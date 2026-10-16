@@ -91,8 +91,23 @@ export function clearLastOpen(
 /** Workspace identity for a session: resolved project root when known, else cwd. */
 export function workspaceKeyOf(session: {
   cwd: string;
+  path?: string;
   projectRoot?: string | null;
   projectKey?: string | null;
 }): string {
+  // If the session belongs to a system routine
+  const p = (session as { path?: string }).path || "";
+  if (p.includes("/routines/sessions/")) {
+    const match = p.match(/\/routines\/sessions\/([^/]+)/);
+    const sub = match ? match[1] : "rutina";
+    return `rutina:${sub}`;
+  }
+
+  // If cwd is under workspaces
+  if (session.cwd && session.cwd.includes("/workspaces/")) {
+    const parts = session.cwd.split("/workspaces/")[1].split("/");
+    return `trabajo:${parts[0]}`;
+  }
+
   return session.projectKey ?? session.projectRoot ?? session.cwd;
 }

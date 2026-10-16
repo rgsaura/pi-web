@@ -159,6 +159,30 @@ export function loadShowIgnoredFiles(storage: StorageLike | null = getBrowserSto
   }
 }
 
+const ACTIVE_NOW_STORAGE_KEY = "pi-web:sidebar-sessions-active-now";
+
+/** Whether the sessions tree starts with the "activas ahora" filter on. */
+export function loadActiveNowOnly(storage: StorageLike | null = getBrowserStorage()): boolean {
+  if (!storage) return false;
+  try {
+    return storage.getItem(ACTIVE_NOW_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function saveActiveNowOnly(
+  active: boolean,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(ACTIVE_NOW_STORAGE_KEY, String(active));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
 export function saveShowIgnoredFiles(
   show: boolean,
   storage: StorageLike | null = getBrowserStorage(),

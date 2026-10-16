@@ -226,6 +226,15 @@ export function ChangesIcon(props: SidebarIconProps) {
   );
 }
 
+/** A heartbeat line: the sessions tree's "activas ahora" filter. */
+export function PulseIcon(props: SidebarIconProps) {
+  return (
+    <SidebarIcon {...props}>
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+    </SidebarIcon>
+  );
+}
+
 /** What the file tree lists: the files tab's ignored-files switch. */
 export function EyeIcon(props: SidebarIconProps) {
   return (

@@ -11,6 +11,10 @@ import { FileViewer } from "./FileViewer";
 import { TabBar, type Tab } from "./TabBar";
 import { openFileTab, saveFileViewerState, saveParkedFileViewerState, switchFileWorkspace, type ParkedFileWorkspace } from "./file-tab-state";
 import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
+import { ExoPanel } from "./ExoPanel";
+import { ExoProposalsView } from "./ExoProposalsView";
+import { ActivityView } from "./ActivityView";
+import { WorkspacesView } from "./WorkspacesView";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
 import { BranchNavigator, hasSessionBranches } from "./BranchNavigator";
 import { SystemPromptPanel } from "./SystemPromptPanel";
@@ -220,6 +224,11 @@ export function AppShell() {
   }, []);
   const [explorerRefreshKey, setExplorerRefreshKey] = useState(0);
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
+  const [exoPanelOpen, setExoPanelOpen] = useState(false);
+  const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
+  const [proposalsViewOpen, setProposalsViewOpen] = useState(false);
+  const [activityViewOpen, setActivityViewOpen] = useState(false);
+  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
   const [projectTrustDialogOpen, setProjectTrustDialogOpen] = useState(false);
@@ -1421,8 +1430,50 @@ export function AppShell() {
         onBackgroundTaskDone={handleBackgroundTaskDone}
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
+        onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
+        onOpenProposalsView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setProposalsViewOpen(true); }}
+        onOpenActivityView={() => { setProposalsViewOpen(false); setWorkspacesViewOpen(false); setActivityViewOpen(true); }}
+        onOpenWorkspacesView={() => { setProposalsViewOpen(false); setActivityViewOpen(false); setWorkspacesViewOpen(true); }}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "space-between", gap: 4 }}>
+        <button
+          type="button"
+          onClick={() => setProposalsViewOpen(true)}
+          title="Propuestas · Decisiones y asuntos pendientes"
+          aria-label="Propuestas"
+          style={{
+            flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+            height: 32, padding: 0, background: proposalsViewOpen ? "var(--bg-selected)" : "none", border: "none",
+            borderRadius: 9, color: proposalsViewOpen ? "var(--accent)" : "var(--text-muted)", cursor: "pointer",
+            fontSize: 12, transition: "background 0.12s, color 0.12s",
+          }}
+          onMouseEnter={(event) => { if (!proposalsViewOpen) { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; } }}
+          onMouseLeave={(event) => { if (!proposalsViewOpen) { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; } }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
+          </svg>
+          <span>Propuestas</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => { setExoInitialProposalId(null); setExoPanelOpen(true); }}
+          title="Exo · Tareas y panel completo"
+          aria-label="Exo · Tareas y panel completo"
+          style={{
+            flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+            height: 32, padding: 0, background: "none", border: "none",
+            borderRadius: 9, color: "var(--text-muted)", cursor: "pointer",
+            fontSize: 12, transition: "background 0.12s, color 0.12s",
+          }}
+          onMouseEnter={(event) => { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; }}
+          onMouseLeave={(event) => { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V2h6v2M9 10h6M9 14h6M9 18h4" />
+          </svg>
+          <span>Tareas</span>
+        </button>
         {([
           ["models", translate("common.models")],
           ["skills", translate("common.skills")],
@@ -2531,7 +2582,18 @@ export function AppShell() {
 
         {/* Chat content */}
         <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
-          {showChat ? (
+          {activityViewOpen ? (
+            <ActivityView onClose={() => setActivityViewOpen(false)} />
+          ) : workspacesViewOpen ? (
+            <WorkspacesView
+              onClose={() => setWorkspacesViewOpen(false)}
+              onStartInCwd={(cwd) => sidebarControlRef.current?.startNewSessionIn({ cwd })}
+            />
+          ) : proposalsViewOpen ? (
+            <ExoProposalsView
+              onClose={() => setProposalsViewOpen(false)}
+            />
+          ) : showChat ? (
             <ChatWindow
               key={sessionKey}
               session={selectedSession}
@@ -2773,6 +2835,7 @@ export function AppShell() {
         onProjectTrustChanged={handleProjectTrustChanged}
       />
     )}
+    {exoPanelOpen && <ExoPanel onClose={() => setExoPanelOpen(false)} initialProposalId={exoInitialProposalId} />}
     {/* After Settings, so it opens above it (z-index 1100 over 1000) when Settings › MCP asks for it. */}
     {projectTrustDialogOpen && projectTrustCwd && (
       <ProjectTrustDialog

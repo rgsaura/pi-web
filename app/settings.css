@@ -2532,3 +2532,186 @@ select.mcp-add-input {
     }
   }
 }
+
+/* — Exo split panel (propuestas y tareas): cards, chips and option buttons — */
+.exo-layout-tabs {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 32px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-panel);
+}
+
+.exo-layout-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.exo-layout-tab:hover {
+  color: var(--text);
+}
+
+.exo-layout-tab[aria-current="page"] {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.exo-layout-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.exo-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-panel);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.exo-card:hover {
+  background: var(--bg-hover);
+}
+
+.exo-card.is-open {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.exo-card-head {
+  display: block;
+  width: 100%;
+  padding: 12px 14px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.exo-card-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.exo-subheading {
+  margin: 0 0 6px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.exo-option {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.exo-option:hover {
+  background: var(--bg-hover);
+}
+
+.exo-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.exo-option.is-chosen {
+  border-color: var(--accent);
+  background: var(--bg-selected);
+}
+
+.exo-option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 5px;
+  background: var(--bg-selected);
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.exo-option.is-chosen .exo-option-letter {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.exo-chip,
+.exo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: normal;
+  text-align: left;
+}
+
+.exo-chip {
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.exo-chip:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.exo-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.exo-pill-alert {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.exo-note {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 11px;
+  line-height: 1.6;
+}

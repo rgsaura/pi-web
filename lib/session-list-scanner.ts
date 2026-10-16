@@ -265,6 +265,23 @@ async function enumerateSessionFiles(sessionsDir: string): Promise<string[]> {
 			// unreadable project dir: same skip-as-absent semantics as the SDK
 		}
 	}
+
+	// Escanear también las sesiones de rutinas del sistema si existen
+	try {
+		const routinesDir = join(process.env.HOME || "/home/rgsaura", ".local/state/routines/sessions");
+		const routineEntries = await readdir(routinesDir, { withFileTypes: true });
+		for (const rentry of routineEntries) {
+			if (rentry.isDirectory() || rentry.isSymbolicLink()) {
+				const rpath = join(routinesDir, rentry.name);
+				try {
+					for (const rf of await readdir(rpath)) {
+						if (rf.endsWith(".jsonl")) files.push(join(rpath, rf));
+					}
+				} catch {}
+			}
+		}
+	} catch {}
+
 	return files;
 }
 

@@ -7,6 +7,7 @@ import { dispatchSessionRowContextMenu } from "@/lib/session-row-context-menu";
 import { sessionDeepLink } from "@/lib/session-links";
 import { getProjectActivity, getRecentProjects } from "@/lib/project-groups";
 import { workspaceKeyOf } from "@/lib/workspace-memory";
+import { isSessionActiveNow } from "@/lib/session-activity";
 import {
   adjacentProjectMove,
   buildArchiveRows,
@@ -29,6 +30,7 @@ import {
 } from "@/lib/session-tree";
 import {
   forgetRetiredSidebarKeys,
+  loadActiveNowOnly,
   loadFilesCollapsed,
   loadGroupExpansion,
   loadNonGitCwds,
@@ -36,6 +38,7 @@ import {
   loadShowIgnoredFiles,
   loadSidebarTab,
   rememberCwdGitStatus,
+  saveActiveNowOnly,
   saveFilesCollapsed,
   saveGroupExpansion,
   savePinnedCollapsed,
@@ -77,6 +80,9 @@ import { useResizablePanel } from "@/hooks/useResizablePanel";
 import { useScrollbarVisibility } from "@/hooks/useScrollbarVisibility";
 import { useSessionUiState } from "@/hooks/useSessionUiState";
 import { archiveViewState, filesFoldState, useSidebarMotion } from "@/hooks/useSidebarMotion";
+import { useExoData } from "@/hooks/useExoData";
+import { useWorkspaces } from "@/hooks/useWorkspaces";
+import { relevantProposals } from "@/lib/exo-visibility";
 import { DirectoryPicker } from "./DirectoryPicker";
 import { DismissButton } from "./DismissButton";
 import { FileExplorer, type FileExplorerHandle } from "./FileExplorer";
@@ -102,6 +108,7 @@ import {
   PinIcon,
   PinOffIcon,
   PlusIcon,
+  PulseIcon,
   RefreshIcon,
   RestoreIcon,
   SearchIcon,
@@ -224,6 +231,14 @@ interface Props {
   onBackgroundTaskDone?: () => void;
   onRunningSessionIdsChange?: (ids: Set<string>) => void;
   onSessionsChange?: (sessions: SessionInfo[]) => void;
+  /** Opens Exo at one proposal (`null`: its full list). */
+  onOpenExoProposal?: (id: string | null) => void;
+  /** Opens the full dedicated Proposals view. */
+  onOpenProposalsView?: () => void;
+  /** Opens the live Activity view (system map). */
+  onOpenActivityView?: () => void;
+  /** Opens the Workspaces view (grouped by category, live status). */
+  onOpenWorkspacesView?: () => void;
 }
 
 /**
@@ -476,9 +491,23 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenActivityView, onOpenWorkspacesView }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
+  const { data: exoData } = useExoData();
+  const { workspaces: workspaceList } = useWorkspaces();
+  const workspaceCount = workspaceList.length;
+  const exoProposals = useMemo(() => exoData?.proposals.proposals ?? [], [exoData]);
+  const exoReferenceMs = useMemo(() => {
+    const capturedAt = exoData?.proposals.capturedAt;
+    if (!capturedAt) return undefined;
+    const parsed = Date.parse(capturedAt);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }, [exoData]);
+  const pendingProposalsCount = useMemo(
+    () => relevantProposals(exoProposals, exoReferenceMs).length,
+    [exoProposals, exoReferenceMs],
+  );
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
   // Tracked in a ref only: the version is compared against the polled value to
   // decide whether the list needs reloading, and no render reads it.
@@ -546,6 +575,10 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
   const stacked = !isMobile && filesPlacement === "below";
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("sessions");
   const [filesCollapsed, setFilesCollapsed] = useState(false);
+  // The sessions tree's "activas ahora" filter: only sessions with activity
+  // inside the 15-minute window or with a live process (a pi one running,
+  // or awaiting input). Restored from browser storage after hydration.
+  const [activeNowOnly, setActiveNowOnly] = useState(false);
   const sessionsTabRef = useRef<HTMLButtonElement>(null);
   const filesTabRef = useRef<HTMLButtonElement>(null);
   const sessionsPanelRef = useRef<HTMLDivElement>(null);
@@ -708,6 +741,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
     if (loadPinnedCollapsed()) setPinnedCollapsed(true);
     if (loadFilesCollapsed()) setFilesCollapsed(true);
     if (loadShowIgnoredFiles()) setShowIgnoredFiles(true);
+    if (loadActiveNowOnly()) setActiveNowOnly(true);
     forgetRetiredSidebarKeys();
   }, []);
 
@@ -1392,8 +1426,27 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
     () => effectiveGroupExpansion(groupExpansion, keptOpenGroups),
     [groupExpansion, keptOpenGroups],
   );
+  // The "now" the filter reads: state, refreshed when the data moves and
+  // on a slow tick, never read during render.
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  useEffect(() => {
+    setNowMs(Date.now());
+  }, [allSessions, runningSessionIds, awaitingInputSessionIds]);
+  useEffect(() => {
+    const timer = window.setInterval(() => setNowMs(Date.now()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  // What the "activas ahora" filter leaves: sessions with a live process
+  // (running or awaiting input) or activity inside the window. The project
+  // groups, the archive and the search keep reading every session.
+  const activeNowSessions = useMemo(() => {
+    if (!activeNowOnly) return allSessions;
+    return allSessions.filter((session) => isSessionActiveNow(session, nowMs, runningSessionIds, awaitingInputSessionIds));
+  }, [allSessions, activeNowOnly, nowMs, runningSessionIds, awaitingInputSessionIds]);
+
   const model = useMemo(() => buildSessionTree({
-    sessions: allSessions,
+    sessions: activeNowSessions,
     uiState,
     runningIds: runningSessionIds,
     awaitingIds: awaitingInputSessionIds,
@@ -1403,7 +1456,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
     groupExpansion: shownGroupExpansion,
     moreShown,
     pinnedCollapsed,
-  }), [allSessions, uiState, runningSessionIds, awaitingInputSessionIds, unreadSessionIds, selectedSessionId, currentProject, shownGroupExpansion, moreShown, pinnedCollapsed]);
+  }), [activeNowSessions, uiState, runningSessionIds, awaitingInputSessionIds, unreadSessionIds, selectedSessionId, currentProject, shownGroupExpansion, moreShown, pinnedCollapsed]);
   // Built while the archive view is rendered, its way out included: it
   // leaves as it was, not empty.
   const archiveMounted = archiveMotion.archiveMounted;
@@ -2601,6 +2654,28 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           <PlusIcon size={12} />
           <span className="sidebar-new-label">{t("sidebar.new")}</span>
         </button>
+        {/* The sessions tree's "activas ahora" filter: only the sessions
+            with a live process or recent activity. Shown wherever the
+            sessions are in view (the tab, or the top section). */}
+        {sessionsShown && (
+          <button
+            type="button"
+            onClick={() => {
+              setActiveNowOnly((active) => {
+                saveActiveNowOnly(!active);
+                return !active;
+              });
+            }}
+            title={activeNowOnly
+              ? `Activas ahora: ${activeNowSessions.length} sesiones. Desactivar para ver todas.`
+              : "Activas ahora: solo sesiones con actividad reciente (15 min) o en ejecución"}
+            aria-label="Activas ahora"
+            aria-pressed={activeNowOnly}
+            className={`sidebar-search-toggle${activeNowOnly ? " is-active" : ""}`}
+          >
+            <PulseIcon size={16} />
+          </button>
+        )}
         <button
           ref={searchButtonRef}
           type="button"
@@ -2627,6 +2702,205 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           <SearchIcon size={16} />
         </button>
       </div>
+
+      {/* System entries at top of sessions panel: live Activity map,
+          Workspaces and the Propuestas inbox, in one strip of the same look. */}
+      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView) && (
+        <div style={{ flexShrink: 0, padding: "6px 8px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6 }}>
+          {onOpenActivityView && (
+            <button
+              type="button"
+              onClick={onOpenActivityView}
+              title="Mapa del sistema en vivo: canales, sesiones Pi, Herdr y rutinas"
+              aria-label="Actividad del sistema"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                padding: "6px 10px",
+                borderRadius: 7,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12,
+                fontWeight: 500,
+                transition: "background 0.12s, border-color 0.12s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ color: "var(--accent)" }}
+                >
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+                <span>Actividad</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 4,
+                  fontSize: 10.5,
+                  fontWeight: 600,
+                  color: "var(--text-muted)",
+                }}
+              >
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", animation: "pulse 1.6s ease-in-out infinite" }} aria-hidden="true" />
+                en vivo
+              </span>
+            </button>
+          )}
+          {onOpenWorkspacesView && (
+            <button
+              type="button"
+              onClick={onOpenWorkspacesView}
+              title="Workspaces por categoría con su estado"
+              aria-label="Workspaces"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                padding: "6px 10px",
+                borderRadius: 7,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12,
+                fontWeight: 500,
+                transition: "background 0.12s, border-color 0.12s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ color: "var(--accent)" }}
+                >
+                  <path d="m12 2 8.5 4.8L12 11.6 3.5 6.8 12 2Z" />
+                  <path d="m3.5 12 8.5 4.8 8.5-4.8" />
+                  <path d="m3.5 17.2 8.5 4.8 8.5-4.8" />
+                </svg>
+                <span>Workspaces</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "1px 7px",
+                  borderRadius: 999,
+                  background: "var(--bg-selected)",
+                  color: "var(--text-muted)",
+                  fontSize: 10.5,
+                  fontWeight: 600,
+                  lineHeight: "15px",
+                }}
+              >
+                {workspaceCount}
+              </span>
+            </button>
+          )}
+          {onOpenProposalsView && (
+          <button
+            type="button"
+            onClick={onOpenProposalsView}
+            title="Abrir vista de propuestas"
+            aria-label={`Propuestas: ${pendingProposalsCount} pendientes`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              padding: "6px 10px",
+              borderRadius: 7,
+              border: "1px solid var(--border)",
+              background: "var(--bg-panel)",
+              color: "var(--text)",
+              cursor: "pointer",
+              fontSize: 12,
+              fontWeight: 500,
+              transition: "background 0.12s, border-color 0.12s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--bg-hover)";
+              e.currentTarget.style.borderColor = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--bg-panel)";
+              e.currentTarget.style.borderColor = "var(--border)";
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ color: "var(--accent)" }}
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+              <span>Propuestas</span>
+            </div>
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "1px 7px",
+                borderRadius: 999,
+                background: pendingProposalsCount > 0 ? "var(--accent)" : "var(--bg-selected)",
+                color: pendingProposalsCount > 0 ? "#ffffff" : "var(--text-muted)",
+                fontSize: 10.5,
+                fontWeight: 600,
+                lineHeight: "15px",
+              }}
+            >
+              {pendingProposalsCount}
+            </span>
+          </button>
+          )}
+        </div>
+      )}
 
       {/* Sessions: every project's sessions, or the archive. A tab's panel,
           or the top section, always shown, filling what the files leave. */}
@@ -2677,7 +2951,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               <SessionTree
                 {...treeProps}
                 rows={model.rows}
-                emptyLabel={t("sidebar.noSessions")}
+                emptyLabel={activeNowOnly ? "Sin actividad en los últimos 15 min" : t("sidebar.noSessions")}
                 reveal={treeReveal}
                 onRevealHandled={handleRevealHandled}
               />

@@ -280,10 +280,23 @@ function createProjectResolver(
         ?? pinnedEntry?.root
         ?? key;
       const customName = storedProjectName(uiState, key) ?? null;
+      let displayName = customName;
+      if (!displayName) {
+        if (key.startsWith("rutina:")) {
+          displayName = `⚡ Rutina: ${key.slice(7)}`;
+        } else if (key.startsWith("trabajo:")) {
+          displayName = `💼 Proyecto: ${key.slice(8)}`;
+        } else if (key === "/home/rgsaura") {
+          displayName = "💬 Personal / Home";
+        } else {
+          displayName = projectNameOf(root);
+        }
+      }
+
       const project: SidebarProject = {
         key,
         root,
-        name: customName ?? projectNameOf(root),
+        name: displayName,
         customName,
         pinned: pinnedEntry !== undefined,
         current,

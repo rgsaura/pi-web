@@ -161,6 +161,29 @@ export async function attachSessionProjectInfo(sessions: SessionInfo[]): Promise
   }));
 
   return sessions.map((session) => {
+    // Si la sesión viene de una rutina en .local/state/routines/sessions
+    const p = session.path || "";
+    if (p.includes("/routines/sessions/")) {
+      const match = p.match(/\/routines\/sessions\/([^/]+)/);
+      const sub = match ? match[1] : "rutina";
+      return {
+        ...session,
+        projectRoot: `Rutina: ${sub}`,
+        projectKey: `rutina:${sub}`,
+      };
+    }
+
+    // Si viene de un workspace de trabajo
+    if (session.cwd && session.cwd.includes("/workspaces/")) {
+      const parts = session.cwd.split("/workspaces/")[1].split("/");
+      const sub = parts[0];
+      return {
+        ...session,
+        projectRoot: `/home/rgsaura/workspaces/${sub}`,
+        projectKey: `trabajo:${sub}`,
+      };
+    }
+
     const project = session.cwd ? projectByCwd.get(session.cwd) : undefined;
     const projectRoot = project?.projectRoot ?? session.cwd;
     return {

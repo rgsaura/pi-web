@@ -148,8 +148,39 @@ const DELETE_TITLE_MAX = 22;
  * user typed, as MessageView shows it), else its id.
  */
 export function sessionRowTitle(session: SessionInfo): string {
-  const displayFirstMessage = skillExpansionToCommand(session.firstMessage) ?? session.firstMessage;
-  return session.name || displayFirstMessage.slice(0, 50) || session.id.slice(0, 12);
+  // If explicitly named, clean up or use
+  if (session.name && !["Asistente", "assistant", "General", "default"].includes(session.name)) {
+    return session.name;
+  }
+
+  let text = session.firstMessage ? (skillExpansionToCommand(session.firstMessage) ?? session.firstMessage).trim() : "";
+
+  // Extract from voice note markers
+  const voiceIdx = text.indexOf("[Nota de voz de Rodrigo]:");
+  if (voiceIdx !== -1) {
+    const after = text.slice(voiceIdx + 25).trim();
+    const clean = after.replace(/^["'“]/, "").replace(/["'”]$/, "").trim();
+    if (clean) text = clean;
+  }
+
+  // Extract from ENCARGO markers
+  const encargoMatch = text.match(/ENCARGO\s*\([^)]+\):\s*([\s\S]*)/i);
+  if (encargoMatch && encargoMatch[1]) {
+    text = encargoMatch[1].trim();
+  }
+
+  // Strip initial markdown headers or role markers
+  text = text.replace(/^(?:#+\s*[^\n]+\n+|[A-Z0-9_\-\s]+:\s*)/, "").trim();
+
+  // Pick the first non-empty line
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  const firstLine = lines[0] || "";
+
+  if (firstLine.length > 3) {
+    return firstLine.slice(0, 60);
+  }
+
+  return session.id.slice(0, 12);
 }
 
 function isImeKey(event: ReactKeyboardEvent): boolean {
