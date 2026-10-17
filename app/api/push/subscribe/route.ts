@@ -30,7 +30,7 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ error: "Invalid push subscription" }, { status: 400 });
   }
 
-  const locale = body.locale === "zh-CN" ? "zh-CN" : "en";
+  const locale = "en";
   await addSubscription({
     endpoint: body.subscription.endpoint,
     keys: body.subscription.keys,

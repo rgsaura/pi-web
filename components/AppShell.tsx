@@ -13,8 +13,10 @@ import { openFileTab, saveFileViewerState, saveParkedFileViewerState, switchFile
 import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
 import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
+import { EncargosView } from "./EncargosView";
 import { ActivityView } from "./ActivityView";
 import { WorkspacesView } from "./WorkspacesView";
+import { VoiceModal } from "./VoiceModal";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
 import { BranchNavigator, hasSessionBranches } from "./BranchNavigator";
 import { SystemPromptPanel } from "./SystemPromptPanel";
@@ -227,8 +229,10 @@ export function AppShell() {
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const [proposalsViewOpen, setProposalsViewOpen] = useState(false);
+  const [encargosViewOpen, setEncargosViewOpen] = useState(false);
   const [activityViewOpen, setActivityViewOpen] = useState(false);
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(false);
+  const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
   const [projectTrustDialogOpen, setProjectTrustDialogOpen] = useState(false);
@@ -1392,7 +1396,7 @@ export function AppShell() {
   // Subagent work tabs: like files, only the active one is mounted.
   const activeAgentTab = agentTabs.find((tab) => `agent:${tab.sessionId}` === activeFileTabId) ?? null;
   const activeCwdName = activeCwd ? getFileName(activeCwd) || activeCwd : null;
-  const windowTitle = activeCwdName ? `${activeCwdName} - Pi Web` : "Pi Web";
+  const windowTitle = activeCwdName ? `${activeCwdName} - Exohuman UI` : "Exohuman UI";
 
   useEffect(() => {
     const syncWindowTitle = () => {
@@ -1431,90 +1435,26 @@ export function AppShell() {
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
         onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
-        onOpenProposalsView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setProposalsViewOpen(true); }}
-        onOpenActivityView={() => { setProposalsViewOpen(false); setWorkspacesViewOpen(false); setActivityViewOpen(true); }}
-        onOpenWorkspacesView={() => { setProposalsViewOpen(false); setActivityViewOpen(false); setWorkspacesViewOpen(true); }}
+        onOpenProposalsView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setProposalsViewOpen(true); }}
+        onOpenEncargosView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setProposalsViewOpen(false); setEncargosViewOpen(true); }}
+        onOpenActivityView={() => { setProposalsViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setActivityViewOpen(true); }}
+        onOpenWorkspacesView={() => { setProposalsViewOpen(false); setActivityViewOpen(false); setEncargosViewOpen(false); setWorkspacesViewOpen(true); }}
+        onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
-      <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "space-between", gap: 4 }}>
-        <button
-          type="button"
-          onClick={() => setProposalsViewOpen(true)}
-          title="Propuestas · Decisiones y asuntos pendientes"
-          aria-label="Propuestas"
-          style={{
-            flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-            height: 32, padding: 0, background: proposalsViewOpen ? "var(--bg-selected)" : "none", border: "none",
-            borderRadius: 9, color: proposalsViewOpen ? "var(--accent)" : "var(--text-muted)", cursor: "pointer",
-            fontSize: 12, transition: "background 0.12s, color 0.12s",
-          }}
-          onMouseEnter={(event) => { if (!proposalsViewOpen) { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; } }}
-          onMouseLeave={(event) => { if (!proposalsViewOpen) { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; } }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
-          </svg>
-          <span>Propuestas</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => { setExoInitialProposalId(null); setExoPanelOpen(true); }}
-          title="Exo · Tareas y panel completo"
-          aria-label="Exo · Tareas y panel completo"
-          style={{
-            flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-            height: 32, padding: 0, background: "none", border: "none",
-            borderRadius: 9, color: "var(--text-muted)", cursor: "pointer",
-            fontSize: 12, transition: "background 0.12s, color 0.12s",
-          }}
-          onMouseEnter={(event) => { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; }}
-          onMouseLeave={(event) => { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V2h6v2M9 10h6M9 14h6M9 18h4" />
-          </svg>
-          <span>Tareas</span>
-        </button>
-        {([
-          ["models", translate("common.models")],
-          ["skills", translate("common.skills")],
-        ] as const).map(([section, label]) => {
-          const disabled = settingsSectionRequiresProject(section) && !projectTrustCwd;
-          return (
-            <button
-              key={section}
-              type="button"
-              onClick={() => setSettingsSection(section)}
-              disabled={disabled}
-              title={disabled ? translate("settings.projectRequired") : label}
-              aria-label={label}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                height: 32, padding: 0, background: "none", border: "none",
-                borderRadius: 9, color: "var(--text-muted)", cursor: disabled ? "default" : "pointer",
-                fontSize: 12, opacity: disabled ? 0.35 : 1,
-                transition: "background 0.12s, color 0.12s",
-              }}
-              onMouseEnter={(event) => { if (!disabled) { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; } }}
-              onMouseLeave={(event) => { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; }}
-            >
-              <SettingsSectionIcon section={section} size={14} strokeWidth={2} />
-              <span>{label}</span>
-            </button>
-          );
-        })}
+      <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
         <button
           type="button"
           onClick={() => setSettingsSection(getLastSettingsSection(projectTrustCwd))}
           title={translate("common.settings")}
           aria-label={translate("common.settings")}
           style={{
-            flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-            height: 32, padding: 0, background: "none", border: "none",
-            borderRadius: 9, color: "var(--text-muted)", cursor: "pointer",
-            fontSize: 12, transition: "background 0.12s, color 0.12s",
+            width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            height: 34, padding: "0 12px", background: "none", border: "1px solid var(--border)",
+            borderRadius: 8, color: "var(--text-muted)", cursor: "pointer",
+            fontSize: 12.5, fontWeight: 500, transition: "background 0.12s, color 0.12s, border-color 0.12s",
           }}
-          onMouseEnter={(event) => { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; }}
-          onMouseLeave={(event) => { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; }}
+          onMouseEnter={(event) => { event.currentTarget.style.background = "var(--bg-hover)"; event.currentTarget.style.color = "var(--text)"; event.currentTarget.style.borderColor = "var(--accent)"; }}
+          onMouseLeave={(event) => { event.currentTarget.style.background = "none"; event.currentTarget.style.color = "var(--text-muted)"; event.currentTarget.style.borderColor = "var(--border)"; }}
         >
           <SettingsSectionIcon section="general" size={14} strokeWidth={2} />
           <span>{translate("common.settings")}</span>
@@ -2313,11 +2253,11 @@ export function AppShell() {
           {!isMobile && (
             <>
               {renderProjectTrustWarning(false)}
-              {renderChatToolbarActions(false)}
-              {renderSessionStatsButton(false)}
+              {!activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderChatToolbarActions(false)}
+              {!activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderSessionStatsButton(false)}
             </>
           )}
-          {!isMobile && renderMainFileToggle(false)}
+          {!isMobile && !activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderMainFileToggle(false)}
           {isMobile && sessionHasBranches && (
             <BranchNavigator
               tree={branchTree}
@@ -2583,7 +2523,18 @@ export function AppShell() {
         {/* Chat content */}
         <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
           {activityViewOpen ? (
-            <ActivityView onClose={() => setActivityViewOpen(false)} />
+            <ActivityView
+              onClose={() => setActivityViewOpen(false)}
+              onSelectSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setActivityViewOpen(false);
+              }}
+            />
           ) : workspacesViewOpen ? (
             <WorkspacesView
               onClose={() => setWorkspacesViewOpen(false)}
@@ -2592,6 +2543,28 @@ export function AppShell() {
           ) : proposalsViewOpen ? (
             <ExoProposalsView
               onClose={() => setProposalsViewOpen(false)}
+              onOpenSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setProposalsViewOpen(false);
+              }}
+            />
+          ) : encargosViewOpen ? (
+            <EncargosView
+              onClose={() => setEncargosViewOpen(false)}
+              onSelectSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setEncargosViewOpen(false);
+              }}
             />
           ) : showChat ? (
             <ChatWindow
@@ -2634,6 +2607,7 @@ export function AppShell() {
               playDoneSound={playDoneSound}
               unlockAudio={unlockAudio}
               holdAudio={holdAudio}
+              onOpenVoice={() => setVoiceModalOpen(true)}
             />
           ) : initialCwdStatus === "validating" ? (
             <div
@@ -2835,7 +2809,7 @@ export function AppShell() {
         onProjectTrustChanged={handleProjectTrustChanged}
       />
     )}
-    {exoPanelOpen && <ExoPanel onClose={() => setExoPanelOpen(false)} initialProposalId={exoInitialProposalId} />}
+    {/* Exo modal popup removed — all access is native in the main view */}
     {/* After Settings, so it opens above it (z-index 1100 over 1000) when Settings › MCP asks for it. */}
     {projectTrustDialogOpen && projectTrustCwd && (
       <ProjectTrustDialog
@@ -2849,6 +2823,10 @@ export function AppShell() {
         onStatus={setProjectTrust}
       />
     )}
+    <VoiceModal
+      isOpen={voiceModalOpen}
+      onClose={() => setVoiceModalOpen(false)}
+    />
     </>
   );
 }

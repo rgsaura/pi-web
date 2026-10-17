@@ -1,15 +1,15 @@
-/** 内置的可用界面语言。 */
-export type Locale = "en" | "zh-CN" | "zh-TW";
+/** Built-in interface language. */
+export type Locale = "en";
 
-/** 翻译字符串使用的简单插值参数。 */
+/** Simple interpolation parameters for translation strings. */
 export type TranslationParams = Record<string, string | number>;
 
-/** 可注册的语言包定义。 */
+/** Registrable language pack definition. */
 export interface LocalePlugin {
-  /** 语言包唯一标识。 */
+  /** Unique language identifier. */
   id: string;
-  /** 用于语言选择菜单的显示名称。 */
+  /** Display name for the language switcher menu. */
   label: string;
-  /** 以稳定 key 索引的翻译消息。 */
+  /** Translation messages indexed by stable keys. */
   messages: Record<string, string>;
 }

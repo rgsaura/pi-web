@@ -5,9 +5,10 @@
 // ponytail: size/mtime fingerprints miss same-size edits with restored mtime;
 // use content hashes if detecting those edits becomes necessary.
 import { closeSync, createReadStream, existsSync, openSync, readFileSync, readSync } from "node:fs";
+import { homedir } from "node:os";
 import { readdir, stat } from "node:fs/promises";
 import type { Dirent } from "node:fs";
-import { basename, join } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import { writePrivateFileAtomicSync } from "./atomic-file";
@@ -266,21 +267,37 @@ async function enumerateSessionFiles(sessionsDir: string): Promise<string[]> {
 		}
 	}
 
-	// Escanear también las sesiones de rutinas del sistema si existen
+	// Escanear también las sesiones de rutinas y canales del sistema si existen.
+	// Solo al listar el directorio real del agente: un agent dir aislado
+	// (tests con PI_CODING_AGENT_DIR) no debe ver las rutinas del host.
+	const agentDirOverride = process.env.PI_CODING_AGENT_DIR;
+	const defaultAgentDir = join(homedir(), ".pi", "agent");
+	const isolatedAgentDir = Boolean(agentDirOverride && resolve(agentDirOverride) !== resolve(defaultAgentDir));
+	if (!isolatedAgentDir) {
 	try {
-		const routinesDir = join(process.env.HOME || "/home/rgsaura", ".local/state/routines/sessions");
-		const routineEntries = await readdir(routinesDir, { withFileTypes: true });
-		for (const rentry of routineEntries) {
-			if (rentry.isDirectory() || rentry.isSymbolicLink()) {
-				const rpath = join(routinesDir, rentry.name);
-				try {
-					for (const rf of await readdir(rpath)) {
-						if (rf.endsWith(".jsonl")) files.push(join(rpath, rf));
+		const extraDirs = [
+			join(process.env.HOME || "/home/rgsaura", ".local/state/routines/sessions"),
+			join(process.env.HOME || "/home/rgsaura", ".local/state/rg-facesearch-bot/sessions"),
+		];
+		for (const edir of extraDirs) {
+			try {
+				const entries = await readdir(edir, { withFileTypes: true });
+				for (const entry of entries) {
+					if (entry.isDirectory() || entry.isSymbolicLink()) {
+						const subpath = join(edir, entry.name);
+						try {
+							for (const rf of await readdir(subpath)) {
+								if (rf.endsWith(".jsonl")) files.push(join(subpath, rf));
+							}
+						} catch {}
+					} else if (entry.name.endsWith(".jsonl")) {
+						files.push(join(edir, entry.name));
 					}
-				} catch {}
-			}
+				}
+			} catch {}
 		}
 	} catch {}
+	}
 
 	return files;
 }

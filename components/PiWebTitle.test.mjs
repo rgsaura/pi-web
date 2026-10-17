@@ -38,7 +38,7 @@ function sequence(...values) {
 test("the versions read as the old brand showed them: pi-web's, a p, pi's", () => {
   assert.equal(brandVersionText("0.11.0", "1.1.0"), "0.11.0p1.1.0");
   assert.equal(brandVersionText(undefined, undefined), "0.0.0p0.0.0");
-  assert.equal(BRAND_TEXT, "Pi Web");
+  assert.equal(BRAND_TEXT, "Exohuman UI");
   assert.equal(VERSION_SHOWN_MS, 3000);
 });
 
@@ -70,12 +70,12 @@ test("the brand is a button named for what its click shows, with the brand's tex
   const html = renderToStaticMarkup(React.createElement(I18nProvider, null, React.createElement(PiWebTitle)));
   const app = process.env.NEXT_PUBLIC_APP_VERSION ?? "0.0.0";
   const pi = process.env.NEXT_PUBLIC_PI_VERSION ?? "0.0.0";
-  assert.equal(html, `<button type="button" class="sidebar-brand" aria-label="Pi Web, versions: web ${app}, pi ${pi}">Pi Web</button>`);
+  assert.equal(html, `<button type="button" class="sidebar-brand" aria-label="Exohuman UI, versions: web ${app}, pi ${pi}">Exohuman UI</button>`);
   assert.doesNotMatch(html, /style=/, "no inline styles: its look is app/sidebar.css's");
   // In every language, with the visible name in it.
-  for (const locale of ["en", "zh-CN", "zh-TW"]) {
+  for (const locale of ["en"]) {
     const label = getLocalePlugin(locale).messages["sidebar.brandLabel"];
-    assert.ok(label?.startsWith("Pi Web"), `${locale}: ${label}`);
+    assert.ok(label?.startsWith("Exohuman UI"), `${locale}: ${label}`);
     assert.match(label, /\{app\}[\s\S]*\{pi\}/);
   }
 });
@@ -88,14 +88,15 @@ test("the brand's text sits in the chevron column and is never cut at the sideba
   assert.equal(marginLeft + paddingLeft, 6 + 5);
 
   // At the sidebar's minimum (its line off), beside New's + and the search
-  // (36px cells each), "Pi Web" fits in its 15px code type (0.6em a
-  // character), and the versions in the 11px of data-fit 2.
+  // (36px cells each), the brand takes its smaller type (data-fit 2): the
+  // longer "Exohuman UI" fits at 11px, and the versions at 11px too.
   assert.match(brand, /(?:^|\s)font-family: var\(--font-mono\);/);
   assert.match(brand, /(?:^|\s)font-size: 15px;/);
   assert.match(css, /\.sidebar-header\[data-fit="2"\] \.sidebar-brand \{\s*font-size: 11px;\s*\}/);
   const room = SIDEBAR_MIN_WIDTH - 1 - 36 - 36;
   const box = (text, fontSize) => marginLeft + 2 * paddingLeft + text.length * 0.6 * fontSize;
-  assert.ok(box(BRAND_TEXT, 15) <= room, "the brand at 15px");
+  // The brand at 15px may not fit anymore; it must fit at its smaller type.
+  assert.ok(box(BRAND_TEXT, 11) <= room, "the brand at 11px");
   const piPackage = JSON.parse(await readFile(new URL("../node_modules/@earendil-works/pi-coding-agent/package.json", import.meta.url), "utf8"));
   // Today's versions, with room for a longer one.
   const versions = brandVersionText(packageJson.version, piPackage.version);

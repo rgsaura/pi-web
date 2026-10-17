@@ -54,7 +54,7 @@ test("Enter submits, never while an input method composes; without plainEnterSub
   assert.equal(oauthPasteKeySubmits(key(), false), false);
   assert.equal(oauthPasteKeySubmits(key({ metaKey: true }), false), true);
   assert.equal(oauthPasteKeySubmits(key({ ctrlKey: true }), false), true);
-  // An Enter that commits an input method's text (zh-CN / zh-TW) submits nothing, whichever flag tells.
+  // An Enter that commits an input method's text submits nothing, whichever flag tells.
   for (const plain of [true, false]) {
     assert.equal(oauthPasteKeySubmits(key({ isComposing: true, metaKey: true }), plain), false);
     assert.equal(oauthPasteKeySubmits(key({ keyCode: 229, ctrlKey: true }), plain), false);

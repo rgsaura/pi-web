@@ -11,7 +11,7 @@ import { useI18n } from "@/hooks/useI18n";
  * VERSION_SHOWN_MS, or at once on a second click.
  */
 
-export const BRAND_TEXT = "Pi Web";
+export const BRAND_TEXT = "Exohuman UI";
 /** How long the versions stay, counted from the click that showed them. */
 export const VERSION_SHOWN_MS = 3000;
 /** The text settles left to right over its length times this many frames. */
@@ -121,8 +121,19 @@ export function PiWebTitle({ onWidthChange }: {
       className={`sidebar-brand${versionShown ? " is-version" : ""}`}
       aria-label={t("sidebar.brandLabel", { app: appVersion ?? "0.0.0", pi: piVersion ?? "0.0.0" })}
       onClick={handleClick}
+      style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
     >
-      {text}
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        style={{ transform: "rotate(180deg)", flexShrink: 0, opacity: 0.9 }}
+        aria-hidden="true"
+      >
+        <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99z" />
+      </svg>
+      <span>{text}</span>
     </button>
   );
 }
