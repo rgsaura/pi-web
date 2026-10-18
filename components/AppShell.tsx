@@ -2566,6 +2566,19 @@ export function AppShell() {
                 setEncargosViewOpen(false);
               }}
             />
+          ) : encargosViewOpen ? (
+            <EncargosView
+              onClose={() => setEncargosViewOpen(false)}
+              onSelectSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setEncargosViewOpen(false);
+              }}
+            />
           ) : showChat ? (
             <ChatWindow
               key={sessionKey}

@@ -246,59 +246,161 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
             </div>
           </section>
 
-          {/* Palanca de Consumo de Tokens (Governor) */}
+          {/* Palanca de Consumo de Tokens (Governor) y Presupuesto */}
           <section aria-label="Control de Gasto">
-            <h2 style={sectionTitle}>Palanca de Gasto (Token Governor)</h2>
-            <div style={{ ...card, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <div>
-                <span style={{ display: "block", fontSize: 13.5, fontWeight: 600 }}>Modo de Inversión y Gasto</span>
-                <span style={{ display: "block", fontSize: 11.5, color: "var(--text-dim)" }}>
-                  Ajusta la intensidad de las investigaciones y tareas en segundo plano.
-                </span>
+            <h2 style={sectionTitle}>Palanca de Gasto & Presupuesto de Tokens</h2>
+            <div style={{ ...card, display: "flex", flexDirection: "column", gap: 14 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                <div>
+                  <span style={{ display: "block", fontSize: 13.5, fontWeight: 600 }}>Modo de Inversión y Gasto</span>
+                  <span style={{ display: "block", fontSize: 11.5, color: "var(--text-dim)" }}>
+                    Ajusta la intensidad de las investigaciones y tareas en segundo plano.
+                  </span>
+                </div>
+                <div style={{ display: "inline-flex", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: 3, gap: 4 }}>
+                  {(["turbo", "normal", "eco"] as const).map((m) => {
+                    const isSel = governorMode === m;
+                    const colors = { turbo: "#8b5cf6", normal: "#3b82f6", eco: "#10b981" };
+                    const labels = { turbo: "🚀 Turbo", normal: "⚖️ Normal", eco: "🌱 Ahorro" };
+                    return (
+                      <button
+                        key={m}
+                        type="button"
+                        onClick={() => handleSetGovernorMode(m)}
+                        style={{
+                          padding: "5px 12px",
+                          fontSize: 12,
+                          fontWeight: isSel ? 650 : 500,
+                          borderRadius: 6,
+                          border: "none",
+                          background: isSel ? colors[m] : "transparent",
+                          color: isSel ? "#ffffff" : "var(--text-muted)",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        {labels[m]}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div style={{ display: "inline-flex", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: 3, gap: 4 }}>
-                {(["turbo", "normal", "eco"] as const).map((m) => {
-                  const isSel = governorMode === m;
-                  const colors = { turbo: "#8b5cf6", normal: "#3b82f6", eco: "#10b981" };
-                  const labels = { turbo: "🚀 Turbo", normal: "⚖️ Normal", eco: "🌱 Ahorro" };
-                  return (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => handleSetGovernorMode(m)}
+
+              {snapshot?.tokenBudget && (
+                <div
+                  style={{
+                    paddingTop: 12,
+                    borderTop: "1px solid var(--border)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600 }}>
+                        📊 Cuota de Tokens ({snapshot.tokenBudget.periodLabel})
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          padding: "2px 8px",
+                          borderRadius: 12,
+                          background: snapshot.tokenBudget.surplusPp >= 0 ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)",
+                          color: snapshot.tokenBudget.surplusPp >= 0 ? "#10b981" : "#ef4444",
+                        }}
+                      >
+                        {snapshot.tokenBudget.surplusLabel}
+                      </span>
+                      {snapshot.tokenBudget.isOffPeak && (
+                        <span
+                          style={{
+                            fontSize: 11,
+                            fontWeight: 600,
+                            padding: "2px 8px",
+                            borderRadius: 12,
+                            background: "rgba(139, 92, 246, 0.15)",
+                            color: "#8b5cf6",
+                          }}
+                        >
+                          🌙 Valle (50% off)
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 12, color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+                      <strong style={{ color: "var(--text)" }}>{(snapshot.tokenBudget.remaining / 1000).toFixed(1)}k</strong> / {(snapshot.tokenBudget.limit / 1000).toFixed(0)}k restantes ({snapshot.tokenBudget.usedPct}% usado)
+                    </div>
+                  </div>
+
+                  {/* Barra de progreso */}
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: 8,
+                      borderRadius: 4,
+                      background: "var(--bg)",
+                      border: "1px solid var(--border)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div
                       style={{
-                        padding: "5px 12px",
-                        fontSize: 12,
-                        fontWeight: isSel ? 650 : 500,
-                        borderRadius: 6,
-                        border: "none",
-                        background: isSel ? colors[m] : "transparent",
-                        color: isSel ? "#ffffff" : "var(--text-muted)",
-                        cursor: "pointer",
-                        transition: "all 0.15s ease",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        width: `${Math.min(100, Math.max(0, snapshot.tokenBudget.usedPct))}%`,
+                        background: snapshot.tokenBudget.usedPct > 85 ? "#ef4444" : snapshot.tokenBudget.usedPct > 65 ? "#f59e0b" : "#8b5cf6",
+                        borderRadius: 3,
+                        transition: "width 0.3s ease",
                       }}
-                    >
-                      {labels[m]}
-                    </button>
-                  );
-                })}
-              </div>
+                    />
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 11.5, color: "var(--text-dim)" }}>
+                    <span>
+                      ⏳ Renovación de ciclo: <strong>{snapshot.tokenBudget.resetLabel}</strong> ({snapshot.tokenBudget.daysRemaining} {snapshot.tokenBudget.daysRemaining === 1 ? "día" : "días"} restantes)
+                    </span>
+                    <span>
+                      Proveedor principal: <strong style={{ textTransform: "uppercase" }}>{snapshot.tokenBudget.preferredProvider}</strong>
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
-          {/* Sesiones Pi */}
+          {/* Sesiones Pi Activas */}
           <section aria-label="Sesiones Pi activas">
-            <h2 style={sectionTitle}>Sesiones Pi · {snapshot ? `${snapshot.piSessions.length} activas` : "…"}</h2>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <h2 style={{ ...sectionTitle, margin: 0 }}>
+                Sesiones Pi en Vivo · {snapshot ? `${snapshot.piSessions.length} activas` : "…"}
+              </h2>
+              {snapshot && snapshot.piSessions.length > 0 && (
+                <span style={{ fontSize: 11, color: "var(--text-dim)" }}>
+                  Detalle del encargo y contexto en curso
+                </span>
+              )}
+            </div>
+
             {snapshot && snapshot.piSessions.length === 0 && (
-              <div style={{ ...card, color: "var(--text-dim)", fontSize: 13 }}>Sin sesiones Pi corriendo ahora.</div>
+              <div style={{ ...card, color: "var(--text-dim)", fontSize: 13, textAlign: "center", padding: "24px 16px" }}>
+                Sin sesiones Pi trabajando activamente en este instante.
+              </div>
             )}
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {(snapshot?.piSessions ?? []).map((session) => {
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {(snapshot?.piSessions ?? []).map((session, idx) => {
                 const { filled, total } = cpuCells(session.cpu);
                 const hasSessionId = Boolean(session.sessionId && session.sessionId.startsWith("01a1"));
+                const categoryColor = session.color || "var(--accent)";
+                const isWorking = session.pid !== "-" || session.currentAction?.startsWith("Ejecutando");
+
                 return (
                   <div
-                    key={session.pid}
+                    key={`${session.sessionId || session.pid}-${idx}`}
                     onClick={() => {
                       if (onSelectSession && session.sessionId) {
                         onSelectSession(session.sessionId);
@@ -308,36 +410,121 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
                     style={{
                       ...card,
                       display: "flex",
-                      alignItems: "center",
-                      gap: 12,
-                      padding: "10px 14px",
+                      flexDirection: "column",
+                      gap: 9,
+                      padding: "12px 16px",
                       cursor: onSelectSession ? "pointer" : "default",
-                      transition: "background 0.15s ease",
+                      transition: "all 0.15s ease",
+                      borderLeft: `4px solid ${categoryColor}`,
                     }}
                     onMouseEnter={(e) => {
-                      if (onSelectSession) e.currentTarget.style.background = "var(--bg-hover, rgba(255,255,255,0.06))";
+                      if (onSelectSession) {
+                        e.currentTarget.style.background = "var(--bg-hover, rgba(255,255,255,0.06))";
+                        e.currentTarget.style.borderColor = categoryColor;
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      if (onSelectSession) e.currentTarget.style.background = card.background as string;
+                      if (onSelectSession) {
+                        e.currentTarget.style.background = card.background as string;
+                        e.currentTarget.style.borderColor = "var(--border)";
+                        e.currentTarget.style.borderLeft = `4px solid ${categoryColor}`;
+                      }
                     }}
                   >
-                    <span aria-hidden="true" style={{ flex: "none", display: "inline-flex", gap: 2 }}>
-                      {Array.from({ length: total }, (_, index) => (
-                        <span key={index} style={{ width: 7, height: 14, borderRadius: 2, background: index < filled ? "var(--accent)" : "var(--bg-selected)" }} />
-                      ))}
-                    </span>
-                    <span style={{ flex: "none", padding: "2px 8px", borderRadius: 5, background: "var(--bg-selected)", color: "var(--accent)", fontSize: 11.5, fontWeight: 600, fontFamily: "var(--font-mono)" }}>
-                      {session.profile}
-                    </span>
-                    <span style={{ flex: 1, minWidth: 0, fontSize: 12.5, color: "var(--text-muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {session.sessionId || `pid ${session.pid}`}
-                    </span>
-                    {onSelectSession && (
-                      <span style={{ flex: "none", fontSize: 12, color: "var(--accent)", fontWeight: 500 }}>
-                        Abrir →
-                      </span>
-                    )}
-                    <span style={{ flex: "none", fontSize: 11.5, color: "var(--text-dim)", fontVariantNumeric: "tabular-nums" }}>cpu {session.cpu}%</span>
+                    {/* Header Row: Category Badge + Encargo ID + Live Status + CPU/Open */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                        {session.category && (
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "2px 7px",
+                              borderRadius: 5,
+                              background: "rgba(255, 255, 255, 0.07)",
+                              color: categoryColor,
+                              fontSize: 11,
+                              fontWeight: 700,
+                              border: `1px solid ${categoryColor}40`,
+                            }}
+                          >
+                            <span>{session.icon || "⚡"}</span>
+                            <span>{session.category}</span>
+                          </span>
+                        )}
+
+                        {session.encargoId && (
+                          <span
+                            style={{
+                              padding: "2px 6px",
+                              borderRadius: 4,
+                              background: "rgba(245, 158, 11, 0.15)",
+                              color: "#f59e0b",
+                              fontSize: 10.5,
+                              fontWeight: 700,
+                              fontFamily: "var(--font-mono)",
+                            }}
+                          >
+                            {session.encargoId}
+                          </span>
+                        )}
+
+                        <span
+                          style={{
+                            padding: "2px 6px",
+                            borderRadius: 4,
+                            background: "var(--bg-selected)",
+                            color: "var(--text-muted)",
+                            fontSize: 10.5,
+                            fontWeight: 600,
+                            fontFamily: "var(--font-mono)",
+                          }}
+                        >
+                          {session.profile || "asistente"}
+                        </span>
+                      </div>
+
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
+                        {isWorking && (
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 10.5, color: "#10b981", fontWeight: 600 }}>
+                            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", animation: "pulse 1.6s ease-in-out infinite" }} />
+                            trabajando
+                          </span>
+                        )}
+
+                        {session.cpu && session.cpu !== "0.0" && (
+                          <span style={{ fontSize: 11, color: "var(--text-dim)", fontVariantNumeric: "tabular-nums" }}>
+                            cpu {session.cpu}%
+                          </span>
+                        )}
+
+                        {onSelectSession && (
+                          <span style={{ fontSize: 11.5, color: "var(--accent)", fontWeight: 600 }}>
+                            Abrir sesión →
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Main Title / Concrete Task */}
+                    <div style={{ fontSize: 13.5, fontWeight: 600, color: "var(--text)", lineHeight: 1.4 }}>
+                      {session.title || "Procesando encargo..."}
+                    </div>
+
+                    {/* Footer Row: Current Action & Workspace CWD */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, fontSize: 11, color: "var(--text-dim)", paddingTop: 4, borderTop: "1px dashed var(--border)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 5, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <span style={{ color: "var(--accent)" }}>⚡</span>
+                        <span style={{ color: "var(--text-muted)" }}>{session.currentAction || "En ejecución"}</span>
+                      </div>
+
+                      {session.cwd && (
+                        <div style={{ flexShrink: 0, fontFamily: "var(--font-mono)", fontSize: 10.5, color: "var(--text-dim)" }}>
+                          📁 {session.cwd.replace(process.env.HOME || "/home/rgsaura", "~")}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })}

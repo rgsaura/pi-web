@@ -15,13 +15,29 @@ export interface ActivityChannel {
   messageCount?: number;
 }
 
-/** A Pi session process running right now. */
+/** A Pi session process running right now with rich context. */
 export interface ActivityPiSession {
   pid: string;
   /** CPU percent as ps reported it. */
   cpu: string;
   profile: string;
   sessionId: string;
+  /** Concrete title or task description. */
+  title?: string;
+  /** Encargo ID if launched from rg-encargo/task-dispatcher. */
+  encargoId?: string;
+  /** High-level category name (e.g. "UI / Frontend", "Infra & Sistema"). */
+  category?: string;
+  /** Thematic category icon. */
+  icon?: string;
+  /** Accent badge color for category. */
+  color?: string;
+  /** Working directory of the session. */
+  cwd?: string;
+  /** Real-time status / latest action snippet. */
+  currentAction?: string;
+  /** Timestamp of last activity in ms. */
+  lastActiveMs?: number;
 }
 
 /** A Herdr agent. */
@@ -120,6 +136,24 @@ export interface ActivitySnapshot {
   timers: ActivityTimer[];
   delegations?: ActivityDelegation[];
   governorMode?: "turbo" | "normal" | "eco";
+  tokenBudget?: {
+    remaining: number;
+    limit: number;
+    usedPct: number;
+    periodLabel: string;
+    daysRemaining: number;
+    resetLabel: string;
+    surplusLabel: string;
+    surplusPp: number;
+    isOffPeak: boolean;
+    offPeakDiscount: string;
+    preferredProvider: string;
+    fiveHour?: {
+      remaining: number;
+      limit: number;
+      usedPct: number;
+    };
+  };
 }
 
 /** The channels the map watches, in display order. */
