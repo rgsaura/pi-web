@@ -1041,9 +1041,9 @@ a.session-tree-main {
   min-width: 6ch;
   margin: 0 0 0 7px;
   padding: 2px 4px;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 6px;
-  background: transparent;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 15px;
@@ -1053,6 +1053,12 @@ a.session-tree-main {
   text-align: left;
   white-space: nowrap;
   cursor: default;
+  transition: all 0.15s ease;
+}
+
+.sidebar-brand:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .sidebar-brand.is-version {

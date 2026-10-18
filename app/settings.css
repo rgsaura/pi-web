@@ -2537,41 +2537,43 @@ select.mcp-add-input {
 .exo-layout-tabs {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 32px;
-  padding: 2px;
+  gap: 4px;
+  height: 36px;
+  padding: 3px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--bg-panel);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .exo-layout-tab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 26px;
-  padding: 0 10px;
+  min-height: 30px;
+  padding: 0 14px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 7px;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
   font: inherit;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 500;
   white-space: nowrap;
-  transition: background 0.12s ease, color 0.12s ease;
+  transition: all 0.15s ease;
 }
 
 .exo-layout-tab:hover {
   color: var(--text);
+  background: var(--bg-hover);
 }
 
 .exo-layout-tab[aria-current="page"] {
   background: var(--bg);
-  color: var(--text);
+  color: var(--accent);
   font-weight: 600;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .exo-layout-tab:focus-visible {
@@ -2581,26 +2583,31 @@ select.mcp-add-input {
 
 .exo-card {
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--bg-panel);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .exo-card:hover {
-  background: var(--bg-hover);
+  background: color-mix(in srgb, var(--bg-panel) 90%, var(--bg-hover));
+  border-color: color-mix(in srgb, var(--border) 70%, var(--accent));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 .exo-card.is-open {
   border-color: var(--accent);
   background: var(--bg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .exo-card-head {
   display: block;
   width: 100%;
-  padding: 12px 14px 10px;
+  padding: 14px 16px 12px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 12px;
   background: transparent;
   color: var(--text);
   cursor: pointer;
@@ -2614,31 +2621,35 @@ select.mcp-add-input {
 }
 
 .exo-subheading {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--text-muted);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .exo-option {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   width: 100%;
-  padding: 8px 10px;
+  min-height: 44px;
+  padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--bg);
   color: var(--text);
   cursor: pointer;
   font: inherit;
   text-align: left;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .exo-option:hover {
   background: var(--bg-hover);
+  border-color: var(--accent);
+  transform: translateY(-0.5px);
 }
 
 .exo-option:focus-visible {
@@ -2648,21 +2659,21 @@ select.mcp-add-input {
 
 .exo-option.is-chosen {
   border-color: var(--accent);
-  background: var(--bg-selected);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .exo-option-letter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
-  margin-top: 1px;
-  border-radius: 5px;
+  border-radius: 6px;
   background: var(--bg-selected);
   color: var(--text-muted);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1;
 }
@@ -2676,14 +2687,15 @@ select.mcp-add-input {
 .exo-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
+  gap: 6px;
+  padding: 4px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--bg);
   color: var(--text-muted);
   font-family: inherit;
-  font-size: 11px;
+  font-size: 11.5px;
+  font-weight: 500;
   line-height: 16px;
   white-space: normal;
   text-align: left;
@@ -2691,12 +2703,14 @@ select.mcp-add-input {
 
 .exo-chip {
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  min-height: 28px;
+  transition: all 0.15s ease;
 }
 
 .exo-chip:hover {
   background: var(--bg-hover);
   color: var(--text);
+  border-color: var(--accent);
 }
 
 .exo-chip:focus-visible {
@@ -2705,13 +2719,14 @@ select.mcp-add-input {
 }
 
 .exo-pill-alert {
-  border-color: #dc2626;
-  color: #dc2626;
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
 }
 
 .exo-note {
-  margin-top: 8px;
+  margin-top: 10px;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 11.5px;
   line-height: 1.6;
 }

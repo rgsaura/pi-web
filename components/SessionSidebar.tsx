@@ -2710,7 +2710,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
       {/* System entries at top of sessions panel: live Activity map,
           Workspaces and the Decisiones inbox, in one strip of the same look. */}
       {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView) && (
-        <div style={{ flexShrink: 0, padding: "6px 8px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6 }}>
+        <div style={{ flexShrink: 0, padding: "8px 10px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6, background: "color-mix(in srgb, var(--bg-panel) 60%, var(--bg))" }}>
           {onOpenActivityView && (
             <button
               type="button"
@@ -2722,33 +2722,38 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
-                padding: "6px 10px",
-                borderRadius: 7,
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
                 border: "1px solid var(--border)",
                 background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
-                fontSize: 12,
-                fontWeight: 500,
-                transition: "background 0.12s, border-color 0.12s",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--bg-hover)";
                 e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "var(--bg-panel)";
                 e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
-                  width="14"
-                  height="14"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{ color: "var(--accent)" }}
@@ -2761,10 +2766,13 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 4,
-                  fontSize: 10.5,
+                  gap: 5,
+                  fontSize: 11,
                   fontWeight: 600,
-                  color: "var(--text-muted)",
+                  color: "#16a34a",
+                  background: "rgba(22, 163, 74, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: 999,
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", animation: "pulse 1.6s ease-in-out infinite" }} aria-hidden="true" />
@@ -2783,33 +2791,38 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
-                padding: "6px 10px",
-                borderRadius: 7,
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
                 border: "1px solid var(--border)",
                 background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
-                fontSize: 12,
-                fontWeight: 500,
-                transition: "background 0.12s, border-color 0.12s",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--bg-hover)";
                 e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "var(--bg-panel)";
                 e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
-                  width="14"
-                  height="14"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{ color: "var(--accent)" }}
@@ -2825,13 +2838,13 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: "1px 7px",
+                  padding: "1px 8px",
                   borderRadius: 999,
                   background: "var(--bg-selected)",
                   color: "var(--text-muted)",
-                  fontSize: 10.5,
+                  fontSize: 11,
                   fontWeight: 600,
-                  lineHeight: "15px",
+                  lineHeight: "16px",
                 }}
               >
                 {workspaceCount}
@@ -2914,39 +2927,45 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-              padding: "6px 10px",
-              borderRadius: 7,
+              minHeight: 38,
+              padding: "8px 12px",
+              borderRadius: 9,
               border: "1px solid var(--border)",
               background: "var(--bg-panel)",
               color: "var(--text)",
               cursor: "pointer",
-              fontSize: 12,
-              fontWeight: 500,
-              transition: "background 0.12s, border-color 0.12s",
+              fontSize: 12.5,
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+              transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "var(--bg-hover)";
               e.currentTarget.style.borderColor = "var(--accent)";
+              e.currentTarget.style.transform = "translateY(-0.5px)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "var(--bg-panel)";
               e.currentTarget.style.borderColor = "var(--border)";
+              e.currentTarget.style.transform = "none";
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <svg
-                width="14"
-                height="14"
+                width="15"
+                height="15"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{ color: "var(--accent)" }}
               >
                 <circle cx="12" cy="12" r="10" />
-                <path d="m9 12 2 2 4-4" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
               <span>Decisiones</span>
             </div>
@@ -2955,13 +2974,13 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "1px 7px",
+                padding: "1px 8px",
                 borderRadius: 999,
-                background: pendingProposalsCount > 0 ? "var(--accent)" : "var(--bg-selected)",
-                color: pendingProposalsCount > 0 ? "#ffffff" : "var(--text-muted)",
-                fontSize: 10.5,
+                background: pendingProposalsCount > 0 ? "rgba(220, 38, 38, 0.15)" : "var(--bg-selected)",
+                color: pendingProposalsCount > 0 ? "#ef4444" : "var(--text-muted)",
+                fontSize: 11,
                 fontWeight: 600,
-                lineHeight: "15px",
+                lineHeight: "16px",
               }}
             >
               {pendingProposalsCount}
