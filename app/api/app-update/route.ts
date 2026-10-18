@@ -67,20 +67,11 @@ async function loadUpdateStatus(): Promise<AppUpdateResponse> {
 }
 
 export async function GET() {
-  if (SKIP_VERSION_CHECK) {
-    return NextResponse.json({
-      currentVersion: CURRENT_VERSION,
-      latestVersion: CURRENT_VERSION,
-      updateAvailable: false,
-      releaseUrl: "",
-    } satisfies AppUpdateResponse);
-  }
-  try {
-    return NextResponse.json(await loadUpdateStatus());
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : String(error) },
-      { status: 502 },
-    );
-  }
+  // En Exohuman UI personalizada no consultamos ni mostramos updates de releases externas de Pi-Web
+  return NextResponse.json({
+    currentVersion: CURRENT_VERSION,
+    latestVersion: CURRENT_VERSION,
+    updateAvailable: false,
+    releaseUrl: "",
+  } satisfies AppUpdateResponse);
 }

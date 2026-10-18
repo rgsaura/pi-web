@@ -235,10 +235,14 @@ interface Props {
   onOpenExoProposal?: (id: string | null) => void;
   /** Opens the full dedicated Proposals view. */
   onOpenProposalsView?: () => void;
+  /** Opens the full dedicated Encargos view. */
+  onOpenEncargosView?: () => void;
   /** Opens the live Activity view (system map). */
   onOpenActivityView?: () => void;
   /** Opens the Workspaces view (grouped by category, live status). */
   onOpenWorkspacesView?: () => void;
+  /** Opens the live voice interface modal. */
+  onOpenVoiceModal?: () => void;
 }
 
 /**
@@ -491,7 +495,7 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenActivityView, onOpenWorkspacesView }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -2704,9 +2708,9 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
       </div>
 
       {/* System entries at top of sessions panel: live Activity map,
-          Workspaces and the Propuestas inbox, in one strip of the same look. */}
+          Workspaces and the Decisiones inbox, in one strip of the same look. */}
       {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView) && (
-        <div style={{ flexShrink: 0, padding: "6px 8px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6 }}>
+        <div style={{ flexShrink: 0, padding: "8px 10px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6, background: "color-mix(in srgb, var(--bg-panel) 60%, var(--bg))" }}>
           {onOpenActivityView && (
             <button
               type="button"
@@ -2718,33 +2722,38 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
-                padding: "6px 10px",
-                borderRadius: 7,
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
                 border: "1px solid var(--border)",
                 background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
-                fontSize: 12,
-                fontWeight: 500,
-                transition: "background 0.12s, border-color 0.12s",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--bg-hover)";
                 e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "var(--bg-panel)";
                 e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
-                  width="14"
-                  height="14"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{ color: "var(--accent)" }}
@@ -2757,10 +2766,13 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 4,
-                  fontSize: 10.5,
+                  gap: 5,
+                  fontSize: 11,
                   fontWeight: 600,
-                  color: "var(--text-muted)",
+                  color: "#16a34a",
+                  background: "rgba(22, 163, 74, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: 999,
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", animation: "pulse 1.6s ease-in-out infinite" }} aria-hidden="true" />
@@ -2779,33 +2791,38 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 alignItems: "center",
                 justifyContent: "space-between",
                 width: "100%",
-                padding: "6px 10px",
-                borderRadius: 7,
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
                 border: "1px solid var(--border)",
                 background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
-                fontSize: 12,
-                fontWeight: 500,
-                transition: "background 0.12s, border-color 0.12s",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--bg-hover)";
                 e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "var(--bg-panel)";
                 e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
-                  width="14"
-                  height="14"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{ color: "var(--accent)" }}
@@ -2821,16 +2838,86 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: "1px 7px",
+                  padding: "1px 8px",
                   borderRadius: 999,
                   background: "var(--bg-selected)",
                   color: "var(--text-muted)",
-                  fontSize: 10.5,
+                  fontSize: 11,
                   fontWeight: 600,
-                  lineHeight: "15px",
+                  lineHeight: "16px",
                 }}
               >
                 {workspaceCount}
+              </span>
+            </button>
+          )}
+          {onOpenEncargosView && (
+            <button
+              type="button"
+              onClick={onOpenEncargosView}
+              title="Encargos y tareas activas pedidas a ROT"
+              aria-label="Encargos"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ color: "#f59e0b" }}
+                >
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+                <span>Encargos</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "1px 8px",
+                  borderRadius: 999,
+                  background: (exoData?.encargos?.pendingCount ?? 0) > 0 ? "rgba(245, 158, 11, 0.15)" : "var(--bg-selected)",
+                  color: (exoData?.encargos?.pendingCount ?? 0) > 0 ? "#f59e0b" : "var(--text-muted)",
+                  fontSize: 11,
+                  fontWeight: 600,
+                  lineHeight: "16px",
+                }}
+              >
+                {exoData?.encargos?.pendingCount ?? 0}
               </span>
             </button>
           )}
@@ -2838,66 +2925,137 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           <button
             type="button"
             onClick={onOpenProposalsView}
-            title="Abrir vista de propuestas"
-            aria-label={`Propuestas: ${pendingProposalsCount} pendientes`}
+            title="Abrir vista de decisiones pendientes"
+            aria-label={`Decisiones: ${pendingProposalsCount} pendientes`}
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-              padding: "6px 10px",
-              borderRadius: 7,
+              minHeight: 38,
+              padding: "8px 12px",
+              borderRadius: 9,
               border: "1px solid var(--border)",
               background: "var(--bg-panel)",
               color: "var(--text)",
               cursor: "pointer",
-              fontSize: 12,
-              fontWeight: 500,
-              transition: "background 0.12s, border-color 0.12s",
+              fontSize: 12.5,
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+              transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "var(--bg-hover)";
               e.currentTarget.style.borderColor = "var(--accent)";
+              e.currentTarget.style.transform = "translateY(-0.5px)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "var(--bg-panel)";
               e.currentTarget.style.borderColor = "var(--border)";
+              e.currentTarget.style.transform = "none";
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <svg
-                width="14"
-                height="14"
+                width="15"
+                height="15"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{ color: "var(--accent)" }}
               >
                 <circle cx="12" cy="12" r="10" />
-                <path d="m9 12 2 2 4-4" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
-              <span>Propuestas</span>
+              <span>Decisiones</span>
             </div>
             <span
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "1px 7px",
+                padding: "1px 8px",
                 borderRadius: 999,
-                background: pendingProposalsCount > 0 ? "var(--accent)" : "var(--bg-selected)",
-                color: pendingProposalsCount > 0 ? "#ffffff" : "var(--text-muted)",
-                fontSize: 10.5,
+                background: pendingProposalsCount > 0 ? "rgba(220, 38, 38, 0.15)" : "var(--bg-selected)",
+                color: pendingProposalsCount > 0 ? "#ef4444" : "var(--text-muted)",
+                fontSize: 11,
                 fontWeight: 600,
-                lineHeight: "15px",
+                lineHeight: "16px",
               }}
             >
               {pendingProposalsCount}
             </span>
           </button>
+          )}
+
+          {onOpenVoiceModal && (
+            <button
+              type="button"
+              onClick={onOpenVoiceModal}
+              title="Hablar por voz en tiempo real con ROT (WebRTC)"
+              aria-label="Hablar por voz con ROT"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                padding: "6px 10px",
+                borderRadius: 7,
+                border: "1px solid rgba(52, 211, 153, 0.35)",
+                background: "rgba(52, 211, 153, 0.08)",
+                color: "#34d399",
+                cursor: "pointer",
+                fontSize: 12,
+                fontWeight: 600,
+                transition: "background 0.12s, border-color 0.12s, transform 0.1s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(52, 211, 153, 0.16)";
+                e.currentTarget.style.borderColor = "#34d399";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(52, 211, 153, 0.08)";
+                e.currentTarget.style.borderColor = "rgba(52, 211, 153, 0.35)";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                </svg>
+                <span>Hablar por Voz</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 4,
+                  fontSize: 10,
+                  fontWeight: 600,
+                  padding: "1px 6px",
+                  borderRadius: 999,
+                  background: "rgba(52, 211, 153, 0.2)",
+                  color: "#34d399",
+                }}
+              >
+                ROT Live
+              </span>
+            </button>
           )}
         </div>
       )}

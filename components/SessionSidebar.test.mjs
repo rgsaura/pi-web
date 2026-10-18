@@ -126,7 +126,7 @@ test("on a desktop the files sit below the sessions by default, both in view", (
   // No tabs: the brand (its name says the versions a click shows), then New,
   // the sessions' "activas ahora" filter and the sessions' search. No view
   // options.
-  assert.match(html, /<div class="sidebar-header"><button type="button" class="sidebar-brand" aria-label="Pi Web, versions: web [^",]+, pi [^",]+">Pi Web<\/button><span class="sidebar-header-spacer"><\/span><button type="button" class="sidebar-new-button"/);
+  assert.match(html, /<div class="sidebar-header"><button type="button" class="sidebar-brand" aria-label="Exohuman UI, versions: web [^",]+, pi [^",]+">Exohuman UI<\/button><span class="sidebar-header-spacer"><\/span><button type="button" class="sidebar-new-button"/);
   assert.doesNotMatch(html, /role="tablist"|role="tab"|role="tabpanel"|View options|sidebar-title/);
   assert.match(html, /<span class="sidebar-new-label">New<\/span><\/button><button type="button" title="Activas ahora: solo sesiones con actividad reciente \(15 min\) o en ejecución" aria-label="Activas ahora" aria-pressed="false" class="sidebar-search-toggle">/);
   assert.match(html, /<button type="button" title="Search conversations" aria-label="Search conversations" aria-expanded="false" aria-controls="session-search-input" class="sidebar-search-toggle">/);

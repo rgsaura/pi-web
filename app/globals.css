@@ -27,43 +27,43 @@
 :root,
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #ffffff;
-  --bg-panel: #f5f5f5;
-  --bg-hover: #eeeeee;
-  --bg-selected: #e8e8e8;
-  --border: #e0e0e0;
-  --text: #1a1a1a;
-  --text-muted: #515c6b;
-  --text-dim: #5e6673;
-  --accent: #245bce;
+  --bg: #f8fafc;
+  --bg-panel: #ffffff;
+  --bg-hover: #f1f5f9;
+  --bg-selected: #e2e8f0;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-contrast: #ffffff;
   --user-bg: #eff6ff;
   --assistant-bg: #ffffff;
-  --tool-bg: #f9fafb;
-  --bg-subtle: rgba(0,0,0,0.03);
-  --chat-content-max-width: 820px;
+  --tool-bg: #f8fafc;
+  --bg-subtle: rgba(15, 23, 42, 0.03);
+  --chat-content-max-width: 860px;
   --chat-content-font-size: 14px;
 }
 
 html.dark,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1a1a1a;
-  --bg-panel: #242424;
-  --bg-hover: #2e2e2e;
-  --bg-selected: #383838;
-  --border: #454545;
-  --text: #e8e8e8;
-  --text-muted: #b7b7b7;
-  --text-dim: #a4a4a4;
-  --accent: #a4c2f4;
-  --accent-hover: #c3d8fa;
-  --accent-contrast: #182234;
-  --user-bg: #292929;
-  --assistant-bg: #1a1a1a;
-  --tool-bg: #222222;
-  --bg-subtle: rgba(255,255,255,0.04);
+  --bg: #0b0f19;
+  --bg-panel: #111827;
+  --bg-hover: #1f293d;
+  --bg-selected: #28354f;
+  --border: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #38bdf8;
+  --accent-hover: #60a5fa;
+  --accent-contrast: #0b0f19;
+  --user-bg: #151e33;
+  --assistant-bg: #111827;
+  --tool-bg: #0d1322;
+  --bg-subtle: rgba(255, 255, 255, 0.04);
 }
 
 [data-theme="mist"] {
@@ -186,7 +186,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-ui);
   font-weight: var(--font-ui-weight);
@@ -197,6 +197,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  background-color: var(--bg);
 }
 
 .web-login-page {
@@ -826,8 +827,8 @@ button.extension-widget-trigger:focus-visible {
 }
 
 :root {
-  --font-ui-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono-default: var(--font-noto-mono), 'JetBrains Mono', 'Fira Code', 'Consolas', ui-monospace, 'PingFang SC', 'Microsoft YaHei', monospace;
+  --font-ui-default: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono-default: "SF Mono", "JetBrains Mono", var(--font-noto-mono), "Fira Code", Menlo, Monaco, Consolas, ui-monospace, monospace;
   --font-ui: var(--font-ui-default);
   --font-mono: var(--font-mono-default);
   --font-ui-weight: 400;

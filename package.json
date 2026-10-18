@@ -1,15 +1,7 @@
 {
-  "name": "@agegr/pi-web",
-  "version": "0.12.1",
-  "description": "Web UI for the pi coding agent",
-  "homepage": "https://github.com/agegr/pi-web#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agegr/pi-web.git"
-  },
-  "bugs": {
-    "url": "https://github.com/agegr/pi-web/issues"
-  },
+  "name": "exohuman-ui",
+  "version": "1.0.0",
+  "description": "Exohuman Centralized Operating Interface",
   "license": "MIT",
   "engines": {
     "node": ">=22.19.0"
