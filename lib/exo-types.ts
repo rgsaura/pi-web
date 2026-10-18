@@ -12,6 +12,8 @@ export interface ExoProposalOption {
   description?: string;
   reasoning?: string;
   kind?: string;
+  /** Renderable image src (media route or https) for visual decisions. */
+  image?: string;
 }
 
 export interface ExoProposalEvidence {
@@ -97,6 +99,7 @@ export interface ExoProposal {
   expiresAt?: string | null;
   source?: string;
   sourceSessionId?: string;
+  links?: string[];
   discard?: { reason: string; details?: string; discardedAt?: string } | null;
   options: ExoProposalOption[];
   evidence: ExoProposalEvidence[];

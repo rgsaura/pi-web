@@ -74,7 +74,7 @@ try {
   await statusChip.waitFor({ state: "visible", timeout: 30_000 });
   const title = await page.locator("article h2").first().innerText();
   assert.ok(title.trim().length > 0, "a proposal title renders");
-  const optionButtons = page.locator("article button[aria-pressed]");
+  const optionButtons = page.locator("article button[aria-pressed], article [role=button][aria-pressed]");
   const optionCount = await optionButtons.count();
   assert.ok(optionCount > 0, "options render as big buttons");
   console.log(`proposal: "${title.slice(0, 60)}" · ${optionCount} options`);

@@ -61,6 +61,7 @@ async function readPrivate(route: string): Promise<Row | null> {
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { homedir } from "os";
+import { optionImagesFor } from "./exo-media";
 
 interface LocalLedgerProposal {
   id: string;
@@ -68,6 +69,7 @@ interface LocalLedgerProposal {
   title: string;
   summary?: string;
   options?: string[];
+  option_images?: unknown;
   source?: string;
   status?: string;
   resolution?: any;
@@ -100,17 +102,23 @@ function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
         updatedAt: item.created_at,
         expiresAt: item.expires_at ?? null,
         source: item.source ?? undefined,
-        sourceSessionId: item.source && /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.test(item.source)
+        sourceSessionId: (item as any).session_id || (item.source && /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.test(item.source)
           ? item.source.match(/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i)?.[1]
-          : undefined,
+          : undefined),
+        links: (item as any).links ?? [],
         decisionState: status === "pending" ? "open" : status === "resolved" ? "accepted" : status === "discarded" ? "rejected" : status,
         attentionState: "fresh",
         selectedOption: item.resolution ? { optionId: "resolved", label: typeof item.resolution === "object" && item.resolution ? (item.resolution as any).choice : "Resuelta" } : null,
         discard: (item as any).discard ?? null,
-        options: (item.options ?? ["Aceptar", "Descartar"]).map((opt, idx) => ({
-          id: `opt-${idx}`,
-          label: opt,
-        })),
+        options: (() => {
+          const labels = (item.options ?? ["Aceptar", "Descartar"]) as string[];
+          const images = optionImagesFor(labels.length, item.option_images);
+          return labels.map((opt, idx) => ({
+            id: `opt-${idx}`,
+            label: opt,
+            ...(images[idx] ? { image: images[idx] } : {}),
+          }));
+        })(),
         evidence: [],
         preparations: [],
         responses: [],

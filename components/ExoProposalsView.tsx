@@ -73,6 +73,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
   const [sentReceipts, setSentReceipts] = useState<Map<string, SentReceipt>>(() => new Map());
   const [failure, setFailure] = useState<ResolveFailure | null>(null);
   const [pulse, setPulse] = useState(0);
+  const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
 
   const [customText, setCustomText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -416,6 +417,11 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
         target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT"
           || target.isContentEditable)
       ) return;
+      if (event.key === "Escape" && zoom) {
+        event.preventDefault();
+        setZoom(null);
+        return;
+      }
       if (event.key === "Escape" && onClose) {
         event.preventDefault();
         onClose();
@@ -439,7 +445,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending]);
+  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending, zoom]);
 
   const pendingCount = useMemo(() => relevantProposals(proposals, referenceMs).length, [proposals, referenceMs]);
   const receipt = currentProposal ? sentReceipts.get(currentProposal.id) : undefined;
@@ -777,6 +783,38 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                       Ver sesión en vivo
                     </a>
                   ) : null}
+                  {(currentProposal.links ?? []).length > 0 && (
+                    <div style={{ display: "inline-flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                      {(currentProposal.links ?? []).map((url) => (
+                        <a
+                          key={url}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 4,
+                            color: "var(--accent)",
+                            textDecoration: "none",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            padding: "2px 8px",
+                            border: "1px solid var(--border)",
+                            borderRadius: 6,
+                            background: "var(--bg-panel)",
+                          }}
+                          title={url}
+                        >
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                          </svg>
+                          {(() => { try { return new URL(url).hostname.replace("www.", ""); } catch { return url.slice(0, 30); } })()}
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -811,6 +849,150 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                     const isDecided = decidedOptionId === option.id;
                     const isSending = sending === option.id;
                     const anySending = sending !== null;
+                    const stateSpans = (
+                      <>
+                        {isSending && (
+                          <span style={{ flex: "none", fontSize: 12, color: "var(--accent)", fontWeight: 600 }}>Enviando…</span>
+                        )}
+                        {isDecided && (
+                          <span style={{ flex: "none", fontSize: 12, color: "#16a34a", fontWeight: 600 }}>
+                            {receipt?.optionId === option.id && !currentProposal.selectedOption ? "Enviada" : "Elegida"}
+                          </span>
+                        )}
+                      </>
+                    );
+                    const sharedCard: React.CSSProperties = {
+                      width: "100%",
+                      padding: "14px 16px",
+                      borderRadius: 10,
+                      border: `1.5px solid ${isDecided ? "#16a34a" : isSending ? "var(--accent)" : "var(--border)"}`,
+                      background: isDecided ? "rgba(22,163,74,0.07)" : isSending ? "var(--bg-selected)" : "var(--bg-panel)",
+                      textAlign: "left",
+                      cursor: isDecided || anySending ? "default" : "pointer",
+                      opacity: decidedOptionId && !isDecided ? 0.55 : 1,
+                      transition: "border-color 0.12s, background 0.12s, opacity 0.12s",
+                    };
+                    const choose = () => void resolve(currentProposal, option.id);
+
+                    // Visual option: image banner + text row, with a zoom peek.
+                    if (option.image) {
+                      return (
+                        <div
+                          key={option.id}
+                          role="button"
+                          tabIndex={0}
+                          aria-pressed={isDecided}
+                          aria-label={`${isDecided ? "Opción elegida" : `Elegir ${letter}`}: ${option.label}`}
+                          onClick={() => {
+                            if (!anySending && !isDecided) choose();
+                          }}
+                          onKeyDown={(event) => {
+                            if ((event.key === "Enter" || event.key === " ") && !anySending && !isDecided) {
+                              event.preventDefault();
+                              choose();
+                            }
+                          }}
+                          title={isDecided ? "Opción elegida" : `Elegir ${letter} (tecla ${letter.toLowerCase()})`}
+                          style={{ ...sharedCard, display: "flex", flexDirection: "column", gap: 10, padding: 10 }}
+                        >
+                          <span style={{ position: "relative", display: "block", width: "100%" }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={option.image}
+                              alt={`Vista previa: ${option.label}`}
+                              loading="lazy"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                setZoom({ src: option.image!, caption: option.label });
+                              }}
+                              style={{
+                                display: "block",
+                                width: "100%",
+                                aspectRatio: "16 / 9",
+                                maxHeight: 240,
+                                objectFit: "cover",
+                                borderRadius: 8,
+                                background: "var(--bg)",
+                                cursor: "zoom-in",
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                setZoom({ src: option.image!, caption: option.label });
+                              }}
+                              title="Ampliar imagen"
+                              aria-label={`Ampliar imagen de ${option.label}`}
+                              style={{
+                                position: "absolute",
+                                top: 8,
+                                right: 8,
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: 30,
+                                height: 30,
+                                borderRadius: 8,
+                                border: "1px solid rgba(255,255,255,0.25)",
+                                background: "rgba(15,23,42,0.72)",
+                                color: "#f8fafc",
+                                cursor: "zoom-in",
+                              }}
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                                <circle cx="11" cy="11" r="7" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                              </svg>
+                            </button>
+                          </span>
+                          <span style={{ display: "flex", alignItems: "center", gap: 14, width: "100%" }}>
+                            <span
+                              style={{
+                                flex: "none",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: 32,
+                                height: 32,
+                                borderRadius: 8,
+                                background: isDecided ? "#16a34a" : "var(--bg-selected)",
+                                color: isDecided ? "#fff" : "var(--accent)",
+                                fontSize: 14,
+                                fontWeight: 700,
+                                fontFamily: "var(--font-mono)",
+                              }}
+                            >
+                              {isDecided ? "✓" : letter}
+                            </span>
+                            <span style={{ flex: 1, minWidth: 0 }}>
+                              <span style={{ display: "block", fontSize: 14.5, fontWeight: 600, lineHeight: 1.4 }}>
+                                {option.label || letter}
+                              </span>
+                              {option.description && (
+                                <span
+                                  style={{
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    fontSize: 12.5,
+                                    lineHeight: 1.45,
+                                    color: "var(--text-muted)",
+                                  }}
+                                >
+                                  {option.description}
+                                </span>
+                              )}
+                            </span>
+                            {stateSpans}
+                          </span>
+                        </div>
+                      );
+                    }
+
                     return (
                       <button
                         key={option.id}
@@ -820,18 +1002,10 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                         title={isDecided ? "Opción elegida" : `Elegir ${letter} (tecla ${letter.toLowerCase()})`}
                         aria-pressed={isDecided}
                         style={{
+                          ...sharedCard,
                           display: "flex",
                           alignItems: "center",
                           gap: 14,
-                          width: "100%",
-                          padding: "14px 16px",
-                          borderRadius: 10,
-                          border: `1.5px solid ${isDecided ? "#16a34a" : isSending ? "var(--accent)" : "var(--border)"}`,
-                          background: isDecided ? "rgba(22,163,74,0.07)" : isSending ? "var(--bg-selected)" : "var(--bg-panel)",
-                          textAlign: "left",
-                          cursor: isDecided || anySending ? "default" : "pointer",
-                          opacity: decidedOptionId && !isDecided ? 0.55 : 1,
-                          transition: "border-color 0.12s, background 0.12s, opacity 0.12s",
                         }}
                       >
                         <span
@@ -872,14 +1046,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                             </span>
                           )}
                         </span>
-                        {isSending && (
-                          <span style={{ flex: "none", fontSize: 12, color: "var(--accent)", fontWeight: 600 }}>Enviando…</span>
-                        )}
-                        {isDecided && (
-                          <span style={{ flex: "none", fontSize: 12, color: "#16a34a", fontWeight: 600 }}>
-                            {receipt?.optionId === option.id && !currentProposal.selectedOption ? "Enviada" : "Elegida"}
-                          </span>
-                        )}
+                        {stateSpans}
                       </button>
                     );
                   })}
@@ -1179,6 +1346,70 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           >
             {undoing ? "Deshaciendo…" : "Deshacer"}
           </button>
+        </div>
+      )}
+      {/* Image lightbox: one tap on an option image shows it full-screen */}
+      {zoom && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Ampliación: ${zoom.caption}`}
+          onClick={() => setZoom(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 10001,
+            background: "rgba(2, 6, 23, 0.9)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14,
+            padding: "clamp(12px, 4vw, 40px)",
+            cursor: "zoom-out",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={zoom.src}
+            alt={zoom.caption}
+            onClick={(event) => event.stopPropagation()}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "82vh",
+              objectFit: "contain",
+              borderRadius: 10,
+              boxShadow: "0 24px 60px -12px rgba(0,0,0,0.6)",
+            }}
+          />
+          <div style={{ display: "flex", alignItems: "center", gap: 12, cursor: "default" }}>
+            <span style={{ color: "#e2e8f0", fontSize: 14, fontWeight: 600, textAlign: "center", maxWidth: "78vw" }}>
+              {zoom.caption}
+            </span>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setZoom(null);
+              }}
+              title="Cerrar (Esc)"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 32,
+                height: 32,
+                borderRadius: 8,
+                border: "1px solid rgba(255,255,255,0.25)",
+                background: "rgba(15,23,42,0.8)",
+                color: "#f8fafc",
+                cursor: "pointer",
+                fontSize: 15,
+              }}
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
     </div>
