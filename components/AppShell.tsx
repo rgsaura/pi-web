@@ -15,6 +15,8 @@ import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
 import { ActivityView } from "./ActivityView";
+import { TimelineView } from "./TimelineView";
+import { AgentsInspectorView } from "./AgentsInspectorView";
 import { WorkspacesView } from "./WorkspacesView";
 import { VoiceModal } from "./VoiceModal";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
@@ -228,10 +230,28 @@ export function AppShell() {
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
-  const [proposalsViewOpen, setProposalsViewOpen] = useState(false);
-  const [encargosViewOpen, setEncargosViewOpen] = useState(false);
-  const [activityViewOpen, setActivityViewOpen] = useState(false);
-  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(false);
+  const initialView = searchParams.get("view");
+  const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
+  const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
+  const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
+  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
+  const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
+  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
+
+  const closeAllOverlayViews = useCallback(() => {
+    setProposalsViewOpen(false);
+    setEncargosViewOpen(false);
+    setActivityViewOpen(false);
+    setWorkspacesViewOpen(false);
+    setTimelineViewOpen(false);
+    setAgentsInspectorOpen(false);
+  }, []);
+
+  const openOverlay = useCallback((setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+    closeAllOverlayViews();
+    setter(true);
+    if (isMobile) setSidebarOpen(false);
+  }, [closeAllOverlayViews, isMobile]);
   const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
@@ -1435,10 +1455,12 @@ export function AppShell() {
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
         onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
-        onOpenProposalsView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setProposalsViewOpen(true); }}
-        onOpenEncargosView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setProposalsViewOpen(false); setEncargosViewOpen(true); }}
-        onOpenActivityView={() => { setProposalsViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setActivityViewOpen(true); }}
-        onOpenWorkspacesView={() => { setProposalsViewOpen(false); setActivityViewOpen(false); setEncargosViewOpen(false); setWorkspacesViewOpen(true); }}
+        onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
+        onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
+        onOpenActivityView={() => openOverlay(setActivityViewOpen)}
+        onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
+        onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
+        onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -2540,6 +2562,21 @@ export function AppShell() {
               onClose={() => setWorkspacesViewOpen(false)}
               onStartInCwd={(cwd) => sidebarControlRef.current?.startNewSessionIn({ cwd })}
             />
+          ) : timelineViewOpen ? (
+            <TimelineView
+              onClose={() => setTimelineViewOpen(false)}
+              onSelectSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setTimelineViewOpen(false);
+              }}
+            />
+          ) : agentsInspectorOpen ? (
+            <AgentsInspectorView onClose={() => setAgentsInspectorOpen(false)} />
           ) : proposalsViewOpen ? (
             <ExoProposalsView
               onClose={() => setProposalsViewOpen(false)}
@@ -2662,16 +2699,98 @@ export function AppShell() {
                  {translate("workspace.selectSession")}
               </div>
             ) : (
-              <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "flex-start", gap: 8, userSelect: "none", pointerEvents: "none" }}>
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7, flexShrink: 0 }}>
-                  <line x1="20" y1="12" x2="4" y2="12" /><polyline points="10 6 4 12 10 18" />
-                </svg>
-                <div>
-                   <div style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>{translate("workspace.getStarted")}</div>
-                  <div style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.8 }}>
-                     <span style={{ color: "var(--text-dim)", marginRight: 6 }}>1.</span>{translate("workspace.selectProject")}<br />
-                     <span style={{ color: "var(--text-dim)", marginRight: 6 }}>2.</span>{translate("workspace.addModels")}
+              <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, padding: 24, textAlign: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                  <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)" }}>ExoHuman UI</div>
+                  <div style={{ fontSize: 13, color: "var(--text-muted)", maxWidth: 360 }}>
+                    Asistente personal, control de agentes y actividades de Rodrigo García
                   </div>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10, maxWidth: 440 }}>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setTimelineViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>🗓️</span>
+                    <span>Línea de Tiempo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setActivityViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>⚡</span>
+                    <span>Actividad en Vivo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setAgentsInspectorOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>🤖</span>
+                    <span>Inspector de Agentes</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setEncargosViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>📦</span>
+                    <span>Encargos</span>
+                  </button>
                 </div>
               </div>
             )
