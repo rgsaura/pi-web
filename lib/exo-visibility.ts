@@ -4,7 +4,10 @@
  * Pure functions over the captured snapshot; the display never changes it.
  *
  * A proposal is relevant only when every rule holds:
- *   1. Its decision is not resolved: `rejected` and `responded` are hidden.
+ *   1. Its decision is not resolved: `rejected`, `responded`, `resolved`,
+ *      `accepted` and `expired` are hidden. (`accepted` is how the local
+ *      ledger's resolved decisions surface in the snapshot; `discard` or a
+ *      `selectedOption` mark a decided item the same way.)
  *   2. It is not stale: when `updatedAt` parses and a reference instant is
  *      available (the snapshot's `capturedAt`, or now), the update must be
  *      younger than `maxAgeDays`. Older items are antigua and hidden.
