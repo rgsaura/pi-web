@@ -15,6 +15,8 @@ import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
 import { ActivityView } from "./ActivityView";
+import { TimelineView } from "./TimelineView";
+import { AgentsInspectorView } from "./AgentsInspectorView";
 import { WorkspacesView } from "./WorkspacesView";
 import { VoiceModal } from "./VoiceModal";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
@@ -232,6 +234,17 @@ export function AppShell() {
   const [encargosViewOpen, setEncargosViewOpen] = useState(false);
   const [activityViewOpen, setActivityViewOpen] = useState(false);
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(false);
+  const [timelineViewOpen, setTimelineViewOpen] = useState(false);
+  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(false);
+
+  const closeAllOverlayViews = () => {
+    setProposalsViewOpen(false);
+    setEncargosViewOpen(false);
+    setActivityViewOpen(false);
+    setWorkspacesViewOpen(false);
+    setTimelineViewOpen(false);
+    setAgentsInspectorOpen(false);
+  };
   const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
@@ -1435,10 +1448,12 @@ export function AppShell() {
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
         onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
-        onOpenProposalsView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setProposalsViewOpen(true); }}
-        onOpenEncargosView={() => { setActivityViewOpen(false); setWorkspacesViewOpen(false); setProposalsViewOpen(false); setEncargosViewOpen(true); }}
-        onOpenActivityView={() => { setProposalsViewOpen(false); setWorkspacesViewOpen(false); setEncargosViewOpen(false); setActivityViewOpen(true); }}
-        onOpenWorkspacesView={() => { setProposalsViewOpen(false); setActivityViewOpen(false); setEncargosViewOpen(false); setWorkspacesViewOpen(true); }}
+        onOpenProposalsView={() => { closeAllOverlayViews(); setProposalsViewOpen(true); }}
+        onOpenEncargosView={() => { closeAllOverlayViews(); setEncargosViewOpen(true); }}
+        onOpenActivityView={() => { closeAllOverlayViews(); setActivityViewOpen(true); }}
+        onOpenWorkspacesView={() => { closeAllOverlayViews(); setWorkspacesViewOpen(true); }}
+        onOpenTimelineView={() => { closeAllOverlayViews(); setTimelineViewOpen(true); }}
+        onOpenAgentsInspector={() => { closeAllOverlayViews(); setAgentsInspectorOpen(true); }}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -2540,6 +2555,21 @@ export function AppShell() {
               onClose={() => setWorkspacesViewOpen(false)}
               onStartInCwd={(cwd) => sidebarControlRef.current?.startNewSessionIn({ cwd })}
             />
+          ) : timelineViewOpen ? (
+            <TimelineView
+              onClose={() => setTimelineViewOpen(false)}
+              onSelectSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setTimelineViewOpen(false);
+              }}
+            />
+          ) : agentsInspectorOpen ? (
+            <AgentsInspectorView onClose={() => setAgentsInspectorOpen(false)} />
           ) : proposalsViewOpen ? (
             <ExoProposalsView
               onClose={() => setProposalsViewOpen(false)}

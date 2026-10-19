@@ -250,6 +250,10 @@ interface Props {
   onOpenActivityView?: () => void;
   /** Opens the Workspaces view (grouped by category, live status). */
   onOpenWorkspacesView?: () => void;
+  /** Opens the Timeline view (past/today/next reconstruction). */
+  onOpenTimelineView?: () => void;
+  /** Opens the Agents inspector (prompts, skills, tools per agent). */
+  onOpenAgentsInspector?: () => void;
   /** Opens the live voice interface modal. */
   onOpenVoiceModal?: () => void;
 }
@@ -504,7 +508,7 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenVoiceModal }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenAgentsInspector, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -2753,7 +2757,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
 
       {/* System entries at top of sessions panel: live Activity map,
           Workspaces and the Decisiones inbox, in one strip of the same look. */}
-      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView) && (
+      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView || onOpenTimelineView || onOpenAgentsInspector) && (
         <div style={{ flexShrink: 0, padding: "8px 10px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6, background: "color-mix(in srgb, var(--bg-panel) 60%, var(--bg))" }}>
           {onOpenActivityView && (
             <button
@@ -2822,6 +2826,90 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", animation: "pulse 1.6s ease-in-out infinite" }} aria-hidden="true" />
                 en vivo
               </span>
+            </button>
+          )}
+          {onOpenTimelineView && (
+            <button
+              type="button"
+              onClick={onOpenTimelineView}
+              title="Línea de tiempo: pasado, hoy y próximo"
+              aria-label="Línea de tiempo"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🗓️</span>
+                <span>Línea de tiempo</span>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>pasado → próximo</span>
+            </button>
+          )}
+          {onOpenAgentsInspector && (
+            <button
+              type="button"
+              onClick={onOpenAgentsInspector}
+              title="Inspector de agentes: system prompts, skills y herramientas"
+              aria-label="Agentes"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🤖</span>
+                <span>Agentes</span>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>prompts · skills</span>
             </button>
           )}
           {onOpenWorkspacesView && (
