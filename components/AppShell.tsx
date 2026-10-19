@@ -2116,6 +2116,12 @@ export function AppShell() {
           box-shadow: none;
         }
       }
+      /* Desktop: mientras la hidratación decide, el backdrop pendiente jamás
+         tapa la pantalla (bug: sidebar invisible hasta hidratar). */
+      .sidebar-overlay-backdrop.sidebar-mobile-pending {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
     `}</style>
     <div style={{
       display: "flex",
