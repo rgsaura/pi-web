@@ -34,6 +34,8 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
   const [loading, setLoading] = useState(false);
 
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [sortMode, setSortMode] = useState<"recent" | "cpu" | "name">("recent");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [governorMode, setGovernorMode] = useState<string>("turbo");
   const [togglingUnit, setTogglingUnit] = useState<string | null>(null);
 
@@ -117,6 +119,51 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
     () => (snapshot?.herdrAgents ?? []).filter((agent) => agent.status === "working"),
     [snapshot],
   );
+
+  const filteredPiSessions = useMemo(() => {
+    let list = snapshot?.piSessions ?? [];
+
+    if (categoryFilter !== "all") {
+      list = list.filter((s) => {
+        const cat = (s.category || "").toLowerCase();
+        if (categoryFilter === "working") {
+          return s.pid !== "-" || s.currentAction?.startsWith("Ejecutando");
+        }
+        if (categoryFilter === "ui") return cat.includes("ui") || cat.includes("frontend");
+        if (categoryFilter === "facesearch") return cat.includes("facesearch");
+        if (categoryFilter === "comms") return cat.includes("comunicac") || cat.includes("comms");
+        if (categoryFilter === "infra") return cat.includes("infra") || cat.includes("sistema");
+        if (categoryFilter === "rutinas") return cat.includes("rutina");
+        if (categoryFilter === "planes") return cat.includes("planes") || cat.includes("agenda");
+        return true;
+      });
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((s) => {
+        const t = (s.title || "").toLowerCase();
+        const c = (s.cwd || "").toLowerCase();
+        const a = (s.currentAction || "").toLowerCase();
+        const id = (s.sessionId || "").toLowerCase();
+        const enc = (s.encargoId || "").toLowerCase();
+        return t.includes(q) || c.includes(q) || a.includes(q) || id.includes(q) || enc.includes(q);
+      });
+    }
+
+    return [...list].sort((a, b) => {
+      if (sortMode === "cpu") {
+        const cpuA = parseFloat(a.cpu || "0") || 0;
+        const cpuB = parseFloat(b.cpu || "0") || 0;
+        return cpuB - cpuA;
+      }
+      if (sortMode === "name") {
+        return (a.title || "").localeCompare(b.title || "");
+      }
+      // default: recent
+      return (b.lastActiveMs || 0) - (a.lastActiveMs || 0);
+    });
+  }, [snapshot?.piSessions, categoryFilter, searchQuery, sortMode]);
 
   const sectionTitle: React.CSSProperties = {
     fontSize: 11,
@@ -374,10 +421,17 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
 
           {/* Sesiones Pi Activas */}
           <section aria-label="Sesiones Pi activas">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-              <h2 style={{ ...sectionTitle, margin: 0 }}>
-                Sesiones Pi en Vivo · {snapshot ? `${snapshot.piSessions.length} activas` : "…"}
-              </h2>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <h2 style={{ ...sectionTitle, margin: 0 }}>
+                  Sesiones Pi en Vivo · {snapshot ? `${filteredPiSessions.length} activas` : "…"}
+                </h2>
+                {snapshot && filteredPiSessions.length !== snapshot.piSessions.length && (
+                  <span style={{ fontSize: 11, color: "var(--accent)", fontWeight: 600 }}>
+                    ({snapshot.piSessions.length} total)
+                  </span>
+                )}
+              </div>
               {snapshot && snapshot.piSessions.length > 0 && (
                 <span style={{ fontSize: 11, color: "var(--text-dim)" }}>
                   Detalle del encargo y contexto en curso
@@ -385,14 +439,139 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
               )}
             </div>
 
-            {snapshot && snapshot.piSessions.length === 0 && (
+            {/* Filtros granulares y ordenación para Sesiones Activas */}
+            {snapshot && snapshot.piSessions.length > 0 && (
+              <div style={{ ...card, padding: "10px 14px", marginBottom: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                {/* Search & Reset */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                  <div style={{ position: "relative", flex: 1 }}>
+                    <input
+                      type="search"
+                      placeholder="Buscar por encargo, título o ruta..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "6px 10px 6px 28px",
+                        borderRadius: 6,
+                        border: "1px solid var(--border)",
+                        background: "var(--bg)",
+                        color: "var(--text)",
+                        fontSize: 12,
+                        outline: "none",
+                      }}
+                    />
+                    <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", fontSize: 12, color: "var(--text-dim)" }}>
+                      🔍
+                    </span>
+                  </div>
+
+                  {(categoryFilter !== "all" || sortMode !== "recent" || searchQuery) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCategoryFilter("all");
+                        setSortMode("recent");
+                        setSearchQuery("");
+                      }}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "var(--accent)",
+                        fontSize: 11.5,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Restablecer filtros
+                    </button>
+                  )}
+                </div>
+
+                {/* Category Pills */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {[
+                    { key: "all", label: "Todas" },
+                    { key: "working", label: "⚡ Trabajando" },
+                    { key: "ui", label: "🎨 UI" },
+                    { key: "facesearch", label: "🔍 FaceSearch" },
+                    { key: "comms", label: "💬 Comms" },
+                    { key: "infra", label: "⚙️ Infra" },
+                    { key: "rutinas", label: "⏱️ Rutinas" },
+                    { key: "planes", label: "🗓️ Planes" },
+                  ].map((c) => {
+                    const isSelected = categoryFilter === c.key;
+                    return (
+                      <button
+                        key={c.key}
+                        type="button"
+                        onClick={() => setCategoryFilter(c.key)}
+                        style={{
+                          padding: "3px 9px",
+                          borderRadius: 6,
+                          fontSize: 11,
+                          fontWeight: isSelected ? 650 : 500,
+                          border: `1px solid ${isSelected ? "var(--accent)" : "var(--border)"}`,
+                          background: isSelected ? "var(--bg-selected)" : "var(--bg)",
+                          color: isSelected ? "var(--accent)" : "var(--text-muted)",
+                          cursor: "pointer",
+                          transition: "all 0.12s ease",
+                        }}
+                      >
+                        {c.label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Sort Mode Row */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, paddingTop: 6, borderTop: "1px dashed var(--border)" }}>
+                  <span style={{ fontSize: 11, color: "var(--text-dim)" }}>
+                    Ordenar sesiones:
+                  </span>
+                  <div style={{ display: "inline-flex", gap: 4 }}>
+                    {[
+                      { key: "recent", label: "Más reciente" },
+                      { key: "cpu", label: "Mayor CPU" },
+                      { key: "name", label: "Nombre" },
+                    ].map((s) => {
+                      const isSelected = sortMode === s.key;
+                      return (
+                        <button
+                          key={s.key}
+                          type="button"
+                          onClick={() => setSortMode(s.key as "recent" | "cpu" | "name")}
+                          style={{
+                            padding: "2px 8px",
+                            borderRadius: 4,
+                            fontSize: 10.5,
+                            fontWeight: isSelected ? 650 : 500,
+                            border: "none",
+                            background: isSelected ? "var(--accent)" : "transparent",
+                            color: isSelected ? "#ffffff" : "var(--text-muted)",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {s.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {snapshot && filteredPiSessions.length === 0 && (
               <div style={{ ...card, color: "var(--text-dim)", fontSize: 13, textAlign: "center", padding: "24px 16px" }}>
-                Sin sesiones Pi trabajando activamente en este instante.
+                {snapshot.piSessions.length === 0
+                  ? "Sin sesiones Pi trabajando activamente en este instante."
+                  : "Ninguna sesión activa coincide con los filtros seleccionados."}
               </div>
             )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {(snapshot?.piSessions ?? []).map((session, idx) => {
+              {filteredPiSessions.map((session, idx) => {
                 const { filled, total } = cpuCells(session.cpu);
                 const hasSessionId = Boolean(session.sessionId && session.sessionId.startsWith("01a1"));
                 const categoryColor = session.color || "var(--accent)";

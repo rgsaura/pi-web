@@ -160,6 +160,8 @@ export function loadShowIgnoredFiles(storage: StorageLike | null = getBrowserSto
 }
 
 const ACTIVE_NOW_STORAGE_KEY = "pi-web:sidebar-sessions-active-now";
+const SESSIONS_CATEGORY_FILTER_STORAGE_KEY = "pi-web:sidebar-sessions-category-filter";
+const SESSIONS_SORT_MODE_STORAGE_KEY = "pi-web:sidebar-sessions-sort-mode";
 
 /** Whether the sessions tree starts with the "activas ahora" filter on. */
 export function loadActiveNowOnly(storage: StorageLike | null = getBrowserStorage()): boolean {
@@ -178,6 +180,48 @@ export function saveActiveNowOnly(
   if (!storage) return;
   try {
     storage.setItem(ACTIVE_NOW_STORAGE_KEY, String(active));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+export function loadSessionsCategoryFilter(storage: StorageLike | null = getBrowserStorage()): string {
+  if (!storage) return "all";
+  try {
+    return storage.getItem(SESSIONS_CATEGORY_FILTER_STORAGE_KEY) || "all";
+  } catch {
+    return "all";
+  }
+}
+
+export function saveSessionsCategoryFilter(
+  category: string,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SESSIONS_CATEGORY_FILTER_STORAGE_KEY, category);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+export function loadSessionsSortMode(storage: StorageLike | null = getBrowserStorage()): string {
+  if (!storage) return "recent";
+  try {
+    return storage.getItem(SESSIONS_SORT_MODE_STORAGE_KEY) || "recent";
+  } catch {
+    return "recent";
+  }
+}
+
+export function saveSessionsSortMode(
+  mode: string,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SESSIONS_SORT_MODE_STORAGE_KEY, mode);
   } catch {
     // Persistence is best-effort.
   }

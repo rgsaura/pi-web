@@ -187,13 +187,16 @@ export function parsePiSessions(psOutput: string): ActivityPiSession[] {
 
     const parts = line.trim().split(/\s+/);
     if (parts.length < 4) continue;
-    const pid = parts[0];
-    const cpu = parts[1];
-    const comm = parts[2];
-    const args = parts.slice(3).join(" ");
+    // Check if output is standard `ps aux` (where parts[0] is USER, parts[1] is PID, parts[2] is %CPU)
+    // or `ps -eo pid,%cpu,comm,args` (where parts[0] is PID, parts[1] is %CPU, parts[2] is COMM)
+    const isAux = parts[0] !== "PID" && isNaN(Number(parts[0])) && !isNaN(Number(parts[1]));
+    const pid = isAux ? parts[1] : parts[0];
+    const cpu = isAux ? parts[2] : parts[1];
+    const comm = isAux ? parts[10] || parts[parts.length - 1] : parts[2];
+    const args = isAux ? parts.slice(10).join(" ") : parts.slice(3).join(" ");
 
     const isPiProcess = comm === "pi" ||
-      /(?:^|\s)(?:node\s+.*bin\/pi|pi)(?:\s|$)/.test(args) ||
+      /(?:^|\s)(?:node\s+.*bin\/pi|pi|\S*\/pi)(?:\s|$)/.test(args) ||
       /\/opt\/exohuman\/.*\/node\s+.*pi/.test(args);
 
     if (!isPiProcess) continue;
@@ -211,7 +214,7 @@ export function parsePiSessions(psOutput: string): ActivityPiSession[] {
     rows.push({
       pid,
       cpu,
-      profile: profile || "asistente",
+      profile: profile || "default",
       sessionId: sessionId.slice(0, 30) || `sesión #${pid}`,
     });
   }
