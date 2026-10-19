@@ -232,6 +232,7 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
         let lastAssistant = "";
         let sessionInfoName = "";
 
+        let isFinished = false;
         for (const line of lines) {
           try {
             const p = JSON.parse(line);
@@ -245,14 +246,22 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
                 const t = (p.message.content || []).find((c: any) => c.type === "text");
                 if (t?.text) lastAssistant = t.text.trim();
                 const tool = (p.message.content || []).find((c: any) => c.type === "toolCall");
-                if (tool) lastTool = tool.name;
+                if (tool) {
+                  lastTool = tool.name;
+                  isFinished = false;
+                }
+                const stopReason = p.stopReason || p.message?.stopReason;
+                if ((stopReason === "stop" || stopReason === "endTurn") && !tool) {
+                  isFinished = true;
+                }
               }
             }
           } catch {}
         }
 
-        if (!id) continue;
+        if (!id || isFinished) continue;
 
+        
         let encargoId = "";
         let title = "";
         let category = "General";
