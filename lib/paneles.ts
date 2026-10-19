@@ -1,5 +1,5 @@
 /**
- * Server-side reader of the EXO paneles root (~/srv/paneles), the same
+ * Server-side reader of the EXO paneles root (~/.local/share/exohuman/paneles), the same
  * directories `rg-panel new` creates: <AAAA-MM-DD>-<slug>/ with index.html +
  * panel.json (+ assets). The ExoHuman UI panel module lists and serves them
  * so deliverables render inside the app with no external port (:30150 stays
@@ -20,6 +20,8 @@ export interface PanelMeta {
   fecha: string;
   resumen: string;
   estado: string;
+  /** Pi session ids registered in panel.json (rg-panel new/link write PI_SESSION_ID here). */
+  sessions: string[];
   /** Last modification of the panel directory, ISO ("" when unknown). */
   mtime: string;
 }
@@ -52,12 +54,38 @@ export const PANEL_MIME: Record<string, string> = {
 export function panelesRoot(): string {
   return process.env.PANELES_ROOT
     ? process.env.PANELES_ROOT
-    : join(homedir(), "srv", "paneles");
+    : join(homedir(), ".local", "share", "exohuman", "paneles");
 }
 
 /** A panel directory name is dated; templates (_plantillas) and dotfiles are internal. */
 export function isPanelDirName(name: string): boolean {
   return /^\d{4}-/.test(name);
+}
+
+/** Session ids a panel.json may register: same shape rg-panel accepts (8–64
+ * alphanumeric/dash), deduped and capped at the 20 rg-panel link keeps. */
+export function parsePanelSessionIds(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const ids: string[] = [];
+  for (const entry of raw) {
+    const id = typeof entry === "string" ? entry.trim() : "";
+    if (!/^[0-9a-zA-Z-]{8,64}$/.test(id) || ids.includes(id)) continue;
+    ids.push(id);
+    if (ids.length >= 20) break;
+  }
+  return ids;
+}
+
+/** Registered ids out of a raw parsed panel.json value: the object's
+ *  `sessions` array; anything else (a bare array, null, broken text)
+ *  registers nothing. Shared by the list and the sessions routes so both
+ *  read the panel.json the same way. */
+export function registeredSessionIds(raw: unknown): string[] {
+  return parsePanelSessionIds(
+    raw && typeof raw === "object" && !Array.isArray(raw)
+      ? (raw as Record<string, unknown>).sessions
+      : null,
+  );
 }
 
 /** Parse one panel.json defensively; every field falls back to the directory. */
@@ -74,6 +102,7 @@ export function parsePanelMeta(slug: string, raw: unknown): PanelMeta {
     fecha: str(meta.fecha) ?? slug.slice(0, 10),
     resumen: str(meta.resumen) ?? "",
     estado: str(meta.estado) ?? "activo",
+    sessions: registeredSessionIds(meta),
     mtime: "",
   };
 }

@@ -2,13 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePaneles } from "@/hooks/usePaneles";
+import { usePanelSessions } from "@/hooks/usePanelSessions";
 import { copyText } from "@/lib/clipboard";
 import type { PanelMeta } from "@/lib/paneles";
+import type { PanelSessionLink } from "@/lib/paneles-sessions";
 
 export interface PanelesViewProps {
   onClose?: () => void;
   /** `?panel=<dir>` deep link: the panel to open once the list loads. */
   initialPanelDir?: string | null;
+  /** Open one of the panel's related Pi sessions (leaves this view). */
+  onOpenSession?: (sessionId: string) => void;
 }
 
 type Filter = "activos" | "archivados" | "todos";
@@ -28,6 +32,9 @@ const TIPO_META: Record<string, { label: string; icon: string; bg: string; color
 };
 
 const TIPO_ORDER = Object.keys(TIPO_META);
+
+/** Session rows the dashboard card lists before its "+N más". */
+const CARD_SESSION_ROWS = 5;
 
 function tipoMeta(tipo: string) {
   return TIPO_META[tipo] ?? TIPO_META.otro;
@@ -51,6 +58,439 @@ function formatDate(fecha: string): string {
   }
 }
 
+function formatWhen(iso: string): string {
+  if (!iso) return "";
+  try {
+    return new Date(iso).toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+  } catch {
+    return "";
+  }
+}
+
+/** Why this session is related, as the chip/row tooltip tells it. */
+function sessionTooltip(link: PanelSessionLink): string {
+  const why =
+    link.source === "panel.json"
+      ? "vinculada en panel.json (rg-panel)"
+      : "menciona el slug del panel";
+  const when = formatWhen(link.modified);
+  const snippet = link.snippet
+    ? `\n…${link.snippet.before}${link.snippet.match}${link.snippet.after}…`
+    : "";
+  return `${link.title}\n${why}${when ? ` · ${when}` : ""}${snippet}`;
+}
+
+/** A related session as a one-line chip (visor strip). Plain link when the
+ * shell passes no onOpenSession, so middle-click/new-tab still work. */
+function SessionChip({
+  link,
+  onOpenSession,
+}: {
+  link: PanelSessionLink;
+  onOpenSession?: (sessionId: string) => void;
+}) {
+  const registered = link.source === "panel.json";
+  return (
+    <a
+      href={`/?session=${link.id}`}
+      onClick={(e) => {
+        if (onOpenSession) {
+          e.preventDefault();
+          onOpenSession(link.id);
+        }
+      }}
+      title={sessionTooltip(link)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        padding: "5px 11px",
+        minHeight: 30,
+        borderRadius: 999,
+        border: "1px solid var(--border)",
+        background: "var(--bg)",
+        color: "var(--text)",
+        fontSize: 12,
+        fontWeight: 600,
+        whiteSpace: "nowrap",
+        textDecoration: "none",
+        flexShrink: 0,
+        transition: "border-color 0.12s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--accent)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border)";
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          background: registered ? "var(--accent)" : "var(--text-dim, #888)",
+          boxShadow: registered ? "0 0 5px var(--accent)" : "none",
+          flexShrink: 0,
+        }}
+      />
+      <span style={{ maxWidth: 190, overflow: "hidden", textOverflow: "ellipsis" }}>{link.title}</span>
+      <span aria-hidden="true" style={{ color: "var(--accent)", fontSize: 11, fontWeight: 700 }}>
+        ↗
+      </span>
+    </a>
+  );
+}
+
+/** A related session as a full-width row (dashboard card expansion): title,
+ * source badge and, for mentions, the snippet that proves the link. */
+function SessionRow({
+  link,
+  onOpenSession,
+}: {
+  link: PanelSessionLink;
+  onOpenSession?: (sessionId: string) => void;
+}) {
+  const registered = link.source === "panel.json";
+  return (
+    <a
+      href={`/?session=${link.id}`}
+      onClick={(e) => {
+        if (onOpenSession) {
+          e.preventDefault();
+          onOpenSession(link.id);
+        }
+      }}
+      title={sessionTooltip(link)}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+        padding: "8px 10px",
+        minHeight: 42,
+        borderRadius: 8,
+        border: "1px solid var(--border)",
+        background: "var(--bg)",
+        textDecoration: "none",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--accent)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border)";
+      }}
+    >
+      <span style={{ display: "flex", alignItems: "center", gap: 7, width: "100%", minWidth: 0 }}>
+        <span
+          aria-hidden="true"
+          style={{
+            width: 7,
+            height: 7,
+            borderRadius: "50%",
+            background: registered ? "var(--accent)" : "var(--text-dim, #888)",
+            boxShadow: registered ? "0 0 5px var(--accent)" : "none",
+            flexShrink: 0,
+          }}
+        />
+        <span
+          style={{
+            fontSize: 12.5,
+            fontWeight: 600,
+            color: "var(--text)",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            flex: 1,
+            minWidth: 0,
+          }}
+        >
+          {link.title}
+        </span>
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 700,
+            padding: "1px 6px",
+            borderRadius: 5,
+            background: registered ? "color-mix(in srgb, var(--accent) 13%, var(--bg-panel))" : "var(--bg-selected)",
+            color: registered ? "var(--accent)" : "var(--text-muted)",
+            flexShrink: 0,
+            letterSpacing: "0.03em",
+          }}
+        >
+          {registered ? "panel.json" : "mención"}
+        </span>
+        <span style={{ fontSize: 11.5, fontWeight: 700, color: "var(--accent)", flexShrink: 0 }}>Abrir ↗</span>
+      </span>
+      {link.snippet ? (
+        <span
+          style={{
+            fontSize: 11,
+            color: "var(--text-dim, #888)",
+            fontFamily: "var(--font-mono)",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            width: "100%",
+          }}
+        >
+          …{link.snippet.before}
+          <span style={{ color: "var(--text-muted)", fontWeight: 700 }}>{link.snippet.match}</span>
+          {link.snippet.after}…
+        </span>
+      ) : (
+        <span style={{ fontSize: 11, color: "var(--text-dim, #888)" }}>{formatWhen(link.modified)}</span>
+      )}
+    </a>
+  );
+}
+
+/** The visor's related-sessions rail: one horizontal, touch-scrollable strip
+ * under the header. Hidden while empty so a panel without sessions keeps its
+ * full canvas. */
+function PanelSessionsStrip({
+  slug,
+  onOpenSession,
+}: {
+  slug: string;
+  onOpenSession?: (sessionId: string) => void;
+}) {
+  const { sessions, missing, truncated, loading, error } = usePanelSessions(slug);
+  if (!loading && sessions.length === 0 && missing.length === 0) return null;
+  if (error && sessions.length === 0) return null;
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "8px 16px calc(8px + env(safe-area-inset-left, 0px))",
+        borderBottom: "1px solid var(--border)",
+        background: "var(--bg-panel)",
+        overflowX: "auto",
+        overflowY: "hidden",
+        flexShrink: 0,
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      <span
+        style={{
+          fontSize: 10.5,
+          fontWeight: 700,
+          color: "var(--text-muted)",
+          whiteSpace: "nowrap",
+          textTransform: "uppercase",
+          letterSpacing: "0.06em",
+          flexShrink: 0,
+        }}
+      >
+        Sesiones{loading && sessions.length === 0 ? "…" : ` · ${sessions.length}`}
+      </span>
+      {sessions.map((link) => (
+        <SessionChip key={link.id} link={link} onOpenSession={onOpenSession} />
+      ))}
+      {truncated ? (
+        <span
+          title="El escaneo cubre los transcripts más recientes; puede haber más sesiones"
+          style={{ fontSize: 11, color: "var(--text-dim, #888)", whiteSpace: "nowrap", flexShrink: 0 }}
+        >
+          + más…
+        </span>
+      ) : null}
+      {missing.length > 0 ? (
+        <span
+          title={`Registradas en panel.json pero no encontradas: ${missing.join(", ")}`}
+          style={{ fontSize: 11, color: "var(--text-dim, #888)", whiteSpace: "nowrap", flexShrink: 0 }}
+        >
+          · {missing.length} sin archivo
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+/** One dashboard card: the panel's own tile plus an on-demand expansion with
+ * its related sessions (panel.json registrations and transcript mentions),
+ * each openable in one tap. */
+function PanelCard({
+  panel,
+  onOpen,
+  onOpenSession,
+}: {
+  panel: PanelMeta;
+  onOpen: () => void;
+  onOpenSession?: (sessionId: string) => void;
+}) {
+  const [sessionsOpen, setSessionsOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  // Fetch only once expanded; the module cache keeps revisits free.
+  const { sessions, missing, loading, error } = usePanelSessions(sessionsOpen ? panel.slug : null);
+
+  const tipo = tipoMeta(panel.tipo);
+  const archived = panel.estado === "archivado";
+  const shortSlug = panel.slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+  const count = sessions.length || panel.sessions.length;
+
+  const openCard = useCallback(() => {
+    if (!sessionsOpen) onOpen();
+  }, [onOpen, sessionsOpen]);
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={openCard}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          if (e.target === e.currentTarget) {
+            e.preventDefault();
+            openCard();
+          }
+        }
+      }}
+      title={archived ? `${panel.titulo} (archivado)` : panel.titulo}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 6,
+        padding: "14px 16px",
+        borderRadius: 12,
+        border: "1px solid var(--border)",
+        background: "var(--bg-panel)",
+        color: "var(--text)",
+        cursor: "pointer",
+        textAlign: "left",
+        opacity: archived ? 0.62 : 1,
+        transition: "border-color 0.12s, transform 0.12s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--accent)";
+        e.currentTarget.style.transform = "translateY(-1px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border)";
+        e.currentTarget.style.transform = "none";
+      }}
+    >
+      <span style={{ display: "flex", alignItems: "center", gap: 6, width: "100%", justifyContent: "space-between" }}>
+        <span
+          style={{
+            fontSize: 10.5,
+            fontWeight: 700,
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            padding: "2px 8px",
+            borderRadius: 6,
+            background: tipo.bg,
+            color: tipo.color,
+          }}
+        >
+          {panel.tipo}
+        </span>
+        <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{formatDate(panel.fecha)}</span>
+      </span>
+      <span style={{ fontSize: 14.5, fontWeight: 650, lineHeight: 1.35, overflowWrap: "anywhere" }}>
+        {panel.titulo}
+      </span>
+      {panel.resumen ? (
+        <span style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.45, overflowWrap: "anywhere" }}>
+          {panel.resumen}
+        </span>
+      ) : null}
+      {archived ? (
+        <span style={{ fontSize: 10.5, color: "var(--text-dim, #888)", fontWeight: 600 }}>archivado</span>
+      ) : null}
+
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setSessionsOpen((open) => !open);
+        }}
+        aria-expanded={sessionsOpen}
+        title="Sesiones Pi relacionadas: vinculadas en panel.json y menciones del slug"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          marginTop: 2,
+          padding: "4px 10px",
+          minHeight: 28,
+          borderRadius: 999,
+          border: `1px solid ${sessionsOpen ? "var(--accent)" : "var(--border)"}`,
+          background: sessionsOpen ? "color-mix(in srgb, var(--accent) 10%, var(--bg-panel))" : "var(--bg-panel)",
+          color: sessionsOpen ? "var(--accent)" : "var(--text-muted)",
+          fontSize: 11.5,
+          fontWeight: 650,
+          cursor: "pointer",
+          transition: "border-color 0.12s",
+        }}
+      >
+        <span aria-hidden="true">💬</span>
+        <span>Sesiones{count > 0 ? ` · ${count}` : ""}</span>
+        <span aria-hidden="true" style={{ fontSize: 9 }}>{sessionsOpen ? "▲" : "▼"}</span>
+      </button>
+
+      {sessionsOpen ? (
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: 6, width: "100%" }}
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          {loading && sessions.length === 0 ? (
+            <span style={{ fontSize: 12, color: "var(--text-muted)", fontStyle: "italic" }}>
+              Buscando sesiones relacionadas…
+            </span>
+          ) : error && sessions.length === 0 ? (
+            <span style={{ fontSize: 12, color: "#dc2626" }}>{error}</span>
+          ) : sessions.length === 0 && missing.length === 0 ? (
+            <span style={{ fontSize: 12, color: "var(--text-muted)" }}>
+              Sin sesiones vinculadas todavía. Vincula una con{" "}
+              <code style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>rg-panel link {shortSlug}</code>.
+            </span>
+          ) : (
+            <>
+              {sessions.slice(0, showAll ? sessions.length : CARD_SESSION_ROWS).map((link) => (
+                <SessionRow key={link.id} link={link} onOpenSession={onOpenSession} />
+              ))}
+              {sessions.length > CARD_SESSION_ROWS && !showAll ? (
+                <button
+                  type="button"
+                  onClick={() => setShowAll(true)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "var(--accent)",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    padding: "4px 2px",
+                    textAlign: "left",
+                  }}
+                >
+                  + {sessions.length - CARD_SESSION_ROWS} más
+                </button>
+              ) : null}
+              {missing.length > 0 ? (
+                <span
+                  title={`Registradas en panel.json pero no encontradas: ${missing.join(", ")}`}
+                  style={{ fontSize: 11, color: "var(--text-dim, #888)" }}
+                >
+                  · {missing.length} registrada{missing.length === 1 ? "" : "s"} sin archivo
+                </span>
+              ) : null}
+            </>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 /** Keep `?view=paneles&panel=<dir>` shareable without re-triggering navigation. */
 function syncPanelParam(dir: string | null) {
   try {
@@ -63,7 +503,7 @@ function syncPanelParam(dir: string | null) {
   }
 }
 
-export function PanelesView({ onClose, initialPanelDir }: PanelesViewProps) {
+export function PanelesView({ onClose, initialPanelDir, onOpenSession }: PanelesViewProps) {
   const { paneles, activeCount, loading, error, refresh } = usePaneles();
   const [filter, setFilter] = useState<Filter>("activos");
   const [search, setSearch] = useState("");
@@ -129,70 +569,14 @@ export function PanelesView({ onClose, initialPanelDir }: PanelesViewProps) {
       });
   }, [selected]);
 
-  const renderCard = (panel: PanelMeta) => {
-    const tipo = tipoMeta(panel.tipo);
-    const archived = panel.estado === "archivado";
-    return (
-      <button
-        key={panel.slug}
-        type="button"
-        onClick={() => selectPanel(panel.slug)}
-        title={archived ? `${panel.titulo} (archivado)` : panel.titulo}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 6,
-          padding: "14px 16px",
-          borderRadius: 12,
-          border: "1px solid var(--border)",
-          background: "var(--bg-panel)",
-          color: "var(--text)",
-          cursor: "pointer",
-          textAlign: "left",
-          opacity: archived ? 0.62 : 1,
-          transition: "border-color 0.12s, transform 0.12s",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = "var(--accent)";
-          e.currentTarget.style.transform = "translateY(-1px)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "var(--border)";
-          e.currentTarget.style.transform = "none";
-        }}
-      >
-        <span style={{ display: "flex", alignItems: "center", gap: 6, width: "100%", justifyContent: "space-between" }}>
-          <span
-            style={{
-              fontSize: 10.5,
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-              padding: "2px 8px",
-              borderRadius: 6,
-              background: tipo.bg,
-              color: tipo.color,
-            }}
-          >
-            {panel.tipo}
-          </span>
-          <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{formatDate(panel.fecha)}</span>
-        </span>
-        <span style={{ fontSize: 14.5, fontWeight: 650, lineHeight: 1.35, overflowWrap: "anywhere" }}>
-          {panel.titulo}
-        </span>
-        {panel.resumen ? (
-          <span style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.45, overflowWrap: "anywhere" }}>
-            {panel.resumen}
-          </span>
-        ) : null}
-        {archived ? (
-          <span style={{ fontSize: 10.5, color: "var(--text-dim, #888)", fontWeight: 600 }}>archivado</span>
-        ) : null}
-      </button>
-    );
-  };
+  const renderCard = (panel: PanelMeta) => (
+    <PanelCard
+      key={panel.slug}
+      panel={panel}
+      onOpen={() => selectPanel(panel.slug)}
+      onOpenSession={onOpenSession}
+    />
+  );
 
   const header = (
     <header
@@ -417,6 +801,7 @@ export function PanelesView({ onClose, initialPanelDir }: PanelesViewProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", background: "var(--bg)", overflow: "hidden" }}>
       {header}
+      {selected ? <PanelSessionsStrip slug={selected.slug} onOpenSession={onOpenSession} /> : null}
       {selected ? viewer : grid}
     </div>
   );

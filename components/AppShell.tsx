@@ -2605,6 +2605,15 @@ export function AppShell() {
             <PanelesView
               onClose={() => setPanelesViewOpen(false)}
               initialPanelDir={initialPanelDir}
+              onOpenSession={(sessionId) => {
+                const target = sessionCatalog.find((s) => s.id === sessionId);
+                if (target) {
+                  handleSelectSession(target);
+                } else {
+                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                }
+                setPanelesViewOpen(false);
+              }}
             />
           ) : encargosViewOpen ? (
             <EncargosView
