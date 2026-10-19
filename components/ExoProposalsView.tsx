@@ -101,10 +101,13 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     return Number.isFinite(parsed) ? parsed : undefined;
   }, [data]);
 
-  // Dynamic available categories with counts
+  // Dynamic available categories with counts. The count follows the active
+  // status filter: on "pending" it counts only relevant (pending) proposals,
+  // so a category badge never promises items the list then filters out.
   const availableCategories = useMemo(() => {
+    const base = statusFilter === "pending" ? relevantProposals(proposals, referenceMs) : proposals;
     const counts = new Map<string, number>();
-    for (const p of proposals) {
+    for (const p of base) {
       const cat = (p.category || "general").toLowerCase();
       counts.set(cat, (counts.get(cat) || 0) + 1);
     }
@@ -114,7 +117,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
       emoji: CATEGORY_META[cat]?.emoji || "📌",
       count,
     }));
-  }, [proposals]);
+  }, [proposals, statusFilter, referenceMs]);
 
   useEffect(() => {
     refresh();
@@ -783,12 +786,37 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                       Ver sesión en vivo
                     </a>
                   ) : null}
-                  {(currentProposal.links ?? []).length > 0 && (
+                  {(currentProposal.links ?? []).length > 0 && (() => {
+                    const chips = (currentProposal.links ?? [])
+                      .map((raw): { url: string; label: string } | null => {
+                        if (typeof raw === "string") {
+                          if (!raw) return null;
+                          try {
+                            return { url: raw, label: new URL(raw).hostname.replace(/^www\./, "") };
+                          } catch {
+                            return { url: raw, label: raw.slice(0, 30) };
+                          }
+                        }
+                        if (raw && typeof raw === "object") {
+                          const obj = raw as { url?: unknown; label?: unknown };
+                          const url = typeof obj.url === "string" ? obj.url : "";
+                          if (!url) return null;
+                          let label = typeof obj.label === "string" && obj.label.trim() ? obj.label.slice(0, 40) : "";
+                          if (!label) {
+                            try { label = new URL(url).hostname.replace(/^www\./, ""); } catch { label = url.slice(0, 30); }
+                          }
+                          return { url, label };
+                        }
+                        return null;
+                      })
+                      .filter((chip): chip is { url: string; label: string } => chip !== null);
+                    if (chips.length === 0) return null;
+                    return (
                     <div style={{ display: "inline-flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                      {(currentProposal.links ?? []).map((url) => (
+                      {chips.map((chip) => (
                         <a
-                          key={url}
-                          href={url}
+                          key={chip.url}
+                          href={chip.url}
                           target="_blank"
                           rel="noopener noreferrer"
                           style={{
@@ -803,18 +831,23 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                             border: "1px solid var(--border)",
                             borderRadius: 6,
                             background: "var(--bg-panel)",
+                            maxWidth: "100%",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
                           }}
-                          title={url}
+                          title={chip.url}
                         >
                           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                           </svg>
-                          {(() => { try { return new URL(url).hostname.replace("www.", ""); } catch { return url.slice(0, 30); } })()}
+                          {chip.label}
                         </a>
                       ))}
                     </div>
-                  )}
+                    );
+                  })()}
                 </div>
               )}
 
