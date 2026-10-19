@@ -14,6 +14,7 @@ import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
 import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
+import { PanelesView } from "./PanelesView";
 import { ActivityView } from "./ActivityView";
 import { TimelineView } from "./TimelineView";
 import { AgentsInspectorView } from "./AgentsInspectorView";
@@ -231,11 +232,13 @@ export function AppShell() {
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const initialView = searchParams.get("view");
+  const initialPanelDir = searchParams.get("panel");
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
   const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
   const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
   const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
+  const [panelesViewOpen, setPanelesViewOpen] = useState(() => initialView === "paneles");
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
 
   const closeAllOverlayViews = useCallback(() => {
@@ -244,6 +247,7 @@ export function AppShell() {
     setActivityViewOpen(false);
     setWorkspacesViewOpen(false);
     setTimelineViewOpen(false);
+    setPanelesViewOpen(false);
     setAgentsInspectorOpen(false);
   }, []);
 
@@ -1460,6 +1464,7 @@ export function AppShell() {
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
         onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
         onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
+        onOpenPanelesView={() => openOverlay(setPanelesViewOpen)}
         onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
@@ -2590,31 +2595,10 @@ export function AppShell() {
                 setProposalsViewOpen(false);
               }}
             />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
-            />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
+          ) : panelesViewOpen ? (
+            <PanelesView
+              onClose={() => setPanelesViewOpen(false)}
+              initialPanelDir={initialPanelDir}
             />
           ) : encargosViewOpen ? (
             <EncargosView
@@ -2790,6 +2774,27 @@ export function AppShell() {
                   >
                     <span>📦</span>
                     <span>Encargos</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setPanelesViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>📊</span>
+                    <span>Paneles e Informes</span>
                   </button>
                 </div>
               </div>
