@@ -267,39 +267,47 @@ async function enumerateSessionFiles(sessionsDir: string): Promise<string[]> {
 		}
 	}
 
-	// Escanear también las sesiones de rutinas y canales del sistema si existen.
-	// Solo al listar el directorio real del agente: un agent dir aislado
-	// (tests con PI_CODING_AGENT_DIR) no debe ver las rutinas del host.
-	const agentDirOverride = process.env.PI_CODING_AGENT_DIR;
-	const defaultAgentDir = join(homedir(), ".pi", "agent");
-	const isolatedAgentDir = Boolean(agentDirOverride && resolve(agentDirOverride) !== resolve(defaultAgentDir));
-	if (!isolatedAgentDir) {
-	try {
-		const extraDirs = [
-			join(process.env.HOME || "/home/rgsaura", ".local/state/routines/sessions"),
-			join(process.env.HOME || "/home/rgsaura", ".local/state/rg-facesearch-bot/sessions"),
-		];
-		for (const edir of extraDirs) {
-			try {
-				const entries = await readdir(edir, { withFileTypes: true });
-				for (const entry of entries) {
-					if (entry.isDirectory() || entry.isSymbolicLink()) {
-						const subpath = join(edir, entry.name);
-						try {
-							for (const rf of await readdir(subpath)) {
-								if (rf.endsWith(".jsonl")) files.push(join(subpath, rf));
-							}
-						} catch {}
-					} else if (entry.name.endsWith(".jsonl")) {
-						files.push(join(edir, entry.name));
-					}
+	// Escanear también las sesiones de rutinas y canales del sistema si existen
+	// (additionalSessionRoots() ya aplica el aislamiento por PI_CODING_AGENT_DIR).
+	for (const edir of additionalSessionRoots()) {
+		try {
+			const entries = await readdir(edir, { withFileTypes: true });
+			for (const entry of entries) {
+				if (entry.isDirectory() || entry.isSymbolicLink()) {
+					const subpath = join(edir, entry.name);
+					try {
+						for (const rf of await readdir(subpath)) {
+							if (rf.endsWith(".jsonl")) files.push(join(subpath, rf));
+						}
+					} catch {}
+				} else if (entry.name.endsWith(".jsonl")) {
+					files.push(join(edir, entry.name));
 				}
-			} catch {}
-		}
-	} catch {}
+			}
+		} catch {}
 	}
 
 	return files;
+}
+
+/**
+ * Roots beyond the agent's own sessions dir that also hold session files the
+ * catalogue lists: routine sessions (`~/.local/state/routines/sessions`) and
+ * the FaceSearch bot's. Empty when the agent dir is isolated (tests with
+ * PI_CODING_AGENT_DIR): an isolated agent dir must not see the host's
+ * routines. Shared with session-reader's targeted id lookup so a routine
+ * session id resolves without paying the full catalogue scan (enc-7baa576c:
+ * that cold fallback hung `?session=<routine-id>` first paints for seconds).
+ */
+export function additionalSessionRoots(): string[] {
+	const agentDirOverride = process.env.PI_CODING_AGENT_DIR;
+	const defaultAgentDir = join(homedir(), ".pi", "agent");
+	if (agentDirOverride && resolve(agentDirOverride) !== resolve(defaultAgentDir)) return [];
+	const home = process.env.HOME || homedir();
+	return [
+		join(home, ".local/state/routines/sessions"),
+		join(home, ".local/state/rg-facesearch-bot/sessions"),
+	];
 }
 
 const MAX_CONCURRENT_SCANS = 10;

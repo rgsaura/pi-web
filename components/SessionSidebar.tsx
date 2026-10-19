@@ -256,6 +256,8 @@ interface Props {
   onOpenPanelesView?: () => void;
   /** Opens the Agents inspector (prompts, skills, tools per agent). */
   onOpenAgentsInspector?: () => void;
+  /** Opens the Post Studio (pre-review of a social post before OpenPost). */
+  onOpenPostStudio?: () => void;
   /** Opens the live voice interface modal. */
   onOpenVoiceModal?: () => void;
 }
@@ -510,7 +512,7 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenVoiceModal }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -1378,6 +1380,24 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
 
   const recentProjects = useMemo(() => getRecentProjects(allSessions), [allSessions]);
 
+  // Remote hosts (SSHFS under ~/remote) as selectable projects, fetched once:
+  // they are cwds before any session exists in them (see /api/remote-roots).
+  // Best-effort — a failed fetch just leaves them out of the menus.
+  const [remoteProjects, setRemoteProjects] = useState<ProjectChoice[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/remote-roots")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { hosts?: Array<{ path: string; key: string }> } | null) => {
+        if (cancelled || !Array.isArray(data?.hosts)) return;
+        setRemoteProjects(data.hosts.map(({ path, key }) => ({ key, root: path })));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const sessionFamilies = useMemo(() => listSessionFamilies(allSessions), [allSessions]);
   const familyByRootId = useMemo(
     () => new Map(sessionFamilies.map((family) => [family.root.id, family])),
@@ -1540,13 +1560,13 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
   }, [applyUiStateRequest, loading, projectKeysToRecord, sessionDetailsLoaded, storedOrderLength, uiStateSynced]);
 
   // Every project in the groups' order, then those with sessions but no
-  // group (all of them archived, or pinned while the project is not): the
-  // project menus of the files tab and of the bar above a fresh composer,
-  // with the names the user gave them.
+  // group (all of them archived, or pinned while the project is not), then
+  // the remote hosts: the project menus of the files tab and of the bar
+  // above a fresh composer, with the names the user gave them.
   const projectNames = uiState.projectNames;
   const projectChoiceList = useMemo(
-    () => mergeProjectChoices(model.projects, recentProjects, projectNames),
-    [model.projects, recentProjects, projectNames],
+    () => mergeProjectChoices(model.projects, [...recentProjects, ...remoteProjects], projectNames),
+    [model.projects, recentProjects, remoteProjects, projectNames],
   );
 
   // What both pickers show for this cwd: the project, its worktrees where the
@@ -2759,7 +2779,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
 
       {/* System entries at top of sessions panel: live Activity map,
           Workspaces and the Decisiones inbox, in one strip of the same look. */}
-      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView || onOpenTimelineView || onOpenPanelesView || onOpenAgentsInspector) && (
+      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView || onOpenTimelineView || onOpenPanelesView || onOpenAgentsInspector || onOpenPostStudio) && (
         <div style={{ flexShrink: 0, padding: "8px 10px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6, background: "color-mix(in srgb, var(--bg-panel) 60%, var(--bg))" }}>
           {onOpenActivityView && (
             <button
@@ -2911,6 +2931,62 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 <span>Paneles</span>
               </div>
               <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>entregables</span>
+            </button>
+          )}
+          {onOpenPostStudio && (
+            <button
+              type="button"
+              onClick={onOpenPostStudio}
+              title="Post Studio: review interactiva del carrusel/reel antes de OpenPost (música audible, selección de fotos, decisión final)"
+              aria-label="Post Studio"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🎬</span>
+                <span>Post Studio</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 5,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#f59e0b",
+                  background: "rgba(245, 158, 11, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: 999,
+                }}
+              >
+                pre
+              </span>
             </button>
           )}
           {onOpenAgentsInspector && (

@@ -14,7 +14,7 @@ import { skillExpansionToCommand } from "./slash-display";
 import { MAX_TOOL_RESULT_IMAGE_BYTES, TOOL_RESULT_IMAGE_MIMES } from "./tool-result-images";
 import { resolveProject, type ProjectInfo } from "./worktree";
 import { readSubagentRun, SUBAGENT_META_TYPE } from "./subagents";
-import { checkSessionMembership, listSessionsIncremental, scanSessionFileInfo, type ScannedSessionInfo } from "./session-list-scanner";
+import { additionalSessionRoots, checkSessionMembership, listSessionsIncremental, scanSessionFileInfo, type ScannedSessionInfo } from "./session-list-scanner";
 
 export { getAgentDir };
 
@@ -258,8 +258,9 @@ export function catalogFirstMessage(text: string): string {
 function mapScannedSession(
   scanned: ScannedSessionInfo,
   pathToId: Map<string, string>,
+  ownsIdPath = true,
 ): SessionInfo {
-  cacheSessionPath(scanned.id, scanned.path);
+  if (ownsIdPath) cacheSessionPath(scanned.id, scanned.path);
   const { originSessionId, subagent } = resolveScannedSessionRelation(scanned, pathToId);
   const detailsPending = scanned.detailsPending === true;
   return {
@@ -289,7 +290,22 @@ function mapScannedSession(
 async function buildSessionList(scanned: ScannedSessionInfo[]): Promise<SessionInfo[]> {
   const pathToId = new Map<string, string>();
   for (const session of scanned) pathToId.set(sessionPathKey(session.path), session.id);
-  return attachSessionProjectInfo(scanned.map((session) => mapScannedSession(session, pathToId)));
+  // Duplicate ids are a fixture of routine channel sessions (the live file
+  // and its archive rotations share one id): the newest row owns the id→path
+  // cache so `?session=<id>` resolves to the live file. Last-write-wins over
+  // the newest-first catalogue used to hand the id to the OLDEST archived
+  // copy (enc-7baa576c). Order-independent: the winner is chosen by modified
+  // time, never by iteration order.
+  const winnerById = new Map<string, ScannedSessionInfo>();
+  for (const session of scanned) {
+    const winner = winnerById.get(session.id);
+    if (!winner || session.modified.getTime() > winner.modified.getTime()) {
+      winnerById.set(session.id, session);
+    }
+  }
+  return attachSessionProjectInfo(
+    scanned.map((session) => mapScannedSession(session, pathToId, winnerById.get(session.id) === session)),
+  );
 }
 
 /**
@@ -403,16 +419,32 @@ async function findSessionPathById(sessionId: string): Promise<string | null> {
   // authoritative so future layouts and malformed files use the full fallback.
   if (!SESSION_ID_PATTERN.test(sessionId)) return null;
 
-  let projectDirs: Dirent[];
+  // Routine channel ids repeat across archive rotations (the live rot/ file
+  // and its rot-archive/ copies share one id), so duplicates are normal, not
+  // ambiguity: the newest file by mtime owns the id. Bailing out to the
+  // catalogue on duplicates made a cold `?session=<routine-id>` pay the full
+  // scan — the very hang this lookup exists to avoid (enc-7baa576c).
+  const candidates: Array<{ path: string; mtimeMs: number }> = [];
+  const consider = (candidate: string) => {
+    try {
+      if (readSessionHeader(candidate)?.id !== sessionId) return;
+      candidates.push({ path: candidate, mtimeMs: statSync(candidate).mtimeMs });
+    } catch {
+      // Unreadable or racing a delete: skip it; other candidates or the
+      // catalogue fallback still answer.
+    }
+  };
+
+  let projectDirs: Dirent[] = [];
   const sessionsDir = resolvePath(defaultSessionsDir());
   try {
     projectDirs = await readdir(sessionsDir, { withFileTypes: true });
   } catch {
-    return null;
+    // An unreadable agent sessions dir must not hide the routine and bot
+    // sessions that live outside it: fall through to the additional roots.
   }
 
   const suffix = `_${sessionId}.jsonl`;
-  let match: string | undefined;
   for (const projectDir of projectDirs) {
     if (!projectDir.isDirectory() && !projectDir.isSymbolicLink()) continue;
     const projectPath = resolvePathWithinDefaultSessions(
@@ -434,25 +466,66 @@ async function findSessionPathById(sessionId: string): Promise<string | null> {
         join(projectPath, file),
         sessionsDir,
       );
-      if (!candidate) continue;
-      try {
-        if (readSessionHeader(candidate)?.id !== sessionId) continue;
-      } catch {
-        continue;
-      }
-      // Do not choose between duplicate candidates; retain the existing
-      // catalogue fallback for its current resolution semantics.
-      if (match && match !== candidate) return null;
-      match = candidate;
+      if (candidate) consider(candidate);
     }
   }
 
-  return match ?? null;
+  // Routine and bot sessions live outside ~/.pi/agent/sessions; scan the
+  // same roots the catalogue lists so their ids resolve through this cheap
+  // targeted lookup instead of the full catalogue fallback, which made a
+  // cold `?session=<routine-id>` block the first paint for seconds
+  // (enc-7baa576c).
+  for (const root of additionalSessionRoots()) {
+    let rootEntries: Dirent[];
+    try {
+      rootEntries = await readdir(root, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const entry of rootEntries) {
+      if (entry.isDirectory() || entry.isSymbolicLink()) {
+        let names: string[];
+        try {
+          names = await readdir(join(root, entry.name));
+        } catch {
+          continue;
+        }
+        for (const name of names) {
+          if (name.endsWith(suffix)) consider(join(root, entry.name, name));
+        }
+      } else if (entry.name.endsWith(suffix)) {
+        consider(join(root, entry.name));
+      }
+    }
+  }
+
+  if (candidates.length === 0) return null;
+  // Newest mtime wins; the path tie-break keeps the answer stable when a
+  // rotation copies a file without changing its clock.
+  let best = candidates[0];
+  for (const candidate of candidates) {
+    if (candidate.mtimeMs > best.mtimeMs
+      || (candidate.mtimeMs === best.mtimeMs && candidate.path > best.path)) {
+      best = candidate;
+    }
+  }
+  return best.path;
 }
 
 function findSessionIdByPath(filePath: string): string | undefined {
   if (!filePath.endsWith(".jsonl")) return undefined;
-  const candidate = resolvePathWithinDefaultSessions(filePath);
+  let candidate = resolvePathWithinDefaultSessions(filePath);
+  if (!candidate) {
+    // Routine and bot session files live outside the agent's sessions dir;
+    // accept them from the same roots the catalogue scans.
+    candidate = additionalSessionRoots().some((root) => {
+      const relativePath = relative(resolvePath(root), resolvePath(filePath));
+      return relativePath !== ""
+        && relativePath !== ".."
+        && !relativePath.startsWith(`..${sep}`)
+        && !isAbsolute(relativePath);
+    }) ? resolvePath(filePath) : null;
+  }
   if (!candidate) return undefined;
   try {
     const sessionId = readSessionHeader(candidate)?.id;
@@ -618,8 +691,8 @@ export async function resolveSessionPath(sessionId: string): Promise<string | nu
     return getPathCache().get(sessionId) ?? null;
   }
 
-  // Unknown layouts, malformed candidates, and duplicate IDs retain the
-  // existing authoritative catalogue scan instead of negative-caching a miss.
+  // Unknown layouts and malformed candidates retain the existing
+  // authoritative catalogue scan instead of negative-caching a miss.
   await listAllSessions();
   return getPathCache().get(sessionId) ?? null;
 }
