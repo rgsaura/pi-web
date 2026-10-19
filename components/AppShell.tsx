@@ -230,12 +230,17 @@ export function AppShell() {
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
-  const [proposalsViewOpen, setProposalsViewOpen] = useState(false);
-  const [encargosViewOpen, setEncargosViewOpen] = useState(false);
-  const [activityViewOpen, setActivityViewOpen] = useState(false);
-  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(false);
-  const [timelineViewOpen, setTimelineViewOpen] = useState(false);
-  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(false);
+  const initialView = searchParams.get("view");
+  const hasSpecificSessionOrCwd = Boolean(initialNavigation.sessionId || initialNavigation.requestedCwd);
+
+  const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
+  const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
+  const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
+  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
+  const [timelineViewOpen, setTimelineViewOpen] = useState(
+    () => initialView === "timeline" || (!initialView && !hasSpecificSessionOrCwd),
+  );
+  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
 
   const closeAllOverlayViews = () => {
     setProposalsViewOpen(false);
