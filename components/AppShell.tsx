@@ -231,15 +231,11 @@ export function AppShell() {
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const initialView = searchParams.get("view");
-  const hasSpecificSessionOrCwd = Boolean(initialNavigation.sessionId || initialNavigation.requestedCwd);
-
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
   const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
   const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
-  const [timelineViewOpen, setTimelineViewOpen] = useState(
-    () => initialView === "timeline" || (!initialView && !hasSpecificSessionOrCwd),
-  );
+  const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
 
   const closeAllOverlayViews = useCallback(() => {
@@ -2703,16 +2699,100 @@ export function AppShell() {
                  {translate("workspace.selectSession")}
               </div>
             ) : (
-              <TimelineView
-                onSelectSession={(sessionId) => {
-                  const target = sessionCatalog.find((s) => s.id === sessionId);
-                  if (target) {
-                    handleSelectSession(target);
-                  } else {
-                    router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                  }
-                }}
-              />
+              <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, padding: 24, textAlign: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                  <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)" }}>ExoHuman UI</div>
+                  <div style={{ fontSize: 13, color: "var(--text-muted)", maxWidth: 360 }}>
+                    Asistente personal, control de agentes y actividades de Rodrigo García
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10, maxWidth: 440 }}>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setTimelineViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>🗓️</span>
+                    <span>Línea de Tiempo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setActivityViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>⚡</span>
+                    <span>Actividad en Vivo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setAgentsInspectorOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>🤖</span>
+                    <span>Inspector de Agentes</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setEncargosViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>📦</span>
+                    <span>Encargos</span>
+                  </button>
+                </div>
+              </div>
             )
           ) : null}
         </div>
