@@ -242,14 +242,20 @@ export function AppShell() {
   );
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
 
-  const closeAllOverlayViews = () => {
+  const closeAllOverlayViews = useCallback(() => {
     setProposalsViewOpen(false);
     setEncargosViewOpen(false);
     setActivityViewOpen(false);
     setWorkspacesViewOpen(false);
     setTimelineViewOpen(false);
     setAgentsInspectorOpen(false);
-  };
+  }, []);
+
+  const openOverlay = useCallback((setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+    closeAllOverlayViews();
+    setter(true);
+    if (isMobile) setSidebarOpen(false);
+  }, [closeAllOverlayViews, isMobile]);
   const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
@@ -1453,12 +1459,12 @@ export function AppShell() {
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
         onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
-        onOpenProposalsView={() => { closeAllOverlayViews(); setProposalsViewOpen(true); }}
-        onOpenEncargosView={() => { closeAllOverlayViews(); setEncargosViewOpen(true); }}
-        onOpenActivityView={() => { closeAllOverlayViews(); setActivityViewOpen(true); }}
-        onOpenWorkspacesView={() => { closeAllOverlayViews(); setWorkspacesViewOpen(true); }}
-        onOpenTimelineView={() => { closeAllOverlayViews(); setTimelineViewOpen(true); }}
-        onOpenAgentsInspector={() => { closeAllOverlayViews(); setAgentsInspectorOpen(true); }}
+        onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
+        onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
+        onOpenActivityView={() => openOverlay(setActivityViewOpen)}
+        onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
+        onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
+        onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -2697,18 +2703,16 @@ export function AppShell() {
                  {translate("workspace.selectSession")}
               </div>
             ) : (
-              <div style={{ position: "absolute", top: 12, left: 12, display: "flex", alignItems: "flex-start", gap: 8, userSelect: "none", pointerEvents: "none" }}>
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7, flexShrink: 0 }}>
-                  <line x1="20" y1="12" x2="4" y2="12" /><polyline points="10 6 4 12 10 18" />
-                </svg>
-                <div>
-                   <div style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>{translate("workspace.getStarted")}</div>
-                  <div style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.8 }}>
-                     <span style={{ color: "var(--text-dim)", marginRight: 6 }}>1.</span>{translate("workspace.selectProject")}<br />
-                     <span style={{ color: "var(--text-dim)", marginRight: 6 }}>2.</span>{translate("workspace.addModels")}
-                  </div>
-                </div>
-              </div>
+              <TimelineView
+                onSelectSession={(sessionId) => {
+                  const target = sessionCatalog.find((s) => s.id === sessionId);
+                  if (target) {
+                    handleSelectSession(target);
+                  } else {
+                    router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
+                  }
+                }}
+              />
             )
           ) : null}
         </div>
