@@ -11,7 +11,6 @@ import { FileViewer } from "./FileViewer";
 import { TabBar, type Tab } from "./TabBar";
 import { openFileTab, saveFileViewerState, saveParkedFileViewerState, switchFileWorkspace, type ParkedFileWorkspace } from "./file-tab-state";
 import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
-import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
 import { PanelesView } from "./PanelesView";
@@ -236,8 +235,10 @@ export function AppShell() {
   }, []);
   const [explorerRefreshKey, setExplorerRefreshKey] = useState(0);
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
-  const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
+  // The Proposals view reports a consumed deep link back: a stable identity
+  // keeps its effect from re-firing on every render here.
+  const consumeExoInitialProposalId = useCallback(() => setExoInitialProposalId(null), []);
   const initialView = searchParams.get("view");
   const initialPanelDir = searchParams.get("panel");
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
@@ -1478,7 +1479,12 @@ export function AppShell() {
         onBackgroundTaskDone={handleBackgroundTaskDone}
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
-        onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
+        onOpenExoProposal={(id) => {
+          // A decision row's deep link: the Proposals view opens at that
+          // proposal (ExoPanel itself is gone; only its state remained).
+          if (id) setExoInitialProposalId(id);
+          openOverlay(setProposalsViewOpen);
+        }}
         onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
         onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
@@ -2612,6 +2618,8 @@ export function AppShell() {
           ) : proposalsViewOpen ? (
             <ExoProposalsView
               onClose={() => setProposalsViewOpen(false)}
+              initialProposalId={exoInitialProposalId}
+              onInitialProposalConsumed={consumeExoInitialProposalId}
               onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {

@@ -9,6 +9,10 @@ import { relevantProposals } from "@/lib/exo-visibility";
 export interface ExoProposalsViewProps {
   onClose?: () => void;
   onOpenSession?: (sessionId: string) => void;
+  /** Opens at this proposal (a decision row's deep link); consumed once found. */
+  initialProposalId?: string | null;
+  /** Fired once the deep link is consumed (or is not findable), to clear it. */
+  onInitialProposalConsumed?: () => void;
 }
 
 type StatusFilter = "pending" | "all";
@@ -62,7 +66,7 @@ function summaryText(proposal: ExoProposal): string {
   return (proposal.question?.trim() || proposal.summary?.trim() || "").slice(0, 500);
 }
 
-export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewProps) {
+export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, onInitialProposalConsumed }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
@@ -168,6 +172,26 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
   }, [proposals, statusFilter, categoryFilter, sortOrder, referenceMs]);
 
   const total = filteredList.length;
+
+  // A decision row's deep link: land on that proposal once the data is in.
+  // Under the current filter first; if the proposal hides elsewhere (a
+  // resolved one under "pending"), widen to all statuses and let the same
+  // effect run again on the recomputed list. Consumed exactly once, also
+  // when nothing matches (the caller drops the link either way).
+  useEffect(() => {
+    if (!initialProposalId || loading) return;
+    const index = filteredList.findIndex((p) => p.id === initialProposalId);
+    if (index >= 0) {
+      setCurrentIndex(index);
+      onInitialProposalConsumed?.();
+      return;
+    }
+    if (statusFilter !== "all" && proposals.some((p) => p.id === initialProposalId)) {
+      setStatusFilter("all");
+      return;
+    }
+    onInitialProposalConsumed?.();
+  }, [initialProposalId, loading, filteredList, proposals, statusFilter, onInitialProposalConsumed]);
 
   useEffect(() => {
     setCurrentIndex((index) => Math.min(index, Math.max(0, total - 1)));

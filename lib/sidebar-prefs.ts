@@ -3,7 +3,8 @@
  * user's explicit project group expand/collapse choices, whether the pinned
  * section is collapsed, whether the files section below the sessions is
  * collapsed, whether the files tab or section lists ignored files, and the
- * folders the worktree listing last found outside git.
+ * folders the worktree listing last found outside git, and the "Secciones
+ * del Sistema" section's variant and collapse.
  * Best-effort localStorage, like the other sidebar memories: privacy mode or
  * quota errors fall back to defaults.
  */
@@ -163,6 +164,21 @@ const ACTIVE_NOW_STORAGE_KEY = "pi-web:sidebar-sessions-active-now";
 const SESSIONS_CATEGORY_FILTER_STORAGE_KEY = "pi-web:sidebar-sessions-category-filter";
 const SESSIONS_SORT_MODE_STORAGE_KEY = "pi-web:sidebar-sessions-sort-mode";
 
+/**
+ * "Secciones del Sistema" (the strip under the voice button): whether it is
+ * collapsed, its layout variant and the sub-section it shows. Per browser,
+ * like the rest of the sidebar's own memories.
+ */
+const SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY = "pi-web:sidebar-system-sections-collapsed";
+const SYSTEM_SECTIONS_VARIANT_STORAGE_KEY = "pi-web:sidebar-system-sections-variant";
+const SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY = "pi-web:sidebar-system-sections-segment";
+
+export type SystemSectionVariant = "full" | "compact" | "access";
+export type SystemSectionSegment = "proyectos" | "rutinas" | "decisiones" | "recientes";
+
+const SYSTEM_SECTION_VARIANTS: readonly SystemSectionVariant[] = ["full", "compact", "access"];
+const SYSTEM_SECTION_SEGMENTS: readonly SystemSectionSegment[] = ["proyectos", "rutinas", "decisiones", "recientes"];
+
 /** Whether the sessions tree starts with the "activas ahora" filter on. */
 export function loadActiveNowOnly(storage: StorageLike | null = getBrowserStorage()): boolean {
   if (!storage) return false;
@@ -212,6 +228,78 @@ export function loadSessionsSortMode(storage: StorageLike | null = getBrowserSto
     return storage.getItem(SESSIONS_SORT_MODE_STORAGE_KEY) || "recent";
   } catch {
     return "recent";
+  }
+}
+
+/** The "Secciones del Sistema" strip folded to its header; open unless the browser saved it folded. */
+export function loadSystemSectionsCollapsed(storage: StorageLike | null = getBrowserStorage()): boolean {
+  if (!storage) return false;
+  try {
+    return storage.getItem(SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function saveSystemSectionsCollapsed(
+  collapsed: boolean,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY, String(collapsed));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** The strip's layout variant; anything unreadable is the full one. */
+export function loadSystemSectionsVariant(
+  storage: StorageLike | null = getBrowserStorage(),
+): SystemSectionVariant {
+  if (!storage) return "full";
+  try {
+    const value = storage.getItem(SYSTEM_SECTIONS_VARIANT_STORAGE_KEY);
+    return SYSTEM_SECTION_VARIANTS.includes(value as SystemSectionVariant) ? (value as SystemSectionVariant) : "full";
+  } catch {
+    return "full";
+  }
+}
+
+export function saveSystemSectionsVariant(
+  variant: SystemSectionVariant,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_VARIANT_STORAGE_KEY, variant);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** The sub-section the full variant shows; defaults to projects. */
+export function loadSystemSectionsSegment(
+  storage: StorageLike | null = getBrowserStorage(),
+): SystemSectionSegment {
+  if (!storage) return "proyectos";
+  try {
+    const value = storage.getItem(SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY);
+    return SYSTEM_SECTION_SEGMENTS.includes(value as SystemSectionSegment) ? (value as SystemSectionSegment) : "proyectos";
+  } catch {
+    return "proyectos";
+  }
+}
+
+export function saveSystemSectionsSegment(
+  segment: SystemSectionSegment,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY, segment);
+  } catch {
+    // Persistence is best-effort.
   }
 }
 
