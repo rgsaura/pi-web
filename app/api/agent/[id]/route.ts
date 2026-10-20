@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { resolveSessionPath } from "@/lib/session-reader";
 import { startRpcSession, getRpcSession, setRpcSessionTools } from "@/lib/rpc-manager";
+import { isDetachedRunActive, abortDetachedRun } from "@/lib/detached-runner";
 
 // POST /api/agent/[id] - Send a command to an existing session
 export async function POST(
@@ -22,6 +23,21 @@ export async function POST(
       throw new Error("toolNames must be an array of strings");
     }
     const toolNames = requestedToolNames as string[] | undefined;
+
+    // Detached runs own their session file while active: no in-process wrapper
+    // may append alongside the out-of-process pi (enc-7c2d78ac). Reads still go
+    // through the normal file path; `abort` stops the whole scope.
+    if (await isDetachedRunActive(id)) {
+      if (body.type === "abort") {
+        const stopped = await abortDetachedRun(id);
+        return NextResponse.json({ success: true, data: { sessionId: id, detached: true, stopped } });
+      }
+      return NextResponse.json({
+        error: "Session is running in a detached process; commands are refused until it settles. Send abort to stop it.",
+        code: "detached_running",
+        ...(body.type === "prompt" ? { accepted: false } : {}),
+      }, { status: 409 });
+    }
 
     // Fast path: already-running session
     const existing = getRpcSession(id);

@@ -5,6 +5,7 @@ import { randomUUID } from "crypto";
 import { allowFileRoot } from "@/lib/file-access";
 import { invalidateSessionListCache } from "@/lib/session-reader";
 import { startRpcSession } from "@/lib/rpc-manager";
+import { startDetachedSession } from "@/lib/detached-runner";
 
 const THINKING_LEVELS = new Set<ThinkingLevel>(["off", "minimal", "low", "medium", "high", "xhigh", "max"]);
 
@@ -50,6 +51,36 @@ export async function POST(req: Request) {
       throw new Error("provider and modelId must be provided together");
     }
     const explicitThinkingLevel = parseThinkingLevel(thinkingLevel);
+
+    // Detached mode (enc-7c2d78ac): the session runs as its own `pi --print`
+    // process in a systemd scope, so it survives server restarts and keeps its
+    // helper processes out of the production cgroup. The session file lands in
+    // the normal catalog; the sidebar shows it as running via /api/agent/running.
+    // Fire-and-forget callers (the task dispatcher) opt in with detached: true.
+    if (body.detached === true) {
+      if (typeof promptCommand.message !== "string" || !promptCommand.message.trim()) {
+        return NextResponse.json({
+          error: "detached: true requires a message",
+          ...(commandType === "prompt" ? { code: "prompt_rejected", accepted: false } : {}),
+        }, { status: 400 });
+      }
+      const run = await startDetachedSession({
+        cwd,
+        message: promptCommand.message,
+        ...(provider && modelId ? { provider, modelId } : {}),
+        ...(explicitThinkingLevel ? { thinkingLevel: explicitThinkingLevel } : {}),
+      });
+      allowFileRoot(cwd);
+      invalidateSessionListCache();
+      return NextResponse.json({
+        success: true,
+        sessionId: run.sessionId,
+        detached: true,
+        data: null,
+        model: run.model,
+        thinkingLevel: run.thinkingLevel ?? undefined,
+      });
+    }
 
     // Must be unique per request: startRpcSession coalesces concurrent callers
     // that share a key onto one session. Date.now() (ms resolution) collides for
