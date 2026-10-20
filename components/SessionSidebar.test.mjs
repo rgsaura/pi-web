@@ -433,6 +433,42 @@ test("the files show the composer bar's picker in one row below the sessions, as
   assert.match(filesPanel, /<span class="project-picker-label">Select project…<\/span>/);
 });
 
+test("the system views keep their original full-row buttons, not the explorer port's pills", () => {
+  // enc-2999ddc9: the port of the SessionsExplorer (8c32f06) had compressed
+  // Timeline, Paneles, Post Studio and the Agents inspector into quiet pills
+  // (4px 9px, 10.5px). They are full rows of the strip's one look again; which
+  // views show stays a matter of AppShell's props, never of style.
+  const html = render({
+    onOpenActivityView: noop,
+    onOpenTimelineView: noop,
+    onOpenPanelesView: noop,
+    onOpenPostStudio: noop,
+    onOpenAgentsInspector: noop,
+    onOpenWorkspacesView: noop,
+    onOpenEncargosView: noop,
+    onOpenProposalsView: noop,
+    onOpenVoiceModal: noop,
+  });
+  const stripEnd = html.indexOf('aria-label="Hablar por voz con ROT"');
+  const strip = html.slice(html.indexOf('aria-label="Actividad del sistema"'), stripEnd);
+  for (const label of ["Línea de tiempo", "Paneles", "Post Studio", "Agentes"]) {
+    const button = strip.match(new RegExp(`<button type="button"[^>]*aria-label="${label}"[^>]*>`));
+    assert.ok(button, `${label} button rendered`);
+    assert.match(button[0], /style="[^"]*padding:8px 12px/, `${label} keeps the strip's button padding`);
+    assert.match(button[0], /font-size:12\.5px/, `${label} keeps the strip's button font size`);
+    assert.match(button[0], /min-height:38px/, `${label} is a full row`);
+  }
+  // The strip's original order, all as rows of the same look.
+  const order = ["Actividad del sistema", "Línea de tiempo", "Paneles", "Post Studio", "Agentes", 'aria-label="Workspaces"', "Encargos", "Decisiones: ", 'aria-label="Hablar por voz con ROT"'];
+  const positions = order.map((label) => html.indexOf(label));
+  assert.ok(positions.every((p) => p !== -1), `every strip entry rendered: ${order}`);
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, "the strip keeps its original order");
+  // No pill row survives (the Encargos count badge legitimately carries its
+  // own 10.5px; the pills' signature was their padding and group label).
+  assert.doesNotMatch(html, /Otras vistas del sistema/);
+  assert.doesNotMatch(html, /padding:4px 9px/);
+});
+
 test("the running poll keeps the same Set while the running ids stay the same", () => {
   const previous = new Set(["a", "b"]);
   assert.equal(sameIdsOr(previous, ["b", "a"]), previous);

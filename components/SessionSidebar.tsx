@@ -504,23 +504,6 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-/** The quiet pill of a secondary system view in the sidebar's strip. */
-const secondaryPillStyle = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 4,
-  padding: "4px 9px",
-  minHeight: 26,
-  borderRadius: 999,
-  border: "1px solid var(--border)",
-  background: "transparent",
-  color: "var(--text-muted)",
-  fontSize: 10.5,
-  fontWeight: 550,
-  cursor: "pointer",
-  whiteSpace: "nowrap",
-  transition: "all 0.12s ease",
-} as const;
 
 export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
@@ -2831,7 +2814,188 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               </span>
             </button>
           )}
-                                                  {onOpenWorkspacesView && (
+          {onOpenTimelineView && (
+            <button
+              type="button"
+              onClick={onOpenTimelineView}
+              title="Línea de tiempo: pasado, hoy y próximo"
+              aria-label="Línea de tiempo"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🗓️</span>
+                <span>Línea de tiempo</span>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>pasado → próximo</span>
+            </button>
+          )}
+          {onOpenPanelesView && (
+            <button
+              type="button"
+              onClick={onOpenPanelesView}
+              title="Paneles: entregables e interfaces visibles de EXO"
+              aria-label="Paneles"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">📊</span>
+                <span>Paneles</span>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>entregables</span>
+            </button>
+          )}
+          {onOpenPostStudio && (
+            <button
+              type="button"
+              onClick={onOpenPostStudio}
+              title="Post Studio: review interactiva del carrusel/reel antes de OpenPost (música audible, selección de fotos, decisión final)"
+              aria-label="Post Studio"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🎬</span>
+                <span>Post Studio</span>
+              </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 5,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#f59e0b",
+                  background: "rgba(245, 158, 11, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: 999,
+                }}
+              >
+                pre
+              </span>
+            </button>
+          )}
+          {onOpenAgentsInspector && (
+            <button
+              type="button"
+              onClick={onOpenAgentsInspector}
+              title="Inspector de agentes: system prompts, skills y herramientas"
+              aria-label="Agentes"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                minHeight: 38,
+                padding: "8px 12px",
+                borderRadius: 9,
+                border: "1px solid var(--border)",
+                background: "var(--bg-panel)",
+                color: "var(--text)",
+                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-hover)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.transform = "translateY(-0.5px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-panel)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🤖</span>
+                <span>Agentes</span>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>prompts · skills</span>
+            </button>
+          )}
+          {onOpenWorkspacesView && (
             <button
               type="button"
               onClick={onOpenWorkspacesView}
@@ -3037,34 +3201,6 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               {pendingProposalsCount}
             </span>
           </button>
-          )}
-
-          {/* Secondary system views, one quiet row of pills: they keep their
-              entry points (their URLs stay ?view=…), without the tall stack
-              of full rows the fork removed. */}
-          {(onOpenTimelineView || onOpenPanelesView || onOpenPostStudio || onOpenAgentsInspector) && (
-            <div role="group" aria-label="Otras vistas del sistema" style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-              {onOpenTimelineView && (
-                <button type="button" onClick={onOpenTimelineView} title="Línea de tiempo: pasado, hoy y próximo" style={secondaryPillStyle}>
-                  <span aria-hidden="true">🗓️</span> Timeline
-                </button>
-              )}
-              {onOpenPanelesView && (
-                <button type="button" onClick={onOpenPanelesView} title="Paneles: entregables e interfaces visibles de EXO" style={secondaryPillStyle}>
-                  <span aria-hidden="true">📊</span> Paneles
-                </button>
-              )}
-              {onOpenPostStudio && (
-                <button type="button" onClick={onOpenPostStudio} title="Post Studio: review de un post antes de publicarlo" style={secondaryPillStyle}>
-                  <span aria-hidden="true">🎬</span> Post Studio
-                </button>
-              )}
-              {onOpenAgentsInspector && (
-                <button type="button" onClick={onOpenAgentsInspector} title="Inspector de agentes: prompts, skills y herramientas" style={secondaryPillStyle}>
-                  <span aria-hidden="true">🤖</span> Agentes
-                </button>
-              )}
-            </div>
           )}
 
           {onOpenVoiceModal && (
