@@ -607,7 +607,7 @@ export function buildPanelHtml(data) {
     }).join("");
   }
   function refresh() {
-    Promise.all([
+    return Promise.all([
       fetch("/api/agent/running", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }),
       fetch("/api/sessions", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }),
     ]).then(function (res) {

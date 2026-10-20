@@ -276,8 +276,7 @@ function clientScriptFrom(html) {
   // Sin la envolvente IIFE ni los arranques automáticos: el test controla refresh().
   const body = main
     .replace(/^\s*\(function \(\) \{/, "")
-    .replace(/\n\s*render\(snapshot, false\);[\s\S]*$/, "")
-    .replace(/\n\s*\}\)\(\);\s*$/, "");
+    .replace(/\n\s*render\(snapshot, false\);\s*\n\s*refresh\(\);[\s\S]*$/, "");
   assert.ok(body.includes("function refresh"), "el script define refresh");
   return body;
 }
