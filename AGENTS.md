@@ -51,7 +51,7 @@ app/api/
   sessions/ui-state/route.ts       GET/POST sidebar pins, archive, project order and names (set, restore, pin-project, add-projects, move-project, rename-project)
   sessions/[id]/auto-name/route.ts POST generate a session title
   sessions/search/route.ts         GET session search
-  agent/new/route.ts               POST { cwd, type: prompt|ensure_session (start only), message?, toolNames?, provider?, modelId?, thinkingLevel? }
+  agent/new/route.ts               POST { cwd, type: prompt|ensure_session (start only), message?, toolNames?, provider?, modelId?, thinkingLevel?, detached? } — detached:true runs the prompt as an out-of-process `pi --print` in its own systemd scope (survives server restarts; commands 409 while it runs, `abort` stops the scope)
   agent/[id]/route.ts              GET state | POST any command
   agent/[id]/events/route.ts       GET SSE stream
   agent/running/route.ts           GET running + awaiting-input session ids, sidebar pins/archive revision
