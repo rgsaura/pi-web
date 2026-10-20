@@ -148,8 +148,15 @@ test("on a desktop the files sit below the sessions by default, both in view", (
   assert.match(filesPanel, /<div class="sidebar-files-scroll scrollbar-subtle">/);
   assert.doesNotMatch(filesPanel, /sidebar-files-toolbar|sidebar-files-title|sidebar-files-actions|sidebar-files-section-search|sidebar-files-changes/);
   assert.doesNotMatch(filesPanel, /sidebar-files-section-count/);
-  // Pins and archive not loaded yet: the tree waits instead of flashing archived rows.
-  assert.match(html, /<div class="session-tree-message">Loading\.\.\.<\/div>/);
+  // The sessions panel is the explorer: its always-there search field, the
+  // two views (Cronológico / Proyectos) and the quick chips, with no session
+  // rows while none exist. No archived row flashes in before ui-state loads:
+  // the explorer separates them through its archivedIds prop.
+  assert.match(html, /<input id="session-search-input" type="search" data-session-filter="true"/);
+  assert.match(html, /data-view-mode="tiempo"[^>]*aria-pressed="true"[^>]*>[\s\S]*?Cronológico<\/button><button type="button" data-view-mode="proyectos"/);
+  assert.match(html, /data-chip="todo"[^>]*>[\s\S]*?Todo/);
+  assert.match(html, /data-chip="activas"[^>]*>[\s\S]*?En Vivo/);
+  assert.match(html, /Sin sesiones todavía\./);
   // Without a folder the files' search has nothing to search.
   assert.match(render(), /<button type="button" disabled="" title="Search files" aria-label="Search files" aria-expanded="false" aria-controls="file-search-input" class="sidebar-tool-button">/);
 });
@@ -172,7 +179,9 @@ test("the fold's and the archive view's motions in the CSS last as long as the h
 test("still, the sidebar renders as it did before it moved: nothing inert, no fold under way, no archive view", () => {
   const html = render({ selectedCwd: "/work/alpha" });
   assert.doesNotMatch(html, / inert[ =>]|is-files-folding|sidebar-archive-view|is-entering|is-leaving/);
-  assert.match(html, /<div class="sidebar-sessions-views"><div class="sidebar-sessions-view">/);
+  // The explorer is the sessions view now: its header (search, views,
+  // chips) renders right away, never inert.
+  assert.match(html, /<div role="group" aria-label="Modo de vista de sesiones"[^>]*>/);
   assert.equal(openingTag(html, "session-sidebar-files-body"), '<div id="session-sidebar-files-body" class="sidebar-files-body">');
   assert.match(html, /role="separator"/, "the open section's separator");
 });
