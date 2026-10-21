@@ -133,6 +133,17 @@ FAIL=0
 self_test_probes() {
   # loopback→docker-proxy hairpin no responde en VM101: la base es la IP LAN
   local base="http://${QA_BIND_IP:-$(hostname -I | awk '{print $1}')}:$WEB_PORT"
+  # caddy arranca en ~1-3 s y el api (Next) puede tardar más tras recreate:
+  # el gate espera a que ambos respondan (cualquier código HTTP = vivo)
+  local i
+  for i in $(seq 1 20); do
+    curl -s -o /dev/null -m3 "http://127.0.0.1:${API_PORT:-3300}/api/health" && break
+    sleep 1
+  done
+  for i in $(seq 1 10); do
+    curl -s -o /dev/null -m3 "$base/" && break
+    sleep 1
+  done
   probe "UI (html)"                 "$base/" 200
   probe "API sessions (caddy→api)"  "$base/api/sessions" 200
   # api corre con network_mode: host → 127.0.0.1:$API_PORT directo (sin token → 401)
