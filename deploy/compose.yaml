@@ -59,7 +59,9 @@ services:
       - /home/rgsaura/.pi:/home/rgsaura/.pi
       - /home/rgsaura/workspaces:/home/rgsaura/workspaces
       - /home/rgsaura/.local/share/exohuman:/home/rgsaura/.local/share/exohuman:ro
-      - /home/rgsaura/.local/state:/home/rgsaura/.local/state:ro
+      # rw: decisiones (ledger de propuestas), encargos y registro de puertos se
+      # escriben DESDE la API (resolver decisiones / cerrar encargos desde la UI)
+      - /home/rgsaura/.local/state:/home/rgsaura/.local/state:rw
       - /home/rgsaura/.config/exohuman:/home/rgsaura/.config/exohuman:ro
       - /home/rgsaura/.local/bin:/home/rgsaura/.local/bin:ro
 
