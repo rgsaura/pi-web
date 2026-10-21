@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
-import { readFileSync } from "fs";
-import { dirname, join } from "path";
+import { readFileSync, realpathSync } from "fs";
+import { dirname, join, sep } from "path";
 import { fileURLToPath } from "url";
 
 const configDir = dirname(fileURLToPath(import.meta.url));
@@ -16,13 +16,40 @@ try {
 // swaps it for an equivalent built at runtime; both bundlers must run it.
 const gfmAutolinkEmailLoader = join(configDir, "lib/gfm-autolink-email-loader.cjs");
 
+// rg-worktree shares the base tree's node_modules into a worktree via a
+// symlink (routing.json shareNodeModules). Turbopack resolves modules only
+// inside the filesystem root, and a worktree whose node_modules points
+// outside its own tree panics at startup ("Invalid distDirRoot ... should not
+// navigate out of the projectPath"). When that happens, widen turbopack.root
+// to the common ancestor of the worktree and the shared node_modules (Next
+// docs › turbopack › Root directory). Trees with their own node_modules keep
+// the default root. (Same fix wt-a81dfe71 carries for its symlink panic.)
+function turbopackRootForSharedNodeModules(): string | undefined {
+  let shared: string;
+  try {
+    shared = realpathSync(join(configDir, "node_modules"));
+  } catch {
+    return undefined;
+  }
+  const project = configDir.endsWith(sep) ? configDir.slice(0, -1) : configDir;
+  if (shared === project || shared.startsWith(project + sep)) return undefined;
+  const a = project.split(sep);
+  const b = shared.split(sep);
+  let common = 0;
+  while (common < a.length && common < b.length && a[common] === b[common]) common++;
+  return common > 1 ? a.slice(0, common).join(sep) : undefined;
+}
+const sharedNodeModulesRoot = turbopackRootForSharedNodeModules();
+
 const nextConfig: NextConfig = {
   // Deployable standalone server (Docker role split, enc-29d7943d): the web
   // image and the host runner both consume .next/standalone (the api image is a
   // plain Node proxy). Host dev builds opt out with PI_WEB_BUILD_STANDALONE=0
   // to keep the classic `next start` flow; images leave it unset (standalone on).
   ...(process.env.PI_WEB_BUILD_STANDALONE === "0" ? {} : { output: "standalone" as const }),
-  outputFileTracingRoot: configDir,
+  // Must equal turbopack.root when that is widened for a shared node_modules
+  // (Next warns and Turbopack keeps the project root otherwise).
+  outputFileTracingRoot: sharedNodeModulesRoot ?? configDir,
   experimental: {
     // proxy.ts matches /api/:path*, and Next buffers the request body whenever
     // a proxy is present, capped at 10 MB by default. The upload route accepts
@@ -35,6 +62,7 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
   // `next dev` runs Turbopack and `npm run build` runs webpack.
   turbopack: {
+    ...(sharedNodeModulesRoot ? { root: sharedNodeModulesRoot } : {}),
     rules: {
       "**/mdast-util-gfm-autolink-literal/lib/index.js": { loaders: [gfmAutolinkEmailLoader] },
     },

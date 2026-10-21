@@ -44,8 +44,8 @@ import {
   showBrowserNotification,
 } from "@/lib/browser-notifications";
 import { setupPushSubscription } from "@/lib/push-client";
-import { getInitialNavigation, linkedSessionId, withTabOpen } from "@/lib/initial-navigation";
-import { clearTabOpenSession, getTabOpen, setTabOpenNewSession, setTabOpenSession } from "@/lib/tab-session";
+import { getInitialNavigation, initialOverlayView, linkedSessionId, withTabOpen } from "@/lib/initial-navigation";
+import { clearTabOpenSession, getTabOpen, setTabOpenNewSession, setTabOpenSession, setTabOpenView } from "@/lib/tab-session";
 import { mergeCatalogRow } from "./session-catalog-helpers";
 import { getDraft, rekeyDraft } from "@/lib/draft-store";
 import {
@@ -231,12 +231,25 @@ export function AppShell() {
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const initialView = searchParams.get("view");
-  const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
-  const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
-  const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
-  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
-  const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
-  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
+  // Dashboards are the app's primary views: a bare open (no ?view=, ?session=
+  // or ?cwd= deep link) lands on the Actividad dashboard, not on a session.
+  const initialOpenView = initialOverlayView(initialView, initialNavigation);
+  const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialOpenView === "proposals");
+  const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialOpenView === "encargos");
+  const [activityViewOpen, setActivityViewOpen] = useState(() => initialOpenView === "activity");
+  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialOpenView === "workspaces");
+  const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialOpenView === "timeline");
+  const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialOpenView === "agents");
+  // The dashboard that owns the view right now (openOverlay keeps exactly one
+  // open), or null when the chat or the composer owns it.
+  const openOverlayViewName = activityViewOpen ? "activity"
+    : proposalsViewOpen ? "proposals"
+    : encargosViewOpen ? "encargos"
+    : workspacesViewOpen ? "workspaces"
+    : timelineViewOpen ? "timeline"
+    : agentsInspectorOpen ? "agents"
+    : null;
+  const overlayViewOpen = openOverlayViewName !== null;
 
   const closeAllOverlayViews = useCallback(() => {
     setProposalsViewOpen(false);
@@ -247,11 +260,16 @@ export function AppShell() {
     setAgentsInspectorOpen(false);
   }, []);
 
-  const openOverlay = useCallback((setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const openOverlay = useCallback((setter: React.Dispatch<React.SetStateAction<boolean>>, viewName?: string) => {
     closeAllOverlayViews();
     setter(true);
     if (isMobile) setSidebarOpen(false);
-  }, [closeAllOverlayViews, isMobile]);
+    // The URL names the dashboard that owns the view — replacing a session or
+    // composer deep link — so a reload and a copied link reopen this dashboard.
+    if (viewName && new URLSearchParams(window.location.search).get("view") !== viewName) {
+      router.replace(`?view=${viewName}`, { scroll: false });
+    }
+  }, [closeAllOverlayViews, isMobile, router]);
   const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [modelsRefreshKey, setModelsRefreshKey] = useState(0);
   const [projectTrust, setProjectTrust] = useState<ProjectTrustStatus | null>(null);
@@ -666,11 +684,37 @@ export function AppShell() {
   // in the useState initializer made the first client tree differ from the
   // server HTML (sidebar "select project" vs ""). Restore after mount instead.
   useLayoutEffect(() => {
-    const next = withTabOpen(initialNavigation, getTabOpen());
-    if (next === initialNavigation) return;
-    setInitialNavigation(next);
-    if (next.sessionId) setInitialSessionRestored(false);
-  }, [initialNavigation]);
+    const tabOpen = getTabOpen();
+    const next = withTabOpen(initialNavigation, tabOpen);
+    if (next !== initialNavigation) {
+      setInitialNavigation(next);
+      if (next.sessionId) setInitialSessionRestored(false);
+      // This tab remembers where it was — a session or a composer — and that
+      // destination replaces the default Actividad dashboard of a bare open.
+      setActivityViewOpen(false);
+      return;
+    }
+    // The tab remembers the dashboard it was on: reopen it in place of the
+    // default. A URL deep link (?view=, ?session=, ?cwd=) already chose where
+    // this load lands, and it keeps precedence over the tab's memory.
+    if (
+      tabOpen?.kind === "view"
+      && initialNavigation.sessionId === null
+      && initialNavigation.requestedCwd === null
+      && new URLSearchParams(window.location.search).get("view") === null
+    ) {
+      // Unknown names keep whatever the default already opened.
+      if (["activity", "proposals", "encargos", "workspaces", "timeline", "agents"].includes(tabOpen.view)) {
+        closeAllOverlayViews();
+        if (tabOpen.view === "proposals") setProposalsViewOpen(true);
+        else if (tabOpen.view === "encargos") setEncargosViewOpen(true);
+        else if (tabOpen.view === "workspaces") setWorkspacesViewOpen(true);
+        else if (tabOpen.view === "timeline") setTimelineViewOpen(true);
+        else if (tabOpen.view === "agents") setAgentsInspectorOpen(true);
+        else setActivityViewOpen(true);
+      }
+    }
+  }, [initialNavigation, closeAllOverlayViews]);
   // Suppresses sessionKey bump in handleCwdChange during the initial URL restore
   const suppressCwdBumpRef = useRef(false);
   // Set when the session the URL linked to is gone: the project the sidebar
@@ -688,10 +732,16 @@ export function AppShell() {
   // that bypass the sidebar selection handler. Transient sessions do not yet
   // carry projectKey, so use the active project identity until hydration.
   // The workspace memory is shared by every tab; the tab memory keeps this
-  // tab's own session so a reload does not follow another tab's last pick.
-  // New session is a selection too: remember the composer cwd so reload stays
-  // on that UI instead of resurrecting the previous chat.
+  // tab's own destination so a reload does not follow another tab's last pick.
+  // A dashboard that owns the view is the tab's destination too: it wins over
+  // the chat underneath. New session is a selection as well: remember the
+  // composer cwd so reload stays on that UI instead of resurrecting the
+  // previous chat.
   useEffect(() => {
+    if (openOverlayViewName) {
+      setTabOpenView(openOverlayViewName);
+      return;
+    }
     if (selectedSession) {
       const projectKey = selectedSession.projectKey
         ?? activeProjectKeyRef.current
@@ -701,7 +751,7 @@ export function AppShell() {
       return;
     }
     if (newSessionCwd) setTabOpenNewSession(newSessionCwd);
-  }, [newSessionCwd, selectedSession]);
+  }, [newSessionCwd, selectedSession, openOverlayViewName]);
 
   useEffect(() => {
     const requestedCwd = initialNavigation.requestedCwd;
@@ -864,15 +914,26 @@ export function AppShell() {
       // instead of discarding them so they return when the user switches back.
       changeFileWorkspace(currentProject, newProject);
       // Restore the workspace we switched to: its last open session, or keep
-      // the default welcome page when none is remembered.
-      if (!skipWorkspaceRestore) restoreWorkspaceContext(newProject, cwd);
+      // the default welcome page when none is remembered. While a dashboard
+      // owns the view the switch is only a context change — no session is
+      // resurrected underneath the dashboard the user is looking at.
+      if (!skipWorkspaceRestore && !overlayViewOpen) restoreWorkspaceContext(newProject, cwd);
     }
-    router.replace(typeof window !== "undefined" ? window.location.pathname : "/", { scroll: false });
-  }, [activeCwd, changeFileWorkspace, invalidateWorkspaceRestore, newSessionCwd, router, selectedSession, restoreWorkspaceContext]);
+    // While a dashboard owns the view, the URL keeps naming that dashboard
+    // (?view=…): a cwd change — the sidebar's initial project auto-selection
+    // included — is context behind the dashboard, not the destination, and
+    // stripping the query would destroy the deep link the user opened.
+    if (!overlayViewOpen) {
+      router.replace(typeof window !== "undefined" ? window.location.pathname : "/", { scroll: false });
+    }
+  }, [activeCwd, changeFileWorkspace, invalidateWorkspaceRestore, newSessionCwd, overlayViewOpen, router, selectedSession, restoreWorkspaceContext]);
 
   const handleSelectSession = useCallback((session: SessionInfo, isRestore = false, entryId?: string, blockIndex?: number, options?: SelectSessionOptions) => {
     setSearchTarget(entryId ? { sessionId: session.id, entryId, blockIndex } : null);
     invalidateWorkspaceRestore();
+    // Opening a session always takes the view from any dashboard that owns
+    // it — including the re-click of the session already open underneath.
+    closeAllOverlayViews();
     const activeDraftKey = activeNewSessionDraftKeyRef.current;
     const activeDraftCwd = newSessionCwd ?? (selectedSession === null ? activeCwd : null);
     if (activeDraftKey && activeDraftCwd) {
@@ -924,10 +985,12 @@ export function AppShell() {
     if (!isRestore || new URLSearchParams(window.location.search).get("session") !== session.id) {
       router.replace(`?session=${encodeURIComponent(session.id)}`, { scroll: false });
     }
-  }, [activeCwd, changeFileWorkspace, invalidateWorkspaceRestore, router, isMobile, newSessionCwd, selectedSession]);
+  }, [activeCwd, changeFileWorkspace, closeAllOverlayViews, invalidateWorkspaceRestore, router, isMobile, newSessionCwd, selectedSession]);
 
   const handleNewSession = useCallback((sessionId: string, cwd: string, projectKey?: string | null, options?: NewSessionOptions) => {
     invalidateWorkspaceRestore();
+    // The composer takes the view from any dashboard that owns it.
+    closeAllOverlayViews();
     const draftKey = `new:${sessionId}:${cwd}`;
     // Leaving a fresh composer for another cwd parks its draft there, as a
     // workspace switch does; New in the same cwd still starts empty. The bar
@@ -968,7 +1031,7 @@ export function AppShell() {
     setActiveTopPanel(null);
     if (isMobile) setSidebarOpen(false);
     router.replace(`?cwd=${encodeURIComponent(cwd)}`, { scroll: false });
-  }, [activeCwd, changeFileWorkspace, invalidateWorkspaceRestore, isMobile, newSessionCwd, router, selectedSession]);
+  }, [activeCwd, changeFileWorkspace, closeAllOverlayViews, invalidateWorkspaceRestore, isMobile, newSessionCwd, router, selectedSession]);
 
   // Global keyboard shortcuts (handles Esc, Ctrl+Alt+N etc.)
   useGlobalKeyboardShortcuts({
@@ -1455,12 +1518,13 @@ export function AppShell() {
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
         onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
-        onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
-        onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
-        onOpenActivityView={() => openOverlay(setActivityViewOpen)}
-        onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
-        onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
-        onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
+        onOpenProposalsView={() => openOverlay(setProposalsViewOpen, "proposals")}
+        onOpenEncargosView={() => openOverlay(setEncargosViewOpen, "encargos")}
+        onOpenActivityView={() => openOverlay(setActivityViewOpen, "activity")}
+        onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen, "workspaces")}
+        onOpenTimelineView={() => openOverlay(setTimelineViewOpen, "timeline")}
+        onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen, "agents")}
+        activeViewName={openOverlayViewName}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -2552,7 +2616,6 @@ export function AppShell() {
         <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
           {activityViewOpen ? (
             <ActivityView
-              onClose={() => setActivityViewOpen(false)}
               onSelectSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
@@ -2565,12 +2628,10 @@ export function AppShell() {
             />
           ) : workspacesViewOpen ? (
             <WorkspacesView
-              onClose={() => setWorkspacesViewOpen(false)}
               onStartInCwd={(cwd) => sidebarControlRef.current?.startNewSessionIn({ cwd })}
             />
           ) : timelineViewOpen ? (
             <TimelineView
-              onClose={() => setTimelineViewOpen(false)}
               onSelectSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
@@ -2582,10 +2643,9 @@ export function AppShell() {
               }}
             />
           ) : agentsInspectorOpen ? (
-            <AgentsInspectorView onClose={() => setAgentsInspectorOpen(false)} />
+            <AgentsInspectorView />
           ) : proposalsViewOpen ? (
             <ExoProposalsView
-              onClose={() => setProposalsViewOpen(false)}
               onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
@@ -2598,33 +2658,6 @@ export function AppShell() {
             />
           ) : encargosViewOpen ? (
             <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
-            />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
-            />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
               onSelectSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
@@ -2715,7 +2748,7 @@ export function AppShell() {
                 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10, maxWidth: 440 }}>
                   <button
                     type="button"
-                    onClick={() => openOverlay(setTimelineViewOpen)}
+                    onClick={() => openOverlay(setTimelineViewOpen, "timeline")}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -2736,7 +2769,7 @@ export function AppShell() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => openOverlay(setActivityViewOpen)}
+                    onClick={() => openOverlay(setActivityViewOpen, "activity")}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -2757,7 +2790,7 @@ export function AppShell() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => openOverlay(setAgentsInspectorOpen)}
+                    onClick={() => openOverlay(setAgentsInspectorOpen, "agents")}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -2778,7 +2811,7 @@ export function AppShell() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => openOverlay(setEncargosViewOpen)}
+                    onClick={() => openOverlay(setEncargosViewOpen, "encargos")}
                     style={{
                       display: "flex",
                       alignItems: "center",

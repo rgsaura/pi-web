@@ -10,7 +10,6 @@ import {
 } from "@/lib/timeline-data";
 
 export interface TimelineViewProps {
-  onClose?: () => void;
   onSelectSession?: (sessionId: string) => void;
 }
 
@@ -62,7 +61,7 @@ function groupByDay(events: TimelineEvent[], nowMs: number): DayGroup[] {
   }));
 }
 
-export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
+export function TimelineView({ onSelectSession }: TimelineViewProps) {
   const [data, setData] = useState<TimelineResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -242,26 +241,6 @@ export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
             </div>
           </div>
         </div>
-        {onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Cerrar"
-            style={{
-              width: 34,
-              height: 34,
-              flexShrink: 0,
-              borderRadius: 8,
-              border: "1px solid var(--border)",
-              background: "var(--bg)",
-              color: "var(--text)",
-              cursor: "pointer",
-              fontSize: 14,
-            }}
-          >
-            ✕
-          </button>
-        )}
       </header>
 
       <div

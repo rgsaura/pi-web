@@ -12,7 +12,6 @@ import {
 } from "@/lib/workspaces-data";
 
 export interface WorkspacesViewProps {
-  onClose?: () => void;
   /** Starts a new Pi session in a workspace's directory (the sidebar's own route). */
   onStartInCwd?: (cwd: string) => void;
 }
@@ -25,7 +24,7 @@ const STATUS_DOT: Record<WorkspaceStatus, string> = {
   pending: "#d97706",
 };
 
-export function WorkspacesView({ onClose, onStartInCwd }: WorkspacesViewProps) {
+export function WorkspacesView({ onStartInCwd }: WorkspacesViewProps) {
   const { workspaces, loading, error, refresh } = useWorkspaces();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(() => new Set());
@@ -46,17 +45,6 @@ export function WorkspacesView({ onClose, onStartInCwd }: WorkspacesViewProps) {
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape" && onClose) {
-        event.preventDefault();
-        onClose();
-      }
-    }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
-
   const groups = useMemo(() => groupWorkspaces(workspaces), [workspaces]);
   const activeCount = useMemo(() => workspaces.filter((workspace) => workspace.status === "active").length, [workspaces]);
 
@@ -72,9 +60,8 @@ export function WorkspacesView({ onClose, onStartInCwd }: WorkspacesViewProps) {
   const openInCwd = useCallback((workspace: WorkspaceSummary) => {
     if (workspace.cwd && onStartInCwd) {
       onStartInCwd(workspace.cwd);
-      onClose?.();
     }
-  }, [onStartInCwd, onClose]);
+  }, [onStartInCwd]);
 
   const buttonBase: React.CSSProperties = {
     display: "inline-flex",
@@ -99,12 +86,10 @@ export function WorkspacesView({ onClose, onStartInCwd }: WorkspacesViewProps) {
     <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "var(--bg)", color: "var(--text)", overflow: "hidden" }}>
       {/* Top bar */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "8px 14px", borderBottom: "1px solid var(--border)", background: "var(--bg-panel)", flexShrink: 0 }}>
-        <button type="button" onClick={onClose} title="Volver al chat (Esc)" aria-label="Volver al chat" style={buttonBase}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Volver
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+          <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🗂️</span>
+          <span style={{ fontSize: 13.5, fontWeight: 700, letterSpacing: "-0.01em" }}>Workspaces</span>
+        </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ fontSize: 11.5, color: "var(--text-dim)" }}>
             {workspaces.length} workspaces · {activeCount} activos

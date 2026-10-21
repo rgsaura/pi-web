@@ -254,6 +254,10 @@ interface Props {
   onOpenTimelineView?: () => void;
   /** Opens the Agents inspector (prompts, skills, tools per agent). */
   onOpenAgentsInspector?: () => void;
+  /** The dashboard view that owns the screen right now ("activity", ...), or
+   *  null when the chat or the composer owns it: the strip's entry of that
+   *  view shows as where the user is. */
+  activeViewName?: string | null;
   /** Opens the live voice interface modal. */
   onOpenVoiceModal?: () => void;
 }
@@ -508,7 +512,53 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenAgentsInspector, onOpenVoiceModal }: Props) {
+/** Visual state of a dashboard strip entry: the look the entries always had
+ *  (inactive), plus the "you are here" mark of the view that owns the screen
+ *  (active) — the strip is the app's primary navigation, and without a mark
+ *  there would be no way to tell which dashboard is open. Spread INTO the
+ *  button's style object (last, so it owns background, border color and
+ *  shadow); `compact` matches the Encargos entry (no soft shadow). */
+function stripEntryVisuals(active: boolean, compact = false): React.CSSProperties {
+  return {
+    background: active
+      ? "color-mix(in srgb, var(--accent) 16%, var(--bg-panel))"
+      : "var(--bg-panel)",
+    borderColor: active
+      ? "color-mix(in srgb, var(--accent) 70%, var(--border))"
+      : "var(--border)",
+    // A left accent bar plus the tint makes "you are here" unmistakable in
+    // both themes (vision QA flagged the tint alone as too subtle).
+    boxShadow: active
+      ? `inset 3px 0 0 var(--accent), ${compact ? "0 0 0 rgba(0,0,0,0)" : "0 1px 2px rgba(0,0,0,0.06)"}`
+      : (compact ? undefined : "0 1px 2px rgba(0,0,0,0.06)"),
+  };
+}
+
+/** Hover handlers of a strip entry (the lift of the big entries, none for
+ *  `compact`) that keep the active look intact when the pointer leaves, plus
+ *  the aria-current of the view that owns the screen. */
+function stripEntryHandlers(active: boolean, compact = false) {
+  const visuals = stripEntryVisuals(active, compact);
+  const enter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!active) {
+      e.currentTarget.style.background = "var(--bg-hover)";
+      e.currentTarget.style.borderColor = "var(--accent)";
+    }
+    if (!compact) e.currentTarget.style.transform = "translateY(-0.5px)";
+  };
+  const leave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.style.background = visuals.background as string;
+    e.currentTarget.style.borderColor = visuals.borderColor as string;
+    if (!compact) e.currentTarget.style.transform = "none";
+  };
+  return {
+    onMouseEnter: enter,
+    onMouseLeave: leave,
+    ...(active ? { "aria-current": "page" as const } : {}),
+  };
+}
+
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenAgentsInspector, activeViewName, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -2774,25 +2824,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 padding: "8px 12px",
                 borderRadius: 9,
                 border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
                 fontSize: 12.5,
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
                 transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              ...stripEntryVisuals(activeViewName === "activity"),
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.transform = "translateY(-0.5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.transform = "none";
-              }}
+              {...stripEntryHandlers(activeViewName === "activity")}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
@@ -2843,25 +2883,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 padding: "8px 12px",
                 borderRadius: 9,
                 border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
                 fontSize: 12.5,
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
                 transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              ...stripEntryVisuals(activeViewName === "timeline"),
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.transform = "translateY(-0.5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.transform = "none";
-              }}
+            {...stripEntryHandlers(activeViewName === "timeline")}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🗓️</span>
@@ -2885,25 +2915,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 padding: "8px 12px",
                 borderRadius: 9,
                 border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
                 fontSize: 12.5,
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
                 transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              ...stripEntryVisuals(activeViewName === "agents"),
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.transform = "translateY(-0.5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.transform = "none";
-              }}
+            {...stripEntryHandlers(activeViewName === "agents")}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 14, lineHeight: 1 }} aria-hidden="true">🤖</span>
@@ -2927,25 +2947,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 padding: "8px 12px",
                 borderRadius: 9,
                 border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
                 fontSize: 12.5,
                 fontWeight: 600,
                 letterSpacing: "-0.01em",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
                 transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              ...stripEntryVisuals(activeViewName === "workspaces"),
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.transform = "translateY(-0.5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.transform = "none";
-              }}
+            {...stripEntryHandlers(activeViewName === "workspaces")}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <svg
@@ -2997,21 +3007,14 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 padding: "6px 10px",
                 borderRadius: 7,
                 border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
                 color: "var(--text)",
                 cursor: "pointer",
                 fontSize: 12,
                 fontWeight: 500,
                 transition: "background 0.12s, border-color 0.12s",
+              ...stripEntryVisuals(activeViewName === "encargos", true),
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-              }}
+            {...stripEntryHandlers(activeViewName === "encargos", true)}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                 <svg
@@ -3063,25 +3066,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               padding: "8px 12px",
               borderRadius: 9,
               border: "1px solid var(--border)",
-              background: "var(--bg-panel)",
               color: "var(--text)",
               cursor: "pointer",
               fontSize: 12.5,
               fontWeight: 600,
               letterSpacing: "-0.01em",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
               transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+            ...stripEntryVisuals(activeViewName === "proposals"),
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--bg-hover)";
-              e.currentTarget.style.borderColor = "var(--accent)";
-              e.currentTarget.style.transform = "translateY(-0.5px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--bg-panel)";
-              e.currentTarget.style.borderColor = "var(--border)";
-              e.currentTarget.style.transform = "none";
-            }}
+          {...stripEntryHandlers(activeViewName === "proposals")}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <svg

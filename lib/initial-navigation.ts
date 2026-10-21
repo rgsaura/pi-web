@@ -21,13 +21,31 @@ export function getInitialNavigation(
 }
 
 /**
+ * The dashboard view a bare open of the app lands on: Actividad, unless the
+ * URL asked for something else. A `?view=` deep link names its own view; a
+ * `?session=` or `?cwd=` deep link goes to that chat or composer. The
+ * dashboards are the app's primary views — a session is something you open
+ * on purpose, not where the app starts.
+ */
+export function initialOverlayView(
+  view: string | null,
+  navigation: InitialNavigation,
+): string | null {
+  if (view) return view;
+  if (navigation.sessionId || navigation.requestedCwd) return null;
+  return "activity";
+}
+
+/**
  * Apply per-tab memory to a navigation snapshot that was taken from the URL
  * alone. Returns the same object when the URL already chose a cwd or session,
  * or when this tab has nothing stored.
  *
  * A remembered session fills `sessionId` and sets `sessionFromTab`. A
  * remembered new-session composer fills `requestedCwd` so reload shows that
- * UI instead of the previous chat.
+ * UI instead of the previous chat. A remembered dashboard view changes
+ * nothing here — the shell opens it itself, below the URL's precedence —
+ * because it is not a session or cwd destination.
  *
  * Call this after mount. Reading sessionStorage during the first client render
  * (including a `useState` initializer) makes SSR HTML diverge from the client
@@ -44,6 +62,7 @@ export function withTabOpen(
   if (tabOpen.kind === "session") {
     return { ...navigation, sessionId: tabOpen.sessionId, sessionFromTab: true };
   }
+  if (tabOpen.kind === "view") return navigation;
   return { ...navigation, requestedCwd: tabOpen.cwd };
 }
 

@@ -7,7 +7,6 @@ import type { ExoProposal } from "@/lib/exo-types";
 import { relevantProposals } from "@/lib/exo-visibility";
 
 export interface ExoProposalsViewProps {
-  onClose?: () => void;
   onOpenSession?: (sessionId: string) => void;
 }
 
@@ -62,7 +61,7 @@ function summaryText(proposal: ExoProposal): string {
   return (proposal.question?.trim() || proposal.summary?.trim() || "").slice(0, 500);
 }
 
-export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewProps) {
+export function ExoProposalsView({ onOpenSession }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
@@ -425,11 +424,6 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
         setZoom(null);
         return;
       }
-      if (event.key === "Escape" && onClose) {
-        event.preventDefault();
-        onClose();
-        return;
-      }
       if (!currentProposal) return;
       if (event.key === "ArrowLeft" && currentIndex > 0) {
         event.preventDefault();
@@ -448,7 +442,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending, zoom]);
+  }, [currentProposal, currentIndex, total, goPrev, goNext, resolve, sending, zoom]);
 
   const pendingCount = useMemo(() => relevantProposals(proposals, referenceMs).length, [proposals, referenceMs]);
   const receipt = currentProposal ? sentReceipts.get(currentProposal.id) : undefined;
@@ -496,19 +490,6 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-          <button
-            type="button"
-            onClick={onClose}
-            title="Volver al chat (Esc)"
-            aria-label="Volver al chat"
-            style={buttonBase}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            <span>Volver</span>
-          </button>
-
           {/* Pending vs All switch */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg)", padding: 2 }}>
