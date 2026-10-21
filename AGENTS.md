@@ -41,6 +41,9 @@ app/api/
   system-map/route.ts             GET live system map (channels, Pi sessions, herdr agents, timers)
   timeline/route.ts                GET merged timeline events (ledgers, sessions, timers, calendar, retro)
   timeline/events/route.ts         GET/POST/DELETE the retroactive manual ledger (quick-entry text or explicit ts)
+  paneles/route.ts                 GET list panel metadata | POST a panel's visibility (fijado/demanda/archivado + expira) in its panel.json
+  paneles/[...path]/route.ts       GET one panel's bytes (base-href injected HTML), no traversal, no symlink escapes
+  paneles/sessions/route.ts        GET a panel's related Pi sessions (panel.json registrations + transcript mentions)
   sessions/route.ts                GET list all sessions
   sessions/[id]/route.ts           GET/PATCH/DELETE a session
   sessions/[id]/context/route.ts   GET ?leafId=&tail=&before= a page of a leaf's context (tail defaults to 50; before pages upward)
@@ -114,6 +117,11 @@ lib/
   session-links.ts          a session's same-instance link (?session=<id>) and the plain-click rule the sidebar keeps in the page
   new-session-context.ts    client-safe: what the project/worktree pickers show (project, worktrees, project list), lag-safe contextForCwd
   normalize.ts              normalizeToolCalls(): file-format vs our toolCall field names
+  paneles.ts                the paneles root's only reader: dated panel dirs, panel.json parsing (estado legacy + effective visibilidad), serving-segment checks
+  paneles-sessions.ts       a panel's related sessions: panel.json registrations merged with transcript mentions
+  panel-catalog.ts          the panel manager's shared model: visibilities fijado/demanda/archivado, expiry, NATIVE_PANELS (Post Studio), catalog merge + pinned order (client-safe, pure)
+  panel-state.ts            the catalog's one write: a panel's estado/expira in its own panel.json, locked + atomic
+  panel-expiry.ts           keeps rg-archive-expiry's registry in step with temporal pins (EXO_EXPIRY_REGISTRY overrides)
   types.ts                  shared TypeScript types
   pi-types.ts               local structural types for pi SDK objects
   pi-sdk-internals.ts       loader for SDK modules the package does not export (MCP connection, config, OAuth)
@@ -182,6 +190,8 @@ components/
   PiWebTitle.tsx           the sidebar's "Pi Web" brand (files below the sessions only): a click scrambles it into the versions
   SessionTree.tsx          virtualized rows of the session tree and the archive view
   SystemSections.tsx        "Secciones del Sistema": the sidebar's live strip (Proyectos/Rutinas/Decisiones/Recientes segments, layout variants, decision deep-links)
+  PanelPins.tsx             the sidebar's pinned-panels strip: fijado panels as one-touch access, pointer drag reorder, expiry countdowns
+  PanelesView.tsx           the panel catalog: tipo sections, search, session trace, visibility controls (pin popover with expiry), the in-app generation flow doc
   SidebarMenu.tsx          sidebar popup menu (bottom sheet on phones), portaled to body: filter field, item secondary actions, the files tab's classic look
   ProjectWorktreePicker.tsx project and worktree boxes + menus: the files' (one row below the sessions, stacked in the tab) and the new-session bar's
   NewSessionContextBar.tsx the picker in its own row under the brand, right above the empty new-session composer; moves go through the sidebar
@@ -222,6 +232,9 @@ hooks/
   useDragDrop.ts           chat drop zone: dropped files, folders marked
   useFilesPlacement.ts     per-browser choice: the desktop sidebar's file browser below the sessions or in its own tab
   useGroupDrag.ts          dragging a sidebar project group: mouse threshold, touch/pen long-press, auto-scroll, drop
+  usePaneles.ts            one shared /api/paneles read (module cache + listeners) for the catalog and the pinned strip
+  usePanelSessions.ts      one panel's related sessions (panel.json + mentions), module-cached
+  useNativePanelStates.ts  native panels' visibility state over sidebar prefs, one module store
   useIsMobile.ts           responsive breakpoint
   useSessionUiState.ts     sidebar pins, archive, project order: optimistic writes in order, refetch on revision change
   useSidebarMotion.ts      the sidebar's fold and archive-view motion: phase, end fallback, reduced motion, what shows meanwhile
@@ -249,6 +262,7 @@ Design decisions and traps live in `docs/agents/`, one note per area. Read every
 - [subagents.md](docs/agents/subagents.md): the built-in subagent setting, profiles and their files, run status, completion notifications, the subagent viewer tab. Files: `lib/subagent*.ts`, `app/api/subagents/**`, `components/AgentsConfig.tsx`, `components/SubagentViewer.tsx`, `components/subagent-viewer-state.ts`.
 - [exo-decisiones.md](docs/agents/exo-decisiones.md): the Exo panel — decisiones (ExoProposalsView) data flow from the rg-proposal ledger, resolve/discard/undo, and visual decisions with per-option images (media dir, /api/exo/media, lightbox). Files: `lib/exo-data.ts`, `lib/exo-media.ts`, `lib/exo-types.ts`, `app/api/exo/**`, `components/ExoProposalsView.tsx`, `components/EncargosView.tsx`.
 - [timeline.md](docs/agents/timeline.md): the merged Timeline view and the retroactive ledger — quick entry of past events by hour, the JSONL store under `~/.local/state/timeline/`, hour bands and learned suggestions, the merged route plus the events route, the view's Eventos/Patrones tabs. Files: `lib/timeline-retro.ts`(+test), `lib/timeline-retro-store.ts`, `lib/timeline-data.ts`, `app/api/timeline/**`, `components/TimelineView.tsx`.
+- [paneles.md](docs/agents/paneles.md): the panel manager — catalog view and pinned strip, the three visibilities with temporal expiry (POST /api/paneles, panel-state, the expiry registry), native panels, the bidirectional session trace, serving, and the generation flow any session follows. Files: `app/api/paneles/**`, `lib/paneles*.ts`, `lib/panel-*.ts`, `hooks/usePaneles.ts`, `hooks/usePanelSessions.ts`, `hooks/useNativePanelStates.ts`, `components/PanelesView.tsx`, `components/PanelPins.tsx`.
 - [client-platform.md](docs/agents/client-platform.md): mobile software keyboard and viewport height, the terminal's extra keys, completion sound. Files: `hooks/useViewportHeight.ts`, `hooks/useAudio.ts`, `components/TerminalExtraKeys.tsx`, `lib/terminal-extra-keys.ts`, the keyboard-open CSS.
 
 ---

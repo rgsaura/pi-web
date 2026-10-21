@@ -58,11 +58,15 @@ export function normalizePanelVisibility(estado: unknown): PanelVisibility {
   return estado === "fijado" || estado === "archivado" ? estado : "demanda";
 }
 
-/** A valid expiry: YYYY-MM-DD that names a real calendar day. */
+/** A valid expiry: YYYY-MM-DD that names a real calendar day. V8's
+ *  Date.parse rolls impossible days over (Feb 30 → Mar 2), so the check
+ *  is a round-trip through UTC, never the parse alone. */
 export function normalizePanelExpiry(value: unknown): string | null {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
-  const time = Date.parse(`${value}T12:00:00Z`);
-  return Number.isFinite(time) ? value : null;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day, 12));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return value;
 }
 
 /** Local midnight of a moment, so expiry days count calendar days. */
@@ -143,8 +147,9 @@ export function panelExpiryCountdown(state: PanelExpiryState): string {
 /**
  * A native view of the app registered as a catalog panel (no panel.json:
  * its visibility lives in the browser's sidebar prefs). Post Studio is the
- * temporal example: pinned while a social plan is active, expiring on a
- * date Rodrigo picks, then quietly back to bajo demanda.
+ * temporal example: bajo demanda by default ("visible sólo cuando se usa"),
+ * pinned while a social plan is active — optionally with an expiry Rodrigo
+ * picks — and then quietly back to bajo demanda.
  */
 export interface NativePanelDef {
   id: string;
@@ -165,7 +170,7 @@ export const NATIVE_PANELS: readonly NativePanelDef[] = [
     resumen: "Review interactiva del carrusel/reel antes de OpenPost: música audible, selección de fotos y decisión final.",
     origen: "sistema",
     icon: "🎬",
-    defaultVisibility: "fijado",
+    defaultVisibility: "demanda",
   },
 ];
 
@@ -179,9 +184,9 @@ export interface NativePanelState {
   expira: string | null;
 }
 
-export function nativePanelState(def: NativePanelDef, saved: Partial<NativePanelState> | undefined): NativePanelState {
+export function nativePanelState(def: NativePanelDef, saved: { visibilidad?: string; expira?: string | null } | undefined): NativePanelState {
   return {
-    visibilidad: saved?.visibilidad ?? def.defaultVisibility,
+    visibilidad: isPanelVisibility(saved?.visibilidad) ? saved.visibilidad : def.defaultVisibility,
     expira: normalizePanelExpiry(saved?.expira),
   };
 }
@@ -346,6 +351,18 @@ export function orderPinnedPanels(panels: readonly CatalogPanel[], order: readon
 /** A plain-text haystack for panel search (title, summary, tipo, slug). */
 export function panelSearchText(panel: CatalogPanel): string {
   return `${panel.titulo} ${panel.resumen} ${panel.tipo} ${panel.slug ?? ""}`.toLowerCase();
+}
+
+/** The order after one drag drop: `from`'s key lands at `to`, the rest
+ *  shifts. Out-of-range indexes keep the order unchanged. */
+export function moveKey(order: readonly string[], from: number, to: number): string[] {
+  if (from < 0 || from >= order.length || to < 0 || to >= order.length || from === to) {
+    return [...order];
+  }
+  const next = [...order];
+  const [key] = next.splice(from, 1);
+  next.splice(to, 0, key);
+  return next;
 }
 
 export function filterCatalogPanelsByText(panels: readonly CatalogPanel[], query: string): CatalogPanel[] {

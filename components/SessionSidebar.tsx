@@ -93,6 +93,7 @@ import { useExoData } from "@/hooks/useExoData";
 import { useWorkspaces } from "@/hooks/useWorkspaces";
 import { relevantProposals } from "@/lib/exo-visibility";
 import { SystemSections } from "./SystemSections";
+import { PanelPins } from "./PanelPins";
 import { DirectoryPicker } from "./DirectoryPicker";
 import { DismissButton } from "./DismissButton";
 import { FileExplorer, type FileExplorerHandle } from "./FileExplorer";
@@ -255,6 +256,10 @@ interface Props {
   onOpenTimelineView?: () => void;
   /** Opens the Paneles view (EXO visible deliverables). */
   onOpenPanelesView?: () => void;
+  /** Opens one HTML panel in the catalog's viewer (the pinned strip). */
+  onOpenPanelDir?: (slug: string) => void;
+  /** Opens a native catalog panel's view, e.g. Post Studio (the pinned strip). */
+  onOpenNativePanel?: (id: string) => void;
   /** Opens the Agents inspector (prompts, skills, tools per agent). */
   onOpenAgentsInspector?: () => void;
   /** Opens the Post Studio (pre-review of a social post before OpenPost). */
@@ -513,7 +518,7 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenExoProposal, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenExoProposal, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenPanelDir, onOpenNativePanel, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -3324,6 +3329,15 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
         onOpenProposal={(id) => onOpenExoProposal?.(id)}
         onOpenProposalsView={onOpenProposalsView}
         onOpenActivityView={onOpenActivityView}
+      />
+
+      {/* The pinned-panels strip: panels the catalog has "fijado", in the
+          order Rodrigo dragged them (components/PanelPins.tsx). Empty means
+          nothing is pinned — the catalog view manages visibility. */}
+      <PanelPins
+        onOpenPanel={onOpenPanelDir}
+        onOpenNativePanel={onOpenNativePanel}
+        onOpenPanelesView={onOpenPanelesView}
       />
 
       {/* Sessions: every project's sessions, or the archive. A tab's panel,

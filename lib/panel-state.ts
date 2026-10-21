@@ -71,7 +71,11 @@ export async function writePanelState(slug: string, update: PanelStateUpdate): P
     return { ok: false, error: "panel no encontrado", status: 404 };
   }
   let nextExpira: string | null | undefined;
-  if (update.expira !== undefined) {
+  if (update.visibilidad !== "fijado") {
+    // An expiry only means something while pinned: unpinned or archived,
+    // it goes (and so does its watcher entry), whatever the request said.
+    nextExpira = null;
+  } else if (update.expira !== undefined) {
     if (update.expira === null || update.expira === "none") {
       nextExpira = null;
     } else {
@@ -80,7 +84,7 @@ export async function writePanelState(slug: string, update: PanelStateUpdate): P
     }
   }
 
-  return serializeByKey(PANEL_STATE_LOCK, slug, () => {
+  return serializeByKey(PANEL_STATE_LOCK, slug, async () => {
     let raw: Record<string, unknown>;
     try {
       const parsed: unknown = JSON.parse(readFileSync(join(dir!, "panel.json"), "utf8"));

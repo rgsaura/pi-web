@@ -247,6 +247,9 @@ export function AppShell() {
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
   const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
   const [panelesViewOpen, setPanelesViewOpen] = useState(() => initialView === "paneles");
+  /** The panel the catalog opens at: a `?panel=` deep link, or the last one
+   *  the sidebar's pinned strip asked for (null: the grid). */
+  const [panelDirRequest, setPanelDirRequest] = useState(initialPanelDir);
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
   const [postStudioOpen, setPostStudioOpen] = useState(() => initialView === "post-studio");
   // ?view=post-studio&post=<id> opens one studio post (defaults to the studio's own default).
@@ -1490,7 +1493,20 @@ export function AppShell() {
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
         onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
         onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
-        onOpenPanelesView={() => openOverlay(setPanelesViewOpen)}
+        onOpenPanelesView={() => {
+          setPanelDirRequest(null);
+          openOverlay(setPanelesViewOpen);
+        }}
+        onOpenPanelDir={(slug) => {
+          setPanelDirRequest(slug);
+          openOverlay(setPanelesViewOpen);
+        }}
+        onOpenNativePanel={(id) => {
+          // A native catalog panel: today the one registered view is Post
+          // Studio; unknown ids fall back to the catalog.
+          if (id === "post-studio") openOverlay(setPostStudioOpen);
+          else openOverlay(setPanelesViewOpen);
+        }}
         onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
         onOpenPostStudio={() => openOverlay(setPostStudioOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
@@ -2633,7 +2649,13 @@ export function AppShell() {
           ) : panelesViewOpen ? (
             <PanelesView
               onClose={() => setPanelesViewOpen(false)}
-              initialPanelDir={initialPanelDir}
+              initialPanelDir={panelDirRequest}
+              onOpenNativePanel={(id) => {
+                if (id === "post-studio") {
+                  setPanelesViewOpen(false);
+                  openOverlay(setPostStudioOpen);
+                }
+              }}
               onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {

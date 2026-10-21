@@ -96,7 +96,7 @@ export interface PanelExpiryTarget {
  * Never throws: the caller's visibility change already happened.
  */
 export function syncPanelExpiryRegistry(slug: string, target: PanelExpiryTarget | null): void {
-  void serializeByKey(EXPIRY_REGISTRY_LOCK, "registry", () => {
+  void serializeByKey(EXPIRY_REGISTRY_LOCK, "registry", async () => {
     try {
       const path = expiryRegistryPath();
       let registry: ExpiryRegistry = { version: 1, entries: [] };
