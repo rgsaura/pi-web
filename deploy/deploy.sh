@@ -26,9 +26,9 @@ DOCKER="${DOCKER:-sudo docker}"
 ENV="${ENV:-qa}"
 
 case "$ENV" in
-  qa)   WEB_PORT="${WEB_PORT:-30152}" ;;
-  pre)  WEB_PORT="${WEB_PORT:-30149}" ;;
-  prod) WEB_PORT="${WEB_PORT:-30141}" ;;
+  qa)   WEB_PORT="${WEB_PORT:-30152}"; API_PORT="${API_PORT:-3300}" ;;
+  pre)  WEB_PORT="${WEB_PORT:-30149}"; API_PORT="${API_PORT:-3301}" ;;
+  prod) WEB_PORT="${WEB_PORT:-30141}"; API_PORT="${API_PORT:-3302}" ;;
   *) die "ENV inválido: $ENV (qa|pre|prod)" ;;
 esac
 
@@ -76,6 +76,7 @@ write_compose_env() {
   cat > "$f" <<ENV
 APP_IMAGE=exohuman-app:$TAG
 WEB_PORT=$WEB_PORT
+API_PORT=$API_PORT
 INTERNAL_TOKEN=$(internal_token)
 # el token se exige en up: si .env no lo trae, aborta (no un stack sin auth)
 PI_WEB_ALLOWED_HOSTS=${PI_WEB_ALLOWED_HOSTS:-exohuman,exohuman.tail08ecb.ts.net,rg-exohuman,rg-exohuman.tail08ecb.ts.net,exohuman.rgsaura.com,exohuman-pre.rgsaura.com,localhost}
@@ -129,8 +130,8 @@ self_test_probes() {
   local base="http://${QA_BIND_IP:-$(hostname -I | awk '{print $1}')}:$WEB_PORT"
   probe "UI (html)"                 "$base/" 200
   probe "API sessions (caddy→api)"  "$base/api/sessions" 200
-  # api corre con network_mode: host → 127.0.0.1:3000 directo (sin token → 401)
-  probe "API sin token directo (host :3000)" "http://127.0.0.1:3000/api/sessions" 401
+  # api corre con network_mode: host → 127.0.0.1:$API_PORT directo (sin token → 401)
+  probe "API sin token directo (host :${API_PORT:-3300})" "http://127.0.0.1:${API_PORT:-3300}/api/sessions" 401
   probe "web 404 en /api (role)"           "http://$(docker_ip web):3000/api/sessions" 404 2>/dev/null || true
   return $FAIL
 }
