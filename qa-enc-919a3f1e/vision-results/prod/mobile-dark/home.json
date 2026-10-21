@@ -1,0 +1,36 @@
+{
+ "desc": "Vista home móvil en tema oscuro: barra superior con menú, 'Session info' y toggle de panel; zona central ampliamente vacía con bloque de marca 'Exohuman UI' + breadcrumb de workspace/rama y composer de nueva sesión con controles debajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Fila de breadcrumb bajo el título (a la derecha, borde derecho de la pantalla)",
+   "desc": "El selector de rama se muestra truncado por la izquierda ('...paneles-manager') y su chevron queda pegado al borde derecho del viewport, con la fila casi desbordada en 390px."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Input del composer (lado derecho del placeholder)",
+   "desc": "El placeholder 'Message... Type / for commands, @' aparece truncado con puntos suspensivos justo donde explica el comando '@', perdiendo información útil en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Barra de controles inferior del composer (fila de iconos + 'Failover Normal' + 'More controls')",
+   "desc": "El texto 'Failover Normal (Defa…' está truncado con elipsis; en 390px esa fila queda amontonada entre iconos, selector de failover y 'More controls'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Zona superior-centro de la pantalla (todo el hueco por encima del título)",
+   "desc": "Más del 35% de la pantalla está en blanco sin contenido ni estado (sin lista de sesiones visible ni indicación de estado), dejando el layout desequilibrado con todo el contenido agrupado en el centro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior: texto 'Session info' y placeholder del input",
+   "desc": "Contraste muy bajo del gris sobre el fondo oscuro ('Session info' y el placeholder apenas se distinguen del fondo)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Barra superior (botón '...' y toggle de panel) y fila de controles del composer (iconos de imagen/micro/ajustes)",
+   "desc": "Targets táctiles de icono con apariencia por debajo de 44px en móvil, difíciles de tocar con precisión."
+  }
+ ],
+ "empty": false
+}

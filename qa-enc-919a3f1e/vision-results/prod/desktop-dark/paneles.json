@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de sesión/agente en vez de la galería de Paneles: sidebar izquierdo (navegación, proyectos, árbol FILES), área central con mensaje largo del agente, chips de archivos y barra de input; barra superior con métricas. La vista Paneles entregables no llega a renderizarse.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "área principal central",
+   "desc": "Con ?view=paneles se espera la galería de paneles entregables pero se muestra el hilo de una sesión con texto markdown del agente: la vista solicitada no carga o no existe ruta real para ella."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista de proyectos",
+   "desc": "Nombre truncado 'Proyecto: wt-paneles-ma...' sin tooltip ni expansión visible; el contador '1' queda suelto al lado del texto cortado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "contenido del mensaje, parte superior del área central",
+   "desc": "El texto del agente aparece cortado por el borde superior ('proceso pi-web.js reiniciado):') sin respiro de scroll ni separador claro con la barra superior."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, métricas",
+   "desc": "Agrupación de métricas '243k ↑ 85k ↓ 26.5M ⊙ 18% / 1.0M' muy comprimida y sin etiquetas claras de qué representan cada valor."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, lista de proyectos",
+   "desc": "Entrada 'probe-cwd' sin icono de proyecto ni contexto, mezclada con los 'Proyecto: wt-...' rompiendo la consistencia visual de la lista."
+  }
+ ],
+ "empty": false
+}

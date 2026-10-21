@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de sesión en móvil con mensaje largo del agente (lista numerada, chips de archivos referenciados, metadatos del turno) y barra inferior con input de mensaje, botones de adjuntar/micrófono/ajustes y enlaces 'Failover Fast'/'More controls'; barra superior con menú, stats de tokens y toggle de panel.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior + primera línea del contenido",
+   "desc": "El texto del mensaje queda cortado a media línea justo bajo la barra superior ('pasos, cada relativa y Nueva sesión aqu'), sin separación ni desvanecido, da sensación de truncado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "metadatos del turno, justo encima del input",
+   "desc": "La línea '522 in · 1,078 out · 191,936 cache R' hace wrap dejando una 'R' sola en la línea siguiente; el corte del texto es ilegible/accidental."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fecha del turno, esquina inferior derecha del mensaje",
+   "desc": "'Oct 15 03:13 PM' se parte en dos líneas ('Oct 15 03:13' / 'PM'), wrap feo en una marca de tiempo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra inferior, fila de controles bajo el input",
+   "desc": "'Failover Fast' y 'More controls' son texto plano sin borde ni fondo ni icono, no tienen affordance de botón y quedan flotando en la parte derecha, junto a los iconos de adjuntar/micrófono/ajustes."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "input de mensaje, borde derecho",
+   "desc": "El placeholder 'Message... Type / for commands, @' llega muy pegado al botón de envío, casi sin margen de seguridad."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "metadatos del turno (522 in · 1,078 out · cache)",
+   "desc": "Texto en gris muy claro sobre fondo blanco, contraste bajo para información de contexto."
+  }
+ ],
+ "empty": false
+}

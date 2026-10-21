@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de sesión con panel izquierdo (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, árbol de FILES) y área central de chat con mensajes largos, chips de archivos referenciados, composer abajo y barra de estado inferior. Vista con datos, sin loader ni error.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra superior derecha (Full history / Generate title / Branches / System / Tools)",
+   "desc": "La barra de pestañas desborda por la derecha: el último elemento aparece cortado ('M') a mitad y el botón de menú queda pegado al borde de la ventana, sin margen."
+  },
+  {
+   "sev": "friccion",
+   "zona": "chips de archivos debajo del mensaje, justo encima del composer",
+   "desc": "La última fila de chips (SessionSidebar.test.mjs, route.ts) queda parcialmente tapada/cortada por el campo de mensaje; la flecha indicadora se solapa con el borde del composer y route.ts se ve cortado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "panel izquierdo, lista de proyectos",
+   "desc": "El nombre 'Proyecto: wt-paneles-ma…' se trunca con puntos suspensivos sin tooltip visible ni forma de ver el nombre completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área de chat, primer mensaje visible (arriba)",
+   "desc": "El contenido del mensaje empieza cortado ('Canales ROI / Voz / FaceSearch…' sin viñeta inicial completa), indicando scroll intermedio con el inicio del mensaje fuera de vista."
+  }
+ ],
+ "empty": false
+}

@@ -79,13 +79,15 @@ export function EncargosView({ onClose, onSelectSession }: EncargosViewProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          rowGap: 8,
           padding: "16px 24px",
           borderBottom: "1px solid var(--border)",
           background: "var(--bg-panel)",
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0, flexWrap: "wrap" }}>
           <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "var(--text)" }}>Encargos y Objetivos</h1>
           <span style={{ fontSize: 12, padding: "3px 10px", borderRadius: 999, background: "rgba(245, 158, 11, 0.15)", color: "#f59e0b", fontWeight: 700 }}>
             {pendingCount} activos
@@ -95,7 +97,7 @@ export function EncargosView({ onClose, onSelectSession }: EncargosViewProps) {
           </span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           <button
             type="button"
             onClick={refresh}

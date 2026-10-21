@@ -1,0 +1,26 @@
+{
+ "desc": "Timeline móvil con header (título, 662 eventos), chips de filtro con scroll horizontal, buscador y lista agrupada por fecha bajo el separador PRÓXIMO, con rutinas programadas y eventos con descripciones larguísimas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro (debajo del header, borde derecho)",
+   "desc": "El cuarto chip (con icono de aviso) aparece cortado a la derecha, a media anchura; se lee como chip roto y obliga a scroll horizontal para ver su etiqueta."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "iconos de cada evento de la lista (columna izquierda) y prefijo de eventos 'caduca'",
+   "desc": "Los iconos/emojis no renderizan correctamente: se ven como cuadrados huecos (tofu), p.ej. '□ □ caduca: ...', sin significado visual alguno."
+  },
+  {
+   "sev": "friccion",
+   "zona": "evento 'caduca: Exploración de planes: Coworking & Founder Meetup...' (Mié 21 Oct)",
+   "desc": "La descripción ocupa ~10 líneas de texto seguido en gris, domina toda la pantalla y entierra el resto del timeline; no hay clamp/colapsar 'ver más', la jerarquía título↔detalle queda aplastada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila superior (top bar, derecha)",
+   "desc": "'Session info' está en inglés dentro de una UI en español; mezcla de idioma en la navegación."
+  }
+ ],
+ "empty": false
+}

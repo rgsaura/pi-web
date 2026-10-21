@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline en tablet oscura: barra superior, sidebar izquierda larga (navegación + árbol de workspaces/files + Settings) y panel derecho con cabecera 'Línea de tiempo', pestañas Eventos/Patrones, chips de filtro y buscador, pero el contenido principal está en blanco en estado 'cargando...' con todos los contadores a 0.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "panel derecho, fila de chips de filtro (horizontal, borde derecho)",
+   "desc": "La fila de chips desborda: el chip 'Re...' queda cortado/clipped contra el borde derecho de la pantalla (viewport 820px) sin scroll horizontal visible ni degradado indicativo; se pierde acceso al resto de filtros."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar ítems (Línea de tiempo, Paneles, Post Studio, Agentes...), pestañas Eventos/Patrones y botón Añadir",
+   "desc": "Los iconos se renderizan como cuadrados vacíos (tofu/glyph faltante) en lugar de su icono real: se pierde la señal visual de cada sección y el botón 'Añadir' muestra un cuadrado sin significado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "panel derecho, área de contenido central",
+   "desc": "Estado combinado confuso: el subtítulo dice 'cargando...' pero todos los chips muestran 0 y la zona queda en negro absoluto sin mensaje de vacío, ni loader, ni CTA; el usuario no sabe si sigue cargando o no hay datos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, ítem de navegación con badge 4 (entre Workspaces y Decisions)",
+   "desc": "Inconsistencia de naming: en el sidebar aparece 'Encargas' mientras en los chips del filtro aparece 'Encargos 0'; tipografía/etiqueta incorrecta."
+  }
+ ],
+ "empty": true
+}

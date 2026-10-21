@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Decisiones en móvil con header, barra de filtros (Volver, pestañas Pendientes/Todas, orden por urgencia) y chips de categoría, seguida de una tarjeta de propuesta con badges, título, origen, descripción larga y el inicio de las opciones propuestas (opción A).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra de filtros superior, extremo derecho",
+   "desc": "El botón 'Por urgen...' queda cortado por el borde del viewport: overflow horizontal visible, texto truncado y sin indicación de scroll (además el icono interior es un glifo roto)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "pestañas 'Pendientes (7)' y 'Todas (106)' (centro-superior)",
+   "desc": "Los iconos de las pestañas se renderizan como cajas tofu (□ / glifo faltante) en lugar de un emoji/icono, indicando fallo de renderizado de fuentes de símbolos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de opción A (abajo), badge 'A'",
+   "desc": "El badge cuadrado 'A' está anclado abajo a la izquierda mientras el texto de la opción ocupa la parte superior: desalineación vertical rota entre badge y contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila 'Origen:', enlace 'Ver sesión en vivo' (derecha)",
+   "desc": "El icono de enlace externo queda pegado al borde del chip de origen y el texto del enlace se parte en dos líneas justo al lado, quedando apretado contra el chip."
+  }
+ ],
+ "empty": false
+}

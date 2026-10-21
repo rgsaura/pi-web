@@ -1,0 +1,21 @@
+{
+ "desc": "Vista Agents con sidebar izquierdo (navegación, workspace, árbol de archivos) y panel principal con 3 tarjetas de agentes colapsables más un 'Catálogo de skills (80)', con mucho espacio vacío debajo.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "panel principal, zona inferior (bajo 'Catálogo de skills (80)')",
+   "desc": "Gran área vacía (~400px) sin contenido ni mensaje; el 'Catálogo de skills (80)' aparece como cabecera colapsada sin pistas de que hay 80 items dentro, lo que hace parecer la vista incompleta."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, item 'Línea de tiempo'",
+   "desc": "El texto del label se parte en dos líneas ('Línea de' / 'tiempo') rompiendo la altura y alineación de los items de navegación respecto al resto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjetas de agentes (dev, exohuman-ui, rot), esquina superior derecha",
+   "desc": "El chevron de colapsar está muy alejado del título/badges, pegado al borde derecho de la tarjeta, lo que dificulta asociarlo con el agente y desperdicia ancho."
+  }
+ ],
+ "empty": false
+}

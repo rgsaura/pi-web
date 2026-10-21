@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Encargos con sidebar izquierdo de navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, proyectos y árbol FILES) y panel principal con header 'Encargos y Objetivos', filtros por pestañas/área y 5 tarjetas de encargos en curso con badges de estado, dificultad y área, metadatos a la derecha y CTA 'Ir a sesión de trabajo'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Tarjetas de encargos, lado derecho (centro del panel principal)",
+   "desc": "El botón 'Ir a sesión de trabajo' solo aparece en las 2 primeras tarjetas; las 3 tarjetas inferiores (Inventario, QA visual, Mejora recursiva) no tienen ninguna acción visible, lo que rompe la consistencia y deja encargos sin navegación."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, lista de proyectos (parte media-inferior)",
+   "desc": "El nombre 'Proyecto: wt-paneles-ma...' está truncado con puntos suspensivos y convive con un badge numérico '1' justo al lado, dificultando identificar el proyecto completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Tarjetas de encargos, subtítulo bajo el título",
+   "desc": "4 de 5 tarjetas muestran el mismo texto genérico 'Iniciando investigación...' sin progreso ni ETA, dando sensación de placeholder y sin información real del estado del encargo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjetas de encargos, esquina superior derecha (metadatos)",
+   "desc": "La línea de metadatos ('Llevan 2m enc-6d8067e1') es gris muy tenue sobre fondo oscuro y amontona duración e ID sin separador claro, apenas legible a este tamaño."
+  }
+ ],
+ "empty": false
+}

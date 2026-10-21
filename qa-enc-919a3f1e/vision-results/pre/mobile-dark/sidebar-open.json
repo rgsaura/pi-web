@@ -1,0 +1,31 @@
+{
+ "desc": "Móvil 390x844 con tema oscuro y sidebar abierto como drawer que cubre la mayor parte de la pantalla: barra superior de iconos/métricas, sección de tarjetas de navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), árbol de workspaces/proyectos abajo y botón Settings fijo al pie. El contenido de la sesión queda parcialmente visible en la franja derecha.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "árbol de workspaces, filas 'Proyecto: …' (mitad inferior del sidebar)",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos (wt-panele…, wt-postst…, wt-resilie…, wt-seccio…, wt-timelin…) lo que impide distinguirlos entre sí en móvil"
+  },
+  {
+   "sev": "friccion",
+   "zona": "árbol de workspaces, botones '+' y '…' de cada fila",
+   "desc": "Targets táctiles pequeños y muy juntos (los tres puntos '…' y el '+'), por debajo del mínimo cómodo de ~44px en móvil"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'Línea de tiempo', parte superior del sidebar",
+   "desc": "El título salta a dos líneas mientras 'pasado → próximo' también se parte en dos, generando una fila desalineada respecto al resto de tarjetas de una sola línea"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, junto al icono de panel",
+   "desc": "Métricas '85k 18%' sin etiqueta ni unidad, difíciles de interpretar y compitiendo con los iconos de acción"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "franja derecha tras el drawer",
+   "desc": "El texto del contenido subyacente queda cortado a media palabra sin scrim de fondo claro, lo que hace que la parte visible se lea como contenido roto"
+  }
+ ],
+ "empty": false
+}

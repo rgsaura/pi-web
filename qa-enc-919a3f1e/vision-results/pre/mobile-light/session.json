@@ -1,0 +1,21 @@
+{
+ "desc": "Vista móvil 390x844 de sesión con mensaje de agente (texto largo con listas numeradas, chips de archivos referenciados, meta de tokens/fecha) y barra inferior con input de mensaje, controles rápidos y pie con estado de modelo.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Cuerpo del mensaje, línea con el chip '( console/proposals/activity/mobile-check )'",
+   "desc": "El chip de código inline se solapa visualmente con los paréntesis que lo envuelven: el '(' queda tapado por el borde izquierdo del chip y el ')' pegado/superpuesto al borde derecho."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra inferior derecha, botón 'More controls'",
+   "desc": "El texto llega muy pegado al borde derecho del viewport, sin margen de seguridad, y junto a 'Failover Fast' se lee en gris claro con bajo contraste sobre fondo blanco."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Pie inferior, fila '⚡ Default'",
+   "desc": "La fila de estado queda casi pegada al borde inferior de la pantalla con padding mínimo y tono gris muy claro, apenas legible."
+  }
+ ],
+ "empty": false
+}

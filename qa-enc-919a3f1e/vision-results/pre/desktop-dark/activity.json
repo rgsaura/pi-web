@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Activity en tema oscuro con sidebar de navegación + árbol de archivos a la izquierda y panel principal con canales principales, presupuesto de tokens, buscador/filtros y lista de sesiones pi activas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta FaceSearch (canales principales, centro-arriba)",
+   "desc": "El nombre del servicio 'rg-facesearch-sentinel....' y el id de sesión 'faceear...' aparecen truncados con puntos suspensivos; no se puede identificar el servicio ni la sesión."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta ROT (canales principales, centro-arriba)",
+   "desc": "El enlace de sesión activa se muestra truncado como 'rot-tel..', cortando el nombre de la sesión antes de 'Abrir sesión →'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "varias zonas (Cuota de Tokens, Renovación de ciclo, input Buscar, nombres de Proyecto, chips de filtro UI/FaceSearch/Comms/Rutinas/Planes, opción 'Mayor CPU')",
+   "desc": "Los iconos/emoji se renderizan como cajas vacías (glifo faltante/tofu), lo que ensucia la interfaz y da sensación de rotura."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta Voz (canales principales, centro)",
+   "desc": "A diferencia de ROT y FaceSearch, la tarjeta Voz no muestra fila 'Sesión activa: ... Abrir sesión →', dejando un hueco vacío y una inconsistencia de información entre tarjetas."
+  }
+ ],
+ "empty": false
+}

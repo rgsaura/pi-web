@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de detalle de una decisión en tema oscuro: sidebar izquierdo de navegación + árbol de archivos 'FILES', y área principal con tarjeta de propuesta (estado, origen, descripción, 3 opciones A/B/C, textarea de respuesta personalizada y botón enviar).",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "header superior izquierdo, tab del logo 'Exohuman UI'",
+   "desc": "El texto del logo aparece recortado por arriba y se solapa con el botón de cierre (x) del tab; la pestaña parece cortada en el borde superior del viewport."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista de 'Proyecto:' (wt-paneles-ma..., wt-poststudio-v2)",
+   "desc": "Los nombres de proyecto se truncan con puntos suspensivos sin tooltip ni ancho suficiente ('Proyecto: wt-paneles-ma...') y los contadores '0 1' quedan amontonados pegados al nombre truncado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, límite inferior de la lista de proyectos, justo encima del divisor 'FILES'",
+   "desc": "Hay un elemento de la lista cortado a media línea (se ve solo la parte superior del texto) por overflow del contenedor, sin scroll visible ni indicación de que hay más contenido."
+  },
+  {
+   "sev": "friccion",
+   "zona": "parte inferior del área principal, botón 'Enviar respuesta'",
+   "desc": "El botón queda pegado y parcialmente cortado por el borde inferior del viewport; el contenedor de 'Respuesta personalizada' no tiene margen/padding inferior suficiente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila 'Origen' de la tarjeta, chip 'Brief matutino · 20-10'",
+   "desc": "El texto del chip se ve comprimido/truncado dentro del recuadro gris y con bajo contraste respecto al resto de la fila 'Origen'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de filtros superior derecha, botón icono junto al desplegable 'Por urgencia / caducidad'",
+   "desc": "El último botón de la barra queda casi pegado al borde derecho de la ventana, sin margen lateral, y su icono es poco identificable."
+  }
+ ],
+ "empty": false
+}

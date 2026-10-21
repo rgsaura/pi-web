@@ -1,0 +1,16 @@
+{
+ "desc": "Vista Paneles (móvil 390x844, tema oscuro): barra superior con menú y 'Session info', cabecera 'Paneles e Informes' con badge '8 activos' y botones Actualizar/Cerrar, pestañas Activos/Archivados/Todos, buscador y listado de tarjetas de informes (INFORME + fecha + título + descripción + botón Sesiones).",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Cabecera de sección 'INFORMES 4' (izquierda) y botón 'Sesiones ▼' de cada tarjeta",
+   "desc": "El icono se renderiza como un cuadro vacío (glyph roto/emoji o fuente de iconos ausente) tanto en el encabezado de la sección como en el botón de cada tarjeta, aspecto de placeholder."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Botones 'Actualizar' y 'Cerrar' bajo el título (arriba-izquierda)",
+   "desc": "'Cerrar' es ambiguo y comparte el mismo peso visual que 'Actualizar'; en móvil no queda claro qué acción cierra (panel, vista o sesión)."
+  }
+ ],
+ "empty": false
+}

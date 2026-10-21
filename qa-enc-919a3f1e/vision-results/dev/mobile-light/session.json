@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de sesión en móvil con mensaje largo en markdown (texto de entrega), chips de archivos, línea de metadatos de tokens y zona de input con barra de controles inferior. Sin loader ni estado vacío; el contenido fluye verticalmente.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, botón '...' (segunda celda)",
+   "desc": "El icono '…' aparece pegado/recortado contra el borde derecho de su celda, sin margen visible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "lista de chips de archivos, fila 'workspaces-data.ts' + 'mobile-check.mjs'",
+   "desc": "El chip 'mobile-check.mjs' llega al borde derecho del viewport sin margen, con aspecto de desborde horizontal; el resto de filas sí tienen padding."
+  },
+  {
+   "sev": "friccion",
+   "zona": "footer inferior, línea '… Default' bajo el avatar 'N'",
+   "desc": "El texto '… Default' queda cortado por el borde inferior de la pantalla y el avatar circular 'N' se solapa con esa línea, dificultando su lectura."
+  },
+  {
+   "sev": "friccion",
+   "zona": "campo de mensaje, placeholder",
+   "desc": "El placeholder 'Message... Type / for commands, @' ocupa todo el ancho y queda pegado al botón de envío, con riesgo de truncado en viewports algo menores."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de controles inferior, iconos de imagen/micro/ajustes",
+   "desc": "Los tres iconos de la izquierda son muy claros (gris casi blanco sobre fondo claro) y pequeños como target táctil, con contraste insuficiente en tema claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, indicadores '↑243k ↓85k 18%'",
+   "desc": "Los números de uso en gris claro tienen poco contraste sobre fondo blanco, difíciles de leer a primera vista."
+  }
+ ],
+ "empty": false
+}

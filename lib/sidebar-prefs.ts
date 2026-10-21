@@ -3,7 +3,8 @@
  * user's explicit project group expand/collapse choices, whether the pinned
  * section is collapsed, whether the files section below the sessions is
  * collapsed, whether the files tab or section lists ignored files, and the
- * folders the worktree listing last found outside git.
+ * folders the worktree listing last found outside git, and the "Secciones
+ * del Sistema" section's variant and collapse.
  * Best-effort localStorage, like the other sidebar memories: privacy mode or
  * quota errors fall back to defaults.
  */
@@ -163,6 +164,36 @@ const ACTIVE_NOW_STORAGE_KEY = "pi-web:sidebar-sessions-active-now";
 const SESSIONS_CATEGORY_FILTER_STORAGE_KEY = "pi-web:sidebar-sessions-category-filter";
 const SESSIONS_SORT_MODE_STORAGE_KEY = "pi-web:sidebar-sessions-sort-mode";
 
+/**
+ * "Secciones del Sistema" (the strip under the voice button): whether it is
+ * collapsed, its layout variant and the sub-section it shows. Per browser,
+ * like the rest of the sidebar's own memories.
+ */
+const SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY = "pi-web:sidebar-system-sections-collapsed";
+const SYSTEM_SECTIONS_VARIANT_STORAGE_KEY = "pi-web:sidebar-system-sections-variant";
+const SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY = "pi-web:sidebar-system-sections-segment";
+
+/**
+ * The pinned-panels strip (components/PanelPins.tsx): whether it is folded
+ * to its header and the order of the pinned catalog keys ("html:<slug>" /
+ * "native:<id>"). The pin STATE of HTML panels lives in each panel.json
+ * (POST /api/paneles, shared by every browser); only the order and the
+ * native views' state are per browser, like the rest of the sidebar's
+ * memories.
+ */
+const PANEL_PINS_COLLAPSED_STORAGE_KEY = "pi-web:sidebar-panel-pins-collapsed";
+const PANEL_PIN_ORDER_STORAGE_KEY = "pi-web:sidebar-panel-pin-order";
+const NATIVE_PANEL_STATES_STORAGE_KEY = "pi-web:sidebar-native-panel-states";
+
+/** Saved catalog keys beyond this many are dropped (oldest first). */
+const MAX_PANEL_PIN_ORDER = 100;
+
+export type SystemSectionVariant = "full" | "compact" | "access";
+export type SystemSectionSegment = "proyectos" | "rutinas" | "decisiones" | "recientes";
+
+const SYSTEM_SECTION_VARIANTS: readonly SystemSectionVariant[] = ["full", "compact", "access"];
+const SYSTEM_SECTION_SEGMENTS: readonly SystemSectionSegment[] = ["proyectos", "rutinas", "decisiones", "recientes"];
+
 /** Whether the sessions tree starts with the "activas ahora" filter on. */
 export function loadActiveNowOnly(storage: StorageLike | null = getBrowserStorage()): boolean {
   if (!storage) return false;
@@ -215,6 +246,78 @@ export function loadSessionsSortMode(storage: StorageLike | null = getBrowserSto
   }
 }
 
+/** The "Secciones del Sistema" strip folded to its header; open unless the browser saved it folded. */
+export function loadSystemSectionsCollapsed(storage: StorageLike | null = getBrowserStorage()): boolean {
+  if (!storage) return false;
+  try {
+    return storage.getItem(SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function saveSystemSectionsCollapsed(
+  collapsed: boolean,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_COLLAPSED_STORAGE_KEY, String(collapsed));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** The strip's layout variant; anything unreadable is the full one. */
+export function loadSystemSectionsVariant(
+  storage: StorageLike | null = getBrowserStorage(),
+): SystemSectionVariant {
+  if (!storage) return "full";
+  try {
+    const value = storage.getItem(SYSTEM_SECTIONS_VARIANT_STORAGE_KEY);
+    return SYSTEM_SECTION_VARIANTS.includes(value as SystemSectionVariant) ? (value as SystemSectionVariant) : "full";
+  } catch {
+    return "full";
+  }
+}
+
+export function saveSystemSectionsVariant(
+  variant: SystemSectionVariant,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_VARIANT_STORAGE_KEY, variant);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** The sub-section the full variant shows; defaults to projects. */
+export function loadSystemSectionsSegment(
+  storage: StorageLike | null = getBrowserStorage(),
+): SystemSectionSegment {
+  if (!storage) return "proyectos";
+  try {
+    const value = storage.getItem(SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY);
+    return SYSTEM_SECTION_SEGMENTS.includes(value as SystemSectionSegment) ? (value as SystemSectionSegment) : "proyectos";
+  } catch {
+    return "proyectos";
+  }
+}
+
+export function saveSystemSectionsSegment(
+  segment: SystemSectionSegment,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(SYSTEM_SECTIONS_SEGMENT_STORAGE_KEY, segment);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
 export function saveSessionsSortMode(
   mode: string,
   storage: StorageLike | null = getBrowserStorage(),
@@ -222,6 +325,103 @@ export function saveSessionsSortMode(
   if (!storage) return;
   try {
     storage.setItem(SESSIONS_SORT_MODE_STORAGE_KEY, mode);
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** The pinned-panels strip folded to its header; open unless the browser saved it folded. */
+export function loadPanelPinsCollapsed(storage: StorageLike | null = getBrowserStorage()): boolean {
+  if (!storage) return false;
+  try {
+    return storage.getItem(PANEL_PINS_COLLAPSED_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function savePanelPinsCollapsed(
+  collapsed: boolean,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(PANEL_PINS_COLLAPSED_STORAGE_KEY, String(collapsed));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/** Catalog keys in the order the browser dragged them (see loadPanelPinOrder). */
+export function loadPanelPinOrder(storage: StorageLike | null = getBrowserStorage()): string[] {
+  if (!storage) return [];
+  try {
+    const raw = storage.getItem(PANEL_PIN_ORDER_STORAGE_KEY);
+    const value: unknown = raw === null ? [] : JSON.parse(raw);
+    if (!Array.isArray(value)) return [];
+    return value
+      .filter((key): key is string => typeof key === "string" && key !== "" && key !== "__proto__")
+      .slice(0, MAX_PANEL_PIN_ORDER);
+  } catch {
+    return [];
+  }
+}
+
+/** Every drag drop saves the full order; unknown keys die on their next read. */
+export function savePanelPinOrder(
+  order: readonly string[],
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage) return;
+  try {
+    const keys = order
+      .filter((key) => typeof key === "string" && key !== "" && key !== "__proto__")
+      .slice(0, MAX_PANEL_PIN_ORDER);
+    storage.setItem(PANEL_PIN_ORDER_STORAGE_KEY, JSON.stringify(keys));
+  } catch {
+    // Persistence is best-effort.
+  }
+}
+
+/**
+ * Native panels' saved state (visibility + temporal expiry), per browser:
+ * a native view has no panel.json. Entries are Partial so a def's own
+ * defaults apply while it is unsaved; junk values are dropped.
+ */
+export function loadNativePanelStates(
+  storage: StorageLike | null = getBrowserStorage(),
+): Record<string, { visibilidad: string; expira: string | null }> {
+  if (!storage) return {};
+  try {
+    const raw = storage.getItem(NATIVE_PANEL_STATES_STORAGE_KEY);
+    const value: unknown = raw === null ? {} : JSON.parse(raw);
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const result: Record<string, { visibilidad: string; expira: string | null }> = {};
+    for (const [id, entry] of Object.entries(value)) {
+      if (id === "__proto__" || !entry || typeof entry !== "object" || Array.isArray(entry)) continue;
+      const state = entry as Record<string, unknown>;
+      const visibilidad = typeof state.visibilidad === "string" ? state.visibilidad : "";
+      const expira = typeof state.expira === "string" && state.expira ? state.expira : null;
+      result[id] = { visibilidad, expira };
+    }
+    return result;
+  } catch {
+    return {};
+  }
+}
+
+/** One native panel's state merged over what the browser already saved. */
+export function saveNativePanelState(
+  id: string,
+  state: { visibilidad: string; expira: string | null },
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  if (!storage || !id || id === "__proto__") return;
+  try {
+    storage.setItem(
+      NATIVE_PANEL_STATES_STORAGE_KEY,
+      JSON.stringify({ ...loadNativePanelStates(storage), [id]: state }),
+    );
   } catch {
     // Persistence is best-effort.
   }

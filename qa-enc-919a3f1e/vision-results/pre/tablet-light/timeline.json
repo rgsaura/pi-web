@@ -1,0 +1,21 @@
+{
+ "desc": "Layout de dos paneles: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, voz) y árbol de archivos; panel derecho con la vista Timeline (pestañas Eventos/Patrones, filtros por tipo, buscador y lista de eventos agrupados por día con 679 eventos).",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Varios iconos en toda la interfaz (botón 'Añadir' del header, pestañas 'Eventos'/'Patrones por hora', chips 'Encargos/Decisiones/Informes', títulos 'Proyecto: ...' del sidebar y marcadores 'caduca' de los eventos)",
+   "desc": "Los iconos se renderizan como cuadrados vacíos (tofu/glifo faltante), indicando una fuente de iconos que no carga o caracteres no soportados; afecta a gran parte de la UI y rompe la legibilidad de acciones."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips de filtros de tipo de evento (bajo las pestañas), borde derecho del panel",
+   "desc": "La fila de chips se desborda horizontalmente: el chip 'Informes 1…' queda cortado en el borde derecho y parece haber más filtros ocultos sin scroll ni indicador visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, sección 'Línea de tiempo' y 'Paneles'",
+   "desc": "El subtítulo 'pasado → próximo' envuelve en dos líneas y queda casi pegado al borde de la tarjeta, con la flecha suelta en la segunda línea; jerarquía algo desordenada."
+  }
+ ],
+ "empty": false
+}

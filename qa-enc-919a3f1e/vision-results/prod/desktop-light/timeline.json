@@ -1,0 +1,30 @@
+{
+ "desc": "Vista Timeline en desktop 1440x900 con tema claro: barra superior de herramientas, sidebar izquierdo (Actividad, navegación, proyectos, árbol FILES) y panel principal con chips de filtro, buscador y lista de eventos agrupados por fecha (PRÓXIMO 19).",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, entradas de proyecto (ej. 'Proyecto: wt-paneles-ma...', 'Proyecto: wt-poststudio-v2', 'Proyecto: wt-explorer')",
+   "desc": "El nombre del proyecto se trunca con puntos suspensivos y no se ve completo; el contador '0 1' queda pegado al texto truncado sin separación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Lista de eventos, delante del texto 'caduca:' (4 eventos: Coworking & Founder Meetup, Cruz Novillo, Watcher Spotify, Cineteca Matadero)",
+   "desc": "Aparece un glifo '⨯' suelto delante de 'caduca:' que parece un emoji/icono no renderizado o carácter roto; inconsistente con el resto de iconos de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Cabeceras de grupo de fecha (Mié 21 Oct / Jue 22 Oct / Vie 23 Oct), número de eventos a la derecha (5, 3, 1)",
+   "desc": "El contador del grupo está pegado al borde derecho de la ventana, casi sin margen, mientras los eventos tienen padding lateral visible; la alineación rota la retícula del panel."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, sección FILES (barra de iconos . ↻ ⬆ ⬇ ◎ ⌄ + y campo de búsqueda)",
+   "desc": "Los iconos de acción del árbol de archivos son muy pequeños y están muy apretados entre sí, con un campo de búsqueda mínimo debajo; targets difíciles de pulsar con precisión."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, ítem 'Línea de tiempo' con etiqueta 'pasado → próximo'",
+   "desc": "El título ocupa dos líneas y la etiqueta lateral queda muy comprimida junto al borde del ítem, generando un aspecto apretado frente a los demás ítems de una sola línea."
+  }
+ ]
+}

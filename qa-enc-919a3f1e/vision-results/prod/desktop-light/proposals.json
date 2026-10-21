@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de propuesta de decisión (panel derecho) con barra superior de filtros y sidebar izquierdo con navegación, lista de proyectos y explorador de archivos. La propuesta muestra título, descripción, 3 opciones A/B/C y un formulario de respuesta con textarea y botón Enviar.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista de Proyectos justo encima del panel FILES",
+   "desc": "La última fila de la lista de proyectos está cortada a la mitad: solo se ve el chevron/icono y el texto queda oculto tras el header 'FILES' (el contenedor desborda y no hace clip limpio)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, ítem 'Proyecto: wt-paneles-ma...'",
+   "desc": "Nombre del proyecto truncado con puntos suspensivos, no se distingue de 'wt-poststudio-v2' al lado; útil tener título completo o tooltip."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, botón a la derecha del desplegable 'Por urgencia / caducidad'",
+   "desc": "El botón está cortado por el borde derecho del viewport: solo se ve una fracción del contenido ('V...'), da sensación de desbordamiento horizontal de la barra de filtros."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón 'Enviar respuesta' (esquina inferior derecha del formulario)",
+   "desc": "Contraste muy bajo: fondo azul muy lavado con texto casi blanco, cuesta distinguir si está deshabilitado o es el estilo definitivo."
+  }
+ ],
+ "empty": false
+}

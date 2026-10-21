@@ -41,6 +41,9 @@ app/api/
   system-map/route.ts             GET live system map (channels, Pi sessions, herdr agents, timers)
   timeline/route.ts                GET merged timeline events (ledgers, sessions, timers, calendar, retro)
   timeline/events/route.ts         GET/POST/DELETE the retroactive manual ledger (quick-entry text or explicit ts)
+  paneles/route.ts                 GET list panel metadata | POST a panel's visibility (fijado/demanda/archivado + expira) in its panel.json
+  paneles/[...path]/route.ts       GET one panel's bytes (base-href injected HTML), no traversal, no symlink escapes
+  paneles/sessions/route.ts        GET a panel's related Pi sessions (panel.json registrations + transcript mentions)
   sessions/route.ts                GET list all sessions
   sessions/[id]/route.ts           GET/PATCH/DELETE a session
   sessions/[id]/context/route.ts   GET ?leafId=&tail=&before= a page of a leaf's context (tail defaults to 50; before pages upward)
@@ -97,6 +100,11 @@ app/api/
   provider-usage/query/route.ts    POST provider usage quotas
   push/config/route.ts             GET VAPID public key
   push/subscribe/route.ts          POST register a push subscription
+  post-studio/route.ts             GET/POST one studio post's state and actions (decide gated by the vision validation)
+  post-studio/list/route.ts        GET every studio post for the picker
+  post-studio/music/route.ts       GET real Instagram music search + audible preview · POST add a real track (audio_id)
+  post-studio/validate/route.ts    POST full-post vision validation (photos + CT126 video frames → one multimodal pass)
+  post-studio/media/[postId]/[file]/route.ts GET one definition-owned media/music asset
   app-update/route.ts              GET current vs latest published pi-web version
 
 lib/
@@ -112,8 +120,19 @@ lib/
   sidebar-prefs.ts          per-browser sidebar tab, group expand choices, pinned-section collapse, files-section fold, folders found outside git
   sidebar-actions.ts        session row menu entries, a project group's name entries and rename request, fork refusal messages, delete-all requests
   session-links.ts          a session's same-instance link (?session=<id>) and the plain-click rule the sidebar keeps in the page
+  spawn-routing.ts          spawn enforcement (enc-a81dfe71): routing.json classification, zone creation via rg-worktree, zone brief, pending briefs
+  spawn-metadata.ts         per-session sidecars (project/encargo/port) the sessions index filters on
   new-session-context.ts    client-safe: what the project/worktree pickers show (project, worktrees, project list), lag-safe contextForCwd
   normalize.ts              normalizeToolCalls(): file-format vs our toolCall field names
+  post-studio.ts            server store: per-post dir (studio/state/validation/decision.json), write lock, asset serving
+  post-studio-shared.ts     client-safe types + pure action engine, validation gate, decision contract
+  post-studio-ig-music.ts   real IG music bridge (instagrapi on CT126 over ssh; search + CDN preview)
+  post-studio-vision.ts     full-post vision validation (sharp + CT126 ffmpeg frames + LiteLLM gateway)
+  paneles.ts                the paneles root's only reader: dated panel dirs, panel.json parsing (estado legacy + effective visibilidad), serving-segment checks
+  paneles-sessions.ts       a panel's related sessions: panel.json registrations merged with transcript mentions
+  panel-catalog.ts          the panel manager's shared model: visibilities fijado/demanda/archivado, expiry, NATIVE_PANELS (Post Studio), catalog merge + pinned order (client-safe, pure)
+  panel-state.ts            the catalog's one write: a panel's estado/expira in its own panel.json, locked + atomic
+  panel-expiry.ts           keeps rg-archive-expiry's registry in step with temporal pins (EXO_EXPIRY_REGISTRY overrides)
   types.ts                  shared TypeScript types
   pi-types.ts               local structural types for pi SDK objects
   pi-sdk-internals.ts       loader for SDK modules the package does not export (MCP connection, config, OAuth)
@@ -177,10 +196,15 @@ lib/
   mcp-tool-display.ts       server/tool label of an mcp__ call from its result details, never the name
 
 components/
+  PostStudioView.tsx        social post studio: carousel preview in a phone frame, real IG music picker with previews, provenance rows, full-post vision validation panel
   AppShell.tsx             layout, URL state, tab management
-  SessionSidebar.tsx       toolbar row (Sessions | Files tabs, or the Pi Web brand with the files below them; new, search): tree, archive, menus, toast; files section (resizable, foldable; one header row with the file keys and changed-files count, the picker's row) or tab (picker boxes + file buttons), FileExplorer
+  SessionSidebar.tsx       toolbar row (Sessions | Files tabs, or the Pi Web brand with the files below them; new, search): the SessionsExplorer panel, the system strip (Actividad/Workspaces/Encargos/Decisiones + secondary pills + Hablar por Voz), menus, toast; files section (resizable, foldable; one header row with the file keys and changed-files count, the picker's row) or tab (picker boxes + file buttons), FileExplorer
   PiWebTitle.tsx           the sidebar's "Pi Web" brand (files below the sessions only): a click scrambles it into the versions
+  SessionsExplorer.tsx     the sessions panel's explorer (port of the fork proyectos-sidebar-dashboards): Cronológico/Proyectos views, quick chips (En Vivo, Encargos, Rutinas, Trabajo, Personal), clean titles, per-row ⋮ menu, inline archived section
   SessionTree.tsx          virtualized rows of the session tree and the archive view
+  SystemSections.tsx        "Secciones del Sistema": the sidebar's live strip (Proyectos/Rutinas/Decisiones/Recientes segments, layout variants, decision deep-links)
+  PanelPins.tsx             the sidebar's pinned-panels strip: fijado panels as one-touch access, pointer drag reorder, expiry countdowns
+  PanelesView.tsx           the panel catalog: tipo sections, search, session trace, visibility controls (pin popover with expiry), the in-app generation flow doc
   SidebarMenu.tsx          sidebar popup menu (bottom sheet on phones), portaled to body: filter field, item secondary actions, the files tab's classic look
   ProjectWorktreePicker.tsx project and worktree boxes + menus: the files' (one row below the sessions, stacked in the tab) and the new-session bar's
   NewSessionContextBar.tsx the picker in its own row under the brand, right above the empty new-session composer; moves go through the sidebar
@@ -221,6 +245,9 @@ hooks/
   useDragDrop.ts           chat drop zone: dropped files, folders marked
   useFilesPlacement.ts     per-browser choice: the desktop sidebar's file browser below the sessions or in its own tab
   useGroupDrag.ts          dragging a sidebar project group: mouse threshold, touch/pen long-press, auto-scroll, drop
+  usePaneles.ts            one shared /api/paneles read (module cache + listeners) for the catalog and the pinned strip
+  usePanelSessions.ts      one panel's related sessions (panel.json + mentions), module-cached
+  useNativePanelStates.ts  native panels' visibility state over sidebar prefs, one module store
   useIsMobile.ts           responsive breakpoint
   useSessionUiState.ts     sidebar pins, archive, project order: optimistic writes in order, refetch on revision change
   useSidebarMotion.ts      the sidebar's fold and archive-view motion: phase, end fallback, reduced motion, what shows meanwhile
@@ -236,7 +263,7 @@ hooks/
 
 Design decisions and traps live in `docs/agents/`, one note per area. Read every note whose files a change touches before making it. Add new notes to the area's file, not here.
 
-- [sessions.md](docs/agents/sessions.md): AgentSession lifecycle and shutdown, fork vs in-session branching, the sidebar's on-disk Fork, session file rewrites, toolCall normalization, SSE reconnect and tool events, transcript system / usage / context-edit entries, running-state polling, custom-message collapsing, streamed chunks re-rendering only the reply, streaming markdown block by block, history caches (tool-result images, subagent runs, session views) and deferred code highlighting with Prism languages loaded on demand, the session sidebar (toolbar row and its brand, project groups, their order and display names, pins, archive, new-session project adoption, the files below the sessions or in a tab), the project/worktree bar above a fresh composer (the header: brand, then the bar) and what it carries across the remount, exported HTML, the extension status bar and its `command:` buttons. Files: `lib/rpc-manager.ts`, `lib/session-reader.ts`, `lib/session-fork*.ts`, `lib/session-delete.ts`, `lib/normalize.ts`, `lib/session-tree.ts`, `lib/session-ui-state*.ts`, `lib/sidebar-prefs.ts`, `lib/sidebar-actions.ts`, `lib/session-links.ts`, `lib/new-session-context.ts`, `hooks/useAgentSession.ts`, `hooks/useSessionUiState.ts`, `hooks/useSidebarMotion.ts`, `hooks/useGroupDrag.ts`, `hooks/useFilesPlacement.ts`, `hooks/useResizablePanel.ts`, `app/api/agent/**`, `app/api/sessions/**`, `components/SessionSidebar.tsx`, `components/PiWebTitle.tsx`, `components/SessionTree.tsx`, `components/SidebarMenu.tsx`, `components/SidebarToast.tsx`, `components/SidebarIcons.tsx`, `components/ProjectWorktreePicker.tsx`, `components/NewSessionContextBar.tsx`, `components/WorktreeCreateForm.tsx`, `handleNewSession`, `handleSelectSession` and the bar's handlers in `components/AppShell.tsx`, `components/BranchNavigator.tsx`, `components/MessageView.tsx`, `components/MarkdownBody.tsx`, `lib/markdown-blocks.ts`, `lib/streaming-message.ts`, `hooks/useStreamingSelector.ts`, `components/MermaidBlock.tsx`, `lib/highlight-queue.ts`, `lib/prism-languages.ts`, `hooks/usePrismLanguages.ts`, `lib/session-view-cache.ts`, `components/CodemodeToolView.tsx`, `components/ExtensionStatusBar.tsx`, `components/ExtensionWidgets.tsx`.
+- [sessions.md](docs/agents/sessions.md): AgentSession lifecycle and shutdown, spawn routing into isolated zones (routing.json enforcement, zone briefs, spawn metadata), fork vs in-session branching, the sidebar's on-disk Fork, session file rewrites, toolCall normalization, SSE reconnect and tool events, transcript system / usage / context-edit entries, running-state polling, custom-message collapsing, streamed chunks re-rendering only the reply, streaming markdown block by block, history caches (tool-result images, subagent runs, session views) and deferred code highlighting with Prism languages loaded on demand, the session sidebar (toolbar row and its brand, project groups, their order and display names, pins, archive, new-session project adoption, the files below the sessions or in a tab), the project/worktree bar above a fresh composer (the header: brand, then the bar) and what it carries across the remount, exported HTML, the extension status bar and its `command:` buttons. Files: `lib/rpc-manager.ts`, `lib/session-reader.ts`, `lib/spawn-routing.ts`, `lib/spawn-metadata.ts`, `lib/session-fork*.ts`, `lib/session-delete.ts`, `lib/normalize.ts`, `lib/session-tree.ts`, `lib/session-ui-state*.ts`, `lib/sidebar-prefs.ts`, `lib/sidebar-actions.ts`, `lib/session-links.ts`, `lib/new-session-context.ts`, `hooks/useAgentSession.ts`, `hooks/useSessionUiState.ts`, `hooks/useSidebarMotion.ts`, `hooks/useGroupDrag.ts`, `hooks/useFilesPlacement.ts`, `hooks/useResizablePanel.ts`, `app/api/agent/**`, `app/api/sessions/**`, `components/SessionSidebar.tsx`, `components/SessionsExplorer.tsx`, `components/SystemSections.tsx`, `components/PiWebTitle.tsx`, `components/SessionTree.tsx`, `components/SidebarMenu.tsx`, `components/SidebarToast.tsx`, `components/SidebarIcons.tsx`, `components/ProjectWorktreePicker.tsx`, `components/NewSessionContextBar.tsx`, `components/WorktreeCreateForm.tsx`, `handleNewSession`, `handleSelectSession` and the bar's handlers in `components/AppShell.tsx`, `components/BranchNavigator.tsx`, `components/MessageView.tsx`, `components/MarkdownBody.tsx`, `lib/markdown-blocks.ts`, `lib/streaming-message.ts`, `hooks/useStreamingSelector.ts`, `components/MermaidBlock.tsx`, `lib/highlight-queue.ts`, `lib/prism-languages.ts`, `hooks/usePrismLanguages.ts`, `lib/session-view-cache.ts`, `components/CodemodeToolView.tsx`, `components/ExtensionStatusBar.tsx`, `components/ExtensionWidgets.tsx`.
 - [tools.md](docs/agents/tools.md): tool presets and Chat only, exact system prompts, tool exposure, the codemode / tool-search / mcp built-ins, the read-only MCP policy, the Code mode and PowerShell `defaultTools` switches. Files: `lib/tool-presets.ts`, `lib/tool-preset-preference.ts`, `lib/chat-only.ts`, `lib/exact-system-prompt.ts`, `lib/builtin-extensions.ts`, `lib/mcp-read-only-policy.ts`, `lib/codemode-settings.ts`, `lib/powershell-settings.ts`, `lib/global-settings-file.ts`, `app/api/agent/new/route.ts`, `app/api/tools/settings/route.ts`, tool selection in `lib/rpc-manager.ts`.
 - [mcp-runtime.md](docs/agents/mcp-runtime.md): the per-session MCP host (when servers register and connect, reported states, trust read on every sync, idle release); `/mcp` in the composer. Files: `lib/mcp-host.ts`, `lib/mcp-transport.ts`, `lib/mcp-status.ts`, `lib/mcp-command.ts`, `lib/mcp-config-key.ts`, MCP wiring in `lib/rpc-manager.ts` and `lib/builtin-extensions.ts`, `/mcp` handling in `hooks/useAgentSession.ts`.
 - [mcp-settings.md](docs/agents/mcp-settings.md): Settings › MCP reads without running anything, masking, the trust dialog's server list, row states, notices, Code mode choice, trust from Settings, Escape stacking, every `mcp.json` write and undo. Files: `app/api/mcp/route.ts`, `app/api/project-trust/route.ts`, `lib/mcp-config-read.ts`, `lib/mcp-config-file.ts`, `lib/mcp-override.ts`, `lib/mcp-undo.ts`, `lib/mcp-secrets.ts`, `lib/mcp-server-display.ts`, `lib/mcp-json-error.ts`, `lib/project-trust.ts`, `lib/regular-file.ts`, `lib/stacked-dialog.ts`, `lib/settings-navigation.ts`, `components/McpConfig.tsx`, `components/mcp-config-helpers.ts`, `components/ProjectTrustDialog.tsx`, `components/SettingsPanel.tsx`.
@@ -248,6 +275,8 @@ Design decisions and traps live in `docs/agents/`, one note per area. Read every
 - [subagents.md](docs/agents/subagents.md): the built-in subagent setting, profiles and their files, run status, completion notifications, the subagent viewer tab. Files: `lib/subagent*.ts`, `app/api/subagents/**`, `components/AgentsConfig.tsx`, `components/SubagentViewer.tsx`, `components/subagent-viewer-state.ts`.
 - [exo-decisiones.md](docs/agents/exo-decisiones.md): the Exo panel — decisiones (ExoProposalsView) data flow from the rg-proposal ledger, resolve/discard/undo, and visual decisions with per-option images (media dir, /api/exo/media, lightbox). Files: `lib/exo-data.ts`, `lib/exo-media.ts`, `lib/exo-types.ts`, `app/api/exo/**`, `components/ExoProposalsView.tsx`, `components/EncargosView.tsx`.
 - [timeline.md](docs/agents/timeline.md): the merged Timeline view and the retroactive ledger — quick entry of past events by hour, the JSONL store under `~/.local/state/timeline/`, hour bands and learned suggestions, the merged route plus the events route, the view's Eventos/Patrones tabs. Files: `lib/timeline-retro.ts`(+test), `lib/timeline-retro-store.ts`, `lib/timeline-data.ts`, `app/api/timeline/**`, `components/TimelineView.tsx`.
+- [post-studio.md](docs/agents/post-studio.md): the social post studio — per-post store (studio/state/validation/decision), the pure action engine and its gates, the real Instagram music bridge over the CT126 instagrapi session, the full-post vision validation that blocks decide, and the QA harness. Files: `components/PostStudioView.tsx`, `app/api/post-studio/**`, `lib/post-studio*.ts`.
+- [paneles.md](docs/agents/paneles.md): the panel manager — catalog view and pinned strip, the three visibilities with temporal expiry (POST /api/paneles, panel-state, the expiry registry), native panels, the bidirectional session trace, serving, and the generation flow any session follows. Files: `app/api/paneles/**`, `lib/paneles*.ts`, `lib/panel-*.ts`, `hooks/usePaneles.ts`, `hooks/usePanelSessions.ts`, `hooks/useNativePanelStates.ts`, `components/PanelesView.tsx`, `components/PanelPins.tsx`.
 - [client-platform.md](docs/agents/client-platform.md): mobile software keyboard and viewport height, the terminal's extra keys, completion sound. Files: `hooks/useViewportHeight.ts`, `hooks/useAudio.ts`, `components/TerminalExtraKeys.tsx`, `lib/terminal-extra-keys.ts`, the keyboard-open CSS.
 - [deploy-docker.md](docs/agents/deploy-docker.md): the UI/API Docker split and the host runner (enc-29d7943d, prop-60ea3410=B): PI_WEB_ROLE gates and the runner token, SSE-safe proxying (api-proxy + caddy + Next), the standalone image that also feeds the host runner, the nftables rules that unblock Docker bridges. Files: `proxy.ts`, `lib/runner-auth.ts`, `deploy/api-proxy/server.mjs`, `deploy/compose.yaml`, `deploy/Caddyfile`, `deploy/deploy.sh`, `deploy/runner/*`, `Dockerfile`, `.github/workflows/build.yml`, `.github/workflows/promote.yml`, system pieces under `~/.config/exohuman/pi-web-runner/`, `~/.config/systemd/user/pi-web-runner.service` and `~/workspaces/exohuman/runner/`.
 

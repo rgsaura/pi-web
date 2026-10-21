@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useExoData } from "@/hooks/useExoData";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { decisionStateColor, formatRelativeEs, formatDateTimeEs } from "@/lib/exo-format";
 import type { ExoProposal } from "@/lib/exo-types";
 import { relevantProposals } from "@/lib/exo-visibility";
@@ -9,6 +10,10 @@ import { relevantProposals } from "@/lib/exo-visibility";
 export interface ExoProposalsViewProps {
   onClose?: () => void;
   onOpenSession?: (sessionId: string) => void;
+  /** Opens at this proposal (a decision row's deep link); consumed once found. */
+  initialProposalId?: string | null;
+  /** Fired once the deep link is consumed (or is not findable), to clear it. */
+  onInitialProposalConsumed?: () => void;
 }
 
 type StatusFilter = "pending" | "all";
@@ -75,8 +80,10 @@ type SpeechRecognitionLike = {
 };
 type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 
-export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewProps) {
+
+export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, onInitialProposalConsumed }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
+  const isMobile = useIsMobile();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [sortOrder, setSortOrder] = useState<SortOrder>("urgency");
@@ -181,6 +188,26 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
   }, [proposals, statusFilter, categoryFilter, sortOrder, referenceMs]);
 
   const total = filteredList.length;
+
+  // A decision row's deep link: land on that proposal once the data is in.
+  // Under the current filter first; if the proposal hides elsewhere (a
+  // resolved one under "pending"), widen to all statuses and let the same
+  // effect run again on the recomputed list. Consumed exactly once, also
+  // when nothing matches (the caller drops the link either way).
+  useEffect(() => {
+    if (!initialProposalId || loading) return;
+    const index = filteredList.findIndex((p) => p.id === initialProposalId);
+    if (index >= 0) {
+      setCurrentIndex(index);
+      onInitialProposalConsumed?.();
+      return;
+    }
+    if (statusFilter !== "all" && proposals.some((p) => p.id === initialProposalId)) {
+      setStatusFilter("all");
+      return;
+    }
+    onInitialProposalConsumed?.();
+  }, [initialProposalId, loading, filteredList, proposals, statusFilter, onInitialProposalConsumed]);
 
   useEffect(() => {
     setCurrentIndex((index) => Math.min(index, Math.max(0, total - 1)));
@@ -509,7 +536,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", rowGap: 8 }}>
           <button
             type="button"
             onClick={onClose}
@@ -524,7 +551,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           </button>
 
           {/* Pending vs All switch */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg)", padding: 2 }}>
               {([["pending", `🎯 Pendientes${pendingCount ? ` (${pendingCount})` : ""}`], ["all", `📋 Todas (${proposals.length})`]] as const).map(([value, label]) => (
                 <button
@@ -536,7 +563,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                   }}
                   aria-pressed={statusFilter === value}
                   style={{
-                    padding: "5px 12px",
+                    padding: isMobile ? "9px 12px" : "5px 12px",
+                    minHeight: isMobile ? 40 : undefined,
                     borderRadius: 6,
                     border: "none",
                     background: statusFilter === value ? "var(--bg-selected)" : "transparent",
@@ -561,7 +589,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                 }}
                 style={{
                   ...buttonBase,
-                  padding: "5px 10px",
+                  padding: isMobile ? "9px 10px" : "5px 10px",
+                  minHeight: isMobile ? 40 : undefined,
                   fontSize: 12,
                   outline: "none",
                 }}

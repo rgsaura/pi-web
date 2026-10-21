@@ -5,12 +5,16 @@
  * so deliverables render inside the app with no external port (:30150 stays
  * a compatibility route until it is retired).
  *
- * Read-only: creating and archiving panels remains `rg-panel`'s job.
+ * Mostly read-only: listing and serving stay pure reads; the catalog's
+ * state write (POST /api/paneles) is the one exception and touches only
+ * panel.json of an existing panel directory (app/api/paneles/route.ts).
+ * Creating panels stays `rg-panel`'s job.
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
+import { effectivePanelVisibility, normalizePanelExpiry, type PanelVisibility } from "./panel-catalog";
 
 export interface PanelMeta {
   /** Directory name under the root, e.g. "2026-10-16-surf-platano" — the panel's slug. */
@@ -20,6 +24,14 @@ export interface PanelMeta {
   fecha: string;
   resumen: string;
   estado: string;
+  /** Where the panel came from ("sesión", "plan", …); panel.json's `origen`. */
+  origen: string;
+  /** The temporal pin's expiry date (YYYY-MM-DD), null when none. */
+  expira: string | null;
+  /** The effective catalog state (a pinned panel past its expiry reads demanda). */
+  visibilidad: PanelVisibility;
+  /** Whether the expiry date has passed (the watcher then proposes archiving). */
+  caducado: boolean;
   /** Pi session ids registered in panel.json (rg-panel new/link write PI_SESSION_ID here). */
   sessions: string[];
   /** Last modification of the panel directory, ISO ("" when unknown). */
@@ -88,20 +100,30 @@ export function registeredSessionIds(raw: unknown): string[] {
   );
 }
 
-/** Parse one panel.json defensively; every field falls back to the directory. */
+/** Parse one panel.json defensively; every field falls back to the directory.
+ *  `estado` holds the raw value rg-panel wrote ("activo" pre-catalog, now
+ *  "fijado" | "demanda" | "archivado"); `visibilidad` is the effective state
+ *  the catalog and the sidebar show. */
 export function parsePanelMeta(slug: string, raw: unknown): PanelMeta {
   const meta = raw && typeof raw === "object" && !Array.isArray(raw)
     ? (raw as Record<string, unknown>)
     : {};
   const str = (value: unknown): string | null =>
     typeof value === "string" && value.trim() ? value.trim() : null;
+  const estado = str(meta.estado) ?? "activo";
+  const expira = normalizePanelExpiry(str(meta.expira));
+  const effective = effectivePanelVisibility(estado, expira);
   return {
     slug,
     titulo: str(meta.titulo) ?? slug,
     tipo: str(meta.tipo) ?? "otro",
     fecha: str(meta.fecha) ?? slug.slice(0, 10),
     resumen: str(meta.resumen) ?? "",
-    estado: str(meta.estado) ?? "activo",
+    estado,
+    origen: str(meta.origen) ?? "sesión",
+    expira,
+    visibilidad: effective.visibility,
+    caducado: effective.expired,
     sessions: registeredSessionIds(meta),
     mtime: "",
   };

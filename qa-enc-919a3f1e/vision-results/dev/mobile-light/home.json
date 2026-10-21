@@ -1,0 +1,41 @@
+{
+ "desc": "Home móvil en tema claro: barra superior con menú, '...' y 'Session info'; zona central casi vacía con branding 'Exohuman UI' + breadcrumb y composer de nueva sesión con controles; toast 'Rendering ...' abajo a la izquierda.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "composer, campo de texto (centro inferior)",
+   "desc": "El placeholder 'Message... Type / for commands, @' desborda y queda cortado tras el '@', sin cerrar la sintaxis; el texto invade la zona del botón de enviar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer (iconos imagen/micro/engranaje)",
+   "desc": "Targets táctiles muy pequeños en móvil (≈28px) y muy separados entre sí, por debajo del mínimo de 44px recomendado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer ('Failover Normal' y 'More controls')",
+   "desc": "Botones de texto sin affordance de botón mezclados con iconos aislados; jerarquía y agrupación confusa, 'More controls' parece link y no acción."
+  },
+  {
+   "sev": "friccion",
+   "zona": "área principal (arriba del logo y abajo del composer)",
+   "desc": "Grandes huecos vacíos arriba y abajo: el contenido queda apilado en una franja central-inferior sin estado vacío que guíe (sin sesiones recientes, sugerencias ni CTA), el espacio se percibe como composición rota."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "toast 'Rendering ...' (esquina inferior izquierda)",
+   "desc": "Indicador de carga flotante pegado a la esquina inferior y al borde, sin contenedor ni explicación; puede solaparse con la navegación inferior."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha ('Session info')",
+   "desc": "Texto en gris azulado claro sobre blanco con contraste bajo y el icono de panel con target pequeño, difícil de leer/tocar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "título 'Exohuman UI' (centro)",
+   "desc": "Espaciado irregular entre palabras ('Exohuman  UI') y alineación del título respecto al logo desplazada por la línea inferior de versión."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,36 @@
+{
+ "desc": "Vista móvil con barra superior (menú, ..., 'Session info', icono panel), gran zona vacía superior y bloque inferior con branding 'Exohuman UI v1.0.0 · pi v1.2.0', breadcrumbs de workspace/agente, composer de mensaje y fila de controles. No se ve el sidebar de sesiones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "bloque breadcrumbs, a la derecha de 'workspaces/exohuman-ui'",
+   "desc": "El nombre del agente/workspace aparece truncado por la izquierda ('...eles-integrador'): el usuario no puede identificar el elemento completo ni saber cuál está seleccionado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer, elemento 'Failover Normal (Defa...'",
+   "desc": "Etiqueta de configuración truncada con puntos suspensivos; no se lee el modo de failover completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "mitad superior de la pantalla (desde la barra superior hasta el logo)",
+   "desc": "Zona enorme vacía sin contenido ni estado que la explique: el bloque útil queda amontonado en la parte baja, sin jerarquía ni indicación de qué hacer primero; además no se ve el sidebar de sesiones en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, texto 'Session info'",
+   "desc": "Contraste muy bajo (gris azulado claro sobre blanco) y mezcla de idioma inglés frente al resto de la interfaz en español."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "subtítulo bajo el logo, 'v1.0.0 · pi v1.2.0'",
+   "desc": "Versión en gris muy tenue con contraste insuficiente sobre fondo claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de controles del composer, iconos de imagen y micrófono",
+   "desc": "Iconos pequeños y muy juntos entre sí y respecto a los textos adyacentes; en móvil el área táctil efectiva parece <44px, incómodo de pulsar."
+  }
+ ],
+ "empty": false
+}

@@ -148,8 +148,15 @@ test("on a desktop the files sit below the sessions by default, both in view", (
   assert.match(filesPanel, /<div class="sidebar-files-scroll scrollbar-subtle">/);
   assert.doesNotMatch(filesPanel, /sidebar-files-toolbar|sidebar-files-title|sidebar-files-actions|sidebar-files-section-search|sidebar-files-changes/);
   assert.doesNotMatch(filesPanel, /sidebar-files-section-count/);
-  // Pins and archive not loaded yet: the tree waits instead of flashing archived rows.
-  assert.match(html, /<div class="session-tree-message">Loading\.\.\.<\/div>/);
+  // The sessions panel is the explorer: its always-there search field, the
+  // two views (Cronológico / Proyectos) and the quick chips, with no session
+  // rows while none exist. No archived row flashes in before ui-state loads:
+  // the explorer separates them through its archivedIds prop.
+  assert.match(html, /<input id="session-search-input" type="search" data-session-filter="true"/);
+  assert.match(html, /data-view-mode="tiempo"[^>]*aria-pressed="true"[^>]*>[\s\S]*?Cronológico<\/button><button type="button" data-view-mode="proyectos"/);
+  assert.match(html, /data-chip="todo"[^>]*>[\s\S]*?Todo/);
+  assert.match(html, /data-chip="activas"[^>]*>[\s\S]*?En Vivo/);
+  assert.match(html, /Sin sesiones todavía\./);
   // Without a folder the files' search has nothing to search.
   assert.match(render(), /<button type="button" disabled="" title="Search files" aria-label="Search files" aria-expanded="false" aria-controls="file-search-input" class="sidebar-tool-button">/);
 });
@@ -172,7 +179,9 @@ test("the fold's and the archive view's motions in the CSS last as long as the h
 test("still, the sidebar renders as it did before it moved: nothing inert, no fold under way, no archive view", () => {
   const html = render({ selectedCwd: "/work/alpha" });
   assert.doesNotMatch(html, / inert[ =>]|is-files-folding|sidebar-archive-view|is-entering|is-leaving/);
-  assert.match(html, /<div class="sidebar-sessions-views"><div class="sidebar-sessions-view">/);
+  // The explorer is the sessions view now: its header (search, views,
+  // chips) renders right away, never inert.
+  assert.match(html, /<div role="group" aria-label="Modo de vista de sesiones"[^>]*>/);
   assert.equal(openingTag(html, "session-sidebar-files-body"), '<div id="session-sidebar-files-body" class="sidebar-files-body">');
   assert.match(html, /role="separator"/, "the open section's separator");
 });
@@ -422,6 +431,42 @@ test("the files show the composer bar's picker in one row below the sessions, as
   // Before the sidebar has a cwd: the project box asks for one.
   assert.match(filesPanel, /<div class="project-picker is-row" role="group" aria-label="Project and worktree"><button type="button" class="project-picker-button is-project is-empty" title="" aria-haspopup="menu" aria-expanded="false">/);
   assert.match(filesPanel, /<span class="project-picker-label">Select project…<\/span>/);
+});
+
+test("the system views keep their original full-row buttons, not the explorer port's pills", () => {
+  // enc-2999ddc9: the port of the SessionsExplorer (8c32f06) had compressed
+  // Timeline, Paneles, Post Studio and the Agents inspector into quiet pills
+  // (4px 9px, 10.5px). They are full rows of the strip's one look again; which
+  // views show stays a matter of AppShell's props, never of style.
+  const html = render({
+    onOpenActivityView: noop,
+    onOpenTimelineView: noop,
+    onOpenPanelesView: noop,
+    onOpenPostStudio: noop,
+    onOpenAgentsInspector: noop,
+    onOpenWorkspacesView: noop,
+    onOpenEncargosView: noop,
+    onOpenProposalsView: noop,
+    onOpenVoiceModal: noop,
+  });
+  const stripEnd = html.indexOf('aria-label="Hablar por voz con ROT"');
+  const strip = html.slice(html.indexOf('aria-label="Actividad del sistema"'), stripEnd);
+  for (const label of ["Línea de tiempo", "Paneles", "Post Studio", "Agentes"]) {
+    const button = strip.match(new RegExp(`<button type="button"[^>]*aria-label="${label}"[^>]*>`));
+    assert.ok(button, `${label} button rendered`);
+    assert.match(button[0], /style="[^"]*padding:8px 12px/, `${label} keeps the strip's button padding`);
+    assert.match(button[0], /font-size:12\.5px/, `${label} keeps the strip's button font size`);
+    assert.match(button[0], /min-height:38px/, `${label} is a full row`);
+  }
+  // The strip's original order, all as rows of the same look.
+  const order = ["Actividad del sistema", "Línea de tiempo", "Paneles", "Post Studio", "Agentes", 'aria-label="Workspaces"', "Encargos", "Decisiones: ", 'aria-label="Hablar por voz con ROT"'];
+  const positions = order.map((label) => html.indexOf(label));
+  assert.ok(positions.every((p) => p !== -1), `every strip entry rendered: ${order}`);
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, "the strip keeps its original order");
+  // No pill row survives (the Encargos count badge legitimately carries its
+  // own 10.5px; the pills' signature was their padding and group label).
+  assert.doesNotMatch(html, /Otras vistas del sistema/);
+  assert.doesNotMatch(html, /padding:4px 9px/);
 });
 
 test("the running poll keeps the same Set while the running ids stay the same", () => {

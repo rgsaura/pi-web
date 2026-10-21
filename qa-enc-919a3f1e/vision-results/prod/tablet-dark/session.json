@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de sesión en tema oscuro: barra superior con acciones (Full history, Generate title, Branches, System, Tools), sidebar izquierdo de navegación + explorador de FILES, y panel central de chat con mensaje largo de texto técnico, chips de archivos referenciados, input de mensaje y barra inferior de controles.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra superior, extremo derecho (top-right)",
+   "desc": "El contador de agentes 'N/M' aparece cortado/clipped contra el borde derecho y solapado por el icono de panel: la barra de acciones desborda horizontalmente en tablet y el último elemento queda ilegible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de Proyectos",
+   "desc": "Nombres de proyecto truncados con elipsis ('Proyecto: wt-paneles-ma...') sin tooltip visible, lo que impide identificar el workspace completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "panel de chat, zona inferior antes del input",
+   "desc": "Los chips de archivos referenciados se apilan en 4 filas muy pegadas al campo de mensaje y al icono de envío, dejando la última fila ('SessionSidebar.test.mjs', 'route.ts') casi pegada al input sin separación clara."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de Decisiones con sidebar izquierdo (navegación, workspaces, árbol FILES) y área principal: barra de filtros (Pendientes/Todas, categoría, urgencia) y una propuesta detallada con badge de estado, título, origen, descripción y 5 opciones A–E en tarjetas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "área principal, tarjetas de opciones A–E",
+   "desc": "Las opciones se muestran como filas con badge de letra, pero no hay ningún control visible (botón/checkbox/enlace) para elegir, votar o descartar una opción; sólo texto, lo que deja la acción principal sin affordance visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, botón de icono junto al desplegable 'Por urgencia / caducidad'",
+   "desc": "El botón de icono queda muy pegado al borde derecho del viewport (margen menor que el resto de la interfaz), lo que rompe la retícula del header."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área principal, tarjeta de opción B",
+   "desc": "La opción B contiene sólo 'limpieza' (una palabra, en minúsculas) mientras el resto lleva descripciones completas; la altura de las tarjetas y la información quedan descompensadas y la jerarquía de decisión es confusa."
+  }
+ ],
+ "empty": false
+}

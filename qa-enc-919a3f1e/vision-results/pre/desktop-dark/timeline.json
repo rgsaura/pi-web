@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline en tema oscuro: barra superior con acciones globales, sidebar izquierdo con navegación (Actividad, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), árbol de proyectos y sección FILES; panel principal con título 'Línea de tiempo', pestañas Eventos/Patrones por hora, chips de filtro por tipo, buscador y lista de eventos agrupados por fecha con descripciones largas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "panel principal — descripciones de eventos (filas 'caduca: ...' en Mié 21 Oct, Jue 22 Oct)",
+   "desc": "El texto de detalle va en gris muy apagado sobre fondo oscuro (#6-7 gris vs #0f172a), contraste bajo para lectura de párrafos largos de 3-4 líneas; es la información más densa de la vista y la más difícil de leer."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera del panel — junto al botón 'Añadir' (esquina superior derecha)",
+   "desc": "Botón '×' de cierre pequeño, iconográfico y sin etiqueta, pegado al botón primario 'Añadir'; target reducido y riesgo de confusión/accidentalidad por proximidad al CTA principal."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "pestañas Eventos/Patrones por hora — borde derecho de la pestaña 'Patrones por hora'",
+   "desc": "Queda un pequeño elemento/fragmento suelto justo tras la pestaña 'Patrones por hora' que parece un resto de control o badge cortado, rompiendo la limpieza de la fila de pestañas."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar — fila 'Línea de tiempo' con subtítulo 'pasado → próximo'",
+   "desc": "El texto del subtítulo queda muy apretado contra el borde derecho del item y compite con el nombre de dos líneas del item, dejando la fila con aspecto congestionado y sin espacio de respiración."
+  }
+ ],
+ "empty": false
+}

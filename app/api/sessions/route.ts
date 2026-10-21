@@ -13,6 +13,7 @@ import {
   getRpcSessionInfos,
   getRunningRpcSessionIds,
 } from "@/lib/rpc-manager";
+import { readSpawnMetadataMap, sessionRoutingFields } from "@/lib/spawn-metadata";
 import { startServerPerf } from "@/lib/perf";
 
 export const dynamic = "force-dynamic";
@@ -36,7 +37,26 @@ export async function GET(req: Request) {
       attachSessionProjectInfo(getRpcSessionInfos()),
     ]);
     perf?.span("scan+projects");
-    const sessions = mergeSessionLists(persistedSessions, runtimeSessions);
+    const merged = mergeSessionLists(persistedSessions, runtimeSessions);
+    // Spawn metadata (enc-a81dfe71): attach project/encargo/port routing to each
+    // session the server spawned, and support server-side ?project=/?encargo=
+    // filtering so hundreds of assets stay queryable without client fan-out.
+    const spawnMeta = readSpawnMetadataMap();
+    const projectFilter = searchParams.get("project");
+    const encargoFilter = searchParams.get("encargo");
+    const sessions = merged
+      .map((session) => {
+        const meta = spawnMeta.get(session.id);
+        return meta ? { ...session, routing: sessionRoutingFields(meta) } : session;
+      })
+      .filter((session) => {
+        if (!projectFilter && !encargoFilter) return true;
+        const routing = session.routing;
+        if (!routing) return false;
+        if (projectFilter && routing.project !== projectFilter) return false;
+        if (encargoFilter && routing.encargo !== encargoFilter) return false;
+        return true;
+      });
     return perf?.attach(jsonResponse(
       req,
       {

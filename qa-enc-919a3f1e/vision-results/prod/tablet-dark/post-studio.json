@@ -1,0 +1,26 @@
+{
+ "desc": "La vista muestra una sesión de agente con sidebar izquierdo (Actividad, Timeline, Agentes, Workspaces, Encargos, Decisiones, proyectos), panel central con texto técnico de dev-log, chips de archivos y barra de mensaje, y barra superior de acciones. No se ve el Post Studio/carrusel de posts esperado.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "área central / global de la vista",
+   "desc": "La URL indica ?view=post-studio pero se renderiza una vista de sesión/chat de agente con explorador de FILES; no aparece el estudio de posts ni el carrusel de redes."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra superior derecha (Tools, panel de sistema)",
+   "desc": "Los controles del topbar se desbordan: 'Tools' queda pegado al borde, aparece un texto truncado 'OM' y el icono de panel está cortado/pegado al borde derecho de la ventana."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de proyectos",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos ('Proyecto: wt-paneles-ma...', 'Proyecto: wt-poststudio-v2...'), impidiendo identificarlos sin hover."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "panel central, parte superior",
+   "desc": "El contenido empieza a mitad de una lista de bullets cortada por el borde superior, sin contexto visible del inicio del mensaje."
+  }
+ ],
+ "empty": false
+}

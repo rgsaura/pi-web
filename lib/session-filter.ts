@@ -20,6 +20,15 @@ export function inferSessionCategory(session: SessionInfo): {
   icon: string;
   color: string;
 } {
+  // Routing metadata (spawn registry) is exact; keyword matching below is the
+  // fallback for sessions spawned before it existed or outside EXO routing.
+  const routedProject = session.routing?.project;
+  if (routedProject === "facesearch") {
+    return { category: "facesearch", label: "FaceSearch", icon: "🔍", color: "#38bdf8" };
+  }
+  if (routedProject === "exohuman-ui") {
+    return { category: "ui", label: "UI / Frontend", icon: "🎨", color: "#a855f7" };
+  }
   const text = `${session.cwd || ""} ${session.name || ""} ${session.firstMessage || ""}`.toLowerCase();
 
   if (text.includes("facesearch")) {

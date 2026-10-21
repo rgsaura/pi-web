@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de Decisiones con sidebar de navegación (Actividad, proyectos, FILES) y panel derecho con tarjeta de propuesta: cabecera con pestañas Pendientes/Todas, filtros de categoría, opciones A/B/C, textarea de respuesta con dictado y paginación inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Múltiples zonas: sidebar 'Línea de tiempo' y 'Agentes', pestañas 'Pendientes (12)' y 'Todas (104)', dropdown 'Por urgencia / caducidad', checkbox junto a 'Respuesta personalizada'",
+   "desc": "Iconos/glifos que renderizan como cajas vacías (tofu): se pierde el significado del icono y da sensación de UI rota, especialmente en las pestañas de estado y en el checkbox (parece un control sin renderizar)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar, lista de proyectos: primer elemento 'Proyecto: wt-paneles-ma...'",
+   "desc": "Nombre de proyecto truncado con puntos suspensivos, mientras el badge '1' queda pegado al final; sin indicación visual de que hay tooltip/tooltip que revele el nombre completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar, item 'Línea de tiempo' (arriba a la izquierda)",
+   "desc": "La etiqueta se parte en dos líneas ('Línea de / tiempo') rompiendo el ritmo vertical frente al resto de items de una sola línea; el item queda más alto y desalineado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Panel derecho, fila de metadatos 'hace 8 horas' tras el badge SISTEMA",
+   "desc": "Texto en gris muy claro sobre fondo blanco: contraste bajo, apenas legible en tablet con brillo medio."
+  }
+ ],
+ "empty": false
+}

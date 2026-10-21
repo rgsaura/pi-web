@@ -354,11 +354,25 @@ export interface SessionTreeNode {
   branchPreview?: BranchPreview;
 }
 
+/** Routing metadata attached by the server when the spawn was routed or
+   * registered (lib/spawn-metadata.ts): what the explorer filters on. */
+export interface SessionRoutingInfo {
+  project?: string;
+  encargo?: string;
+  worktreePath?: string;
+  branch?: string;
+  port?: string;
+  routedFrom?: string;
+  spawnedAt: string;
+}
+
 export interface SessionInfo {
   path: string;
   id: string;
   cwd: string;
   name?: string;
+  /** Spawn routing metadata (project/encargo/port) when the server knows it. */
+  routing?: SessionRoutingInfo;
   created: string;
   modified: string;
   messageCount: number;

@@ -83,6 +83,12 @@ export function ModelSelector({
     ? options.find((option) => option.modelId === value.modelId && option.provider === value.provider)?.name ?? value.modelId
     : emptyLabel ?? (options.length > 0 ? "Select model" : "No models"));
 
+  // QA enc-919a3f1e: the active model's label used to truncate as
+  // "Failover Normal (Defa…". The "(Default)" suffix carries no information
+  // in the button (it is the model's registry name) and eats the useful width;
+  // the full name stays in the dropdown and the title tooltip.
+  const selectedDisplayName = currentName.replace(/\s*\(default\)\s*$/i, "");
+
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -213,7 +219,7 @@ export function ModelSelector({
             <line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" />
           </svg>
         )}
-        <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{currentName}</span>
+        <span title={currentName} style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{selectedDisplayName}</span>
         {variant === "field" && (
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, color: "var(--text-dim)" }}>
             <polyline points="6 9 12 15 18 9" />

@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de Encargos en móvil con cabecera (título + badge '7 activos'), botones Actualizar/Cerrar, filtros por estado y select de Área, y lista de tarjetas de encargo con badges de estado/dificultad/sistema, tiempo transcurrido e id. Layout de una columna, tarjetas apiladas y scroll hacia abajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjetas de encargo, fila superior derecha (campo id: enc-59c26f58 / enc-fdd5d038 / enc-a81dfe71)",
+   "desc": "El identificador se parte con guion ('enc-' + hash en línea nueva) y queda recortado contra el borde derecho de la tarjeta; no se lee completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjetas, columna 'Llevan X' (junto al id)",
+   "desc": "El texto del tiempo se rompe en varias líneas de forma muy apretada ('Llevan / 22h / 3m') por el ancho mínimo del contenedor, quedando ilegible y desalineado con los badges."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante circular inferior izquierdo ('N'), sobre la tercera tarjeta",
+   "desc": "El FAB solapa el título 'Spawn blindado: toda sesión nace en su zona' tapando parte de la palabra 'nace'; tap target fijo cubre contenido de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón 'Session info' / icono de panel, esquina superior derecha",
+   "desc": "El control queda pegado al borde derecho de la pantalla, sin margen de seguridad respecto al edge del viewport."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "subtítulo de tarjetas ('Iniciando investigación…')",
+   "desc": "Texto gris sobre fondo oscuro con contraste muy bajo respecto al título, difícil de leer en móvil."
+  }
+ ],
+ "empty": false
+}
