@@ -66,8 +66,13 @@ cmd_images() {
     ( cd "$DEPLOY_DIR" && $DOCKER compose build --pull=false api )
   else
     LOG "pull $GHCR:$TAG"
-    $DOCKER pull "$GHCR:$TAG"
-    $DOCKER tag "$GHCR:$TAG" "exohuman-app:$TAG"
+    if $DOCKER pull "$GHCR:$TAG" 2>/dev/null; then
+      $DOCKER tag "$GHCR:$TAG" "exohuman-app:$TAG"
+    elif $DOCKER image inspect "exohuman-app:$TAG" >/dev/null 2>&1; then
+      LOG "imagen local exohuman-app:$TAG (promoción sin GHCR)"
+    else
+      die "ni $GHCR:$TAG ni exohuman-app:$TAG existen"
+    fi
   fi
 }
 
