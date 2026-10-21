@@ -13,6 +13,7 @@
 	handle @api_sse {
 		reverse_proxy {$API_UPSTREAM} {
 			flush_interval -1
+			header_up x-runner-token {$INTERNAL_TOKEN}
 			transport http {
 				response_header_timeout 24h
 			}
@@ -22,6 +23,7 @@
 	handle /api/* {
 		reverse_proxy {$API_UPSTREAM} {
 			flush_interval -1
+			header_up x-runner-token {$INTERNAL_TOKEN}
 			transport http {
 				response_header_timeout 10m
 			}

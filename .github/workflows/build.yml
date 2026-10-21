@@ -1,9 +1,9 @@
-# build.yml — imágenes Docker → GHCR + deploy QA (enc-29d7943d, prop-60ea3410=B)
+# build.yml — imagen Docker → GHCR + deploy QA (enc-29d7943d)
 #
-# En cada push a main/dev (tras pasar CI): construye las DOS imágenes y las
-# publica en GHCR con tag `web-<sha7>` / `api-<sha7>` (+ rama). El deploy por
-# compose usa siempre un tag exacto; la promoción pre→prod reutiliza la MISMA
-# imagen (promote.yml) y el rollback es el tag anterior.
+# En cada push a main/dev (tras pasar CI): construye LA imagen única (roles
+# web|api por env) y la publica en GHCR con tag `sha-<sha7>` (+ rama). El
+# deploy por compose usa siempre un tag exacto; la promoción pre→prod
+# reutiliza la MISMA imagen (promote.yml) y el rollback es el tag anterior.
 #
 # Deploy a la VM (opcional hasta configurar secrets): vars.DEPLOY_QA_HOST +
 # secrets.DEPLOY_QA_SSH_KEY. La VM despacha con deploy/deploy.sh --tag.
@@ -47,27 +47,17 @@ jobs:
           sha7="${GITHUB_SHA::7}"
           branch="${GITHUB_REF_NAME}"
           echo "sha7=$sha7" >> "$GITHUB_OUTPUT"
-          echo "web_tags=${{ env.REGISTRY }}/${{ env.IMAGE }}:web-sha-$sha7,${{ env.REGISTRY }}/${{ env.IMAGE }}:web-$branch" >> "$GITHUB_OUTPUT"
-          echo "api_tags=${{ env.REGISTRY }}/${{ env.IMAGE }}:api-sha-$sha7,${{ env.REGISTRY }}/${{ env.IMAGE }}:api-$branch" >> "$GITHUB_OUTPUT"
+          echo "app_tags=${{ env.REGISTRY }}/${{ env.IMAGE }}:sha-$sha7,${{ env.REGISTRY }}/${{ env.IMAGE }}:$branch" >> "$GITHUB_OUTPUT"
 
-      - name: Build & push web image (full app standalone; runner extrae de aquí)
+      - name: Build & push app image (roles web|api via PI_WEB_ROLE)
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ steps.tags.outputs.web_tags }}
-          cache-from: type=gha,scope=web
-          cache-to: type=gha,scope=web,mode=max
-
-      - name: Build & push api image (stateless proxy)
-        uses: docker/build-push-action@v6
-        with:
-          context: deploy/api-proxy
-          push: true
-          tags: ${{ steps.tags.outputs.api_tags }}
-          cache-from: type=gha,scope=api
-          cache-to: type=gha,scope=api,mode=max
+          tags: ${{ steps.tags.outputs.app_tags }}
+          cache-from: type=gha,scope=app
+          cache-to: type=gha,scope=app,mode=max
 
   deploy-qa:
     needs: [images]

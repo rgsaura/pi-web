@@ -27,17 +27,8 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm test
 
-  # Deploy split pieces (enc-29d7943d): the API proxy is a first-class runtime
-  # piece, so its self-test runs on every PR alongside the unit tests.
-  api-proxy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.19.0
-      - run: node deploy/api-proxy/server.mjs --self-test
+  # Deploy split pieces (enc-29d7943d): the api container embeds the runner
+  # (process mode); its unit tests cover lib/detached-runner + lib/runner-auth.
 
   e2e:
     runs-on: ubuntu-latest

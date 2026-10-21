@@ -50,20 +50,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Retag same digests (web + api) — la misma imagen que pasó QA
+      - name: Retag same digest — la misma imagen que pasó QA
         run: |
           set -e
           repo="ghcr.io/${GITHUB_REPOSITORY,,}"
-          for role in web api; do
-            src="$repo:$role-${{ inputs.tag }}"
-            dst="$repo:$role-${{ inputs.target }}"
-            if docker buildx imagetools inspect "$src" >/dev/null 2>&1; then
-              docker buildx imagetools create -t "$dst" "$src"
-              echo "» $src → $dst (mismo digest)"
-            else
-              echo "::error::$src no existe en GHCR"; exit 1
-            fi
-          done
+          src="$repo:${{ inputs.tag }}"
+          dst="$repo:${{ inputs.target }}"
+          if docker buildx imagetools inspect "$src" >/dev/null 2>&1; then
+            docker buildx imagetools create -t "$dst" "$src"
+            echo "» $src → $dst (mismo digest)"
+          else
+            echo "::error::$src no existe en GHCR"; exit 1
+          fi
 
       - name: Deploy target stack (compose, puerto del entorno)
         if: ${{ vars.DEPLOY_QA_HOST != '' }}
@@ -79,9 +77,5 @@ jobs:
           script: |
             set -e
             cd ~/workspaces/exohuman/qa-deploy
-            case "$TARGET" in
-              pre)  export WEB_PORT=30149 ;;
-              prod) export WEB_PORT=30141 ;;
-              *)    export WEB_PORT=30152 ;;
-            esac
+            export ENV="$TARGET"
             ./deploy/deploy.sh all --tag "$TAG"

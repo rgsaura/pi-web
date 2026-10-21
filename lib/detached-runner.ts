@@ -58,6 +58,9 @@ export interface DetachedRun {
   exitCode?: number | null;
   status: DetachedRunStatus;
   logPath: string;
+  /** Process-runner bookkeeping (api container, enc-29d7943d). */
+  runner?: RunnerMode;
+  pid?: number;
   model?: { provider: string; modelId: string } | null;
   thinkingLevel?: string | null;
 }
@@ -77,6 +80,19 @@ const DEFAULTS: Required<Pick<DetachedRunnerOptions, "systemdRunBin" | "systemct
   piBin: "/usr/local/bin/pi",
   spawnTimeoutMs: 10_000,
 };
+
+/**
+ * Runner mode (enc-29d7943d): `systemd` (host: scoped units) or `process`
+ * (api container: supervised plain child processes — no systemd --user inside
+ * Docker). Explicit env wins; otherwise auto-detect via /run/systemd/system.
+ */
+export type RunnerMode = "systemd" | "process";
+
+export function resolveRunnerMode(): RunnerMode {
+  const env = process.env.EXO_RUNNER_MODE;
+  if (env === "process" || env === "systemd") return env;
+  return existsSync("/run/systemd/system") ? "systemd" : "process";
+}
 
 /** systemd unit names allow [a-zA-Z0-9:._-\\] — UUIDs are already safe. */
 export function detachedUnitName(sessionId: string): string {
@@ -160,6 +176,26 @@ async function isUnitActive(unit: string, options?: DetachedRunnerOptions): Prom
   return active;
 }
 
+/** Process-runner liveness: signal 0 probes the pid without touching it. */
+function isPidAlive(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return (error as NodeJS.ErrnoException).code === "EPERM";
+  }
+}
+
+/** Run-aware probe: process runs check their pid, systemd runs their unit. */
+async function isRunHostAlive(run: DetachedRun, options?: DetachedRunnerOptions): Promise<boolean> {
+  if (run.runner === "process" && typeof run.pid === "number") {
+    const alive = isPidAlive(run.pid);
+    unitProbeCache.set(`pid:${run.pid}`, { active: alive, ts: Date.now() });
+    return alive;
+  }
+  return isUnitActive(run.unit, options);
+}
+
 /**
  * A detached run is active while its record says running AND its systemd unit
  * is alive. A record left at `running` by a dead unit is reconciled to `lost`
@@ -168,7 +204,7 @@ async function isUnitActive(unit: string, options?: DetachedRunnerOptions): Prom
 export async function isDetachedRunActive(sessionId: string, agentDir?: string): Promise<boolean> {
   const run = readDetachedRun(sessionId, agentDir);
   if (!run || run.status !== "running") return false;
-  if (!(await isUnitActive(run.unit))) {
+  if (!(await isRunHostAlive(run))) {
     if (readDetachedRun(sessionId, agentDir)?.status === "running") {
       writeDetachedRun({ ...run, status: "lost", endedAt: new Date().toISOString() }, agentDir);
     }
@@ -181,7 +217,7 @@ export async function isDetachedRunActive(sessionId: string, agentDir?: string):
 export async function getActiveDetachedSessionIds(agentDir?: string): Promise<string[]> {
   const active: string[] = [];
   for (const run of listDetachedRuns(agentDir)) {
-    if (run.status === "running" && (await isUnitActive(run.unit))) {
+    if (run.status === "running" && (await isRunHostAlive(run))) {
       active.push(run.sessionId);
     } else if (run.status === "running") {
       writeDetachedRun({ ...run, status: "lost", endedAt: new Date().toISOString() }, agentDir);
@@ -201,19 +237,21 @@ export function buildWrapperScript(params: {
   recordFile: string;
   modelArgs: string[];
   nameArg: string[];
+  /** Process runner (api container): forward SIGTERM/SIGINT to pi so aborts work. */
+  processMode?: boolean;
 }): string {
-  const { piBin, sessionId, promptFile, logFile, recordFile, modelArgs, nameArg } = params;
+  const { piBin, sessionId, promptFile, logFile, recordFile, modelArgs, nameArg, processMode } = params;
   // Values are all machine-generated (uuid/abs paths), safe to inline.
   const args = [modelArgs, nameArg].flat().map((a) => `'${a.replace(/'/g, "'\\''")}'`).join(" ");
   return [
     "#!/bin/sh",
     "# pi-web detached session wrapper (enc-7c2d78ac)",
     `status=running`,
-    `${piBin} --print --session-id '${sessionId}' ${args} < '${promptFile}' > '${logFile}' 2>&1`,
+    `${piBin} --print --session-id '${sessionId}' ${args} < '${promptFile}' > '${logFile}' 2>&1 ${processMode ? "&\npid=$!\ntrap 'kill -TERM $pid 2>/dev/null' TERM INT\nwait $pid" : ""}`,
     `code=$?`,
     `if [ "$code" -eq 0 ]; then status=exited; else status=failed; fi`,
     `printf '{"sessionId":"${sessionId}","status":"%s","exitCode":%s,"endedAt":"%s"}\\n' "$status" "$code" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > '${recordFile}.final'`,
-    `python3 -c 'import json,sys; a=json.load(open(sys.argv[1])); a.update(json.load(open(sys.argv[2]))); json.dump(a, open(sys.argv[3],"w"))' '${recordFile}' '${recordFile}.final' '${recordFile}.merged'`,
+    `node -e 'const fs=require("fs");const a=JSON.parse(fs.readFileSync(process.argv[1]));Object.assign(a,JSON.parse(fs.readFileSync(process.argv[2])));fs.writeFileSync(process.argv[3],JSON.stringify(a,null,2))' '${recordFile}' '${recordFile}.final' '${recordFile}.merged'`,
     `mv '${recordFile}.merged' '${recordFile}'`,
     `rm -f '${recordFile}.final'`,
     `exit $code`,
@@ -229,6 +267,7 @@ export async function startDetachedSession(
   options: DetachedRunnerOptions = {},
 ): Promise<DetachedRun> {
   const opts = { ...DEFAULTS, ...options };
+  const runnerMode = resolveRunnerMode();
   const sessionId = randomUUID();
   const unit = detachedUnitName(sessionId);
   const root = detachedRoot();
@@ -261,6 +300,7 @@ export async function startDetachedSession(
     recordFile,
     modelArgs,
     nameArg,
+    processMode: runnerMode === "process",
   });
   writeFileSync(wrapperFile, script, { mode: 0o700 });
 
@@ -273,8 +313,29 @@ export async function startDetachedSession(
     logPath: logFile,
     model: start.provider && start.modelId ? { provider: start.provider, modelId: start.modelId } : null,
     thinkingLevel: start.thinkingLevel ?? null,
+    runner: runnerMode,
   };
   writeDetachedRun(initial);
+
+  // ── process runner (api container, enc-29d7943d): no systemd --user inside
+  // Docker. The wrapper is self-contained (writes its own final record), so a
+  // detached, unref'd child with pid bookkeeping is the whole machinery.
+  if (runnerMode === "process") {
+    const child = spawn("/bin/sh", [wrapperFile], {
+      cwd: start.cwd,
+      detached: true,
+      stdio: ["ignore", "ignore", "ignore"],
+      env: { ...process.env, PI_PROFILE: "", PI_PROFILE_ISOLATE: "1" },
+    });
+    const pid = child.pid;
+    child.unref();
+    if (!pid) {
+      writeDetachedRun({ ...initial, status: "failed", endedAt: new Date().toISOString() }, undefined);
+      throw new Error("process runner: no pid");
+    }
+    writeDetachedRun({ ...initial, pid }, undefined);
+    return { ...initial, pid };
+  }
 
   const args = [
     "--user",
@@ -357,12 +418,23 @@ export async function startDetachedSession(
 export async function abortDetachedRun(sessionId: string, agentDir?: string): Promise<boolean> {
   const run = readDetachedRun(sessionId, agentDir);
   if (!run || run.status !== "running") return false;
-  const { execFile } = await import("node:child_process");
-  await new Promise<void>((resolve) => {
-    execFile(DEFAULTS.systemctlBin, ["--user", "stop", run.unit], { timeout: 15_000 }, () => resolve());
-  });
+  if (run.runner === "process" && typeof run.pid === "number") {
+    // Container runner: the wrapper traps TERM and forwards it to pi, which
+    // disposes orderly and leaves a resumable session file.
+    try {
+      process.kill(run.pid, "SIGTERM");
+    } catch {
+      // already gone — the wrapper still wrote its final record
+    }
+    unitProbeCache.delete(`pid:${run.pid}`);
+  } else {
+    const { execFile } = await import("node:child_process");
+    await new Promise<void>((resolve) => {
+      execFile(DEFAULTS.systemctlBin, ["--user", "stop", run.unit], { timeout: 15_000 }, () => resolve());
+    });
+    unitProbeCache.delete(run.unit);
+  }
   writeDetachedRun({ ...run, status: "aborted", endedAt: new Date().toISOString() }, agentDir);
-  unitProbeCache.delete(run.unit);
   return true;
 }
 

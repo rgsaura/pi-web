@@ -30,24 +30,24 @@ export function proxy(request: NextRequest) {
   const isApiRequest = request.nextUrl.pathname === "/api"
     || request.nextUrl.pathname.startsWith("/api/");
 
-  // Deploy roles (enc-29d7943d, prop-60ea3410=B). Unset = full app (dev,
-  // today's systemd prod/pre). The split deployment sets:
-  //   PI_WEB_ROLE=web    → UI-only container: /api/* is 404 here, caddy
-  //                        routes it to the stateless API service.
-  //   PI_WEB_ROLE=runner → host runner: the headless API broker (spawn de
-  //                        sesiones pi, streaming SSE, PTY, git) bound to
-  //                        loopback/bridge; UI pages 404 and every request
-  //                        must carry the runner token the API container adds.
+  // Deploy roles (enc-29d7943d). Unset = full app (dev, legacy systemd).
+  // The split deployment sets:
+  //   PI_WEB_ROLE=web → UI-only container: /api/* is 404 here, caddy
+  //                     routes it to the api container.
+  //   PI_WEB_ROLE=api → headless API + agent runner container: UI pages 404,
+  //                     and every request must carry the internal token that
+  //                     only the caddy front injects (defense in depth: this
+  //                     container reaches ~/.pi and the workspaces).
   const role = process.env.PI_WEB_ROLE;
   if (role === "web" && isApiRequest) {
     return new NextResponse(null, { status: 404 });
   }
-  if (role === "runner") {
+  if (role === "api") {
     if (!isApiRequest) {
       return new NextResponse(null, { status: 404 });
     }
     if (!isValidRunnerToken(request.headers.get(RUNNER_TOKEN_HEADER))) {
-      return NextResponse.json({ error: "Runner token required" }, { status: 401 });
+      return NextResponse.json({ error: "Internal token required" }, { status: 401 });
     }
   }
   const isTrustedRequest = isApiRequest
