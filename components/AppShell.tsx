@@ -14,9 +14,11 @@ import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
 import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
+import { PanelesView } from "./PanelesView";
 import { ActivityView } from "./ActivityView";
 import { TimelineView } from "./TimelineView";
 import { AgentsInspectorView } from "./AgentsInspectorView";
+import { PostStudioView } from "./PostStudioView";
 import { WorkspacesView } from "./WorkspacesView";
 import { VoiceModal } from "./VoiceModal";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
@@ -95,6 +97,12 @@ const AGENT_PANEL_WIDTH = 420;
 // pi's built-in tools that never change a file; any other tool may (#1144).
 const READ_ONLY_TOOL_NAMES = new Set(PRESET_READ_ONLY);
 const TOOL_END_REFRESH_MS = 1000;
+// Deadline for the initial ?session= restore. Past it the welcome placeholder
+// shows even if the restore is still stuck on a slow/wedged request, so a
+// cold catalogue scan or a hung server never blanks the app (enc-7baa576c).
+// The restore itself keeps running; a session that lands later simply
+// replaces the placeholder.
+const INITIAL_SESSION_RESTORE_TIMEOUT_MS = 12_000;
 
 function parkedNewSessionDraftKey(cwd: string): string {
   return `parked-new:${cwd}`;
@@ -231,12 +239,17 @@ export function AppShell() {
   const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const initialView = searchParams.get("view");
+  const initialPanelDir = searchParams.get("panel");
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
   const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
   const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
   const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
+  const [panelesViewOpen, setPanelesViewOpen] = useState(() => initialView === "paneles");
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
+  const [postStudioOpen, setPostStudioOpen] = useState(() => initialView === "post-studio");
+  // ?view=post-studio&post=<id> opens one studio post (defaults to the studio's own default).
+  const initialPostStudioPost = searchParams.get("post");
 
   const closeAllOverlayViews = useCallback(() => {
     setProposalsViewOpen(false);
@@ -244,7 +257,9 @@ export function AppShell() {
     setActivityViewOpen(false);
     setWorkspacesViewOpen(false);
     setTimelineViewOpen(false);
+    setPanelesViewOpen(false);
     setAgentsInspectorOpen(false);
+    setPostStudioOpen(false);
   }, []);
 
   const openOverlay = useCallback((setter: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -1168,6 +1183,15 @@ export function AppShell() {
     if (initialLinkedSessionId) skipWorkspaceRestoreRef.current = true;
   }, [initialLinkedSessionId]);
 
+  // Guard for a stuck initial restore (slow cold catalogue, wedged wrapper):
+  // past the deadline the welcome placeholder shows while the restore keeps
+  // running in the background, so the first paint is never held hostage.
+  useEffect(() => {
+    if (initialSessionRestored) return;
+    const timer = setTimeout(() => setInitialSessionRestored(true), INITIAL_SESSION_RESTORE_TIMEOUT_MS);
+    return () => clearTimeout(timer);
+  }, [initialSessionRestored]);
+
   const handleSessionDeleted = useCallback((sessionId: string) => {
     invalidateWorkspaceRestore();
     setRefreshKey((k) => k + 1);
@@ -1460,7 +1484,9 @@ export function AppShell() {
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
         onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
         onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
+        onOpenPanelesView={() => openOverlay(setPanelesViewOpen)}
         onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
+        onOpenPostStudio={() => openOverlay(setPostStudioOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
       />
       <div style={{ padding: "8px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -2596,17 +2622,18 @@ export function AppShell() {
                 setProposalsViewOpen(false);
               }}
             />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
+          ) : panelesViewOpen ? (
+            <PanelesView
+              onClose={() => setPanelesViewOpen(false)}
+              initialPanelDir={initialPanelDir}
+              onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
                   handleSelectSession(target);
                 } else {
                   router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
                 }
-                setEncargosViewOpen(false);
+                setPanelesViewOpen(false);
               }}
             />
           ) : encargosViewOpen ? (
@@ -2622,18 +2649,10 @@ export function AppShell() {
                 setEncargosViewOpen(false);
               }}
             />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
+          ) : postStudioOpen ? (
+            <PostStudioView
+              onClose={() => setPostStudioOpen(false)}
+              postId={initialPostStudioPost ?? undefined}
             />
           ) : showChat ? (
             <ChatWindow
@@ -2796,6 +2815,27 @@ export function AppShell() {
                   >
                     <span>📦</span>
                     <span>Encargos</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openOverlay(setPanelesViewOpen)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 10,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg-panel)",
+                      color: "var(--text)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <span>📊</span>
+                    <span>Paneles e Informes</span>
                   </button>
                 </div>
               </div>

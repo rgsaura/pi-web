@@ -58,9 +58,10 @@ async function readPrivate(route: string): Promise<Row | null> {
   return body && typeof body === "object" && !Array.isArray(body) ? (body as Row) : null;
 }
 
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, writeFileSync } from "fs";
 import { join } from "path";
 import { homedir } from "os";
+import { execSync } from "child_process";
 import { optionImagesFor } from "./exo-media";
 
 interface LocalLedgerProposal {
@@ -72,8 +73,10 @@ interface LocalLedgerProposal {
   option_images?: unknown;
   source?: string;
   status?: string;
-  resolution?: any;
-  discard?: any;
+  session_id?: string;
+  links?: string[];
+  resolution?: { choice?: string; resolved_at?: string } | string;
+  discard?: { reason?: string; details?: string; discarded_at?: string } | null;
   created_at?: string;
   expires_at?: string | null;
 }
@@ -102,14 +105,14 @@ function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
         updatedAt: item.created_at,
         expiresAt: item.expires_at ?? null,
         source: item.source ?? undefined,
-        sourceSessionId: (item as any).session_id || (item.source && /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.test(item.source)
+        sourceSessionId: item.session_id || (item.source && /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.test(item.source)
           ? item.source.match(/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i)?.[1]
           : undefined),
-        links: (item as any).links ?? [],
+        links: item.links ?? [],
         decisionState: status === "pending" ? "open" : status === "resolved" ? "accepted" : status === "discarded" ? "rejected" : status,
         attentionState: "fresh",
-        selectedOption: item.resolution ? { optionId: "resolved", label: typeof item.resolution === "object" && item.resolution ? (item.resolution as any).choice : "Resuelta" } : null,
-        discard: (item as any).discard ?? null,
+        selectedOption: item.resolution ? { optionId: "resolved", label: typeof item.resolution === "object" && item.resolution ? item.resolution.choice : "Resuelta" } : null,
+        discard: item.discard && typeof item.discard === "object" ? { reason: item.discard.reason ?? "Descartada", details: item.discard.details, discardedAt: item.discard.discarded_at } : null,
         options: (() => {
           const labels = (item.options ?? ["Aceptar", "Descartar"]) as string[];
           const images = optionImagesFor(labels.length, item.option_images);
@@ -138,14 +141,30 @@ function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
   }
 }
 
+interface LocalLedgerEncargo {
+  titulo?: string;
+  descripcion?: string;
+  categoria?: string;
+  status?: string;
+  progreso?: number | string;
+  dificultad?: string;
+  estado_detalle?: string;
+  session_id?: string;
+  sessionId?: string;
+  creado?: string;
+  actualizado?: string;
+  resuelto?: string;
+  nota?: string;
+}
+
 function loadLocalEncargos(): NonNullable<ExoData["encargos"]> {
   try {
     const ledgerPath = join(homedir(), ".local/state/encargos/ledger.json");
     if (!existsSync(ledgerPath)) return { total: 0, pendingCount: 0, encargos: [] };
     const raw = readFileSync(ledgerPath, "utf8");
     const parsed = JSON.parse(raw);
-    const map = (parsed.encargos ?? {}) as Record<string, any>;
-    const list: any[] = [];
+    const map = (parsed.encargos ?? {}) as Record<string, LocalLedgerEncargo>;
+    const list: NonNullable<ExoData["encargos"]>["encargos"] = [];
     let pendingCount = 0;
 
     for (const [id, it] of Object.entries(map)) {
@@ -158,7 +177,7 @@ function loadLocalEncargos(): NonNullable<ExoData["encargos"]> {
         categoria: it.categoria ?? "general",
         status,
         progreso: typeof it.progreso === "number" ? it.progreso : (status === "done" ? 100 : 20),
-        dificultad: it.dificultad || "Media",
+        dificultad: it.dificultad === "Baja" || it.dificultad === "Alta" || it.dificultad === "Compleja" ? it.dificultad : "Media",
         estado_detalle: it.estado_detalle || "",
         sessionId: it.session_id || it.sessionId || undefined,
         creado: it.creado,
@@ -313,7 +332,6 @@ export function resolveLocalProposal(proposalId: string, choiceText: string): bo
       choice: choiceText,
       resolved_at: new Date().toISOString(),
     };
-    const { writeFileSync } = require("fs");
     writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
     invalidateExoData();
     return true;
@@ -324,7 +342,6 @@ export function resolveLocalProposal(proposalId: string, choiceText: string): bo
 
 export function discardLocalProposal(proposalId: string, reason: string, details?: string): boolean {
   try {
-    const { execSync } = require("child_process");
     const cmd = `rg-proposal discard ${JSON.stringify(proposalId)} --reason ${JSON.stringify(reason)} --details ${JSON.stringify(details || "")}`;
     execSync(cmd, { encoding: "utf8" });
     invalidateExoData();
@@ -342,7 +359,6 @@ export function discardLocalProposal(proposalId: string, reason: string, details
         details: details || "",
         discarded_at: new Date().toISOString(),
       };
-      const { writeFileSync } = require("fs");
       writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
       invalidateExoData();
       return true;
@@ -354,7 +370,6 @@ export function discardLocalProposal(proposalId: string, reason: string, details
 
 export function undoLocalProposal(proposalId: string): boolean {
   try {
-    const { execSync } = require("child_process");
     const cmd = `rg-proposal undo ${JSON.stringify(proposalId)}`;
     execSync(cmd, { encoding: "utf8" });
     invalidateExoData();
@@ -371,7 +386,6 @@ export function undoLocalProposal(proposalId: string): boolean {
       if ("discard" in parsed.proposals[proposalId]) {
         delete parsed.proposals[proposalId].discard;
       }
-      const { writeFileSync } = require("fs");
       writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
       invalidateExoData();
       return true;

@@ -12,7 +12,8 @@ export type TimelineKind =
   | "recibo"
   | "sesion"
   | "rutina"
-  | "calendario";
+  | "calendario"
+  | "manual";
 
 /** One thing that happened, or will happen, on a date. */
 export interface TimelineEvent {

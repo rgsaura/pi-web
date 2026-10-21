@@ -11,6 +11,8 @@ import {
   splitTimeline,
   type TimelineEvent,
 } from "@/lib/timeline-data";
+import { readRetroEvents } from "@/lib/timeline-retro-store";
+import { toTimelineEvent } from "@/lib/timeline-retro";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -170,6 +172,15 @@ function readSessionEvents(): TimelineEvent[] {
   return events;
 }
 
+/** Eventos retroactivos manuales (ledger propio, ya ordenados desc). */
+function readRetroEventsAsTimeline(): TimelineEvent[] {
+  try {
+    return readRetroEvents().map(toTimelineEvent);
+  } catch {
+    return [];
+  }
+}
+
 /** Timers systemd --user (unidades rg- y rot-): próximos disparos. */
 async function readTimers(): Promise<TimelineEvent[]> {
   const events: TimelineEvent[] = [];
@@ -201,7 +212,7 @@ async function readCalendar(): Promise<TimelineEvent[]> {
 async function readAllEvents(): Promise<TimelineEvent[]> {
   const events: TimelineEvent[] = [];
   // Cada fuente es best-effort: una caída nunca tumba la respuesta.
-  for (const source of [readLedgerEvents, readFailures, readArtifacts, readSessionEvents]) {
+  for (const source of [readLedgerEvents, readFailures, readArtifacts, readSessionEvents, readRetroEventsAsTimeline]) {
     try {
       events.push(...source());
     } catch {}

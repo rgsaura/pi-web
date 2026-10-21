@@ -232,6 +232,11 @@ const AGENT_STATE_RECONCILE_MS = 15_000;
 const BASH_STATE_RECONCILE_MS = 1_000;
 const EVENT_STREAM_READY_TIMEOUT_MS = 60_000;
 const EVENT_STREAM_RECONNECT_DELAY_MS = 1_000;
+// Reading one session's file is a localhost operation; past this the read is
+// wedged (cold catalogue scan, saturated server) and the UI must surface an
+// error instead of spinning forever (enc-7baa576c: a stuck ?session= restore
+// held the first paint hostage with no timeout and no escape).
+const SESSION_LOAD_TIMEOUT_MS = 20_000;
 const SESSION_LEASE_RENEW_INTERVAL_MS = 30_000;
 // Retry temporary model-list failures without requiring a page refresh.
 const MODELS_RETRY_DELAYS_MS = [2_000, 5_000, 10_000];
@@ -647,7 +652,9 @@ export function useAgentSession(opts: UseAgentSessionOptions) {
       if (showLoading) setLoading(true);
       const params = new URLSearchParams({ deferThinking: "1", deferMedia: "1", tree: "summary" });
       if (options?.force) params.set("force", "1");
-      const res = await fetch(`/api/sessions/${encodeURIComponent(sid)}?${params}`);
+      const res = await fetch(`/api/sessions/${encodeURIComponent(sid)}?${params}`, {
+        signal: AbortSignal.timeout(SESSION_LOAD_TIMEOUT_MS),
+      });
       if (res.status === 404) {
         if (showLoading) {
           setData(null);
@@ -756,7 +763,9 @@ export function useAgentSession(opts: UseAgentSessionOptions) {
       try {
         const runId = promptRunIdRef.current;
         const usageRequestId = ++contextUsageRequestIdRef.current;
-        const stateRes = await fetch(`/api/sessions/${encodeURIComponent(sid)}/state`);
+        const stateRes = await fetch(`/api/sessions/${encodeURIComponent(sid)}/state`, {
+          signal: AbortSignal.timeout(SESSION_LOAD_TIMEOUT_MS),
+        });
         if (!stateRes.ok) throw new Error(`HTTP ${stateRes.status}`);
         const agentState = await stateRes.json() as { running: boolean; state?: AgentStateResponse };
         if (sessionIdRef.current !== sid) return null;
@@ -779,7 +788,9 @@ export function useAgentSession(opts: UseAgentSessionOptions) {
         return null;
       }
     } catch (e) {
-      setError(String(e));
+      setError(e instanceof DOMException && e.name === "TimeoutError"
+        ? `Session load timed out after ${Math.round(SESSION_LOAD_TIMEOUT_MS / 1000)}s`
+        : String(e));
       return "error";
     } finally {
       if (showLoading && !messagesLoaded) setLoading(false);

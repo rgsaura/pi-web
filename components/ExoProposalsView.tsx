@@ -62,6 +62,19 @@ function summaryText(proposal: ExoProposal): string {
   return (proposal.question?.trim() || proposal.summary?.trim() || "").slice(0, 500);
 }
 
+type SpeechRecognitionResultItem = { transcript?: string };
+type SpeechRecognitionEventLike = { results: ArrayLike<ArrayLike<SpeechRecognitionResultItem>> };
+type SpeechRecognitionLike = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
+
 export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
@@ -91,7 +104,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   const proposals = useMemo(() => data?.proposals.proposals ?? [], [data]);
   const referenceMs = useMemo(() => {
@@ -324,17 +337,18 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     audioChunksRef.current = [];
 
     // Fallback: Web Speech API if supported for live dictation
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const w = window as unknown as { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor };
+    const SpeechRecognition = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (SpeechRecognition) {
       try {
         const recognition = new SpeechRecognition();
         recognition.lang = "es-ES";
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.onresult = (event: any) => {
+        recognition.onresult = (event: SpeechRecognitionEventLike) => {
           let transcript = "";
           for (let i = 0; i < event.results.length; i++) {
-            transcript += event.results[i][0].transcript;
+            transcript += event.results[i][0].transcript ?? "";
           }
           if (transcript.trim()) {
             setCustomText(transcript);

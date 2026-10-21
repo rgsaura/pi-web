@@ -1,4 +1,4 @@
-import { getAdditionalAllowedRoots, normalizeSlashes } from "./allowed-roots";
+import { getAdditionalAllowedRoots, getRemoteRoot, normalizeSlashes } from "./allowed-roots";
 import { isExistingPathWithinRoots, isPathWithinRoots } from "./path-security";
 import { listAllSessions } from "./session-reader";
 export { allowFileRoot, normalizeSlashes } from "./allowed-roots";
@@ -29,6 +29,9 @@ export async function getAllowedFileRoots(): Promise<Set<string>> {
   }
 
   for (const root of getAdditionalAllowedRoots()) roots.add(root);
+  // Remote hosts (SSHFS under ~/remote): browsable and selectable as cwds
+  // before any session exists there to pin the root.
+  roots.add(getRemoteRoot());
 
   globalThis.__piAllowedRootsCache = { roots, expiresAt: now + ALLOWED_ROOTS_TTL_MS };
   return roots;
