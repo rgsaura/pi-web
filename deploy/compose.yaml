@@ -1,0 +1,53 @@
+# ExoHuman UI/API split — QA/production stack (enc-29d7943d, prop-60ea3410=B)
+#
+#   :30152 ─▶ front (caddy, SSE-safe) ─┬─ /api/* ─▶ api (stateless proxy) ─▶ RUNNER (host systemd)
+#                                      └─ /*     ─▶ web (UI-only container)
+#
+# The runner is NOT a container: it is pi-web-runner.service on the host
+# (spawn de sesiones pi, streaming, PTY, git). The api container is stateless
+# and talks to it via RUNNER_URL — no host paths are mounted anywhere.
+#
+# deploy/deploy.sh generates deploy/.env and drives this file; do not edit by hand.
+
+name: exohuman-web
+
+services:
+  web:
+    image: ${WEB_IMAGE:-exohuman-web:local}
+    environment:
+      PI_WEB_ROLE: web
+      PI_WEB_ALLOWED_HOSTS: ${PI_WEB_ALLOWED_HOSTS:-}
+      PI_WEB_PASSWORD: ${PI_WEB_PASSWORD:-}
+    init: true
+    restart: unless-stopped
+    networks: [exonet]
+
+  api:
+    image: ${API_IMAGE:-exohuman-api:local}
+    environment:
+      RUNNER_URL: ${RUNNER_URL:-http://host.docker.internal:30164}
+      RUNNER_TOKEN: ${RUNNER_TOKEN:?set RUNNER_TOKEN (from ~/.config/exohuman/pi-web-runner/env)}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    init: true
+    restart: unless-stopped
+    networks: [exonet]
+
+  front:
+    image: caddy:2-alpine
+    environment:
+      WEB_PORT: ${WEB_PORT:-30152}
+      API_UPSTREAM: http://api:3000
+      UI_UPSTREAM: http://web:3000
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      - "${WEB_PORT:-30152}:${WEB_PORT:-30152}"
+    init: true
+    restart: unless-stopped
+    depends_on: [web, api]
+    networks: [exonet]
+
+networks:
+  exonet:
+    driver: bridge

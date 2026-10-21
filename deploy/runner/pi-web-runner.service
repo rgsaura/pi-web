@@ -1,0 +1,22 @@
+# pi-web-runner.service — plantilla (enc-29d7943d)
+# La copia canónica vive en ~/.config/systemd/user/pi-web-runner.service
+# (la instala deploy/runner/install.sh; no editar sólo una de las dos).
+#
+# Rol: broker host del split UI/API (prop-60ea3410=B). Expone TODO el API de
+# pi-web (spawn de sesiones pi, streaming SSE, PTY, git, files, settings) en
+# el bridge de Docker + loopback. Lo consume ÚNICAMENTE el contenedor api
+# (stateless) vía RUNNER_URL + token. La UI y la API públicas viven en Docker.
+[Unit]
+Description=ExoHuman pi-web runner (host API broker para el stack Docker)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/workspaces/exohuman/runner/current
+EnvironmentFile=%h/.config/exohuman/pi-web-runner/env
+ExecStart=%h/workspaces/exohuman/runner/current/pi-node %h/workspaces/exohuman/runner/current/server.js
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,41 @@
+# ExoHuman web front (enc-29d7943d): caddy edge of the UI container stack.
+# /api/* → stateless api service (SSE-safe: no buffering, long timeouts);
+# everything else → the web (UI-only) container.
+{
+	admin off
+	auto_https off
+}
+
+:{$WEB_PORT:30152} {
+	# SSE / streaming endpoints: no buffering, no compression, long timeouts
+	# (agent streams can run for minutes; flush_interval -1 flushes each chunk).
+	@api_sse path /api/agent/*/events /api/terminal/*/events
+	handle @api_sse {
+		reverse_proxy {$API_UPSTREAM} {
+			flush_interval -1
+			transport http {
+				response_header_timeout 24h
+			}
+		}
+	}
+
+	handle /api/* {
+		reverse_proxy {$API_UPSTREAM} {
+			flush_interval -1
+			transport http {
+				response_header_timeout 10m
+			}
+		}
+	}
+
+	# UI (static-ish Next standalone): compressible, short timeouts
+	handle {
+		encode zstd gzip
+		reverse_proxy {$UI_UPSTREAM} {
+			flush_interval -1
+			transport http {
+				response_header_timeout 5m
+			}
+		}
+	}
+}

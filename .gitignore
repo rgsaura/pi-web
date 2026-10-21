@@ -47,3 +47,6 @@ e2e_*.mjs
 
 # pi local tooling
 .pi/
+
+# deploy local state (enc-29d7943d)
+deploy/.env

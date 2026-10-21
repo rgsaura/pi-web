@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.worktrees
+test-results
+e2e
+demo
+collect.log
+*.md
+!AGENTS.md
+.env*
+Dockerfile
+deploy
+.github
+sessions
+tsconfig.tsbuildinfo
+.gitignore
