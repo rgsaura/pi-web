@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Post Studio en móvil 390x844 (tema oscuro): mensaje largo de sesión con texto, chips de archivos referenciados, línea de metadatos de tokens/fecha y barra inferior con input de mensaje y controles rápidos.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "línea de metadatos bajo los chips de archivos (parte baja del contenido)",
+   "desc": "El pie de metadatos hace wrap roto: 'Oct 15 03:13 PM' se parte en dos líneas y queda una 'R' huérfana suelta en línea propia, aspecto de desborde/reflow mal gestionado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "parte superior del contenido del mensaje",
+   "desc": "La primera línea de texto queda cortada a media altura pegada al borde superior (bajo la barra de estado), el texto empieza a 'pasos, cada relativa y Nueva sesión aqu…' sin margen ni separación visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "input de mensaje (parte inferior)",
+   "desc": "El placeholder 'Message... Type / for commands, @' tiene contraste muy bajo respecto al fondo del input y el texto es largo, ocupando casi todo el ancho disponible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior de controles (iconos izquierda)",
+   "desc": "Los iconos de adjuntar/imagen, micrófono y ajustes son pequeños (~32-36px) y están muy juntos entre sí y respecto a 'Failover Fast', apretados en el borde inferior en móvil."
+  }
+ ],
+ "empty": false
+}

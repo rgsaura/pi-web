@@ -1,0 +1,36 @@
+{
+ "desc": "Vista home en tema oscuro: topbar con tabs de sesión y panel de estado a la derecha; sidebar izquierdo con navegación de módulos, árbol de sesiones/workspaces (sin sesiones) y explorador de FILES; centro con hero 'Exohuman UI', breadcrumbs, composer de nueva sesión con input y fila de controles/config bajo el campo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, sección FILES: chips de breadcrumb de carpetas (fila '.xohuman-ui | .udio-v2 12')",
+   "desc": "Los nombres de las carpetas están truncados sin elipsis coherente: aparece '.xohuman-ui' (faltan letras del inicio) y '.udio-v2' (debería ser 'post-studio-v2'), el usuario no puede identificar el workspace/fork seleccionado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, bloque de navegación: item 'Línea de tiempo'",
+   "desc": "El label 'Línea de tiempo' envuelve a dos líneas y hace que ese item sea más alto que el resto de la navegación ('Actividad', 'Paneles', 'Post Studio'...), rompiendo el ritmo vertical de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, item 'exohuman-ui' bajo el árbol de sesiones",
+   "desc": "Estado vacío 'No sessions yet' como único texto gris pequeño, sin icono ni acción para crear una primera sesión; además el texto está en inglés mientras el resto del UI está en español."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Centro, composer: placeholder del textarea 'Message... Type / for commands, @ for files'",
+   "desc": "Placeholder en inglés ('Message... Type / for commands') en una interfaz que por el resto está traducida al español, inconsistencia de idioma."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Centro, fila de controles bajo el composer (iconos adjuntar/mic + 'Failover Normal (Default)', 'auto', 'configured', 'Compact')",
+   "desc": "Los iconos de adjuntar y micrófono son muy pequeños y de bajo contraste sobre fondo oscuro, y la fila mezcla iconos sueltos con etiquetas de texto seguidas de iconos, quedando la configuración del envío poco jerarquizada y apretada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, cabecera 'FILES': fila de iconos de acciones (>, carpeta, upload, refresh, eye, .., búsqueda)",
+   "desc": "Los iconos de acciones de la cabecera FILES son diminutos y están muy juntos, con targets poco diferenciados y sin separación clara entre acciones del árbol y de búsqueda."
+  }
+ ],
+ "empty": true
+}

@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de Decisiones en móvil: barra superior con menú y 'Session info', fila de filtros (Volver, Pendientes/Todas/Por urgencia) y chips de categoría, seguida de una tarjeta de propuesta del SISTEMA con título grande, badge de origen, enlace a sesión en vivo, descripción en caja y opciones A/B/C como tarjetas apiladas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros bajo la barra superior, extremo derecho",
+   "desc": "El filtro 'Por urgen…' se corta en el borde derecho de la pantalla: desbordamiento horizontal del contenedor de tabs sin scroll visible ni indicación de que hay más opciones."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tabs 'Pendientes (13)', 'Todas (104)' y filtro 'Por urgen…'",
+   "desc": "Los iconos de los tabs se renderizan como cuadrados vacíos (glifo faltante / tofu), lo que da sensación de interfaz rota."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "badge 'Origen: Brief matutino · 20-10', línea inferior de la cabecera de la propuesta",
+   "desc": "El texto del badge parte la fecha '20-10' en dos líneas ('20-' / '10') por ancho insuficiente, rompiendo la lectura del dato."
+  }
+ ],
+ "empty": false
+}

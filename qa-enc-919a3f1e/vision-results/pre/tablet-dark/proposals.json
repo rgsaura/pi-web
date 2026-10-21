@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de Decisiones con sidebar izquierdo (nav + árbol FILES) y panel derecho con tarjeta de decisión en curso: opciones A/B/C, campo de respuesta personalizada con dictado, descarte y paginación inferior.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo + cabecera principal (iconos de 'Línea de tiempo', 'Paneles', 'Post Studio', 'Agentes', pestañas 'Pendientes'/'Todas', checkbox de 'Respuesta personalizada')",
+   "desc": "Los iconos se renderizan como rectángulos vacíos (glifos tofu), señal de fuente/icon set roto en el build PRE; se repite en toda la UI"
+  },
+  {
+   "sev": "friccion",
+   "zona": "Tarjeta 'Respuesta personalizada', parte superior derecha junto al botón 'Dictar audio'",
+   "desc": "El botón 'Dictar audio' comprime el titular, que se parte en dos líneas con quiebre antinatural ('texto libre o nota / de voz):') y poco aire entre ambos"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fila inferior de paginación, botón '← Anterior'",
+   "desc": "El botón 'Anterior' aparece deshabilitado con texto de bajo contraste sobre fondo casi idéntico, apenas legible"
+  }
+ ],
+ "empty": false
+}

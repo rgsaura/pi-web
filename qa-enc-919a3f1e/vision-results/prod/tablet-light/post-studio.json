@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de sesión/agente con chat: barra superior con pestañas, sidebar izquierdo con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones), árbol de FILES y área central con un documento markdown largo (informe de cambios UI), archivos adjuntos y barra de input de mensaje abajo. No se muestra la vista Post Studio peticionada, sino contenido de una sesión de agente.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "área central completa (viewport 820x1180)",
+   "desc": "La vista cargada no corresponde a Post Studio (?view=post-studio): se muestra un documento markdown de sesión/agentes con lista de cambios de UI, no carruseles ni editor de posts de redes."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra superior derecha (tabs: Tools, ...M)",
+   "desc": "Desbordamiento horizontal del header: los últimos elementos quedan cortados en el borde derecho ('...M' a medias), indicando overflow de la tira de pestañas/herramientas."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista de proyectos (Proyecto: wt-paneles-ma...)",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos ('Proyecto: wt-paneles-ma...') sin tooltip ni expansión visible, y badge 'C 1' pegado al texto truncado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, ítem 'Línea de tiempo'",
+   "desc": "Texto secundario 'pasado → próximo' en gris claro sobre fondo blanco con bajo contraste, apenas legible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior de estados (Failover Fast, off, configured, Compact)",
+   "desc": "Iconos de acciones (imagen, micrófono, volumen) muy pequeños y juntos en la barra inferior, con targets táctiles difíciles de pulsar en tablet."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área central, chips de archivos adjuntos (bottom: route.ts, SessionSidebar.test.mjs)",
+   "desc": "Los chips de archivos se solapan con el borde superior del campo de mensaje, quedando parcialmente ocultos detrás del input."
+  }
+ ],
+ "empty": false
+}

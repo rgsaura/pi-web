@@ -1,0 +1,31 @@
+{
+ "desc": "Post Studio con tres columnas: sidebar izquierdo con navegación y file tree, centro con preview de carrusel 1/19 sobre fondo oscuro, columna derecha con narrativa y tarjetas de música, más barra inferior de confirmación.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "columna derecha, tarjetas de música (A · Rumba y B · Indie emotivo)",
+   "desc": "Las tarjetas son demasiado estrechas para el texto: la descripción se envuelve con 1-2 palabras por línea (\"Rumba mediterránea con base moderna\"), generando bloques verticales ilegibles y desperdicio de altura."
+  },
+  {
+   "sev": "friccion",
+   "zona": "columna derecha, tarjeta B · Indie emotivo, parte inferior",
+   "desc": "El contenido de la tarjeta queda cortado/oculto tras la barra inferior fija (\"despedida...\" se corta a mitad de palabra): solape del footer con el contenido scrolleable, sin margen de respiro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "centro, preview del carrusel, flechas laterales < >",
+   "desc": "Los botones de navegación del carrusel son círculos pequeños sobre la foto, con bajo contraste respecto a la imagen, difícil de localizar y target táctil justo en tablet."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior, botón \"Confirmar decisión → OpenPost\"",
+   "desc": "El botón de acción primaria queda muy pegado al borde derecho de la pantalla, sin margen lateral visible, y su texto es largo para el ancho disponible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "columna derecha, titular \"2 · MÚSICA — PULSA PARA ESCUCHAR\"",
+   "desc": "El titular en mayúsculas se parte en tres líneas por el ancho estrecho de la columna, rompiendo la jerarquía visual respecto al resto de secciones."
+  }
+ ],
+ "empty": false
+}

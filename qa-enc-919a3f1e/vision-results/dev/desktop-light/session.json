@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de sesión de chat en ExoHuman UI: barra superior con pestañas (Full history, Generate title, Branches, System, Tools) y métricas de tokens, sidebar izquierdo con navegación (Actividad, Workspaces, Encargos, Decisiones), buscador, filtros y árbol FILES, y panel principal con un mensaje largo, chips de archivos, campo de input y barra de estado inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de filtros 'Todo 370 / En Vivo 0 / Encargos'",
+   "desc": "El chip 'Encargos' se corta contra el borde derecho del sidebar: overflow horizontal sin scroll ni degradado visible, no se lee el contador."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, primer ítem bajo el separador 'HOY'",
+   "desc": "Texto 'Gestionar ses...' truncado con puntos suspensivos y el badge verde junto a él ('ACTUAL...') cortado por el borde del sidebar, el estado del ítem es ilegible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de carpetas FILES (parte inferior)",
+   "desc": "El ítem 'remote' queda cortado a media fila por el footer con 'Settings', la lista se corta contra el borde inferior sin separación ni scroll visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior del chat, extremo derecho junto al borde de la ventana",
+   "desc": "Icono de candado suelto y pegado al borde derecho de la ventana, sin contenedor ni tooltip visible, fuera de la barra de controles del input."
+  }
+ ],
+ "empty": false
+}

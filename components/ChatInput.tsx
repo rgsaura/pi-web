@@ -2372,7 +2372,7 @@ export const ChatInput = memo(forwardRef<ChatInputHandle, Props>(function ChatIn
                 alignSelf: "flex-end",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                 // Mobile: icon-only so the placeholder and draft keep the width.
-                ...(isMobile ? { width: 36, height: 36, padding: 0 } : { padding: "7px 14px" }),
+                ...(isMobile ? { width: 40, height: 40, padding: 0 } : { padding: "7px 14px" }),
                 background: (value.trim() || attachedImages.length) ? "var(--accent)" : "var(--bg-panel)",
                 border: "none",
                 borderRadius: 8,
@@ -2418,7 +2418,7 @@ export const ChatInput = memo(forwardRef<ChatInputHandle, Props>(function ChatIn
              title={t("chat.attachFiles")}
               style={{
                 flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-                width: 32, height: 32, padding: 0,
+                width: isMobile ? 40 : 32, height: isMobile ? 40 : 32, padding: 0,
                 background: "none", border: "none",
                 borderRadius: 9,
                 color: attachedImages.length ? "var(--accent)" : "var(--text-muted)",
@@ -2449,7 +2449,7 @@ export const ChatInput = memo(forwardRef<ChatInputHandle, Props>(function ChatIn
                 aria-label="Hablar por voz con ROT"
                 style={{
                   flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-                  width: 32, height: 32, padding: 0,
+                  width: isMobile ? 40 : 32, height: isMobile ? 40 : 32, padding: 0,
                   background: "none", border: "none",
                   borderRadius: 9,
                   color: "#34d399",

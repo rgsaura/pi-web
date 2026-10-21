@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de inspector de Agentes en ExoHuman UI: barra lateral izquierda con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Voz, proyectos, árbol FILES, Settings), barra superior con acciones de sesión y área principal con 3 tarjetas de agente (dev, exohuman-ui, rot) más un panel plegable 'Catálogo de skills (80)'. Tema oscuro, sin loader ni error.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra lateral izquierda, bloque de proyectos (filas 'Proyecto: ...')",
+   "desc": "'Proyecto: wt-paneles-ma...' está truncado con puntos suspensivos; el nombre real del proyecto no se puede leer sin interactuar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra lateral izquierda, entre 'Proyecto: wt-explorer' y el encabezado 'FILES'",
+   "desc": "Hay una fila/elemento recortado a media altura: solo se ven los topes de letras cortadas, el contenido queda oculto por overflow del contenedor."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra superior, extremo derecho (esquina superior derecha)",
+   "desc": "Un icono aparece cortado/pegado al borde del viewport, a medio mostrar junto al borde de la ventana."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjetas de agente (dev / exohuman-ui / rot), esquina derecha",
+   "desc": "El chevron de plegar/desplegar es un control muy pequeño y aislado en el borde derecho, difícil de localizar y con área de clic reducida."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra lateral, fila 'probe-cwd' en la lista de proyectos",
+   "desc": "'probe-cwd' no lleva icono mientras el resto de filas de proyecto sí, rompiendo la consistencia visual de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra lateral, contadores de 'Proyecto: wt-paneles-ma...' y 'Proyecto: wt-poststudio-v2' (dígito '0')",
+   "desc": "Los contadores '0' tienen muy bajo contraste sobre el fondo oscuro y casi no se distinguen del fondo."
+  }
+ ],
+ "empty": false
+}

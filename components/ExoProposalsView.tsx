@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useExoData } from "@/hooks/useExoData";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { decisionStateColor, formatRelativeEs, formatDateTimeEs } from "@/lib/exo-format";
 import type { ExoProposal } from "@/lib/exo-types";
 import { relevantProposals } from "@/lib/exo-visibility";
@@ -77,6 +78,7 @@ type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 
 export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
+  const isMobile = useIsMobile();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [sortOrder, setSortOrder] = useState<SortOrder>("urgency");
@@ -509,7 +511,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", rowGap: 8 }}>
           <button
             type="button"
             onClick={onClose}
@@ -524,7 +526,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           </button>
 
           {/* Pending vs All switch */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg)", padding: 2 }}>
               {([["pending", `🎯 Pendientes${pendingCount ? ` (${pendingCount})` : ""}`], ["all", `📋 Todas (${proposals.length})`]] as const).map(([value, label]) => (
                 <button
@@ -536,7 +538,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                   }}
                   aria-pressed={statusFilter === value}
                   style={{
-                    padding: "5px 12px",
+                    padding: isMobile ? "9px 12px" : "5px 12px",
+                    minHeight: isMobile ? 40 : undefined,
                     borderRadius: 6,
                     border: "none",
                     background: statusFilter === value ? "var(--bg-selected)" : "transparent",
@@ -561,7 +564,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                 }}
                 style={{
                   ...buttonBase,
-                  padding: "5px 10px",
+                  padding: isMobile ? "9px 10px" : "5px 10px",
+                  minHeight: isMobile ? 40 : undefined,
                   fontSize: 12,
                   outline: "none",
                 }}

@@ -1,0 +1,30 @@
+{
+ "desc": "Vista de sesión/timeline de agente (no Post Studio): sidebar izquierdo con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Hablar por voz), árbol FILES debajo; panel central con respuesta de agente en lista numerada, chips de archivos y barra de input de mensaje con acciones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "panel central / zona de contenido",
+   "desc": "La vista capturada no es Post Studio (?view=post-studio): se muestra el timeline de sesión con documento de texto, no el carrusel de posts solicitado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de proyectos",
+   "desc": "Nombre truncado 'Proyecto: wt-paneles-ma...' sin tooltip visible, y badge '1' pegado al texto truncado, lo que dificulta distinguir el proyecto real."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "panel central, chips de archivos bajo la respuesta",
+   "desc": "Chips de nombres de archivo (p.ej. session-activity.test.mjs) muy estrechos respecto a su contenido, con el texto recortado/al límite del pill."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera FILES del sidebar",
+   "desc": "Fila de 6 iconos de acción (nuevo, carpeta, subir, ver, copiar, buscar) muy apretados, objetivos táctiles pequeños y sin espacio entre ellos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "parte superior del panel central",
+   "desc": "El texto continúa cortado por el borde superior de la zona de scroll ('...proceso pi-web.js reiniciado):'), indicando corte de contenido no resaltado."
+  }
+ ]
+}

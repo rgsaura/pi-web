@@ -1,0 +1,41 @@
+{
+ "desc": "Vista de Encargos y Objetivos: sidebar izquierdo (navegación, buscador, filtros, árbol FILES) + zona principal con cabecera, tabs (En curso/Activos, Todos, Completados), filtro por Área y lista de tarjetas de encargo con badges de estado, dificultad, sistema y tiempo transcurrido.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de navegación 'Encargos' (parte superior izquierda)",
+   "desc": "El badge naranja con el contador '7' está recortado contra el borde derecho del sidebar; el borde del píldora se corta y parece overflow horizontal del contenedor."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de filtros 'Todo 370 / En Vivo 0 / Encargos' (parte media izquierda)",
+   "desc": "El chip 'Encargos' está cortado por el borde derecho del sidebar (se ve 'Encargos' sin el badge ni padding derecho): overflow horizontal, no hay scroll ni degradado que lo indique."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, sección 'HOY' (parte media izquierda)",
+   "desc": "El título de la sesión 'Gestion de pan...' aparece truncado a media palabra y los badges que le acompañan ('GROUP A...'/'OpenAI...') están recortados contra el borde del sidebar, ilegibles."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, input de búsqueda 'Buscar sesiones, encargos,' (parte media izquierda)",
+   "desc": "El placeholder se corta dejando una coma suelta al final ('...encargos,'), dando sensación de texto incompleto y descuidado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Tarjetas de encargo (centro): 1ª y 2ª tarjeta vs 3ª/4ª/5ª",
+   "desc": "Las dos primeras tarjetas ('Write-guard', 'Arquitectura') no tienen botón 'Ir a sesión de trabajo' mientras las siguientes sí: acciones inconsistentes para el mismo tipo de elemento, sin indicación de por qué no está disponible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjeta 'Gestor de paneles' (parte inferior del centro)",
+   "desc": "El cuerpo es un párrafo muy denso de texto técnico (commits, ramas, colisiones) sin estructura ni jerarquía; compite con el título y hace difícil escanear el estado real del encargo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjetas de encargo, subtítulo 'Iniciando investigación...'",
+   "desc": "El texto de estado en gris claro sobre fondo blanco es de bajo contraste y aparece idéntico en todos los encargos, sin distinguir progreso real entre ellos."
+  }
+ ],
+ "empty": false
+}

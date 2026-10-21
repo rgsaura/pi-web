@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de Encargos y Objetivos en tema oscuro: barra superior de herramientas, sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Encargos, Decisiones, etc.), árbol de FILES y Settings; panel principal con filtros (En curso/Activos, Todos, Completados), selector de Area y 4 tarjetas de encargos activos con badges de estado/dificultad, descripción y botón 'Ir a sesión de trabajo'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "3 tarjetas (Post Studio v2, Gestor de paneles, Mejora recursiva) — línea de descripción",
+   "desc": "Las tres muestran el mismo texto genérico 'Iniciando investigación...' pese a llevar 8-12 min activas; el estado no informa de progreso real y parece placeholder estancado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo — item 'Línea de tiempo'",
+   "desc": "El label se parte en dos líneas ('Línea de / tiempo') mientras el resto de items está en una, rompiendo la alineación y la altura uniforme de la lista de navegación."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjetas — metadatos superiores derechos ('Llevan 8m enc-6d8067e1')",
+   "desc": "Duración e id concatenados sin separación clara en gris de bajo contraste sobre fondo oscuro; el id apenas se distingue y la info queda poco legible."
+  }
+ ],
+ "empty": false
+}

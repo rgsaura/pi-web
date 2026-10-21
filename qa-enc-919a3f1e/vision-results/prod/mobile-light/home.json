@@ -1,0 +1,26 @@
+{
+ "desc": "Home móvil con topbar (menú, 'Session info', toggle de panel) y bloque de composer anclado en la mitad-inferior: logo/versión 'Exohuman UI v1.0.0 · pi v1.2.0', breadcrumbs de workspace/branch, input de mensaje con envío y fila de controles (imagen, mic, failover, 'More controls'). El resto de la pantalla está vacío y no se ve la lista de sesiones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "breadcrumbs (fila de workspace/branch, derecha)",
+   "desc": "'...paneles-managerr' llega pegado al borde derecho sin padding y su chevron queda cortado en el edge: texto truncado y desborde horizontal del contenedor de breadcrumbs."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer",
+   "desc": "'Failover Normal (Defa...' aparece truncado con puntos suspensivos en el selector de modo de failover, ilegible sin abrir el desplegable."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona central del home",
+   "desc": "Enorme vacío vertical (~500-600px) entre el topbar y el bloque del composer sin ninguna lista de sesiones ni estado vacío guiado (ni CTA ni texto): estado vacío pobre y jerarquía confusa en home."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "controles del composer (iconos imagen/micrófono)",
+   "desc": "Iconos de adjuntar imagen y micrófono de tamaño táctil muy reducido (~20-24px) respecto al resto de la fila, difíciles de tocar en móvil."
+  }
+ ],
+ "empty": false
+}

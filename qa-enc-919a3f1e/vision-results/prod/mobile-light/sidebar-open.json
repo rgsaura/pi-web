@@ -1,0 +1,26 @@
+{
+ "desc": "Vista móvil 390x844 con sidebar abierto en overlay: barra superior de iconos, tarjetas de navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz) y lista larga de proyectos/rutinas con acciones + y …; el contenido principal queda atenuado detrás.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar > lista de proyectos (fila 'Proyecto: wt-pan…', 'wt-pos…', 'wt-resilie…', 'wt-seccio…', 'wt-timelin…', 'wt-paneles…', 'wt-remot…')",
+   "desc": "Nombres de proyecto truncados con '...' de forma masiva: varios ítems quedan casi idénticos ('wt-pan...' vs 'wt-paneles...') y no se distinguen entre sí; no hay tooltip ni segunda línea que muestre el nombre completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar > filas de proyecto, botones '+' y '…' (derecha de cada fila)",
+   "desc": "Targets táctiles pequeños (aprox. 28-30px) y muy juntos entre sí, con apenas separación: riesgo alto de toque erróneo en móvil, además el '…' queda pegado al borde derecho del sidebar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior global, zona central-izquierda (entre el icono de carpeta y el '+')",
+   "desc": "Existe una celda vacía ancha sin contenido que ocupa espacio útil, mientras que a la derecha los controles (búsqueda, '↓ 85k 18%', toggle de panel) van apretados en 390px: la barra está desequilibrada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjeta 'Línea de tiempo', texto secundario 'pasado → próximo' (derecha de la tarjeta)",
+   "desc": "Contraste bajo: gris muy claro sobre fondo blanco, apenas legible a tamaño pequeño en móvil."
+  }
+ ],
+ "empty": false
+}

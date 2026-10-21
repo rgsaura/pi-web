@@ -1,0 +1,41 @@
+{
+ "desc": "Home de ExoHuman UI: sidebar izquierdo con tarjetas de navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Voz), lista de sesiones/proyectos y árbol de FILES; zona principal con toolbar superior, logo+versión, selectores de workspace/fork, composer con Send y fila de controles.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, lista de sesiones, fila 'Proyecto: wt-paneles-ma...'",
+   "desc": "Nombre del proyecto truncado con puntos suspensivos ('wt-paneles-ma...') sin tooltip visible ni badge de sesiones completo a la derecha."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, fila 'Proyecto: wt-paneles-sesiones'",
+   "desc": "El texto llega al borde derecho del sidebar y queda cortado sin elipsis ni indicación de contenido oculto; se solapa con el límite del panel."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "toolbar superior, botones 'Full history' y 'Generate title'",
+   "desc": "Etiquetas con contraste muy bajo (texto grisáceo sobre fondo claro), parecen deshabilitadas pero no hay estado hover ni indicador claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "FILES, pestañas de workspace '..human-ui' y '..egrador 12'",
+   "desc": "Nombres truncados con prefijo '..' (p.ej. '..egrador 12'), difícil identificar el workspace al que corresponden."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, sesión 'exohuman-ui' con 'No sessions yet'",
+   "desc": "Estado vacío 'No sessions yet' en inglés mientras el resto de la UI está en español, y sin acción sugerida (CTA) para crear la primera sesión."
+  },
+  {
+   "sev": "friccion",
+   "zona": "composer, fila de controles bajo el input (iconos imagen/micrófono)",
+   "desc": "Targets de los iconos de imagen y micrófono pequeños (~24-28px) y muy separados del resto de controles ('Failover Normal (Default)', 'auto', 'configured', 'Compact'), que quedan dispersos en toda la anchura."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "toolbar superior, iconos junto al logo (+, actividad, filtro, buscar, panel)",
+   "desc": "Grupo de 5 iconos sin etiqueta ni separación clara respecto a los botones con texto, jerarquía poco evidente en tablet."
+  }
+ ],
+ "empty": false
+}

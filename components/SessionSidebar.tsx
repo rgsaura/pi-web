@@ -504,6 +504,26 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
+/** The quiet pill of a secondary system view in the sidebar's strip.
+ *  On touch screens the pill grows to a comfortable ~40px target (QA enc-919a3f1e). */
+function secondaryPillStyle(isMobile: boolean) {
+  return {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 4,
+    padding: isMobile ? "9px 12px" : "4px 9px",
+    minHeight: isMobile ? 40 : 26,
+    borderRadius: 999,
+    border: "1px solid var(--border)",
+    background: "transparent",
+    color: "var(--text-muted)",
+    fontSize: 10.5,
+    fontWeight: 550,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    transition: "all 0.12s ease",
+  } as const;
+}
 
 export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
@@ -3201,6 +3221,34 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
               {pendingProposalsCount}
             </span>
           </button>
+          )}
+
+          {/* Secondary system views, one quiet row of pills: they keep their
+              entry points (their URLs stay ?view=…), without the tall stack
+              of full rows the fork removed. */}
+          {(onOpenTimelineView || onOpenPanelesView || onOpenPostStudio || onOpenAgentsInspector) && (
+            <div role="group" aria-label="Otras vistas del sistema" style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+              {onOpenTimelineView && (
+                <button type="button" onClick={onOpenTimelineView} title="Línea de tiempo: pasado, hoy y próximo" style={secondaryPillStyle(isMobile)}>
+                  <span aria-hidden="true">🗓️</span> Timeline
+                </button>
+              )}
+              {onOpenPanelesView && (
+                <button type="button" onClick={onOpenPanelesView} title="Paneles: entregables e interfaces visibles de EXO" style={secondaryPillStyle(isMobile)}>
+                  <span aria-hidden="true">📊</span> Paneles
+                </button>
+              )}
+              {onOpenPostStudio && (
+                <button type="button" onClick={onOpenPostStudio} title="Post Studio: review de un post antes de publicarlo" style={secondaryPillStyle(isMobile)}>
+                  <span aria-hidden="true">🎬</span> Post Studio
+                </button>
+              )}
+              {onOpenAgentsInspector && (
+                <button type="button" onClick={onOpenAgentsInspector} title="Inspector de agentes: prompts, skills y herramientas" style={secondaryPillStyle(isMobile)}>
+                  <span aria-hidden="true">🤖</span> Agentes
+                </button>
+              )}
+            </div>
           )}
 
           {onOpenVoiceModal && (

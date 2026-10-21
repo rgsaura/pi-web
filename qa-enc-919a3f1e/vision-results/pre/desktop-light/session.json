@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de sesión de chat en desktop 1440x900 con sidebar izquierdo (nav, workspace, árbol FILES), área central con mensaje largo de agente (5 secciones + chips de archivos), input de mensaje abajo y barra de estado inferior; top bar con pestañas de herramientas y contadores de recursos.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, metadatos de cada entrada (\"pasado→próximo\", \"entregables\", \"pre\", \"prompts·skills\")",
+   "desc": "Texto secundario en gris muy claro sobre fondo blanco, tamaño pequeño: contraste bajo y difícilmente legible en las etiquetas de estado de las entradas de navegación."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior derecha, contadores de recursos (↑243k ↓85k 26.5M 18%/1.0M)",
+   "desc": "Contadores amontonados contra el borde derecho sin separación ni etiquetas de tooltip visibles; el contador de descarga muestra un carácter de relleno/superíndice pegado al valor (\"85k\") que rompe la alineación visual."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra de estado inferior derecha (\"off\" / \"configured\" / \"Compact\")",
+   "desc": "Etiquetas sueltas sin icono ni texto descriptor claro (p.ej. \"configured\" no indica qué está configurado), jerarquía confusa en comparación con \"Failover Fast\" que sí tiene icono."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,36 @@
+{
+ "desc": "Home de ExoHuman UI en desktop 1440x900: sidebar izquierdo con módulos (Actividad, Timeline, Agentes, Workspaces, Encargos, Decisiones), listado de sesiones y explorador FILES, y área principal con logo, breadcrumb y composer de nueva sesión.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, bloque de sesiones (junto a 'exohuman-ui')",
+   "desc": "Estado contradictorio: dice 'No sessions yet' pero justo debajo aparecen 2 sesiones ('Proyecto: wt-paneles-ma…' y 'Proyecto: wt-poststudio-v2'); el texto vacío no se oculta al haber datos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, listado de sesiones",
+   "desc": "Nombres de sesión truncados con puntos suspensivos ('Proyecto: wt-paneles-ma…'), el título completo no es legible ni hay tooltip visible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "explorador FILES, fila de pestañas/chips bajo los iconos",
+   "desc": "Los chips de archivos están cortados a mitad de palabra ('__human-ui', 'k_grador 12') y se solapan entre sí, indicando overflow horizontal sin scroll ni degradación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "explorador FILES, fila de iconos de acción",
+   "desc": "7 iconos de acción (folder, upload, refresh, link, eye, history, search) muy apretados en ~200px, con targets pequeños y sin separación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, 'Full history' y 'Generate title'",
+   "desc": "Controles en gris muy claro con contraste apenas legible respecto al fondo, parecen deshabilitados sin estado alternativo explicativo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área principal, columna inferior del composer (texto 'Failover Normal (Default)' y controles de la derecha)",
+   "desc": "Controles del pie del composer (auto, configured, Compact, volumen) muy dispersos y en gris de bajo contraste, jerarquía confusa frente al input principal."
+  }
+ ],
+ "empty": false
+}

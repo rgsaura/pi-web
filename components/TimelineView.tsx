@@ -318,9 +318,32 @@ export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
       >
         <span style={{ fontSize: 14, lineHeight: "20px", flexShrink: 0 }} aria-hidden="true">{meta.icon}</span>
         <span style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ display: "block", overflowWrap: "anywhere" }}>{event.title}</span>
+          <span
+            title={event.title}
+            style={{
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 3,
+              overflow: "hidden",
+              overflowWrap: "anywhere",
+            }}
+          >
+            {event.title}
+          </span>
           {(event.category || event.status || event.detail || event.ts) && (
-            <span style={{ display: "block", color: "var(--text-dim, #888)", fontSize: 11, marginTop: 2, overflowWrap: "anywhere" }}>
+            <span
+              title={[timeLabel(event), event.category, event.status, event.detail].filter(Boolean).join(" · ")}
+              style={{
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+                overflow: "hidden",
+                color: "var(--text-dim, #888)",
+                fontSize: 11,
+                marginTop: 2,
+                overflowWrap: "anywhere",
+              }}
+            >
               {[timeLabel(event), event.category, event.status, event.detail].filter(Boolean).join(" · ")}
             </span>
           )}

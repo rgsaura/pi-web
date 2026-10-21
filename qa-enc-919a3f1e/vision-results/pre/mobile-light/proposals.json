@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de propuestas en móvil: barra superior, filtros (Pendientes/Todas, Categoría, Por decidir/SISTEMA), tarjeta de propuesta con título, origen, descripción larga y opciones propuestas. Contenido con datos, sin estado vacío.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros superior (Pendientes/Todas) — borde derecho de la pantalla",
+   "desc": "El botón 'Por urgen…' queda cortado y desborda horizontalmente fuera del viewport 390px; no se ve completo ni hay indicador claro de scroll."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "bloque Origen — chip junto a título",
+   "desc": "El chip de origen con texto monoespaciado ('Sesión proactiva · conexiones · 17-10') se parte en dos líneas dentro de su caja con borde, resultando apretado y con aspecto roto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "enlace 'Ver sesión en vivo' — derecha del chip Origen",
+   "desc": "El enlace se parte en dos líneas ('Ver sesión / en vivo') apretado contra el chip de origen, con poco espacio y jerarquía visual confusa en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior — 'Session info' y icono de panel",
+   "desc": "Texto 'Session info' en color gris muy claro sobre fondo claro, contraste bajo y difícil de leer en móvil."
+  }
+ ],
+ "empty": false
+}

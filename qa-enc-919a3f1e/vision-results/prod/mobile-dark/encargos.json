@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de Encargos en móvil con cabecera, título grande, filtros por estado y área, y una lista de tarjetas de encargos con badges de estado/dificultad, metadatos, título, descripción y acciones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra de acciones superior, lado derecho (botón 'Cerrar')",
+   "desc": "El botón 'Cerrar' queda cortado por el borde derecho de la pantalla: hay overflow horizontal y no se ve completo ni es pulsable en su totalidad."
+  },
+  {
+   "sev": "friccion",
+   "zona": "chips de metadatos en las tarjetas (columna derecha: 'enc-...' y 'Llevan X')",
+   "desc": "Los textos se parten a media palabra en dos líneas ('enc-' / '6d867e1', 'Llevan' / '1m'), rompiendo el identificador del encargo y dificultando la lectura rápida."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "título 'Encargos y Objetivos' + fila superior",
+   "desc": "El título ocupa tres líneas y empuja la fila de controles ('5 activos', '197 total', 'Actualizar', 'Cerrar') hacia la derecha, provocando el amontonamiento y el corte del último botón."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjetas de la lista (esquina inferior de las tarjetas 1 y 3)",
+   "desc": "Solo la tarjeta central muestra el botón 'Ir a sesión de trabajo'; las demás no tienen acción visible, lo que rompe la consistencia de las tarjetas."
+  }
+ ],
+ "empty": false
+}

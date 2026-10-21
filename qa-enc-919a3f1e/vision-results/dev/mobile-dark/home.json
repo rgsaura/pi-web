@@ -1,0 +1,36 @@
+{
+ "desc": "Home móvil en tema oscuro: barra superior con menú hamburguesa, botón de más opciones, 'Session info' e icono de panel; cuerpo casi vacío con identidad 'Exohuman UI v1.0.0 · pi v1.2.0', ruta de workspace 'workspaces/exohuman', composer con placeholder y botón de envío, controles secundarios (adjuntar, micrófono, 'More controls') y un pill 'Rendering ...' abajo a la izquierda.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "composer / campo de mensaje (centro de la captura)",
+   "desc": "El placeholder 'Message... Type / for commands, @' queda cortado/clipeado contra el botón de envío sin elipsis ni espacio, sugiriendo overflow del texto dentro del input."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona de contenido principal (todo el cuerpo de la vista raíz)",
+   "desc": "En la home no se ve ninguna lista de sesiones ni estado inicial útil: pantalla casi vacía salvo el logo y el composer, con grandes huecos arriba y abajo; si el sidebar existe está colapsado tras el hamburger sin pistas de sesiones existentes."
+  },
+  {
+   "sev": "friccion",
+   "zona": "pill inferior izquierdo 'Rendering ...'",
+   "desc": "Indicador de carga persistente ('Rendering ...') fijo en la esquina inferior que parece no resolverse ni dar acción, y queda pegado al borde izquierdo/inferior sin safe-area clara."
+  },
+  {
+   "sev": "friccion",
+   "zona": "controles secundarios bajo el composer (iconos de adjuntar imagen y micrófono)",
+   "desc": "Los iconos de adjuntar y micrófono son pequeños (~24px visibles) para targets táctiles en móvil (<44px), además de estar muy separados entre sí y del texto 'More controls'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de controles inferior del composer",
+   "desc": "Mezcla de affordances inconsistente: dos iconos (imagen, micrófono) y a la derecha un botón de texto 'More controls'; además el micrófono está en verde saturado mientras el resto es gris tenue, rompiendo la jerarquía cromática."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón de envío dentro del composer (derecha)",
+   "desc": "La flecha de envío tiene muy bajo contraste sobre el fondo del botón, apenas distinguible, y el botón queda muy pegado al borde derecho del input."
+  }
+ ],
+ "empty": false
+}

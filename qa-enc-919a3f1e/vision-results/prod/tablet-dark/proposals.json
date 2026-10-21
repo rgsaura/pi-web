@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de decisiones en tablet: rail izquierdo con navegación, árbol FILES y lista de proyectos; panel derecho con detalle de la decisión 'Tarjeta del token-governor', opciones A/B/C, respuesta personalizada con dictado y paginación (1 de 13).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Todo el rail izquierdo y cabecera del panel derecho (iconos de 'Línea de tiempo', 'Agentes', badges 'Pendientes'/'Todas', checks de la lista de 'Proyecto:' y delante de 'Respuesta personalizada')",
+   "desc": "Múltiples iconos renderizan como cuadrados vacíos (tofu □): la fuente de iconos no carga o el glifo no existe, dejando marcas sin significado en navegación, filtros y listas."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Rail izquierdo, primer elemento de la lista de proyectos: 'Proyecto: wt-paneles-ma... ○1'",
+   "desc": "Nombre de proyecto truncado con puntos suspensivos y el contador '○1' pegado al final sin espacio, dando sensación de texto cortado y datos incompletos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Botón 'Enviar respuesta', esquina inferior derecha del formulario de respuesta",
+   "desc": "El texto del botón aparece gris apagado sobre fondo azul verdoso (estado deshabilitado), con contraste muy bajo y aspecto de control inactivo aunque la acción es la principal de la tarjeta."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior de filtros, extremo derecho junto al desplegable 'Por urgencia / caducidad'",
+   "desc": "El botón icono del final queda cortado/pegado al borde derecho de la ventana, casi sin margen, y su glifo se ve parcial recortado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Paginación inferior central: 'Decisión 1 de 13'",
+   "desc": "Texto gris muy tenue sobre fondo oscuro, poco legible frente a los botones 'Anterior'/'Siguiente' que sí tienen contraste suficiente."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,31 @@
+{
+ "desc": "Sidebar izquierdo con marca ExoHuman UI, navegación (Actividad, Workspaces, Encargos, Decisiones…), buscador, chips de filtro, sección HOY y árbol de FILES; zona principal con cabecera 'Encargos y Objetivos' (7 activos, 211 total), tabs de estado, filtro de área y lista de tarjetas de encargos con badges (EN CURSO, Dificultad, SISTEMA/UI), título, descripción, meta lateral y botón de acción.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, sección HOY, tarjeta 'Gestor de pane...' (mitad inferior)",
+   "desc": "La tarjeta aparece truncada ('Gestor de pan') y queda tapada por el panel FILES, que se superpone encima; el contenido de esa entrada es ilegible/inaccesible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, parte inferior, ítem 'remote' sobre la barra Settings",
+   "desc": "La fila 'remote' queda solapada por el avatar circular 'N' y por la barra 'Settings'; el texto queda cortado y el elemento no es legible ni clicable con claridad."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips de filtro ('Cronológico', 'Proyectos', 'Todo 370', 'En Vivo 0', 'Encargos')",
+   "desc": "El chip 'Encargos' está cortado por el borde derecho del sidebar, se pierde parte de su etiqueta y se intuye que hay más chips fuera de vista sin indicador de scroll."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, campo de búsqueda 'Buscar sesiones, encargos,'",
+   "desc": "El placeholder está truncado en el borde del input y termina en una coma suelta, sin leerse la frase completa."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona principal, tarjetas 1-4 de la lista de encargos",
+   "desc": "Varias tarjetas muestran el mismo subtítulo genérico 'Iniciando investigación…' como único contenido descriptivo, frente a la tarjeta 5 que sí tiene descripción real; parece texto placeholder sin datos de estado/avance."
+  }
+ ],
+ "empty": false
+}

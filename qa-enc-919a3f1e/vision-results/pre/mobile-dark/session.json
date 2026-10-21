@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de sesión en móvil con mensaje largo de agente (texto con numeración, etiquetas de archivo en chips), barra de controles inferior con input, iconos y acciones, y barra superior con métricas de tokens. Sin overflow horizontal global y con buena jerarquía de texto.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra inferior de controles, extremo derecho ('More controls')",
+   "desc": "El label 'More controls' queda pegado al borde derecho de la pantalla sin margen de seguridad, riesgo de recorte/overflow en 390px y sin padding lateral consistente respecto al resto de la barra."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "borde superior del área de contenido bajo la barra fija",
+   "desc": "El texto del mensaje queda cortado a media línea bajo la barra superior sin separación visual (fade/padding), da sensación de contenido roto al hacer scroll."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior, fila de iconos (imagen, micrófono, chip) y 'Failover Fast'",
+   "desc": "Controles de la barra inferior desiguales en estilo y peso visual: iconos sueltos a la izquierda frente a botones de texto ('Failover Fast', 'More controls'), jerarquía confusa y anchos de target variables en móvil."
+  }
+ ],
+ "empty": false
+}

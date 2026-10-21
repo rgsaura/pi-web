@@ -10,6 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import type { SessionInfo } from "@/lib/types";
 
 /**
@@ -320,6 +321,7 @@ export const SessionsExplorer = forwardRef<SessionsExplorerHandle, SessionsExplo
     ref,
   ) {
     const [query, setQuery] = useState("");
+    const isMobile = useIsMobile();
     const [chip, setChip] = useState<ChipId>("todo");
     const [view, setView] = useState<ViewMode>("tiempo");
     const [collapsedProjects, setCollapsedProjects] = useState<Set<string>>(new Set());
@@ -933,8 +935,8 @@ export const SessionsExplorer = forwardRef<SessionsExplorerHandle, SessionsExplo
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 5,
-                    padding: "5px 6px",
-                    minHeight: 28,
+                    padding: isMobile ? "9px 6px" : "5px 6px",
+                    minHeight: isMobile ? 40 : 28,
                     borderRadius: 8,
                     border: `1px solid ${active ? "transparent" : "var(--border)"}`,
                     background: active ? "var(--bg-selected)" : "transparent",
@@ -971,8 +973,8 @@ export const SessionsExplorer = forwardRef<SessionsExplorerHandle, SessionsExplo
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 4,
-                    padding: "4px 10px",
-                    minHeight: 28,
+                    padding: isMobile ? "9px 12px" : "4px 10px",
+                    minHeight: isMobile ? 40 : 28,
                     borderRadius: 999,
                     border: `1px solid ${activeChip ? "transparent" : "var(--border)"}`,
                     background: activeChip ? "var(--accent)" : "transparent",

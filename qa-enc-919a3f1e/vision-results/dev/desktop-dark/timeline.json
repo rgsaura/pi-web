@@ -1,0 +1,31 @@
+{
+ "desc": "App con sidebar izquierdo (navegación, búsqueda, filtros y explorador FILES) y panel principal con la vista Timeline: título, pestañas Eventos/Patrones, chips de filtro por tipo, buscador y lista de eventos agrupados por fecha (Jue 22 Oct, Vie 23 Oct).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de filtros 'Todo 370 / En Vivo 0 / Encargos' (mitad inferior del sidebar)",
+   "desc": "El chip 'Encargos' queda cortado/clipeado contra el borde derecho del sidebar; la fila desborda horizontalmente sin indicación de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, sección 'HOY 30' justo encima del panel FILES",
+   "desc": "El encabezado de FILES solapa/oculta el contenido de la sección 'HOY': el texto 'Gestion de ra…' aparece truncado y el badge/chip contiguo queda cortado por el panel FILES."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, input de búsqueda 'Buscar sesiones, encargos…'",
+   "desc": "El placeholder está truncado en el propio campo ('Buscar sesiones, encargos,') sin ajuste de texto; se pierde parte de la ayuda."
+  },
+  {
+   "sev": "friccion",
+   "zona": "timeline, filas de eventos 'caduca' (Jue 22 Oct, últimas filas)",
+   "desc": "Las descripciones largas se cortan con puntos suspensivos ('combinando dise…', 'Madrid Río o…') sin control visible para expandir/ver el texto completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, explorador FILES parte inferior",
+   "desc": "El ítem '*remote' queda parcialmente tapado por la barra de 'Settings' fijada al fondo; el árbol de archivos parece continuar bajo ella sin separación clara."
+  }
+ ],
+ "empty": false
+}

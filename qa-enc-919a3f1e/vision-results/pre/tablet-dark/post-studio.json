@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Post Studio con barra lateral izquierda (nav + árbol FILES), preview del carrusel 1/19 en el centro y panel derecho de narrativa/música, con barra inferior de acción Confirmar decisión.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Panel derecho, tarjetas de música (A Rumba / B Indie emotivo)",
+   "desc": "El texto de descripción se parte a una o dos palabras por línea (columna demasiado estrecha), ilegible: 'Rumba mediterránea con base moderna' y 'El sur, la terraza, la barbacoa...' ocupan un ancho mínimo con saltos de línea extremos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Panel derecho, tarjeta B · Indie emotivo (borde inferior)",
+   "desc": "La tarjeta queda cortada por la barra inferior de acciones ('despedida' truncada y texto continuo oculto), obligando a scroll y con riesgo de perder contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra lateral izquierda, sección FILES",
+   "desc": "El árbol de archivos ocupa toda la altura del sidebar empujando el resto del contenido y compitiendo con la vista principal; en tablet 820px el espacio central se estrecha considerablemente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Cabecera Post Studio, botón 'Cerrar' junto a badge 'PRE · nada se publica'",
+   "desc": "Los controles de cabecera están apretados y desbalanceados respecto al título, con poco aire entre badge y botón."
+  }
+ ],
+ "empty": false
+}

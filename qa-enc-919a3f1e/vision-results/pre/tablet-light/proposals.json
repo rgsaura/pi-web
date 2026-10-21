@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Decisiones en tablet: sidebar izquierda con navegación, árbol de workspace y FILES; zona principal con pestañas Pendientes/Todas, filtros, y una propuesta de poda con descripción y opciones A-H listadas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Opciones propuestas · opción B (centro de la captura)",
+   "desc": "El texto queda truncado a media frase: 'Aprobar solo podas evidentes (Viper' sin cerrar el paréntesis ni mostrar elipsis/indicador de texto continuado; no se sabe si hay más contenido oculto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar navegación + pestañas superiores (Pendientes/Todas)",
+   "desc": "Los iconos se renderizan como cuadrados vacíos (tofu/glyph faltante) en 'Línea de tiempo', 'Paneles', 'Post Studio', 'Agentes', 'Decisiones' y delante de 'Pendientes'/'Todas': iconografía rota en tema claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Bloque Origen · enlace 'Ver sesión en vivo' (junto a la tarjeta Origen)",
+   "desc": "El enlace se rompe en tres líneas apiladas ('Ver / sesión / en vivo') por estar en una columna demasiado estrecha; aspecto desordenado frente al botón contiguo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fila de filtros superior derecha · botón junto al select 'Por urgencia / caducidad'",
+   "desc": "El botón muestra glifos ilegibles ('→·') en lugar de un icono reconocible, probablemente glyph faltante o tooltip mal pintado."
+  }
+ ],
+ "empty": false
+}

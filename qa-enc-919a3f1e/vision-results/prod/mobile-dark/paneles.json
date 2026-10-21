@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de mensaje en hilo de sesión (contenido tipo devlog con código, chips de archivos y zona de input inferior) en móvil 390x844 y tema oscuro, con barra superior de estado y controles inferiores.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "parte superior del contenido de texto, bajo la barra de estado",
+   "desc": "El primer párrafo aparece cortado a media línea ('pasos, cada relativa y Nueva sesión aquí...') sin espacio de respiro respecto a la barra superior: texto truncado/pegado al borde superior."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona de metadatos justo bajo los chips de archivos (derecha/centro)",
+   "desc": "Aparece la letra 'R' suelta en su propia línea, suelta del resto de metadatos ('522 in · 1,078 out · 191,936 cache'), probablemente texto cortado o que salta de forma errónea."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "campo de mensaje inferior (placeholder)",
+   "desc": "El placeholder 'Message... Type / for commands, @' termina en '@' sin cerrar, aparentemente truncado dentro del ancho disponible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "contenido principal de la vista (?view=paneles)",
+   "desc": "La vista se supone una galería de paneles entregables pero se muestra el cuerpo de un mensaje de sesión con chips de archivos; no se ve ningún panel/galería ni cabecera de la vista."
+  }
+ ],
+ "empty": false
+}

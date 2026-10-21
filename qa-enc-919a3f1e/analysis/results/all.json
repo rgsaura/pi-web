@@ -1,0 +1,497 @@
+[
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "activity",
+  "rel": "prod/desktop-dark/activity.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/activity.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "encargos",
+  "rel": "prod/desktop-dark/encargos.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/encargos.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "agents",
+  "rel": "prod/desktop-dark/agents.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/agents.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "home",
+  "rel": "prod/desktop-dark/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "post-studio",
+  "rel": "prod/desktop-dark/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "paneles",
+  "rel": "prod/desktop-dark/paneles.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/paneles.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "proposals",
+  "rel": "prod/desktop-dark/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "session",
+  "rel": "prod/desktop-dark/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "session-scrolled",
+  "rel": "prod/desktop-dark/session-scrolled.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/session-scrolled.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-dark",
+  "view": "timeline",
+  "rel": "prod/desktop-dark/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-dark/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-light",
+  "view": "post-studio",
+  "rel": "prod/desktop-light/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-light/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-light",
+  "view": "home",
+  "rel": "prod/desktop-light/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-light/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-light",
+  "view": "proposals",
+  "rel": "prod/desktop-light/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-light/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-light",
+  "view": "timeline",
+  "rel": "prod/desktop-light/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-light/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "desktop-light",
+  "view": "session",
+  "rel": "prod/desktop-light/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/desktop-light/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "encargos",
+  "rel": "prod/mobile-dark/encargos.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/encargos.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "paneles",
+  "rel": "prod/mobile-dark/paneles.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/paneles.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "home",
+  "rel": "prod/mobile-dark/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "post-studio",
+  "rel": "prod/mobile-dark/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "session",
+  "rel": "prod/mobile-dark/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "proposals",
+  "rel": "prod/mobile-dark/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "sidebar-open",
+  "rel": "prod/mobile-dark/sidebar-open.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/sidebar-open.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "home",
+  "rel": "prod/mobile-light/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-dark",
+  "view": "timeline",
+  "rel": "prod/mobile-dark/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-dark/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "post-studio",
+  "rel": "prod/mobile-light/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "session",
+  "rel": "prod/mobile-light/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "proposals",
+  "rel": "prod/mobile-light/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "sidebar-open",
+  "rel": "prod/mobile-light/sidebar-open.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/sidebar-open.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-dark",
+  "view": "home",
+  "rel": "prod/tablet-dark/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-dark/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "mobile-light",
+  "view": "timeline",
+  "rel": "prod/mobile-light/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/mobile-light/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-dark",
+  "view": "post-studio",
+  "rel": "prod/tablet-dark/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-dark/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-dark",
+  "view": "session",
+  "rel": "prod/tablet-dark/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-dark/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-dark",
+  "view": "proposals",
+  "rel": "prod/tablet-dark/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-dark/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-dark",
+  "view": "timeline",
+  "rel": "prod/tablet-dark/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-dark/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-light",
+  "view": "post-studio",
+  "rel": "prod/tablet-light/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-light/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-light",
+  "view": "home",
+  "rel": "prod/tablet-light/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-light/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-light",
+  "view": "proposals",
+  "rel": "prod/tablet-light/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-light/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-light",
+  "view": "timeline",
+  "rel": "prod/tablet-light/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-light/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "prod",
+  "combo": "tablet-light",
+  "view": "session",
+  "rel": "prod/tablet-light/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/prod/tablet-light/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "activity",
+  "rel": "pre/desktop-dark/activity.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/activity.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "encargos",
+  "rel": "pre/desktop-dark/encargos.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/encargos.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "agents",
+  "rel": "pre/desktop-dark/agents.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/agents.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "home",
+  "rel": "pre/desktop-dark/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "post-studio",
+  "rel": "pre/desktop-dark/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "paneles",
+  "rel": "pre/desktop-dark/paneles.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/paneles.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "proposals",
+  "rel": "pre/desktop-dark/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "session-scrolled",
+  "rel": "pre/desktop-dark/session-scrolled.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/session-scrolled.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "session",
+  "rel": "pre/desktop-dark/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-dark",
+  "view": "timeline",
+  "rel": "pre/desktop-dark/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-dark/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-light",
+  "view": "post-studio",
+  "rel": "pre/desktop-light/post-studio.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-light/post-studio.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-light",
+  "view": "home",
+  "rel": "pre/desktop-light/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-light/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-light",
+  "view": "proposals",
+  "rel": "pre/desktop-light/proposals.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-light/proposals.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-light",
+  "view": "session",
+  "rel": "pre/desktop-light/session.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-light/session.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "desktop-light",
+  "view": "timeline",
+  "rel": "pre/desktop-light/timeline.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/desktop-light/timeline.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ },
+ {
+  "server": "pre",
+  "combo": "mobile-dark",
+  "view": "home",
+  "rel": "pre/mobile-dark/home.png",
+  "file": "/home/rgsaura/workspaces/exohuman-ui/qa-enc-919a3f1e/captures/pre/mobile-dark/home.png",
+  "ok": false,
+  "error": "TypeError: fetch failed"
+ }
+]

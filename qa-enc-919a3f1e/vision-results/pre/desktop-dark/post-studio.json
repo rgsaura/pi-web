@@ -1,0 +1,21 @@
+{
+ "desc": "Vista Post Studio con sidebar izquierdo (nav, workspaces, file tree), columna central con mockup de carrusel (foto, navegación, dots) y columna derecha con narrativa A/B/C, selector musical con reproductor y lista de fotos reordenable; footer fijo con resumen y acción de confirmación.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "columna derecha, fila de música B (Indie emotivo), línea inferior del reproductor",
+   "desc": "El texto de estado 'en pausa · 0:00 / 0:00 · loop' tiene contraste muy bajo respecto al fondo del card seleccionado, apenas legible; la barra de progreso es una línea casi imperceptible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "columna derecha, lista 'TUS FOTOS', fila 6 (Velas) en el borde inferior",
+   "desc": "La fila 6 queda cortada/parcialmente oculta bajo la barra fija de confirmación del footer, sin margen de respiro visible entre el final de la lista y la barra."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "mockup central, cabecera de la historia (rgsaura · La Herradura)",
+   "desc": "El texto de usuario/título de la historia queda pegado al borde derecho del frame del mockup, con riesgo de truncado en nombres más largos."
+  }
+ ],
+ "empty": false
+}

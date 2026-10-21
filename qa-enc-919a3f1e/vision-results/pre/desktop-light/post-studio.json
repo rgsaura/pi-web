@@ -1,0 +1,21 @@
+{
+ "desc": "Post Studio con sidebar izquierdo (nav + árbol FILES), previsualización de carrusel tipo móvil a la izquierda del área principal y columna derecha con secciones de narrativa, música y lista de fotos ordenables; barra inferior con resumen y CTA de confirmación.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "previsualización del carrusel (parte izquierda del área principal), cabecera oscura sobre la foto",
+   "desc": "El texto «rgsaura · La Herradura •» queda truncado/cortado contra el borde derecho de la tarjeta sin elipsis visible, el «•» final aparece a medias."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sección 2 · Música, tarjeta B «Indie emotivo» (centro-derecha)",
+   "desc": "Estado de reproducción inconsistente: el botón circular azul muestra icono de pausa pero la línea de estado dice «en pausa · 0:00 / 0:00 · loop», con duración 0:00/0:00 (sin pista cargada) y una barra de progreso vacía apenas visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sección 3 · Tus fotos, parte inferior de la lista (centro-derecha)",
+   "desc": "La fila 6 «Velas» queda cortada a la mitad bajo la barra inferior fija (footer), sin padding de cierre del scroll ni separación que indique que la lista continúa."
+  }
+ ],
+ "empty": false
+}

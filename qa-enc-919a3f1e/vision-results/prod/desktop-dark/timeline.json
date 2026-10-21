@@ -1,0 +1,31 @@
+{
+ "desc": "Vista Timeline (desktop 1440x900, tema oscuro): barra superior con acciones, sidebar izquierdo con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisions, Hablar por Voz), árbol de proyectos/files y panel principal con cabecera, chips de filtros por tipo, buscador y eventos agrupados por día (Mié 21 Oct, Jue 22 Oct, Vie 23 Oct).",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, sección proyectos (Mitad izquierda)",
+   "desc": "Los nombres de proyecto se truncan con puntos suspensivos ('Proyecto: wt-paneles-ma…') mientras otros caben completos, rompiendo la escaneabilidad de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, líneas de proyecto ('Proyecto: wt-paneles-ma…' y 'Proyecto: wt-poststudio-v2')",
+   "desc": "Los dos badges numéricos (0 y 1) con iconos van pegados al texto y entre sí, apelotonados al final de la línea y muy cerca del borde derecho del sidebar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Panel central, eventos de timeline (descripciones de los 'caduca:')",
+   "desc": "Las descripciones de los eventos ocupan 2-3 líneas de texto gris apretado en cada fila, generando filas muy altas y densas frente a las rutinas de una sola línea, con jerarquía poco clara entre título y detalle."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Panel central, metadatos de eventos ('01:30 · programada', '09:00 · ocio · pendiente' etc.)",
+   "desc": "Texto secundario en gris muy oscuro sobre fondo oscuro con contraste bajo, difícil de leer sobre todo en las líneas de estado/hora."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior (Full history, Generate title, System, Tools) y toolbar FILES",
+   "desc": "Controles agrupados muy juntos con iconos pequeños y sin separación clara entre acciones de barra superior; los iconos del toolbar FILES son blancos muy pequeños, difícil de distinguir su función."
+  }
+ ],
+ "empty": false
+}

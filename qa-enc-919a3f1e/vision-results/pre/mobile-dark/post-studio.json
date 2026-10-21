@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Post Studio en móvil: barra superior con menú y Session info, cabecera con título del estudio, badge PRE y botón Cerrar, pestañas Carrusel/Reel, tarjeta de previsualización de post de Instagram (foto de portada, contador 1/19, puntos de paginación, etiqueta Portada) y pie con resumen del carrusel y CTA Confirmar decisión.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera Post Studio (parte superior, línea de título)",
+   "desc": "El título queda truncado con elipsis (\"Post Studio · La Herradura · Cum...\") en 390px, no se ve el nombre completo del proyecto"
+  },
+  {
+   "sev": "friccion",
+   "zona": "pestañas Carrusel/Reel y junto al título (iconos)",
+   "desc": "Los iconos de las pestañas Carrusel y Reel y el icono previo al título se renderizan como glifos de sustitución (cuadrado vacío), indicando icono/emoji roto o ausente"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "overlay inferior de la tarjeta de previsualización (indicador de paginación)",
+   "desc": "La fila de puntos del carrusel es muy pequeña y el \"+7\" aparece pegado a los puntos sin separación clara, con targets táctiles mínimos en móvil"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera de la tarjeta de previsualización (sobre la foto)",
+   "desc": "El texto \"rsgaura · La Herradura\" se apoya sobre una zona clara de la imagen con degradado poco marcado, contraste justo para lectura"
+  }
+ ],
+ "empty": false
+}

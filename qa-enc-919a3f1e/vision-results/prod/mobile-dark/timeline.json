@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline móvil en tema oscuro: barra superior con menú, título 'Línea de tiempo' (659 eventos) y botón de cierre, fila de chips de filtro (Todos/Encargos/Decisiones/...) desplazable, campo de búsqueda y lista cronológica agrupada por fecha con rutinas y eventos con descripción larga expandida.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro, borde derecho (fila 2 de la captura)",
+   "desc": "El cuarto chip se corta contra el borde derecho de la pantalla sin indicador de scroll (solo se ve parte de un icono ⚠ truncado), lo que da sensación de overflow horizontal y oculta filtros existentes."
+  },
+  {
+   "sev": "friccion",
+   "zona": "evento 'caduca: Exploración de planes: Coworking & Founder Meetup...', Mié 21 Oct",
+   "desc": "La descripción del evento se muestra íntegramente sin truncar/colapsar (~10 líneas de texto), dominando la lista y empujando el resto de eventos fuera de pantalla; no hay 'ver más' ni clamp de líneas."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "mismo evento 'caduca', línea de título y meta",
+   "desc": "Doble icono de casilla/checkbox duplicado al inicio ('▫▫ caduca') y repetición redundante de la fecha ('Miércoles 21-oct' en la descripción cuando ya está bajo el grupo 'Mié 21 Oct'), ruidando la jerarquía."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, 'Session info' y botón de panel (esquina superior derecha)",
+   "desc": "'Session info' en gris azulado sobre fondo oscuro con contraste bajo y muy pegado al botón de panel/cerrar de la derecha, separación mínima entre targets táctiles."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de sesión de chat con sidebar izquierdo (navegación principal, proyectos y árbol FILES) y área central de mensajes con respuesta larga del agente, chips de archivos, footer con estado y barra de entrada de mensaje. Tema oscuro, layout de tres zonas con panel derecho colapsado.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, lista de proyectos (mitad superior)",
+   "desc": "Los nombres de proyecto quedan truncados con puntos suspensivos ('Proyecto: wt-paneles-ma…', 'Proyecto: wt-poststudio-v2'), impidiendo identificar el proyecto sin hover"
+  },
+  {
+   "sev": "friccion",
+   "zona": "Panel FILES, cabecera (barra de iconos junto a 'FILES')",
+   "desc": "Los 6-7 iconos de acciones (subir, carpeta, subir archivo, toggle, ojo, +, lupa) están muy apretados y son de tamaño muy reducido (~14px), con separación mínima entre ellos: difícil de clicar y propenso a errores"
+  },
+  {
+   "sev": "friccion",
+   "zona": "Barra inferior central (footer bajo la zona de chat)",
+   "desc": "Controles 'Failover Fast', 'off', 'configured', 'Compact' y dos iconos de audio apilados a la derecha en texto pequeño (~11px), con jerarquía confusa: no queda claro cuáles son acciones, cuáles son estados y qué significa 'off'"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Borde derecho, altura ~860px (icono de candado/panel)",
+   "desc": "El icono de toggle del panel derecho aparece pegado y parcialmente cortado contra el borde de la ventana, casi ilegible como control"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Área de mensaje del agente, parte superior del contenido",
+   "desc": "El mensaje del agente arranca a media frase ('proceso pi-web.js reiniciado):') sin cabecera ni contexto visible del inicio del bloque, dando sensación de contenido cortado al cargar la vista"
+  }
+ ],
+ "empty": false
+}
