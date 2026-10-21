@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de Decisiones en móvil 390x844 con tema oscuro: barra superior, filtros de estado (Pendientes/Todas/urgencia), chips de categoría, y una propuesta del SISTEMA con descripción y opciones A-D en tarjetas apiladas.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "barra de filtros de estado, extremo derecho (botón 'Por urgen')",
+   "desc": "El botón de urgencia se desborda fuera del viewport: se corta el texto ('Por urgen') y no hay indicación de scroll horizontal visible, parte del control es inaccesible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "varias: título de la propuesta ('▯ Paneles actuales'), chips de filtro ('Pendientes'/'Todas'), toggle superior derecho",
+   "desc": "Los iconos renderizan como caracteres tofu (▯ / cuadrado hueco) por faltante de glifo/emoji en la fuente del navegador móvil, dejando cajas vacías en toda la interfaz."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de Origen: enlace 'Ver sesión en vivo' (derecha del chip)",
+   "desc": "El enlace se parte en dos líneas ('Ver sesión en' / 'vivo') junto al icono de enlace externo, quedando un target táctil apretado y desalineado respecto al chip de origen."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "opción A (tarjeta A)",
+   "desc": "El texto se corta con asterisco ('sidebar-*') sin ellipsis ni indicación de que hay más contenido; la descripción queda incompleta sin forma evidente de verla completa."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "parte inferior (opción D visible a medias)",
+   "desc": "La última tarjeta aparece cortada por el borde inferior sin separación visual clara de fin de lista, pudiendo confundirse con un desbordamiento."
+  }
+ ],
+ "empty": false
+}

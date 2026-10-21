@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de Decisiones en móvil con pestañas Pendientes/Todas, filtros de orden y categoría, y una tarjeta de propuesta (Elecciones 29N) con metadatos, descripción y opciones A/B. Varias filas de chips se desbordan por el borde derecho con texto truncado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila 'Origen:' de la tarjeta, lado derecho",
+   "desc": "Los chips 'La Moncloa · voto por…' y 'Correos · voto por cor…' se cortan en el borde de la pantalla (overflow horizontal): no se lee el texto completo ni hay indicación clara de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila 'Origen:' bloque 'Ver sesión en vivo'",
+   "desc": "El enlace 'Ver sesión en vivo' se parte en 3 líneas (Ver / sesión / en vivo) dentro de una columna estrecha, ilegible y mal alineado frente a los chips."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros 'Categoría:', chip derecho",
+   "desc": "El chip '□ General (13…' queda truncado en el borde derecho, cortando el contador de elementos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante 'N' abajo a la izquierda",
+   "desc": "El FAB circular 'N' solapa la tarjeta de la opción B (tapando parte del badge de letra 'B') al final del scroll, bloqueando contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "pestañas 'Pendientes/Todas', chip 'GENERAL', título de propuesta",
+   "desc": "Los iconos se renderizan como cuadros vacíos (tofu □) en varios elementos: pestañas, chip de categoría, título 'Elecciones 29N', indicando iconos/glyphs no cargados."
+  }
+ ],
+ "empty": false
+}

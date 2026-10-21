@@ -1,0 +1,21 @@
+{
+ "desc": "Vista Paneles con sidebar de navegación a la izquierda (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz, árbol de FILES) y, en el área principal, cabecera 'Paneles e Informes' con badge de activos, filtros (Activos/Archivados/Todos) + buscador, y una galería de tarjetas agrupadas en INFORMES (4), GALERÍAS (1) y COMPARATIVAS (2) con badges de tipo, fecha, descripción y botón 'Sesiones'.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Píldora del filtro 'Activos' (fila de filtros, zona superior del contenido)",
+   "desc": "Hay un pequeño elemento/glifo suelto que se solapa con la etiqueta 'Activos' en la esquina superior derecha de la píldora, rompiendo el acabado del botón seleccionado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fila de filtros + buscador 'Buscar panel...' (parte superior del área principal)",
+   "desc": "El input de búsqueda tiene mayor alto que las píldoras de filtro y sus bordes superior/inferior no alinean con los de los botones, dejando la fila desalineada verticalmente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Cabecera de sección 'COMPARATIVAS 2' (entre GALERÍAS y las tarjetas naranjas)",
+   "desc": "El icono decorativo previo al rótulo se solapa ligeramente con la letra inicial de 'COMPARATIVAS', y el icono de 'GALERÍAS' presenta el mismo ajuste justo."
+  }
+ ],
+ "empty": false
+}

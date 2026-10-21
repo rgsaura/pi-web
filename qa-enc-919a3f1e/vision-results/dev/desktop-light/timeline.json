@@ -1,0 +1,36 @@
+{
+ "desc": "Vista Timeline en desktop: sidebar izquierda con navegación, filtros y panel FILES; zona principal con header de línea de tiempo, pestañas Eventos/Patrones, chips de filtro por tipo, buscador y listado de eventos agrupados por fecha (PRÓXIMO, Jue 22 Oct, Vie 23 Oct).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, fila de filtros 'Todo 370 / En Vivo 0 / Encargos' (parte inferior del bloque superior)",
+   "desc": "El tercer chip 'Encargos' queda cortado en el borde derecho del sidebar; hay overflow horizontal y no se ve su contador ni el texto completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, fila bajo 'HOY 30' (encima del panel FILES)",
+   "desc": "Aparece 'Centro de n' truncado con un badge 'ALERTAS…' cortado por el borde del sidebar; el texto del elemento y su badge son ilegibles por desbordamiento."
+  },
+  {
+   "sev": "friccion",
+   "zona": "esquina inferior izquierda, botón flotante circular 'N'",
+   "desc": "El botón flotante se solapa con el botón 'Settings' y tapa los últimos ítems del árbol FILES ('remote' queda oculto tras el círculo)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "columna de eventos 'caduca:' (Jue 22 Oct), descripciones grises de ancho completo",
+   "desc": "Las descripciones son líneas muy largas en gris claro de bajo contraste sobre blanco y se truncan con '…' sin indicación de 'ver más' ni posibilidad de expandir."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "chips de filtro 'Calendario 0' y 'Retro 0'",
+   "desc": "Tienen el texto en gris muy claro (deshabilitado), con contraste pobre frente al resto de chips activos; no queda claro si son clicables."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierda, campo de búsqueda 'Buscar sesiones, encargos,'",
+   "desc": "El placeholder queda truncado en el borde del input ('encargos,' se corta), sobredimensionado para el ancho disponible."
+  }
+ ],
+ "empty": false
+}

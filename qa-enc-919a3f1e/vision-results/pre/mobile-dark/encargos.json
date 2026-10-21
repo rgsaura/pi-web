@@ -1,0 +1,31 @@
+{
+ "desc": "Vista Encargos en móvil con tema oscuro: barra superior, cabecera con título, badge de activos, contadores y acciones, filtros por estado/área y lista de tarjetas de encargos (estado, dificultad, área, duración, id, título, descripción y CTA).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Cabecera superior derecha, fila de acciones (botones 'Actualizar' y 'Cerrar')",
+   "desc": "El botón 'Cerrar' queda cortado por el borde derecho de la pantalla: la fila de acciones desborda horizontalmente y el botón no se ve completo ni es tocable entero."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Cabecera junto al título: badge '5 activos' + contador '197 total'",
+   "desc": "El badge '5 activos' queda aplastado entre el título y '197 total', con el texto partido en dos líneas ('5'/'activos') y '197 total' también envuelto en dos líneas; bloque de contadores apretado y de lectura confusa."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Título de la vista 'Encargos y Objetivos' (superior izquierda)",
+   "desc": "El título se parte en tres líneas ('Encargos'/'y'/'Objetivos') por el badge contiguo, ocupando mucho espacio vertical en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de meta de cada tarjeta (derecha: 'Llevan 5m' e id 'enc-…')",
+   "desc": "En las tres tarjetas 'Llevan 5m' y el id se parten a mitad ('Llevan'/'5m', 'enc-'/'6d8067e1', 'enc-'/'ebe31041'), quedando guiones y números huérfanos con aspecto descuidado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Filtro de estado activo 'En curso / Activos'",
+   "desc": "El texto del filtro se envuelve en dos líneas dentro del botón, rompiendo la alineación con 'Todos' y 'Completados' que van en una línea."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de sesión con chat en zona central (mensaje largo estructurado con listas, código inline y chips de archivos + input abajo), sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), árbol de FILES y Settings; barra superior con pestañas (Full history, Generate title, Branches, System, Tools) y métricas de tokens/uso a la derecha.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "placeholder del input de mensaje y botón Send (abajo centro)",
+   "desc": "Mezcla de idiomas: UI en español pero placeholder en inglés (\"Message... Type / for commands, @ for files\") y botón \"Send\" en inglés."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (métricas: 243k, ↑85k, 26.5M, 18% / 1.0M)",
+   "desc": "Etiquetas numéricas muy pequeñas y en gris poco contrastado, sin unidades/labels claras que expliquen qué representa cada cifra (jerarquía confusa)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, subetiquetas de navegación (pasado → próximo, entregables, prompts · skills)",
+   "desc": "Texto secundario en gris muy tenue sobre fondo oscuro, contraste bajo que dificulta la lectura."
+  },
+  {
+   "sev": "friccion",
+   "zona": "área de chat, parte superior del mensaje visible",
+   "desc": "El mensaje aparece cortado por arriba (empieza a mitad de frase: \"proceso pi-web.js reiniciado):\") sin cabecera de mensaje visible (autor, timestamp, acciones), lo que dificulta ubicar el inicio y contexto del contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de herramientas inferior del chat (Failover Fast, off, configured, Compact)",
+   "desc": "Controles y estados mezclados sin etiquetas claras ni separación visual consistente, con iconos pequeños apilados en la esquina inferior derecha."
+  }
+ ],
+ "empty": false
+}

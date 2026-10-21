@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Activity oscura (1440x900): sidebar izquierdo con navegación, lista de proyectos, panel FILES con árbol y Settings; contenido principal con tarjetas de canales, palanca de gasto/tokens, buscador de sesiones pi en vivo y tarjetas de sesión con acciones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista de proyectos (entre 'Proyecto: wt-explorer' y el header 'FILES')",
+   "desc": "La lista de proyectos se corta a mitad de fila: hay un elemento parcialmente visible recortado por el panel FILES, sin indicación clara de scroll (clipping vertical)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de proyectos; tarjeta 'FaceSearch'; filas 'Sesión activa' de canales ROT y FaceSearch",
+   "desc": "Textos truncados visibles: 'Proyecto: wt-paneles-ma...', 'rg-facesearch-sentinel....', 'rot-tel...' y 'facesear...' cortados sin tooltip/expandir."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de proyectos, fila 'probe-cwd'",
+   "desc": "La fila 'probe-cwd' no lleva icono inicial mientras el resto de filas sí, rompiendo la alineación vertical de los iconos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, junto a 'EN VIVO'",
+   "desc": "Botón/icono de estado (~24x24) muy pequeño y pegado al borde derecho, con target mínimo apenas visible junto al indicador EN VIVO."
+  }
+ ],
+ "empty": false
+}

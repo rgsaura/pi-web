@@ -1,0 +1,31 @@
+{
+ "desc": "Vista raíz con sidebar izquierda (nav, filtros, árbol FILES, settings) y zona principal centrada con logo, breadcrumb y composer de nueva sesión sobre fondo casi vacío.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, campo de búsqueda ('Buscar sesiones, encargos')",
+   "desc": "El placeholder queda truncado a mitad de palabra ('Buscar sesiones, encargos,') sin elipsis: el input no muestra el texto completo y parece cortado por el ancho del sidebar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, fila de chips de filtro (Todo 370 / En Vivo 0 / Encargos)",
+   "desc": "La fila desborda horizontalmente: el chip 'Encargos' queda cortado en el borde derecho del sidebar y no hay wrap ni scroll visible, por lo que no se puede leer ni pulsar completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, sección 'HOY', primera fila de sesión ('Gestor de pr...')",
+   "desc": "El título de la sesión está truncado sin elipsis clara y el badge/chip lateral queda cortado contra el borde del sidebar; además la fila queda a medio tapar por el inicio del panel FILES, dando sensación de solape/recorte vertical."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierda, cabecera 'FILES' (fila de iconos: rutas, carpeta, subir, ojo, config, expandir, buscar)",
+   "desc": "Los 7 iconos están muy amontonados sin separación ni etiquetas, con targets pequeños y jerarquía confusa en un ancho reducido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona principal, pie del composer (Failover Normal / auto / configured / Compact)",
+   "desc": "Fila de metadatos con mezcla de iconos sueltos y etiquetas ('auto', 'configured', 'Compact') sin agrupación ni jerarquía clara respecto al input, y sin estado explicado para el usuario."
+  }
+ ],
+ "empty": false
+}

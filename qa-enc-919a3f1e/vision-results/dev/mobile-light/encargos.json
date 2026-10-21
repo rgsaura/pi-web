@@ -1,0 +1,31 @@
+{
+ "desc": "Vista Encargos en móvil con cabecera (título + contador 7 activos, botones Actualizar/Cerrar), filtros por estado y área, y tarjetas de encargos con badges, meta y descripción. Hay datos (no vacía).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "meta de cada tarjeta, borde derecho (campo id 'enc-59c26f58', 'enc-fdd5d038', 'enc-a81dfe71')",
+   "desc": "El identificador queda cortado/pegado al borde de la tarjeta y parte del texto se salta de línea a mitad de token, sin ellipsis ni caja propia: overflow horizontal contenido a duras penas en el borde derecho."
+  },
+  {
+   "sev": "friccion",
+   "zona": "meta de cada tarjeta, columna 'Llevan' (junto a icono de reloj)",
+   "desc": "La duración se parte en dos líneas ('Llevan' / '39m') dentro de una columna estrecha, junto a un icono suelto; la fila meta (EN CURSO + Dificultad + SISTEMA + Llevan + id) está amontonada y con saltos de línea inconsistentes."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta inferior ('Spawn blindado: toda sesión nace en su zona'), esquina inferior izquierda",
+   "desc": "El botón flotante circular 'N' solapa y oculta el final del título de la tarjeta, haciendo ilegible 'nace en su zona'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjetas, campo de descripción ('Iniciando investigación...')",
+   "desc": "Las tres tarjetas muestran exactamente la misma descripción genérica, sin diferenciar el estado real del encargo; aporta cero información y rompe la jerarquía informativa respecto al título."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de botones 'Actualizar' y 'Cerrar', zona superior izquierda",
+   "desc": "'Cerrar' como botón de acción con el mismo peso visual que 'Actualizar' resulta confuso jerárquicamente junto al título, ocupando espacio de cabecera en móvil."
+  }
+ ],
+ "empty": false
+}

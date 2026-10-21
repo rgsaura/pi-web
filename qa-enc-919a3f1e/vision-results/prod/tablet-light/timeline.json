@@ -1,0 +1,31 @@
+{
+ "desc": "Sidebar izquierdo con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz, lista de Proyectos/Rutinas, árbol FILES y Settings) y panel derecho con la vista Timeline: cabecera con 663 eventos, fila de filtros por tipo, buscador y tarjetas de eventos agrupadas por día (Mié 21 Oct a Sáb 24 Oct) con títulos y descripciones largas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Panel derecho, fila de filtros por tipo de evento (cerca del borde derecho)",
+   "desc": "El chip 'Informes 1...' queda cortado en el borde del viewport: la fila de pestañas desborda horizontalmente sin scroll ni degradado visible que indique que hay más filtros ocultos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Panel derecho, tarjetas de eventos 'caduca: ...' (bloques de descripción en gris)",
+   "desc": "Las descripciones largas se renderizan en gris muy claro sobre fondo gris claro, con contraste muy bajo y párrafos densos de 5-6 líneas que hacen la timeline ilegible de un vistazo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar, lista de proyectos y filas de eventos (iconos delante del texto)",
+   "desc": "Los iconos se dibujan como glifos cuadrados huecos (tofu/sustituto) en 'Proyecto: wt-...', 'Rutina: reconcile', 'probe-cwd' y en cada fila de evento ('▯ Rutina:', '▯ ▯ caduca:'), sugiriendo iconos rotos o fallback de fuente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar, ítem 'Proyecto: wt-paneles-ma...' (primer proyecto de la lista)",
+   "desc": "El nombre del proyecto se trunca con puntos suspensivos sin tooltip visible y además el badge de contador se solapa visualmente con el final del texto truncado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar, tarjeta 'Línea de tiempo' con 'pasado → próximo'",
+   "desc": "El título se parte en dos líneas ('Línea de / tiempo') y la etiqueta 'pasado → próximo' también, quedando un bloque muy apretado y con línea base desalineada respecto al icono."
+  }
+ ],
+ "empty": false
+}

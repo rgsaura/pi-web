@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline móvil en tema oscuro: barra superior, cabecera con título y acciones, pestañas Eventos/Patrones, fila de filtros con contadores, buscador, y lista de eventos agrupados por día (Mié 21 Oct, Jue 22 Oct) con rutinas programadas y encargos con descripción larga.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros (chips) bajo las pestañas, borde derecho",
+   "desc": "El cuarto chip (con icono de aviso) aparece cortado a la derecha: se ve solo su icono sin etiqueta ni indicador de scroll, por lo que no se entiende qué filtro existe ni que la fila es desplazable."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de evento 'caduca: Exploración de planes: Coworking & Founder Meetup en Chamberí Café', sección Mié 21 Oct",
+   "desc": "La descripción se muestra íntegra sin colapsar (párrafo de ~8 líneas) y ocupa prácticamente media pantalla, empujando el resto del timeline y rompiendo el ritmo visual del listado; falta line-clamp o 'ver más'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "iconos de cada fila de evento y de los chips de filtro (columna izquierda)",
+   "desc": "Los iconos se renderizan como rectángulos/cajas idénticos y sin semántica aparente (posibles glifos rotos o placeholder), lo que no ayuda a distinguir rutina / encargo / decisión de un vistazo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior derecha, 'Session info' e icono de panel",
+   "desc": "El texto 'Session info' está en inglés en una interfaz totalmente en español y su target junto al icono de panel es estrecho, con ambos elementos muy pegados al borde superior."
+  }
+ ],
+ "empty": false
+}

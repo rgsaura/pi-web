@@ -1,0 +1,36 @@
+{
+ "desc": "Vista home con sidebar izquierdo muy denso (nav de módulos, árbol de sesiones 'No sessions yet', explorador de FILES largo, Settings fijado abajo) y zona principal con hero Exohuman UI, selectores de workspace/branch, composer con botón Send y fila de controles (Failover, auto, configured, Compact). Sobre tablet 820px el sidebar ocupa casi el 40% del ancho y la zona principal queda con enorme vacío arriba y abajo del composer.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, sección de sesiones ('exohuman-ui')",
+   "desc": "El estado vacío de sesiones es sólo la línea 'No sessions yet' en gris claro, sin icono, explicación ni CTA para crear la primera sesión, además de convivir sin separación clara con el explorador de FILES justo debajo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, fila 'ENCARGO OFICIAL (enc-6d80...' del árbol de sesiones",
+   "desc": "El nombre del encargo aparece truncado con puntos suspensivos sin tooltip ni forma de ver el id completo (enc-6d80…), lo que impide identificar el encargo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona principal (derecha), área entre topbar y hero/composer",
+   "desc": "En 820x1180 el hero y el composer flotan en el centro de una zona principal mayormente vacía (huecos grandes arriba y abajo), con el sidebar ocupando ~40% del ancho: en tablet la jerarquía queda confusa y el composer desperdicia espacio horizontal útil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, fila 'Línea de tiempo'",
+   "desc": "El subtítulo 'pasado → próximo' se parte en dos líneas y queda apretado contra el título 'Línea de tiempo', rompiendo la alineación horizontal del resto de filas de navegación."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "topbar superior, items 'Full history' y 'Generate title'",
+   "desc": "Texto en gris muy claro con contraste insuficiente respecto al fondo, leyéndose como deshabilitado/ilegible en tema claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de controles bajo el composer (derecha)",
+   "desc": "Los controles (imagen, micrófono, 'Failover Normal (Default)', 'auto', 'configured', 'Compact') están muy separados entre sí y 'Compact' queda pegado al borde derecho del área, con iconos sueltos sin etiqueta que aprietan la lectura en tablet."
+  }
+ ],
+ "empty": false
+}

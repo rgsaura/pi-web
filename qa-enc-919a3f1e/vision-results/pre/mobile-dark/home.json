@@ -1,0 +1,36 @@
+{
+ "desc": "Vista home móvil en tema oscuro con barra superior (menú, '…', 'Session info', toggle de panel) y bloque central-abajo: logo 'Exohuman UI' con versión, selectores de workspace y rama, composer con placeholder y fila de controles (imagen, mic, failover, more controls). Gran zona vacía en la mitad superior y bajo los controles; no se ve lista de sesiones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "centro / mitad superior de la pantalla",
+   "desc": "Más de la mitad del viewport está en blanco: el bloque de marca + composer está verticalmente centrado dejando ~500px vacíos arriba y ~500px abajo, sin lista de sesiones visible ni ningún estado que ocupe la zona; la home se siente vacía y el contenido relevante queda desplazado hacia el tercio inferior."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de selectores, a la derecha del workspace: selector de rama/entorno",
+   "desc": "El texto aparece truncado por el borde izquierdo ('…eles-integrador') sin identificar el nombre completo; el truncado inicial rompe la lectura del elemento seleccionado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer: selector de failover",
+   "desc": "Etiqueta truncada 'Failover Normal (Defa…' sin poder saber el valor real ('Default…') en móvil; falta de ancho o de tooltip/abreviación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de controles bajo el composer: iconos de adjuntar imagen y micrófono",
+   "desc": "Targets táctiles pequeños (iconos de ~24px sin padding visible de 44px) en una fila compacta junto a texto; en móvil los iconos de imagen/mic son difíciles de tocar con precisión."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha: texto 'Session info'",
+   "desc": "Contraste bajo del label gris sobre fondo casi negro; poco legible en móvil y su función no queda clara junto al icono de panel."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "composer: placeholder del input",
+   "desc": "Placeholder largo ('Message... Type / for commands, @') en fuente grande que ocupa casi todo el ancho disponible del input, compitiendo con el botón de envío y dando sensación de desborde."
+  }
+ ],
+ "empty": false
+}

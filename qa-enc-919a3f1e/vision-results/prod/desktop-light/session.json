@@ -1,0 +1,16 @@
+{
+ "desc": "Vista de sesión con sidebar izquierdo (navegación, lista de proyectos y explorador FILES), área central de chat con mensaje largo de contenido técnico y footer con input de mensaje y barra de estado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, sección de proyectos (ítems \"Proyecto: wt-paneles-ma...\" y \"Proyecto: wt-poststudio-v2\")",
+   "desc": "Los nombres de proyecto se truncan con puntos suspensivos sin tooltip ni indicación de nombre completo; el nombre real del proyecto no es legible (\"wt-paneles-ma...\")."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila \"Hablar por Voz\" / botón \"ROT Live\"",
+   "desc": "El botón verde saturado \"ROT Live\" compite visualmente con el badge \"en vivo\" de Actividad y con los badges de contadores, aportando ruido cromático a la jerarquía del sidebar."
+  }
+ ],
+ "empty": false
+}

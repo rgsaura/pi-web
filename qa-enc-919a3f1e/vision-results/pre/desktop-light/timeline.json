@@ -1,0 +1,31 @@
+{
+ "desc": "Vista Timeline con sidebar de navegación (Actividad, Paneles, Agentes, Workspaces, Encargos, Decisiones, Voz) y panel principal con pestañas Eventos/Patrones por hora, chips de filtro por tipo y barra de búsqueda. El área de contenido está vacía: todos los contadores a 0 y sin eventos listados.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera del panel principal, bajo 'Línea de tiempo'",
+   "desc": "Persiste el texto 'cargando...' mientras el área de eventos queda en blanco sin skeleton ni mensaje de estado, dando sensación de loader eterno o carga colgada."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, entre el ítem 'Hablar por Voz' y la sección FILES",
+   "desc": "Aparece suelto el texto crudo 'Loading...' en inglés sin traducir ni contenedor, rompiendo la coherencia con el resto de la UI en español."
+  },
+  {
+   "sev": "friccion",
+   "zona": "área de contenido de la Timeline, debajo de la barra de búsqueda",
+   "desc": "Estado vacío sin contenido: no hay ilustración, ni copy de 'no hay eventos', ni CTA para crear el primer evento, dejando una zona blanca enorme junto al botón 'Añadir'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, barra de herramientas de la sección FILES",
+   "desc": "Fila de iconos (terminal, carpeta, upload, etc.) muy pequeños y sin etiquetas, amontonados sobre un input vacío, con targets difíciles de distinguir y de clicar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "chips de filtro (Todos 0, Encargos 0, ... Retro 0)",
+   "desc": "Todos los chips muestran contador 0, por lo que la fila de 10 filtros aporta ruido sin utilidad cuando no hay datos que filtrar."
+  }
+ ],
+ "empty": true
+}

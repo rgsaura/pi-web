@@ -1,0 +1,26 @@
+{
+ "desc": "Vista home con top bar (Full history, Generate title, System, Tools), sidebar izquierdo de navegación + árbol de archivos/sesiones, y en el centro el composer de nueva sesión con logo, breadcrumbs y campo de mensaje. Zona central muy aireada, sin datos de sesión todavía.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, bloque de sesiones bajo 'exohuman-ui'",
+   "desc": "Estado vacío pobre: solo 'No sessions yet' en gris pequeño, sin icono, explicación ni CTA para crear la primera sesión, y en inglés dentro de una UI en español"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "composer central, placeholder del input y barra inferior",
+   "desc": "Mezcla de idiomas: placeholder 'Message... Type / for commands, @ for files' y controles 'auto'/'configured' en inglés mientras el resto de la interfaz está en español"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "top bar, botones 'Full history' y 'Generate title'",
+   "desc": "Texto en gris muy claro con contraste insuficiente sobre fondo claro; parecen deshabilitados aunque probablemente sean activos, lo que rompe la jerarquía frente a 'System'/'Tools' que sí son legibles"
+  },
+  {
+   "sev": "friccion",
+   "zona": "composer central, barra inferior derecha",
+   "desc": "Controles 'auto', 'configured', 'Compact' y el icono de volumen amontonados con texto pequeño gris y apenas separación entre ellos, sin agrupación ni jerarquía clara"
+  }
+ ],
+ "empty": false
+}

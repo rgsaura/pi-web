@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline móvil en tema claro: barra superior, cabecera con título, contador de eventos y botones Añadir/cerrar, pestañas Eventos/Patrones por hora, chips de filtro con contadores, buscador y listado de eventos agrupados por sección 'PRÓXIMO' y fecha, con filas de rutinas y encargos.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro (Todos 741 / Encargos 413 / Decisiones 247) - borde derecho de la pantalla",
+   "desc": "El cuarto chip (con icono de advertencia) queda cortado/clipeado justo en el borde derecho: overflow horizontal sin ninguna pista visual de scroll (fade, borde atenuado o flecha), da sensación de contenido roto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos de toda la interfaz (cabecera 'Línea de tiempo', pestañas Eventos/Patrones por hora, chips Encargos/Decisiones y filas de eventos)",
+   "desc": "Los iconos se renderizan como cuadrados huecos (tofu / glifo ausente) en lugar de su pictograma: parece que falta la fuente de iconos o falla el glifo, lo que resta legibilidad a la jerarquía (tipo de evento, tipo de filtro)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "última fila visible ('caduca: Watcher Spotify: canciones nuevas con contexto en EXO') - esquina inferior izquierda",
+   "desc": "El badge flotante oscuro 'N' (overlay de desarrollo) se solapa sobre el texto del evento, tapando parte del título y la descripción y dificultando la lectura del elemento."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila 'caduca: Exploración de planes: Exposición retrospectiva...' - descripción",
+   "desc": "La descripción ocupa 3 líneas y termina cortada con '...' sin indicación de expansión: en móvil la fila queda muy cargada frente a las rutinas de una sola línea."
+  }
+ ],
+ "empty": false
+}

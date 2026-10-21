@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de sesión con barra superior (stats y acciones), sidebar izquierdo (nav, buscador, filtros, lista de sesiones HOY y árbol FILES) y panel principal de chat con mensaje largo, chips de archivos, composer y barra de estado inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de filtros (Todo / En Vivo / Encargos)",
+   "desc": "La píldora 'Encargos' queda cortada en el borde derecho del sidebar: overflow horizontal, el texto y su contador no son visibles completos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, lista 'HOY' donde empieza el panel FILES",
+   "desc": "El panel FILES se solapa/recorta sobre la primera fila de sesión ('Post Studio ui 23…'), dejando el texto cortado a media palabra sin margen de separación."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, campo de búsqueda",
+   "desc": "Placeholder truncado a media frase: 'Buscar sesiones, encargos,' se corta sin indicar el resto del alcance."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "borde derecho del área de chat, junto al nivel del composer",
+   "desc": "Icono de candado pegado al borde derecho de la ventana, casi fuera de pantalla y sin área de clic holgada."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,41 @@
+{
+ "desc": "Vista de Decisión con detalle de propuesta: sidebar izquierda (navegación, filtros, panel FILES) y área principal con cabecera de filtros, tarjeta de propuesta con metadatos, opciones A/B/C y bloque de respuesta personalizada.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, fila de chips bajo Cronológico/Proyectos",
+   "desc": "El chip 'Encargos' se corta en el borde derecho del sidebar; el texto queda truncado y no se ve completo (overflow horizontal no manejado)"
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, sección HOY (bajo el chip 'Todo 370')",
+   "desc": "El primer elemento de la lista aparece truncado como 'Gastos de no...' con puntos suspensivos y además queda parcialmente tapado por el panel FILES"
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierda, límite entre la lista de HOY y el panel FILES",
+   "desc": "El panel FILES se solapa con el contenido de la lista ('Crear e' aparece cortado/duplicado detrás de la barra de herramientas de FILES), rompiendo la lectura de ambos elementos"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera de filtros y tarjeta principal (Pendientes, Todas, Por urgencia/caducidad, GENERAL, antes del título, 'Respuesta personalizada')",
+   "desc": "Varios iconos se renderizan como cajas vacías (glyph faltante/tofu): chips '□ Pendientes', '□ Todas', '□ Por urgencia', badge '□ GENERAL', antes del título 'Elecciones 29N' y antes de 'Respuesta personalizada'"
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de propuesta, fila de origen (junto a 'Origen:')",
+   "desc": "El chip 'Brief matutino · 21-10' es demasiado estrecho y el texto salta a dos líneas dejando el '·' suelto, aspecto roto y apretado"
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de propuesta, fila de origen, enlace derecho",
+   "desc": "El enlace 'Ver sesión en vivo' salta a dos líneas y queda apiñado contra los chips de contexto, desalineado con el resto de la fila"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierda, campo de búsqueda",
+   "desc": "El placeholder 'Buscar sesiones, encargos,' se corta a media frase sin indicación de que continúa"
+  }
+ ],
+ "empty": false
+}

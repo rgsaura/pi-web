@@ -1,0 +1,36 @@
+{
+ "desc": "Vista Decisiones en móvil: cabecera con botón Volver, tabs Pendientes/Todas, orden y chips de categoría, y una tarjeta de propuesta (Elecciones 29N) con badge de caducidad, origen, texto descriptivo y opciones A/B. Iconografía y chips con problemas de render y overflow.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips de categoría bajo 'Categoría:' (lado derecho de la captura)",
+   "desc": "Los chips desbordan el ancho del viewport y el último ('General') aparece cortado en el borde derecho, con texto ilegible y sin indicador claro de scroll horizontal."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de enlaces/etiquetas a la derecha de 'Origen:' (filas 'La Moncloa · voto por' y 'Correos · voto por co')",
+   "desc": "Los chips de enlace se cortan en el borde derecho del viewport: el texto queda truncado ('voto por', 'voto por co') y no se ve completo, con overflow horizontal."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Iconos de toda la vista (tabs 'Pendientes'/'Todas', dropdown 'Por urgencia / caducidad', chips de categoría, título de la propuesta, opciones A/B, icono de 'Ver sesión en vivo')",
+   "desc": "Los iconos se renderizan como cuadrados huecos (tofu/missing glyph) por fallo de fuente de iconos/emoji, generando ruido visual y pérdida de significado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Botón flotante circular 'N' (esquina inferior izquierda) sobre la tarjeta de la opción B",
+   "desc": "El FAB solapa la tarjeta de la opción B y tapa parcialmente su badge, dificultando la lectura y el acceso a esa opción."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Enlace 'Ver sesión en vivo' en la fila de Origen (centro-izquierda)",
+   "desc": "El texto rompe en 3 líneas ('Ver / sesión / en vivo') con el icono estrujado al lado, dando un aspecto desordenado frente al resto de la fila."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Badge 'Caducado/Caduca: 19 nov 2026 00:00' y etiqueta 'hace 8 horas'",
+   "desc": "La fila superior de la propuesta queda desequilibrada: 'hace 8 horas' en gris tenue junto a badges de alto contraste, con jerarquía poco clara entre fecha de caducidad y antigüedad."
+  }
+ ],
+ "empty": false
+}

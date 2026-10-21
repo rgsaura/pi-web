@@ -1,0 +1,31 @@
+{
+ "desc": "Vista Timeline con sidebar izquierdo (nav, lista de proyectos, árbol FILES, Settings) y panel principal con cabecera, pestañas de filtros, buscador y eventos agrupados por fecha (Mié 21 Oct a Sáb 24 Oct) con descripciones largas. Todo en tema oscuro, sin estado vacío ni errores visibles.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro (Todos/Encargos/Decisiones/Fallos/Informes), parte superior del panel derecho",
+   "desc": "La fila de pestañas se desborda: el chip 'Informes 1…' queda cortado en el borde derecho sin affordance de scroll ni indicación de más opciones, en viewport 820px"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, lista de proyectos (sección bajo 'Hablar por Voz')",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos ('Proyecto: wt-paneles-ma…') sin tooltip ni forma de ver el nombre completo"
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, item 'Línea de tiempo'",
+   "desc": "El texto descriptivo 'pasado → próximo' se parte en dos líneas y el título 'Línea de tiempo' también ocupa dos líneas, dejando el item desalineado respecto al resto de la navegación"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera global superior derecha (iconos de toggle/paneles)",
+   "desc": "Los iconos de la barra superior son pequeños y muy apretados entre sí, con targets táctiles apenas visibles para tablet"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "eventos de timeline (tarjetas con checkbox cuadrado a la izquierda)",
+   "desc": "Los checkboxes de cada evento son iconos pequeños y muy juntos al texto, con target táctil reducido y sin padding de interacción claro"
+  }
+ ],
+ "empty": false
+}

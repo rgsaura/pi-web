@@ -1,0 +1,31 @@
+{
+ "desc": "La vista ?view=post-studio muestra en realidad un mensaje de agente (changelog de sesiones) con chips de archivos, metadata de tokens, campo de input y barra inferior de controles; no se ve el estudio de posts/carrusel esperado.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "contenido principal / toda la pantalla",
+   "desc": "La vista Post Studio no muestra el estudio de posts ni carrusel: se renderiza un chat de agente con un changelog, por lo que la ruta o el enrutado de la vista está roto (contenido no correspondiente a la vista solicitada)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "línea de metadata inferior del mensaje ('522 in · 1,078 out · 191,936 cache R') y fecha 'Oct 15 03:13 PM'",
+   "desc": "Ambos textos se rompen en dos líneas con salto feo (la 'R' suelta y la fecha 'PM' en línea propia), rompiendo la alineación con el resto del mensaje."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra inferior flotante ('Failover Fast' / 'More controls') sobre la metadata del mensaje",
+   "desc": "El elemento 'Failover Fast' solapa visualmente la 'R' partida de la línea de metadata; el contenido queda tapado por la barra inferior."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior de controles (icono imagen, micrófono, engranaje, 'Failover Fast', 'More controls')",
+   "desc": "Controles mezclados sin jerarquía: iconos pequeños a la izquierda junto a dos etiquetas de texto; 'Failover Fast' no tiene contenedor ni borde y los targets táctiles de los iconos son pequeños (<40px) para móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "chips de archivos (SessionSidebar.tsx, route.ts, etc.)",
+   "desc": "Los chips se apilan en dos columnas irregulares con anchos muy dispares, generando un bloque visual desordenado en móvil."
+  }
+ ],
+ "empty": false
+}

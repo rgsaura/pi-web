@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Decisiones con sidebar izquierdo de navegación + panel FILES, barra superior de filtros y área principal con una propuesta (título, origen, enlaces, descripción) y la lista de OPCIONES PROPUESTAS en tarjetas A-F.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila Origen, chip 'Auditoría enc-955f7fdd · 20-10' (centro-superior)",
+   "desc": "El identificador/fecha se parte en dos líneas ('20-' / '10') dentro del chip, con corte a mitad de dato, aspecto de texto truncado o mal envuelto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "enlace 'Ver sesión en vivo' junto al chip de Origen (centro-superior)",
+   "desc": "El enlace se envuelve en dos líneas ('Ver sesión en' / 'vivo') rompiendo la alineación horizontal de la fila Origen; el contenedor es demasiado estrecho."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "opciones propuestas C, D, E (centro de la captura)",
+   "desc": "Las tarjetas C 'Donzapas', D 'BananaSurf', E 'Savage' sólo muestran un nombre propio sin verbo ni descripción, en contraste con A y B que sí enuncian la acción; jerarquía y contenido inconsistente que dificulta decidir."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "esquina superior derecha de la barra de filtros",
+   "desc": "Pequeño control (checkbox con desplegable) pegado al borde derecho del viewport, de tamaño reducido y sin margen ni etiqueta visible, fácil de pasar por alto."
+  }
+ ],
+ "empty": false
+}

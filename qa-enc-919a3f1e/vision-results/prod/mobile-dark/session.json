@@ -1,0 +1,21 @@
+{
+ "desc": "Vista móvil de una sesión con mensajes de chat en tema oscuro: barra superior con menú/estadísticas, cuerpo con listado numerado, párrafo 'Calidad', chips de archivos y meta de tokens; abajo campo de mensaje con barra de acciones.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "zona meta del mensaje (justo encima del input, izquierda)",
+   "desc": "Aparece una 'R' suelta en una línea propia bajo '522 in · 1,078 out · 191,936 cache', con la fecha 'Oct 15 03:13 PM' partida en dos líneas: etiqueta de rol/autor truncada y wrap incorrecto del timestamp."
+  },
+  {
+   "sev": "friccion",
+   "zona": "primer mensaje visible en la parte superior del scroll (bajo la barra superior)",
+   "desc": "El texto queda recortado contra el borde derecho: 'Nueva sesión aqu' se corta a media palabra, indicando overflow/clip horizontal o solape con la barra fija."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de acciones inferior (Failover Fast / More controls)",
+   "desc": "Acciones en texto plano en la esquina inferior derecha con poco aire respecto al borde y sin separación clara respecto a los iconos (imagen/micro/ajustes) de la misma fila, jerarquía confusa en móvil."
+  }
+ ],
+ "empty": false
+}

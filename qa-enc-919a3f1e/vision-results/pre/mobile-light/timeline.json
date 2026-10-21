@@ -1,0 +1,21 @@
+{
+ "desc": "Vista Timeline móvil (390x844, tema claro): barra superior con menú y Session info, cabecera 'Línea de tiempo' con contador de eventos, botón Añadir y cerrar, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiones) y buscador, seguido de la lista agrupada por día (Mié 21 Oct, Jue 22 Oct) con eventos de rutinas y encargos con descripción larga.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros (chips) — borde derecho de la captura",
+   "desc": "El cuarto chip se corta contra el borde derecho (solo se ve el icono ⚠ a medio render) sin indicación de scroll ni degradado: overflow horizontal no comunicado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos de toda la interfaz (botón Añadir, pestañas Eventos/Patrones por hora, chips Encargos/Decisiones, iconos de cada fila de evento)",
+   "desc": "Los iconos/emojis se renderizan como cuadrados vacíos (tofu □): glifo no disponible, iconografía ilegible y fea. En el evento 'caduca: Exploración de planes...' aparecen dos cuadrados seguidos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "evento 'caduca: Exploración de planes: Coworking & Founder Meetup…' (bloque Mié 21 Oct, mitad inferior)",
+   "desc": "La descripción se vuelca completa en el timeline (párrafo de ~10 líneas sin clamp ni colapso), rompe el ritmo de escaneo de la lista y empuja el resto de eventos fuera de pantalla."
+  }
+ ],
+ "empty": false
+}

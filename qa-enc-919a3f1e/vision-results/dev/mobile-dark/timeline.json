@@ -1,0 +1,26 @@
+{
+ "desc": "Vista Timeline móvil en tema oscuro: barra superior con menú/Session info, cabecera con título 'Línea de tiempo', botón Añadir y cerrar, pestañas Eventos/Patrones por hora, chips de filtro, buscador y lista de eventos agrupados por fecha (PRÓXIMO 22 / Jue 22 Oct) con rutinas programadas y eventos 'caduca'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Píldora flotante 'Rendering …' en la esquina inferior izquierda, sobre la lista de eventos",
+   "desc": "El indicador de renderizado se superpone y tapa parte del último evento (icono, 'Siguiente paso: EXO' y su meta), bloqueando la lectura del contenido en vez de posicionarse en un área libre o reservar espacio."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips de filtro (Todos 741 / Encargos 413 / Decisiones 247 / …) borde derecho",
+   "desc": "La fila se desborda horizontalmente y el chip siguiente aparece cortado a mitad en el borde de la pantalla (solo se ve un icono de aviso), sin indicador de scroll ni affordance que indique que hay más filtros; en táctil no hay forma evidente de llegar a ellos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Meta de los eventos 'caduca:' (filas inferiores, texto secundario)",
+   "desc": "La descripción larga se trunca con '…' a la derecha ('Recorrido no línea…', 'contexto de cuándo …'), dejando frases a medias y obligando a entrar al detalle para saber de qué trata el evento."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Eventos 'caduca:' (inicio de fila, junto al título)",
+   "desc": "Aparecen dos iconos casi idénticos seguidos antes del texto 'caduca:', sin jerarquía clara entre ellos, lo que ensucia la alineación frente al resto de filas que llevan un solo icono."
+  }
+ ],
+ "empty": false
+}

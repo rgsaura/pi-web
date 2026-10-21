@@ -1,0 +1,36 @@
+{
+ "desc": "Vista de una decisión concreta: sidebar izquierdo con navegación, búsqueda, filtros y árbol FILES; área principal con barra superior (Volver, Pendientes/Todas, orden), filtros de categoría y tarjeta de propuesta con título, origen, descripción, 3 opciones (A/B/C) y bloque de respuesta personalizada con textarea y botón Enviar.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "toda la interfaz (iconos de sidebar, badges, título, botones)",
+   "desc": "Múltiples iconos se renderizan como cuadros tofu (▯): Pendientes, Todas, Por urgencia, GENERAL, título de la decisión, Respuesta personalizada, items del sidebar; la fuente de iconos no carga."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de pills de filtro (Todo 370 / En Vivo 0 / Encargos)",
+   "desc": "La pill «Encargos» queda cortada por el borde derecho del sidebar: hay overflow horizontal en esa fila y no se ve el texto completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, sección HOY / lista de actividad",
+   "desc": "El panel FILES (con su barra de herramientas y árbol de carpetas) se superpone y tapa el contenido de la lista de actividad («Gestor de pa…» queda semicubierto), generando un solape visual."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, primer elemento de la lista HOY",
+   "desc": "Texto truncado «Gestor de pa…» con badge «Catast…» también cortado y pegado al texto, sin elipsis clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta de la decisión, fila Origen, recuadro «Brief matutino · 21-10»",
+   "desc": "El texto del recuadro de origen se parte en dos líneas y queda cortado («Brief matutino ·» / «21-10»), aparentando truncado en un contenedor demasiado estrecho."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "esquina inferior izquierda, botón Settings",
+   "desc": "El avatar circular oscuro «N» se solapa con el botón Settings, quedando parte del botón tapada."
+  }
+ ],
+ "empty": false
+}

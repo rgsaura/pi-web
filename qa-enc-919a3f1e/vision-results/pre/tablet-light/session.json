@@ -1,0 +1,16 @@
+{
+ "desc": "Vista de sesión con sidebar izquierdo (nav, workspace list, file tree, Settings) y área de chat con mensaje largo, chips de archivos y barra de entrada abajo. Topbar con acciones horizontales.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra superior derecha (topbar)",
+   "desc": "El grupo de acciones se desborda: se ve un item cortado a 'OM' sin poder leerlo ni scrollear fácilmente en tablet."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona inferior del mensaje de chat (chips de archivos) sobre el input",
+   "desc": "La fila de chips 'workspaces-data.ts' y 'mobile-check.mjs' queda tapada/cortada por la barra de entrada de mensaje, sin margen de separación."
+  }
+ ],
+ "empty": false
+}

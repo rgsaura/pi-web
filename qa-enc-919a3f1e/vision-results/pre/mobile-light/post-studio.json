@@ -1,0 +1,21 @@
+{
+ "desc": "Vista Post Studio en móvil: barra superior, cabecera con título del post y badge PRE, selector Carrusel/Reel, previsualización tipo Instagram del carrusel (1/19) y pie con resumen y botón de confirmación.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera, línea de título 'Post Studio · La Herradura · Cum...'",
+   "desc": "El título queda truncado con 'Cum...' y no se puede ver el nombre completo del post sin opción de expandir."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera (icono junto al título) y pestañas 'Carrusel' y 'Reel'",
+   "desc": "Los iconos se renderizan como cuadrados vacíos (tofu/glyph faltante), sugiriendo emoji o fuente de iconos no cargada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta de previsualización, paginación inferior de fotos",
+   "desc": "Se muestran 12 puntos + '+7' junto al contador '1/19'; el '+7' es ambiguo respecto a cuántas fotos hay realmente y su relación con los puntos."
+  }
+ ],
+ "empty": false
+}

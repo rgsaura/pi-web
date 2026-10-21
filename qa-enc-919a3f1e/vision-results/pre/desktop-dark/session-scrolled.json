@@ -1,0 +1,21 @@
+{
+ "desc": "Vista de sesión en tema oscuro: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, voz) + árbol de workspaces/files; barra superior con pestañas de sesión y contadores de tokens; área central con mensaje largo renderizado (listas, código inline, chips de ficheros), input con Send y barra de pie con controles.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "borde derecho, junto al área del input (icono de candado)",
+   "desc": "Botón/icono de candado flotante pegado al borde derecho, casi recortado contra el margen de la ventana; parece un control suelto sin contenedor ni margen visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (contadores 243k / 85k / 26.5M / 18% / 1.0M)",
+   "desc": "Cinco métricas apiladas sin etiquetas legibles ni separación clara; difícil saber qué representa cada valor de un vistazo (jerarquía confusa)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de pie inferior derecha (off / configured / Compact)",
+   "desc": "Etiquetas de estado en gris muy pequeño y bajo contraste sobre fondo oscuro; apenas legibles y sin relación clara con los iconos que las preceden."
+  }
+ ],
+ "empty": false
+}

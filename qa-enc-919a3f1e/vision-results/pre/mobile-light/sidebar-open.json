@@ -1,0 +1,26 @@
+{
+ "desc": "Vista móvil 390x844 con el sidebar abierto sobre el contenido atenuado: barra superior con iconos/estadísticas, lista de secciones principales (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), árbol de proyectos abajo y Settings fijado al pie.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Lista de proyectos del sidebar (mitad inferior)",
+   "desc": "Los nombres de proyecto se truncan con puntos suspensivos sin espacio suficiente: 'wt-panele...', 'wt-postst...', 'wt-resilie...', 'wt-seccio...', 'wt-timelin...' quedan indistinguibles entre sí en móvil; no hay forma de ver el nombre completo ni tooltip visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Item 'Línea de tiempo' del sidebar",
+   "desc": "El rótulo rompe en dos líneas ('Línea de / tiempo') mientras el resto de items son de una línea, rompiendo el ritmo vertical y acercando el icono al texto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de proyectos del sidebar (derecha, columnas '+' y '...')",
+   "desc": "Los targets táctiles de '+' y el menú '...' son muy pequeños y están muy próximos entre sí en móvil, riesgo de tap accidental."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Chevrons de expandir del árbol de proyectos (izquierda)",
+   "desc": "Los iconos '>' son muy pequeños y con poco contraste gris, difíciles de tocar y de percibir como control de expansión."
+  }
+ ],
+ "empty": false
+}

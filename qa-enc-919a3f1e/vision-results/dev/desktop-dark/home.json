@@ -1,0 +1,31 @@
+{
+ "desc": "Vista home con sidebar izquierdo (navegación, buscador, filtros, lista de sesiones HOY y panel FILES con árbol de ficheros) y zona principal con título Exohuman UI, breadcrumb, composer con input y barra de controles.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar > fila de filtros (chips Cronológico/Proyectos/Todo/En Vivo/Encargos)",
+   "desc": "El chip 'Encargos' desborda el ancho del sidebar y queda cortado por el borde, con overflow horizontal sin scroll ni indicación de que hay más chips."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar > lista 'HOY' (primer item)",
+   "desc": "El item 'Post Studio v2 ...' aparece truncado y su badge derecho cortado, parcialmente tapado por el encabezado del panel FILES que se solapa con la lista de sesiones."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar > panel FILES sobre la lista de sesiones",
+   "desc": "El panel FILES ocupa la zona inferior del sidebar y deja la lista de sesiones reducida a un solo item visible, aparentando un solape/desplazamiento que bloquea el resto de sesiones."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar > campo de búsqueda",
+   "desc": "El placeholder 'Buscar sesiones, encargos,' está truncado a mitad de frase, sin indicación del resto de alcance."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona principal > barra de controles bajo el composer",
+   "desc": "Etiquetas 'Failover Normal', 'auto', 'configured', 'Compact' en gris muy apagado sobre fondo oscuro, con contraste bajo y poco legible."
+  }
+ ],
+ "empty": false
+}

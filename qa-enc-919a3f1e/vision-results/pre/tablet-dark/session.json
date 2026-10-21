@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de sesión con chat: sidebar izquierdo con navegación, lista de proyectos/workspaces y árbol de FILES; zona central con mensaje largo en markdown (listas numeradas, código inline, badges de archivos) y barra de input abajo con controles de pie.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "zona central, fila inferior de badges de archivos justo encima del input",
+   "desc": "La última fila de chips de archivos ('workspaces-data.ts', 'mobile-check.mjs') queda cortada/oculta tras la barra de mensaje: el contenido del mensaje se solapa o desborda bajo el input y no se puede ver completa sin scroll manual"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, extremo derecho (junto al toggle de panel)",
+   "desc": "El indicador 'N/M' del agente queda truncado/cortado por el borde derecho del viewport, mostrando solo una parte de la etiqueta"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha, icono flotante suelto",
+   "desc": "Aparece un icono de candado desplazado a la derecha sobre el área de chat, separado del resto de controles y sin alineación clara con la barra de herramientas"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, entrada 'Línea de tiempo'",
+   "desc": "El label 'Línea de tiempo' envuelve a dos líneas mientras la meta 'pasado → próximo' también ocupa dos, haciendo la fila más alta y desalineada respecto al resto de entradas del menú"
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,31 @@
+{
+ "desc": "Vista raíz oscura con sidebar izquierdo (secciones de actividad, árbol de sesiones/proyectos y panel FILES) y área principal centrada con logo/versiones, breadcrumb de workspace y composer de nueva sesión con barra de controles inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar > FILES > pestañas de archivos (parte superior izquierda, bajo FILES · 25)",
+   "desc": "Las dos pestañas muestran texto truncado roto por la izquierda: aparecen como '.._human-ui' y '.._egrador 12' en lugar de los nombres completos, ilegibles e identificables solo por el badge."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar > lista de sesiones/proyectos (árbol exohuman-ui)",
+   "desc": "El nombre del proyecto 'Proyecto: wt-paneles-ma…' se trunca sin tooltip visible, quedando imposible distinguirlo de otro posible proyecto con el mismo prefijo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Composer > barra de controles inferior del input (fila derecha)",
+   "desc": "Controles 'auto', 'configured', 'Compact' y el icono de volumen están apilados muy juntos con iconos pequeños y texto mínimo, sin separación clara entre grupos semánticos (modo / estado / vista / audio)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar > barra de herramientas de FILES (fila de iconos junto a 'FILES · 25')",
+   "desc": "Seis iconos de acción (cerrar, colapsar, subir, refrescar, ojo, buscar) de ~12px muy comprimidos y con poca separación, targets difíciles de pulsar incluso en desktop."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior > extremo derecho (parte superior de la captura)",
+   "desc": "El icono de panel queda pegado al borde derecho del viewport sin margen de aire respecto al resto de la topbar."
+  }
+ ],
+ "empty": false
+}

@@ -1,0 +1,46 @@
+{
+ "desc": "Vista home con sidebar izquierdo muy ancho (nav de módulos + árbol de sesiones/workspaces/FILES) y panel principal centrado con logo, breadcrumb de rutas, composer de nueva sesión y fila de controles debajo. Tema oscuro, mucho espacio vacío en la zona principal.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, lista de sesiones bajo 'Proyecto: wt-poststudio-v2'",
+   "desc": "El nombre de sesión 'ENCARGO OFICIAL (enc-ebe3...' aparece truncado con puntos suspensivos, no se ve el identificador completo ni la fecha 'now' queda bien enlazada con el texto cortado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, pestañas de la sección FILES",
+   "desc": "Los chips de pestañas muestran texto truncado: '..xohuman-ui' y '..udio-v2 12' (debería ser 'post-studio-v2'), el nombre del workspace/fork no se lee."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar global en viewport 820px",
+   "desc": "El sidebar ocupa más de la mitad del ancho (~520px de 820px), dejando el panel principal muy comprimido y generando una jerarquía invertida respecto a la vista de sesión."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, estado vacío 'exohuman-ui' > 'No sessions yet'",
+   "desc": "Estado vacío solo con texto plano en gris, sin icono, explicación ni CTA para crear la primera sesión; además está en inglés en una UI mayoritariamente en español."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior, botones 'Full history' y 'Generate title'",
+   "desc": "Texto e iconos con contraste muy bajo sobre el fondo oscuro (parecen deshabilitados sin feedback claro), difíciles de leer."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila 'Línea de tiempo'",
+   "desc": "El label 'Línea de tiempo' salta a dos líneas y 'pasado→ próximo' también, la fila queda desalineada respecto a las demás del nav."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, toolbar de FILES (fila de iconos >_ folder subir refresh ojo etc.)",
+   "desc": "Seis iconos amontonados sin separación ni etiquetas, con targets táctiles pequeños para tablet; difícil distinguir su función."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Panel principal, fila de controles bajo el composer ('Failover Normal (Default)' 'auto' 'configured' 'Compact')",
+   "desc": "Controles dispersos en una sola línea con etiquetas ambiguas ('auto', 'configured') sin agrupación ni jerarquía, y 'Compact' pegado al borde derecho de la zona útil."
+  }
+ ],
+ "empty": false
+}

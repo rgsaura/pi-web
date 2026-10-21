@@ -1,0 +1,31 @@
+{
+ "desc": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior con menú y contadores de tokens, cuerpo de mensaje largo del agente (lista numerada, texto de calidad/tests), chips de archivos tocados, línea de metadatos de tokens/fecha, campo de input con botón enviar y fila de controles inferiores (imagen, mic, ajustes, Failover Fast, More controls) con avatar y estado 'Default'.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "campo de mensaje inferior: placeholder",
+   "desc": "El placeholder 'Type / for commands, @' queda truncado/pegado al botón de enviar, sin separación ni indicación de que hay más contenido."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles inferior (imagen, micrófono, engranaje, 'Failover Fast', 'More controls')",
+   "desc": "Targets táctiles pequeños y desiguales: los iconos son ~24px sin padding táctil generoso y están muy separados del texto 'More controls', difícil de alcanzar con el pulgar en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "avatar circular 'N' en la esquina inferior izquierda",
+   "desc": "El avatar solapa el borde superior del estado '❯ Default' de la parte inferior, rompiendo la alineación y dificultando la lectura/uso de esa zona."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "línea de metadatos del mensaje ('522 in · 1,078 out · 191,936 cache' / 'Oct 15 03:13')",
+   "desc": "Contraste muy bajo del texto gris sobre el fondo oscuro, apenas legible a ese tamaño."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona inicial del mensaje visible (parte superior del scroll)",
+   "desc": "El mensaje arranca cortado a mitad de frase ('cuando hay cwd resoluble.'), lo que da sensación de salto de contexto al cargar la vista."
+  }
+ ],
+ "empty": false
+}

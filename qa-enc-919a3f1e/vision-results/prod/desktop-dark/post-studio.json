@@ -1,0 +1,21 @@
+{
+ "desc": "La vista (?view=post-studio) no muestra el Post Studio: se ve la sesión de chat con un informe numerado de cambios, sidebar izquierdo con Actividad/Línea de tiempo/Agentes/Workspaces/Encargas/Decisiones, panel FILES con árbol de carpetas y barra de mensaje inferior.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "Panel central principal",
+   "desc": "La vista solicitada es Post Studio (carrusel de posts) pero se renderiza la conversación de sesión con el resumen de implementación; no hay controles ni datos de post/carrusel en ningún punto de la pantalla."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior derecha (System/Tools)",
+   "desc": "La etiqueta 'Tools' queda parcialmente recortada por el botón toggle de panel del borde derecho; el control se amontona contra el borde."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, lista de proyectos",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos ('Proyecto: wt-paneles-ma... 0') sin tooltip ni forma de ver el nombre completo."
+  }
+ ],
+ "empty": false
+}

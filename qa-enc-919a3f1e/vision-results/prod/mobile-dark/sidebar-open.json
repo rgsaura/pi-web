@@ -1,0 +1,26 @@
+{
+ "desc": "Móvil 390x844 en tema oscuro con el sidebar abierto como drawer sobre el contenido de la sesión: barra superior con contadores (85k/18%), secciones principales (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), lista larga de proyectos/instancias y botón Settings anclado abajo; detrás se ve el panel de la conversación recortado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "lista de proyectos en el sidebar (filas 'Proyecto: wt-pan...', 'wt-pos...', 'wt-resilie...', 'wt-seccio...', 'wt-timelin...', 'wt-panele...', 'wt-remot...')",
+   "desc": "Nombres de proyecto truncados con puntos suspensivos a ~390px; varios empiezan igual (wt-pan..., wt-pane..., wt-panele...) y quedan indistinguibles sin posibilidad de ver el nombre completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "filas de proyecto en el sidebar (glifo antes del texto)",
+   "desc": "Aparece un glifo cuadrado vacío (tofu / icono no renderizado) en lugar del icono del proyecto en varias filas, mientras 'probe-cwd' no tiene icono y 'Rutina: reconcile' sí."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "borde derecho del drawer: contenido de la sesión detrás del sidebar",
+   "desc": "No hay scrim/oscurecimiento ni cierre visual: el contenido detrás queda a la misma luminosidad y cortado a media palabra/línea, lo que resta foco al menú abierto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cada fila de proyecto: botones '+' y '⋯' a la derecha",
+   "desc": "Los controles por fila son estrechos y están muy juntos entre sí y respecto al texto truncado, apretando el row en 390px."
+  }
+ ],
+ "empty": false
+}

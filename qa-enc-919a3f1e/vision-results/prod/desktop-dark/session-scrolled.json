@@ -1,0 +1,26 @@
+{
+ "desc": "Vista de sesión con sidebar izquierdo (nav, proyectos, árbol de FILES), área principal con mensaje largo renderizado en markdown, barra superior con acciones y métricas, y footer con input de mensaje, chips de archivos y controles secundarios.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, lista de proyectos",
+   "desc": "Los nombres se truncan con puntos suspensivos ('Proyecto: wt-paneles-ma...') y los contadores '0' y '1' quedan sueltos al final sin explicación visual clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, cabecera del panel FILES",
+   "desc": "El rótulo aparece cortado ('FILE...') y la fila de iconos de acciones (explorar, carpeta, upload, download, ojo, +, search) va muy apretada contra él, sin separación ni tooltips visibles."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior derecha, métricas (243k / 85k / 26.5M / 18%/1.0M)",
+   "desc": "Indicadores de tokens/uso en tipografía muy pequeña y sin etiquetas, difíciles de interpretar de un vistazo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Footer inferior, fila de controles junto a 'Failover Fast'",
+   "desc": "Controles 'off', 'configured', 'Compact' e iconos (imagen, micrófono, volumen) amontonados sin separación ni jerarquía, con targets pequeños y poco etiquetados."
+  }
+ ],
+ "empty": false
+}

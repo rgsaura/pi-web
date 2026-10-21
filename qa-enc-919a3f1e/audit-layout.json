@@ -1,0 +1,347 @@
+[
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": "session",
+  "error": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:30145/?session=01a13fb2-558a-70c5-b325-48eea1d52dda\","
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar decisiones",
+    "h": 27,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Todas (136)",
+    "h": 25,
+    "w": 98
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⚡Sistema (13)",
+    "h": 25,
+    "w": 108
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📌General (1)",
+    "h": 25,
+    "w": 98
+   },
+   {
+    "tag": "BUTTON",
+    "text": "❤️Salud (1)",
+    "h": 25,
+    "w": 88
+   },
+   {
+    "tag": "A",
+    "text": "La Moncloa · voto por correo 2",
+    "h": 24,
+    "w": 258
+   },
+   {
+    "tag": "A",
+    "text": "Correos · voto por correo",
+    "h": 24,
+    "w": 203
+   }
+  ],
+  "headline": "🗳️ Elecciones 29N: ¿voto por correo o presencial?"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   }
+  ],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⋮",
+    "h": 28,
+    "w": 28
+   }
+  ],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": "agents",
+  "error": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:30145/?view=agents\", waiting until \"domcontentloaded\""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "mobile",
+  "view": "activity",
+  "error": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:30145/?view=activity\", waiting until \"domcontentloade"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Post Studio · La Herradura · Cumple 27 + Buceo"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Agentes"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "tablet",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Canales Principales"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": ""
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": "proposals",
+  "error": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:30145/?view=proposals\", waiting until \"domcontentload"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": "post-studio",
+  "error": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:30145/?view=post-studio\", waiting until \"domcontentlo"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Agentes"
+ },
+ {
+  "server": "localhost_30145",
+  "vp": "desktop",
+  "view": null,
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets": [],
+  "headline": "Canales Principales"
+ }
+]

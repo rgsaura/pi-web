@@ -1,0 +1,36 @@
+{
+ "desc": "Vista raíz en tablet 820x1180, tema oscuro: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), lista de sesiones con árbol de FILES y Settings abajo; zona principal casi vacía con hero 'Exohuman UI', selectores de workspace/fork, composer de mensaje y fila de controles de sesión.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar, tarjeta de navegación 'Línea de tiempo'",
+   "desc": "El título 'Línea de tiempo' se parte en dos líneas y el descriptor 'pasado → próximo' también envuelve, rompiendo la altura uniforme de las tarjetas de navegación respecto a las demás."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, lista de sesiones",
+   "desc": "Los nombres de sesión se truncan con puntos suspensivos ('Proyecto: wt-paneles-ma...'), impidiendo identificar la sesión sin hover/expandir."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, lista de sesiones, estado 'No sessions yet'",
+   "desc": "Estado vacío pobre: solo texto gris pequeño sin acción ni ayuda ('No sessions yet' sin botón para crear sesión ni indicación de qué hacer)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona principal, parte superior",
+   "desc": "Gran hueco vacío entre la barra superior y el bloque del hero/composer (contenido centrado verticalmente), dejando ~40% de la pantalla en blanco sin estado ni guía."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona principal, fila de controles bajo el composer",
+   "desc": "Controles amontonados en una sola línea (iconos imagen/micrófono, 'Failover Normal (Default)', 'auto', 'configured', 'Compact') con iconos pequeños poco diferenciados y sin agrupación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, árbol FILES",
+   "desc": "Árbol de archivos muy extenso que empuja 'Settings' al fondo y obliga a scroll largo; la sección ocupa más altura que la lista de sesiones, desequilibrando el panel."
+  }
+ ],
+ "empty": false
+}
