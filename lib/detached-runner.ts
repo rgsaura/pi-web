@@ -32,10 +32,12 @@ import { getAgentDir } from "@earendil-works/pi-coding-agent";
  *   logs/<sessionId>.log    pi stdout+stderr for post-mortem
  *
  * Record status machine: running → exited | failed | aborted | lost.
- * `running` records are re-verified against systemd on every liveness read; a
- * record that says running while its unit is gone is reconciled to `lost`
- * (pi-web crashed between spawn and wrapper bookkeeping, or the unit was
- * stopped out-of-band).
+ * Liveness reads verify the run's host (systemd unit, or the wrapper pid for
+ * process runs) on every poll; a record that says running while its host is
+ * gone is reconciled to `lost`, and — enc-aca74f1f — a terminal record whose
+ * host is still alive (poisoned by older code) is healed back to `running`:
+ * the probe, not the record, decides (pi-web crashed between spawn and wrapper
+ * bookkeeping, or the unit was stopped out-of-band).
  */
 
 export interface DetachedRunStart {
@@ -186,30 +188,79 @@ function isPidAlive(pid: number): boolean {
   }
 }
 
+/** The wrapper path fragment that identifies a run's own pid. */
+function wrapperIdentityPath(sessionId: string): string {
+  return join("pi-web-detached", "wrappers", `${sessionId}.sh`);
+}
+
+function readCmdline(pid: number): string {
+  try {
+    return readFileSync(`/proc/${pid}/cmdline`, "utf8").replace(/\0/g, " ");
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * True when pid is alive AND is this run's wrapper, not a recycled pid:
+ * /proc/<pid>/cmdline must name the wrapper script (zombies read empty on
+ * Linux, so they land here as dead). Without /proc (non-Linux dev) the bare
+ * signal-0 probe is all we have and stays authoritative.
+ */
+function isWrapperPid(sessionId: string, pid: number): boolean {
+  if (!isPidAlive(pid)) return false;
+  const cmdline = readCmdline(pid);
+  if (!existsSync("/proc")) return true;
+  return cmdline.includes(wrapperIdentityPath(sessionId));
+}
+
 /** Run-aware probe: process runs check their pid, systemd runs their unit. */
 async function isRunHostAlive(run: DetachedRun, options?: DetachedRunnerOptions): Promise<boolean> {
   if (run.runner === "process" && typeof run.pid === "number") {
-    const alive = isPidAlive(run.pid);
+    const alive = isWrapperPid(run.sessionId, run.pid);
     unitProbeCache.set(`pid:${run.pid}`, { active: alive, ts: Date.now() });
     return alive;
   }
   return isUnitActive(run.unit, options);
 }
 
+/** Drop a stale end time and mark the record running again. */
+function markRunning(run: DetachedRun, agentDir?: string): void {
+  const healed = { ...run, status: "running" as const };
+  delete healed.endedAt;
+  writeDetachedRun(healed, agentDir);
+}
+
 /**
- * A detached run is active while its record says running AND its systemd unit
- * is alive. A record left at `running` by a dead unit is reconciled to `lost`
+ * A terminal record gets a resurrection probe only where the record can lie:
+ * process runs (the container poisoned them; the pid probe is two cheap
+ * syscalls, no exec). Systemd units reconcile themselves and probing every
+ * historical record would cost one systemctl spawn each poll.
+ */
+function shouldProbeTerminal(run: DetachedRun): boolean {
+  return run.runner === "process" && typeof run.pid === "number";
+}
+
+/**
+ * A detached run is active while its host (wrapper pid or systemd unit) is
+ * alive — the probe is the real liveness signal and beats a stale record.
+ * enc-aca74f1f: the pre-enc-29d7943d build reconciled process runs to `lost`
+ * (it probed a systemd unit that cannot exist in the api container) while
+ * their wrappers kept working; those records are healed back to `running`.
+ * A record that says running while its host is gone is reconciled to `lost`
  * so the sidebar never shows a zombie spinner.
  */
 export async function isDetachedRunActive(sessionId: string, agentDir?: string): Promise<boolean> {
   const run = readDetachedRun(sessionId, agentDir);
-  if (!run || run.status !== "running") return false;
+  if (!run) return false;
+  if (run.status !== "running" && !shouldProbeTerminal(run)) return false;
   if (!(await isRunHostAlive(run))) {
     if (readDetachedRun(sessionId, agentDir)?.status === "running") {
       writeDetachedRun({ ...run, status: "lost", endedAt: new Date().toISOString() }, agentDir);
     }
     return false;
   }
+  if (run.status !== "running") markRunning(run, agentDir);
   return true;
 }
 
@@ -217,7 +268,9 @@ export async function isDetachedRunActive(sessionId: string, agentDir?: string):
 export async function getActiveDetachedSessionIds(agentDir?: string): Promise<string[]> {
   const active: string[] = [];
   for (const run of listDetachedRuns(agentDir)) {
-    if (run.status === "running" && (await isRunHostAlive(run))) {
+    if (run.status !== "running" && !shouldProbeTerminal(run)) continue;
+    if (await isRunHostAlive(run)) {
+      if (run.status !== "running") markRunning(run, agentDir);
       active.push(run.sessionId);
     } else if (run.status === "running") {
       writeDetachedRun({ ...run, status: "lost", endedAt: new Date().toISOString() }, agentDir);
