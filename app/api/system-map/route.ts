@@ -228,6 +228,9 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
         let id = "";
         let cwd = "";
         let firstUser = "";
+        type ContentPart = { type?: string; text?: string; name?: string };
+        const asParts = (value: unknown): ContentPart[] =>
+          Array.isArray(value) ? (value as ContentPart[]) : [];
         let lastTool = "";
         let lastAssistant = "";
         let sessionInfoName = "";
@@ -240,14 +243,14 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
             if (p.type === "session_info") { sessionInfoName = p.name; }
             if (p.type === "message") {
               if (p.message?.role === "user" && !firstUser) {
-                firstUser = (p.message.content || []).map((c: any) => c.text || "").join(" ").trim();
+                firstUser = asParts(p.message.content).map((c) => c.text || "").join(" ").trim();
               }
               if (p.message?.role === "assistant") {
-                const t = (p.message.content || []).find((c: any) => c.type === "text");
+                const t = asParts(p.message.content).find((c) => c.type === "text");
                 if (t?.text) lastAssistant = t.text.trim();
-                const tool = (p.message.content || []).find((c: any) => c.type === "toolCall");
+                const tool = asParts(p.message.content).find((c) => c.type === "toolCall");
                 if (tool) {
-                  lastTool = tool.name;
+                  lastTool = tool.name ?? "";
                   isFinished = false;
                 }
                 const stopReason = p.stopReason || p.message?.stopReason;
