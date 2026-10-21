@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { resolveSessionPath } from "@/lib/session-reader";
 import { startRpcSession, getRpcSession, setRpcSessionTools } from "@/lib/rpc-manager";
 import { isDetachedRunActive, abortDetachedRun } from "@/lib/detached-runner";
+import { consumePendingZoneBrief, withZoneBrief } from "@/lib/spawn-routing";
 
 // POST /api/agent/[id] - Send a command to an existing session
 export async function POST(
@@ -37,6 +38,17 @@ export async function POST(
         code: "detached_running",
         ...(body.type === "prompt" ? { accepted: false } : {}),
       }, { status: 409 });
+    }
+
+    // Spawn-zone brief (enc-a81dfe71): a session born via ensure_session on a
+    // routed base tree carries a staged zone brief; the session's FIRST prompt
+    // delivers it, so the agent learns its zone rules without any client
+    // cooperation. One-shot: later prompts never see it again.
+    if (body.type === "prompt" && typeof body.message === "string") {
+      const brief = consumePendingZoneBrief(id);
+      if (brief) {
+        body.message = withZoneBrief(brief, body.message);
+      }
     }
 
     // Fast path: already-running session
