@@ -90,7 +90,6 @@ import { useScrollbarVisibility } from "@/hooks/useScrollbarVisibility";
 import { useSessionUiState } from "@/hooks/useSessionUiState";
 import { archiveViewState, filesFoldState, useSidebarMotion } from "@/hooks/useSidebarMotion";
 import { useExoData } from "@/hooks/useExoData";
-import { useWorkspaces } from "@/hooks/useWorkspaces";
 import { relevantProposals } from "@/lib/exo-visibility";
 import { DirectoryPicker } from "./DirectoryPicker";
 import { DismissButton } from "./DismissButton";
@@ -248,8 +247,6 @@ interface Props {
   onOpenEncargosView?: () => void;
   /** Opens the live Activity view (system map). */
   onOpenActivityView?: () => void;
-  /** Opens the Workspaces view (grouped by category, live status). */
-  onOpenWorkspacesView?: () => void;
   /** Opens the Timeline view (past/today/next reconstruction). */
   onOpenTimelineView?: () => void;
   /** Opens the Agents inspector (prompts, skills, tools per agent). */
@@ -508,12 +505,10 @@ function buttonAnchor(element: HTMLElement, align: "start" | "end"): SidebarMenu
   return { kind: "rect", rect: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }, align };
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenAgentsInspector, onOpenVoiceModal }: Props) {
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenTimelineView, onOpenAgentsInspector, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
-  const { workspaces: workspaceList } = useWorkspaces();
-  const workspaceCount = workspaceList.length;
   const exoProposals = useMemo(() => exoData?.proposals.proposals ?? [], [exoData]);
   const exoReferenceMs = useMemo(() => {
     const capturedAt = exoData?.proposals.capturedAt;
@@ -2755,9 +2750,9 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
         </button>
       </div>
 
-      {/* System entries at top of sessions panel: live Activity map,
-          Workspaces and the Decisiones inbox, in one strip of the same look. */}
-      {(onOpenActivityView || onOpenProposalsView || onOpenWorkspacesView || onOpenTimelineView || onOpenAgentsInspector) && (
+      {/* System entries at top of sessions panel: live Activity map
+          and the Decisiones inbox, in one strip of the same look. */}
+      {(onOpenActivityView || onOpenProposalsView || onOpenTimelineView || onOpenAgentsInspector) && (
         <div style={{ flexShrink: 0, padding: "8px 10px", borderBottom: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 6, background: "color-mix(in srgb, var(--bg-panel) 60%, var(--bg))" }}>
           {onOpenActivityView && (
             <button
@@ -2910,77 +2905,6 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                 <span>Agentes</span>
               </div>
               <span style={{ fontSize: 11, fontWeight: 600, color: "var(--text-dim, #888)" }}>prompts · skills</span>
-            </button>
-          )}
-          {onOpenWorkspacesView && (
-            <button
-              type="button"
-              onClick={onOpenWorkspacesView}
-              title="Workspaces por categoría con su estado"
-              aria-label="Workspaces"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                minHeight: 38,
-                padding: "8px 12px",
-                borderRadius: 9,
-                border: "1px solid var(--border)",
-                background: "var(--bg-panel)",
-                color: "var(--text)",
-                cursor: "pointer",
-                fontSize: 12.5,
-                fontWeight: 600,
-                letterSpacing: "-0.01em",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
-                transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--bg-hover)";
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.transform = "translateY(-0.5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--bg-panel)";
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.transform = "none";
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: "var(--accent)" }}
-                >
-                  <path d="m12 2 8.5 4.8L12 11.6 3.5 6.8 12 2Z" />
-                  <path d="m3.5 12 8.5 4.8 8.5-4.8" />
-                  <path d="m3.5 17.2 8.5 4.8 8.5-4.8" />
-                </svg>
-                <span>Workspaces</span>
-              </div>
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "1px 8px",
-                  borderRadius: 999,
-                  background: "var(--bg-selected)",
-                  color: "var(--text-muted)",
-                  fontSize: 11,
-                  fontWeight: 600,
-                  lineHeight: "16px",
-                }}
-              >
-                {workspaceCount}
-              </span>
             </button>
           )}
           {onOpenEncargosView && (
