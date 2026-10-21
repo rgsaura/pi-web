@@ -770,7 +770,7 @@ function GenerationFlowHelp({ open, onToggle }: { open: boolean; onToggle: () =>
             <strong>1 · Crea el panel desde cualquier sesión de Pi.</strong> El entregable vive en su propio
             directorio con plantilla, nunca como archivo suelto:
             <br />
-            <code style={code}>rg-panel new &lt;slug&gt; --tipo informe|galeria|comparativa|base --titulo "…" --resumen "…"</code>
+            <code style={code}>rg-panel new &lt;slug&gt; --tipo informe|galeria|comparativa|base --titulo &quot;…&quot; --resumen &quot;…&quot;</code>
           </span>
           <span>
             <strong>2 · Escribe el contenido</strong> en el <code style={code}>index.html</code> creado bajo{" "}
