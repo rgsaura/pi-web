@@ -17,11 +17,37 @@ const DEFAULT_BASE = "http://127.0.0.1:5173";
 const CACHE_MS = 30_000;
 const FETCH_TIMEOUT_MS = 8_000;
 
+/** The ledgers the local read parses. The env overrides are the same ones the
+ *  rg-proposal CLI honors, so tests can point both sides at a temp copy. */
+function proposalsLedgerPath(): string {
+  return process.env.RG_PROPOSALS_LEDGER ?? join(homedir(), ".local/state/proposals/ledger.json");
+}
+function encargosLedgerPath(): string {
+  return process.env.RG_ENCARGOS_LEDGER ?? join(homedir(), ".local/state/encargos/ledger.json");
+}
+
+/** "mtimeMs:size" of one ledger file, or "missing" when it does not exist.
+ *  Any external write (rg-proposal, rg-encargo, another session) moves it. */
+function ledgerStamp(path: string): string {
+  try {
+    const stat = statSync(path);
+    return `${Math.trunc(stat.mtimeMs)}:${stat.size}`;
+  } catch {
+    return "missing";
+  }
+}
+
+/** Identity of the on-disk ledgers the cached snapshot was parsed from. */
+function ledgersFingerprint(): string {
+  return `${ledgerStamp(proposalsLedgerPath())}|${ledgerStamp(encargosLedgerPath())}`;
+}
+
 type Row = Record<string, unknown>;
 
 interface CacheEntry {
   data: ExoData;
   readAt: number;
+  ledgers: string;
 }
 
 let cache: CacheEntry | null = null;
@@ -58,7 +84,7 @@ async function readPrivate(route: string): Promise<Row | null> {
   return body && typeof body === "object" && !Array.isArray(body) ? (body as Row) : null;
 }
 
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, writeFileSync, statSync } from "fs";
 import { join } from "path";
 import { homedir } from "os";
 import { optionImagesFor } from "./exo-media";
@@ -80,7 +106,7 @@ interface LocalLedgerProposal {
 
 function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
   try {
-    const ledgerPath = join(homedir(), ".local/state/proposals/ledger.json");
+    const ledgerPath = proposalsLedgerPath();
     if (!existsSync(ledgerPath)) return [];
     const raw = readFileSync(ledgerPath, "utf8");
     const parsed = JSON.parse(raw);
@@ -106,10 +132,14 @@ function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
           ? item.source.match(/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i)?.[1]
           : undefined),
         links: (item as any).links ?? [],
+        // `status` is the ledger's authority (what rg-proposal shows as ⏳/✔):
+        // a reopened proposal can still carry its old `resolution`/`discard`,
+        // and that leftover must never hide a pending decision from the
+        // badge — the counters follow the status, not stale sub-fields.
         decisionState: status === "pending" ? "open" : status === "resolved" ? "accepted" : status === "discarded" ? "rejected" : status,
         attentionState: "fresh",
-        selectedOption: item.resolution ? { optionId: "resolved", label: typeof item.resolution === "object" && item.resolution ? (item.resolution as any).choice : "Resuelta" } : null,
-        discard: (item as any).discard ?? null,
+        selectedOption: status === "resolved" && item.resolution ? { optionId: "resolved", label: typeof item.resolution === "object" && item.resolution ? (item.resolution as any).choice : "Resuelta" } : null,
+        discard: status === "discarded" ? (item as any).discard ?? null : null,
         options: (() => {
           const labels = (item.options ?? ["Aceptar", "Descartar"]) as string[];
           const images = optionImagesFor(labels.length, item.option_images);
@@ -140,7 +170,7 @@ function loadLocalActiveProposals(): ExoData["proposals"]["proposals"] {
 
 function loadLocalEncargos(): NonNullable<ExoData["encargos"]> {
   try {
-    const ledgerPath = join(homedir(), ".local/state/encargos/ledger.json");
+    const ledgerPath = encargosLedgerPath();
     if (!existsSync(ledgerPath)) return { total: 0, pendingCount: 0, encargos: [] };
     const raw = readFileSync(ledgerPath, "utf8");
     const parsed = JSON.parse(raw);
@@ -210,16 +240,21 @@ async function readExoData(): Promise<ExoData> {
   return merged;
 }
 
-/** The panel's data: one bounded read of the five private collections. */
+/** The panel's data: one bounded read of the five private collections.
+ *  The cache serves reads only while both on-disk ledgers are unchanged —
+ *  any external write (the CLIs, another session) is picked up at once, not
+ *  when the TTL happens to lapse — and never longer than CACHE_MS, which
+ *  bounds the upstream snapshot path (no local proposals) instead. */
 export async function getExoData(): Promise<ExoData> {
-  if (cache && Date.now() - cache.readAt < CACHE_MS) return cache.data;
+  const fingerprint = ledgersFingerprint();
+  if (cache && Date.now() - cache.readAt < CACHE_MS && cache.ledgers === fingerprint) return cache.data;
   if (!inFlight) {
     inFlight = readExoData().finally(() => {
       inFlight = null;
     });
   }
   const data = await inFlight;
-  cache = { data, readAt: Date.now() };
+  cache = { data, readAt: Date.now(), ledgers: fingerprint };
   return data;
 }
 
@@ -303,7 +338,7 @@ export function buildProposalChoiceRequest(
 
 export function resolveLocalProposal(proposalId: string, choiceText: string): boolean {
   try {
-    const ledgerPath = join(homedir(), ".local/state/proposals/ledger.json");
+    const ledgerPath = proposalsLedgerPath();
     if (!existsSync(ledgerPath)) return false;
     const raw = readFileSync(ledgerPath, "utf8");
     const parsed = JSON.parse(raw);
@@ -313,7 +348,6 @@ export function resolveLocalProposal(proposalId: string, choiceText: string): bo
       choice: choiceText,
       resolved_at: new Date().toISOString(),
     };
-    const { writeFileSync } = require("fs");
     writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
     invalidateExoData();
     return true;
@@ -331,7 +365,7 @@ export function discardLocalProposal(proposalId: string, reason: string, details
     return true;
   } catch (e) {
     try {
-      const ledgerPath = join(homedir(), ".local/state/proposals/ledger.json");
+      const ledgerPath = proposalsLedgerPath();
       if (!existsSync(ledgerPath)) return false;
       const raw = readFileSync(ledgerPath, "utf8");
       const parsed = JSON.parse(raw);
@@ -342,7 +376,6 @@ export function discardLocalProposal(proposalId: string, reason: string, details
         details: details || "",
         discarded_at: new Date().toISOString(),
       };
-      const { writeFileSync } = require("fs");
       writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
       invalidateExoData();
       return true;
@@ -361,7 +394,7 @@ export function undoLocalProposal(proposalId: string): boolean {
     return true;
   } catch (e) {
     try {
-      const ledgerPath = join(homedir(), ".local/state/proposals/ledger.json");
+      const ledgerPath = proposalsLedgerPath();
       if (!existsSync(ledgerPath)) return false;
       const raw = readFileSync(ledgerPath, "utf8");
       const parsed = JSON.parse(raw);
@@ -371,7 +404,6 @@ export function undoLocalProposal(proposalId: string): boolean {
       if ("discard" in parsed.proposals[proposalId]) {
         delete parsed.proposals[proposalId].discard;
       }
-      const { writeFileSync } = require("fs");
       writeFileSync(ledgerPath, JSON.stringify(parsed, null, 2), "utf8");
       invalidateExoData();
       return true;

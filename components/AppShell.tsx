@@ -11,7 +11,6 @@ import { FileViewer } from "./FileViewer";
 import { TabBar, type Tab } from "./TabBar";
 import { openFileTab, saveFileViewerState, saveParkedFileViewerState, switchFileWorkspace, type ParkedFileWorkspace } from "./file-tab-state";
 import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
-import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
 import { ActivityView } from "./ActivityView";
@@ -228,8 +227,6 @@ export function AppShell() {
   }, []);
   const [explorerRefreshKey, setExplorerRefreshKey] = useState(0);
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
-  const [exoPanelOpen, setExoPanelOpen] = useState(false);
-  const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
   const initialView = searchParams.get("view");
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
   const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
@@ -1454,7 +1451,6 @@ export function AppShell() {
         onBackgroundTaskDone={handleBackgroundTaskDone}
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
-        onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
         onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
         onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
@@ -2594,32 +2590,6 @@ export function AppShell() {
                   router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
                 }
                 setProposalsViewOpen(false);
-              }}
-            />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
-              }}
-            />
-          ) : encargosViewOpen ? (
-            <EncargosView
-              onClose={() => setEncargosViewOpen(false)}
-              onSelectSession={(sessionId) => {
-                const target = sessionCatalog.find((s) => s.id === sessionId);
-                if (target) {
-                  handleSelectSession(target);
-                } else {
-                  router.replace(`?session=${encodeURIComponent(sessionId)}`, { scroll: false });
-                }
-                setEncargosViewOpen(false);
               }}
             />
           ) : encargosViewOpen ? (

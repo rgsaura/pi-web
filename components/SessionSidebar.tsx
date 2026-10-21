@@ -240,8 +240,6 @@ interface Props {
   onBackgroundTaskDone?: () => void;
   onRunningSessionIdsChange?: (ids: Set<string>) => void;
   onSessionsChange?: (sessions: SessionInfo[]) => void;
-  /** Opens Exo at one proposal (`null`: its full list). */
-  onOpenExoProposal?: (id: string | null) => void;
   /** Opens the full dedicated Proposals view. */
   onOpenProposalsView?: () => void;
   /** Opens the full dedicated Encargos view. */
@@ -514,6 +512,10 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
   const { data: exoData } = useExoData();
   const { workspaces: workspaceList } = useWorkspaces();
   const workspaceCount = workspaceList.length;
+  const activeWorkspaceCount = useMemo(
+    () => workspaceList.filter((workspace) => workspace.status === "active").length,
+    [workspaceList],
+  );
   const exoProposals = useMemo(() => exoData?.proposals.proposals ?? [], [exoData]);
   const exoReferenceMs = useMemo(() => {
     const capturedAt = exoData?.proposals.capturedAt;
@@ -2916,8 +2918,8 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
             <button
               type="button"
               onClick={onOpenWorkspacesView}
-              title="Workspaces por categoría con su estado"
-              aria-label="Workspaces"
+              title={`Workspaces por categoría · ${activeWorkspaceCount} activos · ${workspaceCount} registrados`}
+              aria-label={`Workspaces: ${activeWorkspaceCount} activos`}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -2972,14 +2974,14 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
                   justifyContent: "center",
                   padding: "1px 8px",
                   borderRadius: 999,
-                  background: "var(--bg-selected)",
-                  color: "var(--text-muted)",
+                  background: activeWorkspaceCount > 0 ? "rgba(139, 92, 246, 0.15)" : "var(--bg-selected)",
+                  color: activeWorkspaceCount > 0 ? "#a855f7" : "var(--text-muted)",
                   fontSize: 11,
                   fontWeight: 600,
                   lineHeight: "16px",
                 }}
               >
-                {workspaceCount}
+                {activeWorkspaceCount}
               </span>
             </button>
           )}
@@ -2987,8 +2989,8 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
             <button
               type="button"
               onClick={onOpenEncargosView}
-              title="Encargos y tareas activas pedidas a ROT"
-              aria-label="Encargos"
+              title={`Encargos y tareas pedidas a ROT · ${exoData?.encargos?.pendingCount ?? 0} activos · ${exoData?.encargos?.total ?? 0} registrados`}
+              aria-label={`Encargos: ${exoData?.encargos?.pendingCount ?? 0} activos`}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -3052,7 +3054,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           <button
             type="button"
             onClick={onOpenProposalsView}
-            title="Abrir vista de decisiones pendientes"
+            title={`Decisiones pendientes de criterio · ${pendingProposalsCount} activas · ${exoProposals.length} en historial`}
             aria-label={`Decisiones: ${pendingProposalsCount} pendientes`}
             style={{
               display: "flex",

@@ -119,12 +119,10 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     }));
   }, [proposals, statusFilter, referenceMs]);
 
+  // The shared store polls while the tab is visible; opening the view still
+  // forces one fresh read so the inbox is current the moment it is acted on.
   useEffect(() => {
     refresh();
-    const timer = window.setInterval(() => {
-      if (document.visibilityState === "visible") refresh();
-    }, 30_000);
-    return () => window.clearInterval(timer);
   }, [refresh]);
 
   // Filtering & Sorting
@@ -495,13 +493,16 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           flexShrink: 0,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        {/* On phones the row wraps (Volver / filters / order) instead of
+            overflowing the viewport: each control keeps its size and the
+            bar simply grows taller. */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
           <button
             type="button"
             onClick={onClose}
             title="Volver al chat (Esc)"
             aria-label="Volver al chat"
-            style={buttonBase}
+            style={{ ...buttonBase, flexShrink: 0 }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -510,7 +511,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           </button>
 
           {/* Pending vs All switch */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg)", padding: 2 }}>
               {([["pending", `🎯 Pendientes${pendingCount ? ` (${pendingCount})` : ""}`], ["all", `📋 Todas (${proposals.length})`]] as const).map(([value, label]) => (
                 <button
@@ -550,6 +551,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                   padding: "5px 10px",
                   fontSize: 12,
                   outline: "none",
+                  minWidth: 0,
+                  maxWidth: "100%",
                 }}
                 title="Criterio de ordenación"
               >
@@ -595,6 +598,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
               setCategoryFilter("all");
               setCurrentIndex(0);
             }}
+            title={statusFilter === "pending" ? "Decisiones pendientes de todas las categorías" : "Todas las decisiones históricas"}
             style={{
               padding: "3px 10px",
               borderRadius: 20,
@@ -607,7 +611,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
               whiteSpace: "nowrap",
             }}
           >
-            Todas ({proposals.length})
+            Todas ({statusFilter === "pending" ? pendingCount : proposals.length})
           </button>
           {availableCategories.map((c) => (
             <button
