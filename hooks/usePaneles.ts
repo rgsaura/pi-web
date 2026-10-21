@@ -16,6 +16,10 @@ interface PanelesResponse {
 const CACHE_MS = 30_000;
 let cache: { data: PanelesResponse | null; readAt: number } = { data: null, readAt: 0 };
 let inFlight: Promise<PanelesResponse> | null = null;
+/** Mounted readers: a refresh (a visibility change landed) reaches them all,
+ *  so the sidebar's pinned strip and the catalog never disagree for a
+ *  cache window. */
+const listeners = new Set<() => void>();
 
 async function fetchPaneles(): Promise<PanelesResponse> {
   if (!inFlight) {
@@ -50,6 +54,7 @@ export function usePaneles(): UsePanelesResult {
     cache = { data: null, readAt: 0 };
     inFlight = null;
     setVersion((value) => value + 1);
+    for (const listener of listeners) listener();
   }, []);
 
   useEffect(() => {
@@ -78,7 +83,17 @@ export function usePaneles(): UsePanelesResult {
     };
   }, [version]);
 
+  // Another reader's refresh (a state change from the catalog, another tab's
+  // POST): this instance re-reads too, without its own cache window.
+  useEffect(() => {
+    const listener = () => setVersion((value) => value + 1);
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }, []);
+
   const paneles = data?.paneles ?? [];
-  const activeCount = paneles.filter((p) => p.estado !== "archivado").length;
+  const activeCount = paneles.filter((p) => p.visibilidad !== "archivado").length;
   return { data, paneles, activeCount, loading, error, refresh };
 }
