@@ -1,0 +1,213 @@
+{
+ "desktop-dark-musica.png": {
+  "desc": "Post Studio de IG con preview de carrusel en marco móvil, música real seleccionada, fotos con procedencia y chips de narrativa; layout sólido y bien jerarquizado. Solo detalles menores de truncado y metadatos ambiguos.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zona": "preview móvil (cabecera tipo story)",
+    "desc": "El texto 'rgsaura · La Herradura' se corta a mitad de glifo contra el borde del marco sin elipsis, quedando un resto de carácter suelto."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "cabecera · línea de metadatos",
+    "desc": "La línea muestra '□ 6 9-13 oct 2026' con un '6' huérfano y rangos de fecha en conflicto respecto a '10-09 → 10-14' del mismo título; resultado ambiguo y redundante."
+   }
+  ],
+  "empty": false
+ },
+ "desktop-dark-slides.png": {
+  "desc": "sin análisis",
+  "issues": [],
+  "empty": false
+ },
+ "desktop-dark-validacion.png": {
+  "desc": "Vista Post Studio completa y estable: preview de carrusel en marco móvil, música IG con buscador y tarjeta activa, y lista de fotos con procedencia y controles, todo bien alineado en dark.",
+  "issues": [],
+  "empty": false
+ },
+ "desktop-dark.png": {
+  "desc": "Post Studio completo y funcional: preview de carrusel en marco de móvil, música real de IG seleccionada con buscador y chips, y listado de 15 fotos con procedencia y controles de orden/validación. Estado «pre · nada se publica» y barra de revisión inferior coherentes.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zona": "cabecera del móvil (preview carrusel)",
+    "desc": "El texto «rgsaura · La Herradura · …» queda cortado sin elipsis al llegar al borde del marco; se lee abrupto en la línea de contexto del post."
+   }
+  ],
+  "empty": false
+ },
+ "desktop-light-musica.png": {
+  "desc": "Post Studio con carrusel en marco de móvil, música real de IG seleccionada con buscador y chips, y lista de fotos con procedencia y validación visual. Layout limpio y consistente; no se aprecian roturas estructurales.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zone": "Cabecera del preview móvil (marco de teléfono)",
+    "desc": "El título de cabecera «rgsaura · La Herradura » termina con un carácter suelto (barra vertical) sin elipsis, sugiriendo texto/etiqueta truncada en el límite del marco."
+   }
+  ],
+  "empty": false
+ },
+ "desktop-light-slides.png": {
+  "desc": "Vista Post Studio del carrusel de La Herradura con preview de móvil, lista de slides procedenciadas, panel de validación visual y biblioteca inferior; layout consistente y sin problemas estructurales.",
+  "issues": [],
+  "empty": false
+ },
+ "desktop-light-validacion.png": {
+  "desc": "Post Studio con carrusel 15/20, música IG real seleccionada con audio_id visible, fotos con procedencia y validación; layout estable y sin cortes ni solapes reales.",
+  "issues": [],
+  "empty": false
+ },
+ "desktop-light.png": {
+  "desc": "Post Studio completo: marco móvil con carrusel 1/15 + dots + contador 15/20, música real de IG con preview y buscador, y listado de fotos con procedencia (fecha/quién/lugar) y validación ✓ encaja; layout consistente y sin roturas.",
+  "issues": [],
+  "empty": false
+ },
+ "mobile-dark-musica.png": {
+  "desc": "Vista Post Studio en dark mode con carrusel/preview, narrativa, música IG real seleccionada y validaciones. Layout general correcto y estable; solo detalles menores de truncado en textos de apoyo.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zona": "Input de búsqueda de música (sección 2)",
+    "desc": "El placeholder 'Buscar en la biblioteca real de…' queda cortado en el borde del input sin elipsis, y además el botón 'Buscar' lo sobresale lateralmente en anchos estrechos."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Tarjeta de música seleccionada",
+    "desc": "El audio_id '8275995635…' se trunca con reticencias y la línea 'para OpenPost/Postiz' queda partida; conviene mostrar el ID completo o un formato corto limpio."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Título superior",
+    "desc": "'Post Studio · La Herradura · Cu…' se trunca; aunque lleva elipsis, el nombre del post queda ilegible en móvil."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-dark-slides.png": {
+  "desc": "Vista móvil de Post Studio con lista de fotos (procedencia y acciones), panel de validación visual y barra fija de confirmación. Generalmente sólido; solo detalles menores de recorte y maquetación.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zona": "lista de fotos / límite con panel de validación",
+    "desc": "La fila 6 (Tarta 27) queda cortada a mitad de fila, incluidos sus botones de acción, sin indicador de scroll; parece un contenedor de altura fija que recorta sin pista visual."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "panel 'Validación visual' → ítem 'Rocas'",
+    "desc": "El texto descriptivo se indenta a la derecha del badge '✓ encaja' formando una columna estrecha con quiebres de línea poco naturales (p.ej. 'pozo del río —')."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-dark-validacion.png": {
+  "desc": "Vista mobile del Post Studio: lista de fotos con acciones, tarjeta de validación visual y barra sticky inferior con estado; layout estable y sin roturas graves.",
+  "issues": [
+   {
+    "sev": "friccion",
+    "zona": "Tarjeta VALIDACIÓN VISUAL · descripción 'Rocas'",
+    "desc": "El badge '✓ encaja' queda inline con el texto del slide, provocando que la descripción envuelva alrededor del pill con borde izquierdo irregular y lectura algo emborronada."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Filas de fotos (2-6)",
+    "desc": "La procedencia se trunca en '2026-10-09 17:15 …' perdiendo lugar/quién; tiene elipsis pero justo la info de procedencia que la vista promete queda oculta sin acción de expansión visible."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Cabecera",
+    "desc": "Título 'Post Studio · La Herradura · Cu…' truncado; aceptable en móvil pero la ciudad queda cortada."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-dark.png": {
+  "desc": "Vista Post Studio en móvil: cabecera, selector Carrusel/Reel, preview de IG en marco de móvil con foto y etiquetas de validación, correcto en general.",
+  "issues": [
+   {
+    "sev": "friccion",
+    "zone": "Preview del post — cabecera del marco móvil (avatar rgsaura)",
+    "desc": "La línea 'rgsaura · La Herradura' se corta contra el borde derecho del marco sin elipsis: el lugar (procedencia) queda truncado y se pierde contexto importante."
+   },
+   {
+    "sev": "cosmetica",
+    "zone": "H1 de la cabecera",
+    "desc": "El título 'Post Studio · La Herradura · Cu...' se trunca con elipsis y se pierde el dato final (año/contexto); aceptable pero convendría ajustarlo al ancho móvil."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-light-musica.png": {
+  "desc": "Post Studio en móvil: header con estado PRE, preview de carrusel 1/15 en marco de móvil, narrativas A/B/C, música IG real con reproductor, buscador y validaciones. Layout sólido, sin roturas evidentes.",
+  "issues": [
+   {
+    "sev": "friccion",
+    "zona": "Buscador de música (input \"Buscar en la biblioteca real de…\")",
+    "desc": "El placeholder se corta en el borde del input sin elipsis; al ser un campo estrecho junto al botón \"Buscar\", se pierde la mitad de la ayuda contextual del buscador."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Header sticky (título)",
+    "desc": "\"Post Studio · La Herradura · Cu…\" se trunca justo en el descriptor del post, dejando el título incompleto aunque con elipsis."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-light-slides.png": {
+  "desc": "Vista de Post Studio con lista de fotos del carrusel, validación visual y acciones de confirmación. La estructura general se lee bien, pero hay solapes y truncados que ocultan información de procedencia.",
+  "issues": [
+   {
+    "sev": "friccion",
+    "zona": "tarjeta slide 6 (Tarta 27)",
+    "desc": "La tarjeta queda cortada y la tarjeta de 'VALIDACIÓN VISUAL' se solapa sobre ella, tapando parte de sus botones de acción en vez de seguir un flujo de scroll limpio."
+   },
+   {
+    "sev": "friccion",
+    "zona": "metadatos de cada slide (fecha/hora)",
+    "desc": "La línea de procedencia se trunca a '2026-10-11 12:54 …' sin mostrar lugar/quién, perdiendo justo la info clave de procedencia que promete la vista."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "cabecera (título)",
+    "desc": "Título truncado 'Post Studio · La Herradura · Cu…' sin contexto suficiente para distinguir el post si hubiera varios."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "botón 'Confirmar decisión → OpenPost'",
+    "desc": "El botón aparece en estado atenuado sin indicar claramente qué falta (revisión 0/15 es la causa probable, pero no hay hint asociado)."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-light-validacion.png": {
+  "desc": "Post Studio móvil con carrusel de 15 fotos, procedencia por foto, música IG real y validación visual vigente; estructura sólida pero con la barra fija inferior tapando contenido y algún dato recortado sin contexto.",
+  "issues": [
+   {
+    "sev": "friccion",
+    "zona": "barra de acciones fija inferior",
+    "desc": "La barra fija (chips de música/visión, revisión 0/15, CTA) se superpone al contenido sin padding inferior suficiente: tapa la parte final de la tarjeta 'VALIDACIÓN VISUAL DEL POST' (el texto queda cortado a media descripción) y recorta la fila 6 'Tarta 27'."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "cabecera (título y meta)",
+    "desc": "Título recortado a 'Post Studio · La Herradura · Cu...' y la línea de fechas termina en '… □ 6' sin unidad ('6 fotos'/'6 días'), quedando ambiguo frente a 'Carrusel · 15 fotos' del pie."
+   }
+  ],
+  "empty": false
+ },
+ "mobile-light.png": {
+  "desc": "Vista Post Studio en móvil: cabecera con metadata, pestañas Carrusel/Reel, preview en marco de móvil con badges de música/visión y CTA de confirmación. Layout sólido y sin roturas.",
+  "issues": [
+   {
+    "sev": "cosmetica",
+    "zona": "Cabecera título",
+    "desc": "Título truncado sin contexto: «Post Studio · La Herradura · Cu...» corta el nombre del post justo en el dato identificativo (con elipsis, pero el nombre clave queda ilegible en la vista principal)."
+   },
+   {
+    "sev": "cosmetica",
+    "zona": "Preview marco móvil (overlay superior)",
+    "desc": "El texto de procedencia/overlay «rgsaura · La Herradura ...» se corta a filo del marco del móvil sin elipsis; si continúa con fecha/lugar/quién, ese dato queda invisible en el carrusel."
+   }
+  ],
+  "empty": false
+ }
+}

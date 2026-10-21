@@ -11,10 +11,12 @@
  * by re-searching the query and matching the audio_id — the track object
  * carries a signed progressive_download_url that streams the m4a preview.
  *
- * Wire format: the python script arrives on stdin followed by one JSON
- * request line. Search answers one JSON line on stdout; preview answers the
- * raw m4a bytes (exit codes distinguish failures). No remote files are
- * created and nothing is mutated on the account: search_music is read-only.
+ * Wire format: the python script arrives on stdin as a heredoc; `python -`
+ * (dash = script from stdin) takes the one JSON request line as base64 argv,
+ * so the payload never rides the command line. Search answers one JSON line
+ * on stdout; preview answers the raw m4a bytes (exit codes distinguish
+ * failures). No remote files are created and nothing is mutated on the
+ * account: search_music is read-only.
  */
 
 import { execFile } from "child_process";
@@ -137,7 +139,10 @@ async function runBridge(
   maxBuffer: number,
 ): Promise<{ stdout: Buffer; code: number | undefined; unreachable: boolean }> {
   const argv = Buffer.from(JSON.stringify(request), "utf8").toString("base64");
-  const remote = `${IG_BRIDGE_PY} ${argv} <<'PYEOF'\n${BRIDGE_SCRIPT.trim()}\nPYEOF`;
+  // NB: the dash — `python -` reads the script from the heredoc on stdin and
+  // the base64 word becomes sys.argv[1]. Without it python treats the base64
+  // as a script path and exits 2.
+  const remote = `${IG_BRIDGE_PY} - ${argv} <<'PYEOF'\n${BRIDGE_SCRIPT.trim()}\nPYEOF`;
   try {
     const { stdout } = await execFileAsync(
       "ssh",

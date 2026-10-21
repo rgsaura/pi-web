@@ -912,7 +912,7 @@ export function PostStudioView({ onClose, postId: initialPostId }: PostStudioVie
         <span style={{ flex: 1, minWidth: 0, fontSize: 12, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {item.caption || item.file}{star(item.star)}
           {item.kind === "video" && <span style={{ color: "var(--text-dim)", marginLeft: 6, fontSize: 10 }}>vídeo</span>}
-          <span style={{ display: "block", fontSize: 9.5, color: "var(--text-dim)", marginTop: 1 }}>
+          <span style={{ display: "block", fontSize: 9.5, color: "var(--text-dim)", marginTop: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {provenanceLine(item) || "sin procedencia"}{outOfWindow ? " · ⚠ fuera del plan" : ""}
           </span>
           {vision && (
@@ -979,7 +979,7 @@ export function PostStudioView({ onClose, postId: initialPostId }: PostStudioVie
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
           <button type="button" onClick={() => setActivePostId(null)} title="Volver a la lista de posts" style={{ border: "none", background: "transparent", color: "var(--text-muted)", fontSize: 16, cursor: "pointer", padding: 4 }}>🎬</button>
           <div style={{ minWidth: 0 }}>
-            <h1 style={{ fontSize: 16.5, fontWeight: 700, margin: 0, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Post Studio · {definition.title}</h1>
+            <h1 title={`${definition.title} · ${definition.subtitle}`} style={{ fontSize: 16.5, fontWeight: 700, margin: 0, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Post Studio · {definition.title}</h1>
             <div style={{ fontSize: 11.5, color: "var(--text-muted)", marginTop: 1, display: "flex", gap: 8, flexWrap: "wrap" }}>
               {plan && <span>📍 {plan.location}</span>}
               {plan && <span>📅 {plan.dateStart.slice(5)} → {plan.dateEnd.slice(5)}</span>}
@@ -1141,7 +1141,7 @@ export function PostStudioView({ onClose, postId: initialPostId }: PostStudioVie
                       );
                     })}
                   {validation.issues.length > 0 && (
-                    <div style={{ fontSize: 11, color: "#d97706" }}>
+                    <div style={{ fontSize: 11, color: "#b45309" }}>
                       {validation.issues.slice(0, 4).map((issue, i) => <div key={i}>⚠ {issue}</div>)}
                     </div>
                   )}

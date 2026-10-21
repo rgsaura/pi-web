@@ -97,6 +97,11 @@ app/api/
   provider-usage/query/route.ts    POST provider usage quotas
   push/config/route.ts             GET VAPID public key
   push/subscribe/route.ts          POST register a push subscription
+  post-studio/route.ts             GET/POST one studio post's state and actions (decide gated by the vision validation)
+  post-studio/list/route.ts        GET every studio post for the picker
+  post-studio/music/route.ts       GET real Instagram music search + audible preview · POST add a real track (audio_id)
+  post-studio/validate/route.ts    POST full-post vision validation (photos + CT126 video frames → one multimodal pass)
+  post-studio/media/[postId]/[file]/route.ts GET one definition-owned media/music asset
   app-update/route.ts              GET current vs latest published pi-web version
 
 lib/
@@ -114,6 +119,10 @@ lib/
   session-links.ts          a session's same-instance link (?session=<id>) and the plain-click rule the sidebar keeps in the page
   new-session-context.ts    client-safe: what the project/worktree pickers show (project, worktrees, project list), lag-safe contextForCwd
   normalize.ts              normalizeToolCalls(): file-format vs our toolCall field names
+  post-studio.ts            server store: per-post dir (studio/state/validation/decision.json), write lock, asset serving
+  post-studio-shared.ts     client-safe types + pure action engine, validation gate, decision contract
+  post-studio-ig-music.ts   real IG music bridge (instagrapi on CT126 over ssh; search + CDN preview)
+  post-studio-vision.ts     full-post vision validation (sharp + CT126 ffmpeg frames + LiteLLM gateway)
   types.ts                  shared TypeScript types
   pi-types.ts               local structural types for pi SDK objects
   pi-sdk-internals.ts       loader for SDK modules the package does not export (MCP connection, config, OAuth)
@@ -177,6 +186,7 @@ lib/
   mcp-tool-display.ts       server/tool label of an mcp__ call from its result details, never the name
 
 components/
+  PostStudioView.tsx        social post studio: carousel preview in a phone frame, real IG music picker with previews, provenance rows, full-post vision validation panel
   AppShell.tsx             layout, URL state, tab management
   SessionSidebar.tsx       toolbar row (Sessions | Files tabs, or the Pi Web brand with the files below them; new, search): tree, archive, menus, toast; files section (resizable, foldable; one header row with the file keys and changed-files count, the picker's row) or tab (picker boxes + file buttons), FileExplorer
   PiWebTitle.tsx           the sidebar's "Pi Web" brand (files below the sessions only): a click scrambles it into the versions
@@ -248,6 +258,7 @@ Design decisions and traps live in `docs/agents/`, one note per area. Read every
 - [subagents.md](docs/agents/subagents.md): the built-in subagent setting, profiles and their files, run status, completion notifications, the subagent viewer tab. Files: `lib/subagent*.ts`, `app/api/subagents/**`, `components/AgentsConfig.tsx`, `components/SubagentViewer.tsx`, `components/subagent-viewer-state.ts`.
 - [exo-decisiones.md](docs/agents/exo-decisiones.md): the Exo panel — decisiones (ExoProposalsView) data flow from the rg-proposal ledger, resolve/discard/undo, and visual decisions with per-option images (media dir, /api/exo/media, lightbox). Files: `lib/exo-data.ts`, `lib/exo-media.ts`, `lib/exo-types.ts`, `app/api/exo/**`, `components/ExoProposalsView.tsx`, `components/EncargosView.tsx`.
 - [timeline.md](docs/agents/timeline.md): the merged Timeline view and the retroactive ledger — quick entry of past events by hour, the JSONL store under `~/.local/state/timeline/`, hour bands and learned suggestions, the merged route plus the events route, the view's Eventos/Patrones tabs. Files: `lib/timeline-retro.ts`(+test), `lib/timeline-retro-store.ts`, `lib/timeline-data.ts`, `app/api/timeline/**`, `components/TimelineView.tsx`.
+- [post-studio.md](docs/agents/post-studio.md): the social post studio — per-post store (studio/state/validation/decision), the pure action engine and its gates, the real Instagram music bridge over the CT126 instagrapi session, the full-post vision validation that blocks decide, and the QA harness. Files: `components/PostStudioView.tsx`, `app/api/post-studio/**`, `lib/post-studio*.ts`.
 - [client-platform.md](docs/agents/client-platform.md): mobile software keyboard and viewport height, the terminal's extra keys, completion sound. Files: `hooks/useViewportHeight.ts`, `hooks/useAudio.ts`, `components/TerminalExtraKeys.tsx`, `lib/terminal-extra-keys.ts`, the keyboard-open CSS.
 
 ---
