@@ -11,7 +11,6 @@ import { FileViewer } from "./FileViewer";
 import { TabBar, type Tab } from "./TabBar";
 import { openFileTab, saveFileViewerState, saveParkedFileViewerState, switchFileWorkspace, type ParkedFileWorkspace } from "./file-tab-state";
 import { SettingsPanel, SettingsSectionIcon } from "./SettingsPanel";
-import { ExoPanel } from "./ExoPanel";
 import { ExoProposalsView } from "./ExoProposalsView";
 import { EncargosView } from "./EncargosView";
 import { PanelesView } from "./PanelesView";
@@ -236,8 +235,10 @@ export function AppShell() {
   }, []);
   const [explorerRefreshKey, setExplorerRefreshKey] = useState(0);
   const [settingsSection, setSettingsSection] = useState<SettingsSection | null>(null);
-  const [exoPanelOpen, setExoPanelOpen] = useState(false);
   const [exoInitialProposalId, setExoInitialProposalId] = useState<string | null>(null);
+  // The Proposals view reports a consumed deep link back: a stable identity
+  // keeps its effect from re-firing on every render here.
+  const consumeExoInitialProposalId = useCallback(() => setExoInitialProposalId(null), []);
   const initialView = searchParams.get("view");
   const initialPanelDir = searchParams.get("panel");
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
@@ -246,6 +247,9 @@ export function AppShell() {
   const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
   const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
   const [panelesViewOpen, setPanelesViewOpen] = useState(() => initialView === "paneles");
+  /** The panel the catalog opens at: a `?panel=` deep link, or the last one
+   *  the sidebar's pinned strip asked for (null: the grid). */
+  const [panelDirRequest, setPanelDirRequest] = useState(initialPanelDir);
   const [agentsInspectorOpen, setAgentsInspectorOpen] = useState(() => initialView === "agents");
   const [postStudioOpen, setPostStudioOpen] = useState(() => initialView === "post-studio");
   // ?view=post-studio&post=<id> opens one studio post (defaults to the studio's own default).
@@ -1478,13 +1482,31 @@ export function AppShell() {
         onBackgroundTaskDone={handleBackgroundTaskDone}
         onRunningSessionIdsChange={handleRunningSessionIdsChange}
         onSessionsChange={handleSessionsChange}
-        onOpenExoProposal={(id) => { setExoInitialProposalId(id); setExoPanelOpen(true); }}
+        onOpenExoProposal={(id) => {
+          // A decision row's deep link: the Proposals view opens at that
+          // proposal (ExoPanel itself is gone; only its state remained).
+          if (id) setExoInitialProposalId(id);
+          openOverlay(setProposalsViewOpen);
+        }}
         onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
         onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
         onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
         onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
-        onOpenPanelesView={() => openOverlay(setPanelesViewOpen)}
+        onOpenPanelesView={() => {
+          setPanelDirRequest(null);
+          openOverlay(setPanelesViewOpen);
+        }}
+        onOpenPanelDir={(slug) => {
+          setPanelDirRequest(slug);
+          openOverlay(setPanelesViewOpen);
+        }}
+        onOpenNativePanel={(id) => {
+          // A native catalog panel: today the one registered view is Post
+          // Studio; unknown ids fall back to the catalog.
+          if (id === "post-studio") openOverlay(setPostStudioOpen);
+          else openOverlay(setPanelesViewOpen);
+        }}
         onOpenAgentsInspector={() => openOverlay(setAgentsInspectorOpen)}
         onOpenPostStudio={() => openOverlay(setPostStudioOpen)}
         onOpenVoiceModal={() => setVoiceModalOpen(true)}
@@ -2612,6 +2634,8 @@ export function AppShell() {
           ) : proposalsViewOpen ? (
             <ExoProposalsView
               onClose={() => setProposalsViewOpen(false)}
+              initialProposalId={exoInitialProposalId}
+              onInitialProposalConsumed={consumeExoInitialProposalId}
               onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {
@@ -2625,7 +2649,13 @@ export function AppShell() {
           ) : panelesViewOpen ? (
             <PanelesView
               onClose={() => setPanelesViewOpen(false)}
-              initialPanelDir={initialPanelDir}
+              initialPanelDir={panelDirRequest}
+              onOpenNativePanel={(id) => {
+                if (id === "post-studio") {
+                  setPanelesViewOpen(false);
+                  openOverlay(setPostStudioOpen);
+                }
+              }}
               onOpenSession={(sessionId) => {
                 const target = sessionCatalog.find((s) => s.id === sessionId);
                 if (target) {

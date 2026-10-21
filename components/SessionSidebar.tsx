@@ -84,6 +84,8 @@ import { archiveViewState, filesFoldState, useSidebarMotion } from "@/hooks/useS
 import { useExoData } from "@/hooks/useExoData";
 import { useWorkspaces } from "@/hooks/useWorkspaces";
 import { relevantProposals } from "@/lib/exo-visibility";
+import { SystemSections } from "./SystemSections";
+import { PanelPins } from "./PanelPins";
 import { DirectoryPicker } from "./DirectoryPicker";
 import { DismissButton } from "./DismissButton";
 import { FileExplorer, type FileExplorerHandle } from "./FileExplorer";
@@ -246,6 +248,10 @@ interface Props {
   onOpenTimelineView?: () => void;
   /** Opens the Paneles view (EXO visible deliverables). */
   onOpenPanelesView?: () => void;
+  /** Opens one HTML panel in the catalog's viewer (the pinned strip). */
+  onOpenPanelDir?: (slug: string) => void;
+  /** Opens a native catalog panel's view, e.g. Post Studio (the pinned strip). */
+  onOpenNativePanel?: (id: string) => void;
   /** Opens the Agents inspector (prompts, skills, tools per agent). */
   onOpenAgentsInspector?: () => void;
   /** Opens the Post Studio (pre-review of a social post before OpenPost). */
@@ -525,7 +531,8 @@ function secondaryPillStyle(isMobile: boolean) {
   } as const;
 }
 
-export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
+
+export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSession, controlRef, onNewSessionContextChange, initialSessionId, initialSessionLinked, skipInitialProjectSelection, onInitialRestoreDone, refreshKey, onSessionDeleted, selectedCwd: selectedCwdProp, onCwdChange, onOpenFile, onOpenTerminal, explorerRefreshKey, onExplorerRefresh, onAtMention, onAtMentions, onBackgroundTaskDone, onRunningSessionIdsChange, onSessionsChange, onOpenExoProposal, onOpenProposalsView, onOpenEncargosView, onOpenActivityView, onOpenWorkspacesView, onOpenTimelineView, onOpenPanelesView, onOpenPanelDir, onOpenNativePanel, onOpenAgentsInspector, onOpenPostStudio, onOpenVoiceModal }: Props) {
   const { t } = useI18n();
   const isMobile = useIsMobile();
   const { data: exoData } = useExoData();
@@ -538,10 +545,11 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
     const parsed = Date.parse(capturedAt);
     return Number.isFinite(parsed) ? parsed : undefined;
   }, [exoData]);
-  const pendingProposalsCount = useMemo(
-    () => relevantProposals(exoProposals, exoReferenceMs).length,
+  const pendingProposals = useMemo(
+    () => relevantProposals(exoProposals, exoReferenceMs),
     [exoProposals, exoReferenceMs],
   );
+  const pendingProposalsCount = pendingProposals.length;
   const [allSessions, setAllSessions] = useState<SessionInfo[]>([]);
   // Tracked in a ref only: the version is compared against the polled value to
   // decide whether the list needs reloading, and no render reads it.
@@ -3317,6 +3325,33 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           )}
         </div>
       )}
+
+      {/* "Secciones del Sistema": the strip Rodrigo picked from the mockup
+          (panel 2026-10-19-sidebar-mockups-v3), under the voice button and
+          above the session tree. Real data only: the sidebar's sessions,
+          pending decisiones and the live rg-* timers; three layout variants
+          switchable in place and remembered per browser. It never blocks the
+          sidebar: sessions are props and the timer read degrades silently. */}
+      <SystemSections
+        sessions={allSessions}
+        runningIds={runningSessionIds}
+        uiState={uiState}
+        selectedSessionId={selectedSessionId}
+        pendingProposals={pendingProposals}
+        onSelectSession={handleSelectSessionFromList}
+        onOpenProposal={(id) => onOpenExoProposal?.(id)}
+        onOpenProposalsView={onOpenProposalsView}
+        onOpenActivityView={onOpenActivityView}
+      />
+
+      {/* The pinned-panels strip: panels the catalog has "fijado", in the
+          order Rodrigo dragged them (components/PanelPins.tsx). Empty means
+          nothing is pinned — the catalog view manages visibility. */}
+      <PanelPins
+        onOpenPanel={onOpenPanelDir}
+        onOpenNativePanel={onOpenNativePanel}
+        onOpenPanelesView={onOpenPanelesView}
+      />
 
       {/* Sessions: every project's sessions, or the archive. A tab's panel,
           or the top section, always shown, filling what the files leave. */}
