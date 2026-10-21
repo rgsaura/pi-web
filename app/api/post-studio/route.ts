@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { DEFAULT_POST_ID, getPostStudio, mutatePostStudio } from "@/lib/post-studio";
+import { DEFAULT_POST_ID, getPostStudio, getValidation, mutatePostStudio } from "@/lib/post-studio";
 import { POST_ID_RE } from "@/lib/post-studio-shared";
 
 export const runtime = "nodejs";
@@ -21,7 +21,10 @@ export async function GET(request: Request) {
   if (!snapshot) {
     return NextResponse.json({ error: "POST_NOT_FOUND" }, { status: 404, headers: NO_STORE });
   }
-  return NextResponse.json(snapshot, { headers: NO_STORE });
+  return NextResponse.json(
+    { ...snapshot, validation: getValidation(post) },
+    { headers: NO_STORE },
+  );
 }
 
 /**
@@ -46,13 +49,18 @@ export async function POST(request: Request) {
   }
   // Shape the raw body into a typed action; unknown fields are dropped.
   const shaped: Record<string, unknown> = { action };
-  for (const key of ["presetId", "id", "musicId", "videoId", "format", "direction"] as const) {
+  for (const key of ["presetId", "id", "musicId", "videoId", "format", "direction", "query", "status", "note"] as const) {
     if (key in rest) shaped[key] = rest[key];
   }
   if (Array.isArray(rest.ids)) shaped.ids = rest.ids;
+  if (rest.track === null) shaped.track = null;
+  else if (rest.track && typeof rest.track === "object") shaped.track = rest.track;
   const result = await mutatePostStudio(post, shaped as never);
   if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: result.status, headers: NO_STORE });
+    return NextResponse.json(
+      { error: result.error, ...(result.details ? { details: result.details } : {}) },
+      { status: result.status, headers: NO_STORE },
+    );
   }
   return NextResponse.json(
     { ...result.snapshot, decision: result.decision ?? null },
