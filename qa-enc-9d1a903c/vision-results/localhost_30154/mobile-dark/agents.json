@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Agentes en móvil 390x844, tema oscuro: cabecera con título 'Agents', badge '6 agentes' y filtro activo 'failover-normal'; lista scrolleable de tarjetas de agente (nombre + tag litellm + descripción + chevron de expandir), 6 agentes visibles.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Fila de título 'Agentes' / filtro activo 'failover-normal' (parte superior derecha)",
+   "desc": "El chip del filtro llega pegado al borde derecho del viewport y su texto toca el botón de cierre X, que aparece como una caja separada y desalineada verticalmente respecto al chip."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Última tarjeta de la lista, esquina inferior izquierda",
+   "desc": "El badge circular 'N' (dev tools de Next.js) se superpone sobre el nombre del agente y lo tapa, dejando visible solo 'ot' en lugar del nombre completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjeta 'exohuman-ui' (segunda tarjeta), borde derecho",
+   "desc": "El chevron de expandir cae a una fila inferior respecto al título/tag, rompiendo la alineación vertical que sí mantienen el resto de tarjetas."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Chevrons de expandir de todas las tarjetas (borde derecho)",
+   "desc": "El icono de desplegar es muy pequeño (~20px) y no tiene área táctil ampliada visible; en móvil es difícil de pulsar con precisión."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "agents.png"
+}

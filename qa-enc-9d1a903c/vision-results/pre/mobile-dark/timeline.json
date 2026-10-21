@@ -1,0 +1,18 @@
+{
+ "desc": "Vista Timeline móvil en tema oscuro: barra superior con menú y 'Session info', cabecera con título, contador de eventos y botón Añadir; pestañas Eventos/Patrones, chips de filtro, buscador y lista de eventos agrupados por fecha bajo 'PRÓXIMO 13'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Global: botón 'Añadir', pestañas (Eventos/Patrones por hora), chips de filtro (Todos/Encargos/Decisiones) y filas de eventos",
+   "desc": "Todos los iconos/emojis se renderizan como cajas vacías (tofu □): falta de glifo/fuente de iconos, aparecen cuadrados huecos antes de cada etiqueta y duplicados (□ □) delante de 'caduca' en cada evento."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips de filtro, borde derecho de la pantalla",
+   "desc": "Los chips desbordan horizontalmente: el 4º chip (con icono de aviso) aparece cortado a la mitad contra el borde derecho sin indicador de scroll ni desvanecido, por lo que se pierde parte del control."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Workspaces en móvil (390x844, tema oscuro): barra superior con menú y 'Session info', fila de cabecera con 'Volver', contador '5 workspaces · 4 activos' y expandir; debajo sección 'SANDBOXES & PREVIEWS UI (4)' con tarjetas por workspace (título, badge de puerto, rama, botones Abrir Preview / Sesión Pi, bloque de feedback o input de feedback).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Cabecera de sección 'SANDBOXES & PREVIEWS UI (4)' y bloques de 'Feedback registrado:' (todas las tarjetas)",
+   "desc": "El icono/emoji previo al texto no renderiza y se muestra un glifo tofu (rectángulo vacío) tanto en el título de sección como al inicio de los textos de feedback ('▯ Fork activo en puerto 30205…', '▯ Revisado: diseño muy limpio…')."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Campo 'Rama:' de la tarjeta 'Fork Brand Design' (parte central-izquierda)",
+   "desc": "El nombre de rama 'fork/brand-design' se parte a mitad de segmento y envuelve en dos líneas ('fork/brand-' / 'design'), rompiendo la lectura del path justo donde se une a los botones de la derecha."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Valores de 'Rama:' (mono) y etiqueta 'Puerto' de los badges en todas las tarjetas",
+   "desc": "Contraste muy bajo del texto secundario gris sobre fondo oscuro (rama 'sandbox/variant-a', 'sandbox/variant-b' y label 'Puerto'), apenas diferenciable del fondo de la tarjeta en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "workspaces.png"
+}

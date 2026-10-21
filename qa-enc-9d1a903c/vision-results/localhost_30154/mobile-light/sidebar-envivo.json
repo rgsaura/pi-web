@@ -1,0 +1,33 @@
+{
+ "desc": "Sidebar/drawer lateral sobre contenido atenuado en móvil: barra de tabs superior, bloque de navegación con cards (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), secciones del sistema, fijados, buscador y filtros rápidos con 'En Vivo' activo (0 resultados) + Settings abajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros rápidos, borde derecho del sidebar (junto a 'En Vivo 0')",
+   "desc": "El chip 'Encargos 2' queda cortado/clipped por el borde derecho; no se lee completo, lo que indica desbordamiento horizontal o contenedor sin scroll accesible en 390px."
+  },
+  {
+   "sev": "friccion",
+   "zona": "esquina inferior izquierda, fila 'Settings'",
+   "desc": "El avatar circular 'N' se solapa sobre el botón/ítem 'Settings', tapando su zona izquierda y reduciendo el área táctil efectiva."
+  },
+  {
+   "sev": "friccion",
+   "zona": "encabezado 'SECCIONES DEL SISTEMA', grupo de iconos de vista (lista/tablero/grid) a la derecha",
+   "desc": "Los tres iconos de conmutación de vista son targets pequeños (~32px, por debajo de 44px recomendado en móvil) y el de 'grid' queda a ras del borde derecho, difícil de tocar sin desbordar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "filtro rápido 'En Vivo 0' activo en la parte inferior",
+   "desc": "El filtro rápido está activo pero marca 0 resultados; no se muestra ningún estado vacío ni aviso de 'sin sesiones en vivo' en la zona de contenido, dejando la acción sin retorno claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta fijada 'Surf Plátano · ...'",
+   "desc": "El nombre de la sesión aparece truncado con elipsis ('Surf Plátano · ...'), perdiendo contexto del fijado."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-envivo.png"
+}

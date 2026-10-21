@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Icono de la cabecera de sección 'SANDBOXES & PREVIEWS UI (4)', parte superior del listado",
+   "desc": "El glifo del icono aparece como cuadrado de reemplazo (□ / tofu) en lugar del icono real: fuente de iconos/emoji no cargada o glifo inexistente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Bloque 'Feedback registrado' de las tarjetas 'Fork Brand Design' y 'Variante A'",
+   "desc": "El carácter inicial del texto de feedback se renderiza como cuadrado de reemplazo (□) en vez del emoji/símbolo original, en ambos registros."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Campo 'Rama:' de la tarjeta 'Fork Brand Design: Estilo y Marca ExoHuman', fila central",
+   "desc": "El nombre de rama 'fork/brand-design' se parte en dos líneas ('fork/brand-' / 'design') rompiendo el nombre del repositorio y desalineando la fila respecto al resto de tarjetas."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Botón 'Sesión Pi' de todas las tarjetas, derecha de la fila de acciones",
+   "desc": "El label se parte en dos líneas ('Sesión' / 'Pi') por ancho insuficiente del botón, en lugar de mantener el texto en una línea."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Etiqueta 'Rama:' de las tarjetas, columna izquierda",
+   "desc": "El texto de la etiqueta 'Rama:' tiene contraste muy bajo sobre el fondo claro, apenas legible comparado con el resto de la tarjeta."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "workspaces.png"
+}

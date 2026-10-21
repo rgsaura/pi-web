@@ -1047,7 +1047,7 @@ export function ExoPanel({ onClose, initialProposalId }: { onClose: () => void; 
                           </span>
                         </div>
                         <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)", lineHeight: 1.35, marginBottom: 8 }}>
-                          {enc.titulo || enc.descripcion?.slice(0, 60)}
+                          {enc.titulo || (enc.descripcion ? enc.descripcion.slice(0, 59) + (enc.descripcion.length > 59 ? "…" : "") : "")}
                         </div>
                         <div style={{ marginBottom: 4 }}>
                           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11.5, color: "var(--text-muted)", marginBottom: 4 }}>

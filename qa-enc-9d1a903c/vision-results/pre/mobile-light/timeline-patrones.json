@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Timeline en móvil con cabecera (título 'Línea de tiempo', contador de eventos, botón Añadir y cerrar), dos pestañas 'Eventos' y 'Patrones por hora' (esta activa) y un estado vacío con mensaje centrado en el área de contenido.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera vs. área de contenido (estado vacío)",
+   "desc": "La cabecera indica '787 eventos · pasado / hoy / próximo' pero el contenido dice 'Aún no hay eventos retroactivos', lo que genera una contradicción/confusión para el usuario que no sabe si hay datos o no."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos/emojis en todo el encabezado, pestañas y mensaje del estado vacío",
+   "desc": "Los iconos no se renderizan: aparecen como cuadrados vacíos (tofu/□) junto a 'Línea de tiempo', en las pestañas 'Eventos' y 'Patrones por hora' y en el mensaje ('Añade cosas del pasado con □'), rompiendo la comprensión de la acción referenciada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "mensaje del estado vacío, línea 2",
+   "desc": "El texto hace referencia a un icono ('con □') sin etiqueta textual ni botón de acción, por lo que el usuario no puede saber a qué control se refiere ni lanzar la acción desde el propio estado vacío (sin CTA)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "mensaje del estado vacío, texto completo",
+   "desc": "El texto del estado vacío usa un gris muy claro sobre fondo casi blanco, con contraste bajo que lo hace poco legible en móvil."
+  }
+ ],
+ "empty": true,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline-patrones.png"
+}

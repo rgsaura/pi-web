@@ -1,0 +1,33 @@
+{
+ "desc": "Vista home en tema oscuro: sidebar izquierda con navegación por secciones, lista de sesiones, filtros y FILES; zona principal con composer centrado (marca Exohuman UI, breadcrumb, input de mensaje y controles).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar > 'SECCIONES DEL SISTEMA', fila de chips",
+   "desc": "Los chips están truncados ('P... 20', 'Rutin...', 'Decl...', 'Recl...') y el último se corta contra el borde derecho del sidebar: overflow horizontal sin scroll ni degradado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar > lista de sesiones, fila 'Rutinas • call-intake'",
+   "desc": "El texto de la sesión queda cortado/solapado por la cabecera 'FIJADOS' que se dibuja encima, parece que la fila no tiene espacio suficiente y se desborda verticalmente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar > fila de filtros ('Todo 418', 'En Vivo 0', 'Encargos')",
+   "desc": "El chip 'Encargos' se corta en el borde derecho del sidebar, el grupo de filtros desborda horizontalmente y queda texto ilegible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar > FIJADOS, sesión 'Surf Plátan...'",
+   "desc": "El nombre de la sesión fijada está truncado con puntos suspensivos y el badge '7 días' ocupa ancho, dejando poco espacio al título."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "main > fila de controles del composer (derecha)",
+   "desc": "Controles 'auto', 'configured', 'Compact' y el icono de volumen están muy juntos y en gris de bajo contraste, la jerarquía respecto a 'Failover Normal' resulta confusa."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

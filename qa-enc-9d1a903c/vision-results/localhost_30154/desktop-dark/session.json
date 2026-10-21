@@ -1,0 +1,33 @@
+{
+ "desc": "Vista de sesión con sidebar izquierdo (navegación, secciones del sistema, lista de sesiones, files, settings), barra superior con pestañas y contadores de tokens, área central de chat con mensaje largo y chips de archivos, e input de mensaje con barra inferior de estado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips bajo 'SECCIONES DEL SISTEMA'",
+   "desc": "Los chips muestran etiquetas truncadas e ilegibles: 'P... 20', 'Rutin...', 'Decli...', 'Reci...'; además el primer chip aparece cortado por el borde izquierdo del sidebar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, filtros de la lista de sesiones ('Todo 418' / 'En Vivo 0' / 'Encargos')",
+   "desc": "El chip 'Encargos' queda cortado por el borde derecho del sidebar, sin padding y sin ver el contador/estado completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, bloque 'FIJADOS', elemento 'Surf Plátan...'",
+   "desc": "El nombre del elemento fijado está truncado a 'Surf Plátan...' sin tooltip ni forma de leer el nombre completo junto al badge '7 días'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, sección 'FILES', justo bajo la fila de iconos de acciones",
+   "desc": "Aparece un carácter suelto '~' aislado bajo la barra de iconos de FILES, con aspecto de resto de texto o item vacío sin renderizar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, fila 'Rutinas · call-intake' sobre el header 'FIJADOS'",
+   "desc": "La fila 'Rutinas · call-intake' parece recortada verticalmente / pisada por el header 'FIJADOS · 1', con el texto tocando el separador."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

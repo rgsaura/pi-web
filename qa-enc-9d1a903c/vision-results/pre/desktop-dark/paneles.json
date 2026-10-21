@@ -1,0 +1,33 @@
+{
+ "desc": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, bloque 'SECCIONES DEL SISTEMA' (fila tipo P... / Rutin... / D... / Recel...)",
+   "desc": "Fila de chips excede el ancho del sidebar: el texto queda cortado y los elementos se salen por el borde derecho (overflow horizontal), sin scroll ni indicación clara."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila 'FILJADOS · 1 v' -> 'Surf Plátan...'",
+   "desc": "Nombre del elemento truncado a 'Surf Plátan...' sin tooltip ni ancho suficiente; el badge '7 días' empuja el texto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de filtros inferiores ('Todo 418', 'En Vivo 0', 'Encargos')",
+   "desc": "Los chips desbordan el ancho del panel: 'Encargos' queda cortado por el borde derecho del sidebar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila 'Rutinas · pa-ara74f1f' y etiqueta 'FILJADOS'",
+   "desc": "Texto cortado en el borde derecho y posible typo 'FILJADOS' (¿FIJADOS?), lo que rompe la pulcritud visual de la sección."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjeta 'Tablero de Tareas y Encargos Activos' (columna derecha, fila INFORMES)",
+   "desc": "Fecha '16 oct 2026' muy pegada al borde derecho de la tarjeta, con margen inferior al del resto de tarjetas."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}

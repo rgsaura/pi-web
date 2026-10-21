@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Actividad móvil en tema oscuro: cabecera con navegación y estado EN VIVO, sección 'Canales principales' con 3 tarjetas de servicio (ROT, Voz, FaceSearch), panel 'Palanca de gasto y presupuesto de tokens' con selector de modo y barra de cuota, y comienzo de una sección de sesiones pi recortada abajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Botón flotante circular con logo 'N' (esquina inferior izquierda) sobre el título de sección inferior",
+   "desc": "El FAB tapa y corta el encabezado 'SESIONES PI EN VIVO · 1 ACTIVAS', quedando ilegible (se ve 'S...ONES PI EN VIVO'). El contenido no deja resguardo para el elemento flotante."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Panel 'Modo de Inversión y Gasto': botones Turbo/Normal/Ahorro, 'Cuota de Tokens', badge 'Valle' y línea 'Renovación de ciclo'",
+   "desc": "Los iconos/emojis no renderizan: aparecen cajas tofu (□) delante de 'Turbo', 'Normal', 'Ahorro', 'Cuota de Tokens', 'Valle (50% off)' y 'Renovación de ciclo'."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Línea inferior del panel de tokens: 'Renovación de ciclo: mar 17:17 (6 días restantes) · Proveedor principal: ZAI'",
+   "desc": "Los dos textos se mezclan al envolver: la lectura queda '…(6 Proveedor / días restantes) principal: ZAI', rompiendo el orden y dificultando entender cuántos días quedan."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjetas de canales: subtítulos 'rot-assistant.service', 'rg-voice-live.service', 'rg-facesearch-sentinel.service'",
+   "desc": "Texto de nombre de servicio en gris muy apagado sobre fondo oscuro, contraste bajo para lectura en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Esquina superior derecha de cada tarjeta de canal: icono '?'",
+   "desc": "Icono de ayuda minúsculo y ambiguo (~20px), target táctil pequeño y sin etiqueta clara de su función."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "activity.png"
+}

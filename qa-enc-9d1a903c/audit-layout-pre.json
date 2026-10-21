@@ -1,0 +1,1517 @@
+[
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "home",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "workspaces/exohuman",
+    "h": 36,
+    "w": 177
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Send",
+    "h": 40,
+    "w": 40
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Hablar por voz con ROT",
+    "h": 40,
+    "w": 40
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Failover Normal",
+    "h": 32,
+    "w": 167
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 32,
+    "w": 101
+   }
+  ],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "session",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open SessionSidebar.tsx",
+    "h": 24,
+    "w": 163
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open SidebarIcons.tsx",
+    "h": 24,
+    "w": 149
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open workspaces-data.test.mj",
+    "h": 24,
+    "w": 206
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open session-activity.test.m",
+    "h": 24,
+    "w": 211
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open workspaces-data.ts",
+    "h": 24,
+    "w": 164
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open mobile-check.mjs",
+    "h": 24,
+    "w": 149
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open SessionSidebar.test.mjs",
+    "h": 24,
+    "w": 198
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open route.ts",
+    "h": 24,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Copy",
+    "h": 22,
+    "w": 59
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Send",
+    "h": 40,
+    "w": 40
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Hablar por voz con ROT",
+    "h": 40,
+    "w": 40
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Failover Fast",
+    "h": 32,
+    "w": 167
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 32,
+    "w": 101
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Open SessionSidebar.tsx",
+    "h": 24,
+    "w": 163
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open SidebarIcons.tsx",
+    "h": 24,
+    "w": 149
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open workspaces-data.test.mj",
+    "h": 24,
+    "w": 206
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open session-activity.test.m",
+    "h": 24,
+    "w": 211
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open workspaces-data.ts",
+    "h": 24,
+    "w": 164
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open mobile-check.mjs",
+    "h": 24,
+    "w": 149
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open SessionSidebar.test.mjs",
+    "h": 24,
+    "w": 198
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Open route.ts",
+    "h": 24,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Copy",
+    "h": 22,
+    "w": 59
+   }
+  ],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "timeline",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Añadir evento pasado",
+    "h": 34,
+    "w": 84
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 34,
+    "w": 34
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📜 Eventos",
+    "h": 30,
+    "w": 85
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📊 Patrones por hora",
+    "h": 30,
+    "w": 150
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Todos 780",
+    "h": 30,
+    "w": 87
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📦 Encargos 443",
+    "h": 30,
+    "w": 120
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🎯 Decisiones 281",
+    "h": 30,
+    "w": 131
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⚠️ Fallos 40",
+    "h": 30,
+    "w": 94
+   },
+   {
+    "tag": "INPUT",
+    "text": "Buscar eventos",
+    "h": 38,
+    "w": 366
+   }
+  ],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "proposals",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Volver al chat",
+    "h": 33,
+    "w": 85
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🎯 Pendientes",
+    "h": 40,
+    "w": 115
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📋 Todas (150)",
+    "h": 40,
+    "w": 108
+   },
+   {
+    "tag": "SELECT",
+    "text": "⏰ Por urgencia / caducidad⚡ ",
+    "h": 41,
+    "w": 255
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar decisiones",
+    "h": 27,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Todas (150)",
+    "h": 25,
+    "w": 98
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar decisiones",
+    "h": 27,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Todas (150)",
+    "h": 25,
+    "w": 98
+   }
+  ],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "post-studio",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   }
+  ],
+  "headline": "Post Studio"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "encargos",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   },
+   {
+    "tag": "SELECT",
+    "text": "TodasAUTOMATIZACIONAYUDABOTC",
+    "h": 31,
+    "w": 188
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Ir a sesión de trabajo",
+    "h": 27,
+    "w": 178
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Ir a sesión de trabajo",
+    "h": 27,
+    "w": 178
+   }
+  ],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "paneles",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Activos",
+    "h": 30,
+    "w": 75
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Archivados",
+    "h": 30,
+    "w": 101
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Todos",
+    "h": 30,
+    "w": 65
+   },
+   {
+    "tag": "INPUT",
+    "text": "Buscar panel",
+    "h": 38,
+    "w": 280
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Cómo crear un panel reuti",
+    "h": 39,
+    "w": 348
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📌Fijar",
+    "h": 28,
+    "w": 61
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🔍Demanda",
+    "h": 28,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🗄️Archivar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "💬Sesiones · 2▼",
+    "h": 28,
+    "w": 126
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📌Fijar",
+    "h": 28,
+    "w": 61
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🔍Demanda",
+    "h": 28,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🗄️Archivar",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "💬Sesiones · 2▼",
+    "h": 28,
+    "w": 126
+   }
+  ],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "panel-detail",
+  "docOverflowX": 0,
+  "offscreen": [
+   {
+    "tag": "SPAN",
+    "cls": "",
+    "text": "informe20 oct 2026· Qué se ha hecho y qu",
+    "right": 424,
+    "w": 89
+   },
+   {
+    "tag": "SPAN",
+    "cls": "",
+    "text": "informe",
+    "right": 406,
+    "w": 71
+   },
+   {
+    "tag": "SPAN",
+    "cls": "",
+    "text": "20 oct 2026",
+    "right": 405,
+    "w": 69
+   },
+   {
+    "tag": "SPAN",
+    "cls": "",
+    "text": "· Qué se ha hecho y qué está en marcha: ",
+    "right": 424,
+    "w": 89
+   }
+  ],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "← Paneles",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📌 Fijar",
+    "h": 28,
+    "w": 62
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Copiar enlace",
+    "h": 28,
+    "w": 108
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Recargar",
+    "h": 28,
+    "w": 80
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Pestaña nueva",
+    "h": 28,
+    "w": 114
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "← Paneles",
+    "h": 28,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "📌 Fijar",
+    "h": 28,
+    "w": 62
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Copiar enlace",
+    "h": 28,
+    "w": 108
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Recargar",
+    "h": 28,
+    "w": 80
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Pestaña nueva",
+    "h": 28,
+    "w": 114
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 64
+   }
+  ],
+  "headline": "Mejoras del Sistema"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "agents",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 38
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Cerrar",
+    "h": 28,
+    "w": 38
+   }
+  ],
+  "headline": "Agentes"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "activity",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Volver al chat",
+    "h": 31,
+    "w": 81
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar actividad",
+    "h": 25,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🚀 Turbo",
+    "h": 28,
+    "w": 74
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⚖️ Normal",
+    "h": 28,
+    "w": 82
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🌱 Ahorro",
+    "h": 28,
+    "w": 75
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar actividad",
+    "h": 25,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🚀 Turbo",
+    "h": 28,
+    "w": 74
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⚖️ Normal",
+    "h": 28,
+    "w": 82
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🌱 Ahorro",
+    "h": 28,
+    "w": 75
+   }
+  ],
+  "headline": "Canales Principales"
+ },
+ {
+  "server": "pre",
+  "vp": "mobile",
+  "view": "workspaces",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [
+   {
+    "tag": "BUTTON",
+    "text": "🎯Encargos229",
+    "h": 40,
+    "w": 109
+   },
+   {
+    "tag": "BUTTON",
+    "text": "⏱️Rutinas69",
+    "h": 40,
+    "w": 93
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🛠️Trabajo5",
+    "h": 40,
+    "w": 86
+   },
+   {
+    "tag": "BUTTON",
+    "text": "🏠Personal111",
+    "h": 40,
+    "w": 105
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show sidebar",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "More controls",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Session info",
+    "h": 35,
+    "w": 282
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Show file panel",
+    "h": 36,
+    "w": 36
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Volver al chat",
+    "h": 31,
+    "w": 81
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar workspaces",
+    "h": 25,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "↻",
+    "h": 23,
+    "w": 23
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Guardar",
+    "h": 28,
+    "w": 67
+   }
+  ],
+  "smallTargets30": [
+   {
+    "tag": "BUTTON",
+    "text": "Actualizar workspaces",
+    "h": 25,
+    "w": 31
+   },
+   {
+    "tag": "BUTTON",
+    "text": "↻",
+    "h": 23,
+    "w": 23
+   },
+   {
+    "tag": "BUTTON",
+    "text": "Guardar",
+    "h": 28,
+    "w": 67
+   }
+  ],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "home",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "session",
+  "docOverflowX": 0,
+  "offscreen": [
+   {
+    "tag": "BUTTON",
+    "cls": "",
+    "text": "",
+    "right": 828,
+    "w": 36
+   }
+  ],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "timeline",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "proposals",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "post-studio",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Post Studio"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "encargos",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "paneles",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "panel-detail",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Mejoras del Sistema"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "agents",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Agentes"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "activity",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Canales Principales"
+ },
+ {
+  "server": "pre",
+  "vp": "tablet",
+  "view": "workspaces",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "home",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "session",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "timeline",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "proposals",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "post-studio",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Post Studio"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "encargos",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Encargos y Objetivos"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "paneles",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Paneles e Informes"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "panel-detail",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Mejoras del Sistema"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "agents",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Agentes"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "activity",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": "Canales Principales"
+ },
+ {
+  "server": "pre",
+  "vp": "desktop",
+  "view": "workspaces",
+  "docOverflowX": 0,
+  "offscreen": [],
+  "smallTargets44": [],
+  "smallTargets30": [],
+  "headline": ""
+ }
+]

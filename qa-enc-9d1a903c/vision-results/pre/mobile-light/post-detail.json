@@ -1,0 +1,28 @@
+{
+ "desc": "Detalle de un post del Post Studio en móvil: cabecera con título y metadatos, pestañas Carrusel/Reel, preview del carrusel estilo Instagram con foto y overlay, y barra inferior con badges de validación, botón de confirmar y pie del carrusel.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "título principal (parte superior de la captura)",
+   "desc": "El título queda truncado con puntos suspensivos: 'Post Studio · La Herradura · Cu…'; el nombre completo del proyecto/carrusel no se lee en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de metadatos bajo el título, pestañas 'Carrusel'/'Reel' y pie 'Otro Atardecer'",
+   "desc": "Varios iconos se renderizan como cuadrado vacío (□ tofu) en toda la vista: junto a 'La Herradura', en ambos botones de pestaña y en el pie del carrusel; iconografía/emoji rota que aporta ruido visual."
+  },
+  {
+   "sev": "friccion",
+   "zona": "overlay superior de la preview de imagen (tarjeta del carrusel)",
+   "desc": "El texto 'rgsaura · La Herradura' se corta contra el borde de la tarjeta y 'La Herradura' queda con bajo contraste (gris sobre cielo claro), apenas legible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón 'Confirmar decisión → OpenPost' (barra inferior)",
+   "desc": "El botón aparece en estado deshabilitado con texto gris muy claro sobre fondo claro; cuesta leerlo y no se distingue bien de un elemento inactivo frente a uno activo."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-detail.png"
+}

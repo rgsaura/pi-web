@@ -1,0 +1,33 @@
+{
+ "desc": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila horizontal 'SECCIONES DEL SISTEMA' (parte media-baja)",
+   "desc": "Los chips de sección van truncados con puntos suspensivos ('P... 20', 'Rutin...', 'D...', 'Rece...') y se aprietan en una fila que se corta en el borde del sidebar; los nombres no son legibles."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, bloque intermedio bajo 'exohuman' / encima de 'FIJADOS'",
+   "desc": "La línea 'Rutinas · ra-aca74f1f' aparece recortada por la mitad, solapada/cortada por el encabezado 'FIJADOS · 1 ▾ gestionar'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, fila de filtros 'Cronológico / Proyectos / Todo 418 / En Vivo 0 / Encargos'",
+   "desc": "El chip 'Encargos' queda cortado por el borde derecho del sidebar, texto incompleto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, item fijado 'Surf Plátan...'",
+   "desc": "Nombre del archivo fijado truncado con puntos suspensivos, se pierde el identificador del recurso."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona principal, botón 'Enviar respuesta' (inferior del formulario)",
+   "desc": "El botón de envío tiene aspecto deshabilitado/casi sin contraste frente al fondo del panel, jerarquía poco clara respecto a 'Dictar audio'."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

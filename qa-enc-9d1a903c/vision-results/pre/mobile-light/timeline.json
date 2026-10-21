@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Todo el contenido (iconos de pestañas, chips de filtro, iconos de fila de evento y detalles)",
+   "desc": "Todos los iconos/emojis se renderizan como cuadrados vacíos (tofu □): antes de 'caduca:' en cada evento, en las pestañas 'Eventos' y 'Patrones por hora', y en los chips 'Encargos'/'Decisiónes'. La interfaz parece rota y se pierde toda la señalización visual."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips de filtro (tercer bloque), extremo derecho",
+   "desc": "Desborde horizontal: la fila de filtros se corta en el borde derecho y queda un icono de advertencia (⚠) a medio mostrar, sin indicación clara de scroll; 'Decisiónes 283' queda parcialmente junto al corte."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Chips de filtro, tercera pastilla",
+   "desc": "Error tipográfico: aparece 'Decisiónes 283' en lugar de 'Decisiones'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Metadatos de cada evento (línea gris bajo el título)",
+   "desc": "Contraste bajo: la línea '20:00 · ocio · pendiente · ...' en gris muy claro sobre blanco apenas se distingue del fondo, difícil de leer en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Descripciones de evento (2ª línea de metadatos)",
+   "desc": "Los textos se cortan con '…' a ~2 líneas ('Recorrido no línea…', 'detectar canciones/playlists nuevas con contexto de cuándo …'), quedando información clave incompleta sin acción de 'ver más' visible."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

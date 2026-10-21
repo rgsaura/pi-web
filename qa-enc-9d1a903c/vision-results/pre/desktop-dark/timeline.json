@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Timeline con sidebar de navegación/actividad a la izquierda y panel principal con pestañas Eventos/Patrones por hora, filtros por tipo, buscador y lista de eventos agrupados por fecha con contadores.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "panel principal, descripciones de eventos",
+   "desc": "Las descripciones de los eventos se truncan con '...' sin control visible de expansión (ej. 'combinando diseño...', 'sin ruido.'... 'Objetivo: que EXO capture el contexto ANTES de que se olvide'), obligando a cortar información relevante del plan."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, secciones del sistema",
+   "desc": "Textos recortados por el borde del panel: 'Rutinas · exo-arca74f1f' parcialmente cortado, 'Fijados · 1 v' truncado, fila de chips 'P... 20 / Rutin... / D... / Rece...' con labels ilegibles."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, item fijado y buscador",
+   "desc": "El item fijado muestra 'Surf Plátan...' truncado y el placeholder del input de búsqueda se corta en 'Buscar sesiones, encargos,' sin acabar la frase."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, fila inferior de filtros/FILES",
+   "desc": "El chip 'Encargos' de la fila de filtros queda cortado por el borde derecho del sidebar, sugiriendo overflow horizontal no scrollable en esa franja."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

@@ -1,0 +1,28 @@
+{
+ "desc": "Vista de Encargos en móvil: cabecera con título 'Encargos y Objativos' + badge '6 activos', contador '228 total', botones Actualizar/Cerrar, pestañas de filtro (En curso/Todos/Completados) y selector de Área; debajo una tarjeta de encargo con badges de estado, título, cuerpo largo y botón 'Ir a sesión de trabajo'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila superior de la tarjeta (extremo derecho)",
+   "desc": "El identificador 'enc-a802372d' queda cortado/clipped contra el borde derecho de la tarjeta, sin margen ni opción visible de copiarlo; el texto se parte mid-token."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila superior de la tarjeta",
+   "desc": "Se amontonan 5 elementos en una sola fila (EN CURSO, Dificultad: Media, SISTEMA, Llevan 31m, id): 'Llevan 31m' se parte en dos líneas y el conjunto queda apretado y difícil de escanear en 390px."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "título de la tarjeta (final 3ª línea)",
+   "desc": "El título termina en '~22:5', texto cortado de forma sospechosa (posible hora '22:50' truncada o falta de línea final)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior (izquierda)",
+   "desc": "Los iconos de menú (☰ y '...') están muy cerca entre sí y divididos por separadores verticales, creando diana táctil pequeña y aspecto de controles amontonados."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

@@ -84,6 +84,7 @@ export function SandboxesSection({ onStartInCwd }: SandboxesSectionProps) {
     alignItems: "center",
     gap: 6,
     padding: "5px 10px",
+    minHeight: 36,
     borderRadius: 6,
     border: "1px solid var(--border)",
     background: "var(--bg)",
@@ -119,7 +120,7 @@ export function SandboxesSection({ onStartInCwd }: SandboxesSectionProps) {
           type="button"
           onClick={fetchSandboxes}
           disabled={loading}
-          style={{ ...buttonBase, padding: "2px 6px", fontSize: 11 }}
+          style={{ ...buttonBase, padding: "2px 6px", fontSize: 11, minWidth: 32, minHeight: 32 }}
         >
           {loading ? "..." : "↻"}
         </button>

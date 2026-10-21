@@ -439,7 +439,7 @@ function VisibilityControl({
     alignItems: "center",
     gap: 5,
     padding: "4px 9px",
-    minHeight: 28,
+    minHeight: 36,
     borderRadius: 8,
     border: `1px solid ${active ? accentColor : "var(--border)"}`,
     background: active ? `color-mix(in srgb, ${accentColor} 12%, var(--bg-panel))` : "var(--bg-panel)",
@@ -644,7 +644,7 @@ function PanelCard({
               gap: 6,
               marginTop: 2,
               padding: "4px 10px",
-              minHeight: 28,
+              minHeight: 36,
               borderRadius: 999,
               border: `1px solid ${sessionsOpen ? "var(--accent)" : "var(--border)"}`,
               background: sessionsOpen ? "color-mix(in srgb, var(--accent) 10%, var(--bg-panel))" : "var(--bg-panel)",
@@ -968,7 +968,7 @@ export function PanelesView({ onClose, initialPanelDir, onOpenSession, onOpenNat
         flexWrap: "wrap",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0, flexWrap: "wrap", rowGap: 8 }}>
         {selected ? (
           <button
             type="button"
@@ -979,11 +979,14 @@ export function PanelesView({ onClose, initialPanelDir, onOpenSession, onOpenNat
             ← Paneles
           </button>
         ) : null}
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "var(--text)", whiteSpace: "nowrap" }}>
+        <h1
+          title={selected ? selected.titulo : undefined}
+          style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0, flex: "1 1 auto" }}
+        >
           {selected ? selected.titulo : "Paneles e Informes"}
         </h1>
         {selected ? (
-          <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "var(--text-muted)", flexWrap: "wrap" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "var(--text-muted)", flexWrap: "wrap", minWidth: 0 }}>
             <span
               style={{
                 padding: "2px 8px",

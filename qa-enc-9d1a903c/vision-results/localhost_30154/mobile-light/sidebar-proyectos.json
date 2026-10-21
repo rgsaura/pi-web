@@ -1,0 +1,33 @@
+{
+ "desc": "Sidebar de sesiones en móvil (390x844) con la navegación de sesión (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque 'SECCIONES DEL SISTEMA' con tabs Proyectos/Rutinas/Decisions/Recientes, sección FIJADOS, buscador, conmutador Cronológico/Proyectos, fila de pills de filtro y Settings al fondo; detrás del scrim se asoma el contenido de la sesión.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Barra superior de tabs, borde derecho",
+   "desc": "El tab 'Session info' queda cortado a media palabra por el borde del viewport y el icono de panel posterior queda casi pegado/recortado; no se ve si la barra es desplazable ni hay indicio de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de pills de filtro inferior (Todo/En Vivo/Encargos), parte derecha",
+   "desc": "Overflow horizontal: la pill 'Encargos 2…' se corta contra el borde derecho y queda incompleta, sin affordance clara de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Botón flotante de avatar 'N', esquina inferior izquierda",
+   "desc": "El FAB solapa y tapa parcialmente la pill 'Todo 418', bloqueando su zona táctil y recortando su texto por abajo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de pills de filtro, parte inferior",
+   "desc": "La fila queda parcialmente tapada/cortada por la barra 'Settings' al fondo: 'Todo 418' se ve recortado por abajo, no hay separación entre el scroll de la lista y la barra fija."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sección FIJADOS, fila 'Surf Plátano · ...'",
+   "desc": "El nombre del proyecto aparece truncado con puntos suspensivos sin tooltip ni línea secundaria que permita identificarlo."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-proyectos.png"
+}

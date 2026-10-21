@@ -1,0 +1,48 @@
+{
+ "desc": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips 'SECCIONES DEL SISTEMA' (mitad de la captura, bajo los botones de vista)",
+   "desc": "La fila desborda el ancho del sidebar: 'P…' y 'De…' aparecen truncados y 'Recie…' queda cortado a la mitad en el borde derecho, con scroll horizontal implícito."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros inferior ('Todo 418', 'En Vivo 0', 'Encargos 2…')",
+   "desc": "Desborde horizontal: 'Encargos 2…' cortado en el borde derecho y el chip activo 'Todo 418' queda pegado/cortado contra el borde izquierdo de la pantalla."
+  },
+  {
+   "sev": "friccion",
+   "zona": "input de búsqueda ('Buscar sesiones, encarg…')",
+   "desc": "El placeholder se corta a media palabra ('encarg') sin elipsis en el borde del contenedor, dando aspecto de texto desbordado."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos de las filas del menú (Línea de tiempo, Paneles, Post Studio, Agentes, Fijados) y de chips/filtros",
+   "desc": "Los glifos se renderizan como cuadrados huecos (tofu □) en lugar de iconos/emoji: falta de fuente o de iconografía, afecta a toda la lista."
+  },
+  {
+   "sev": "friccion",
+   "zona": "cabecera 'SECCIONES DEL SISTEMA' + botones de vista (lista/tabla/grid)",
+   "desc": "El título salta a dos líneas y queda apiñado contra los 3 botones de vista a la derecha, sin separación ni alineación clara entre título y controles."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sesión fijada 'Surf Plátano · …' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión se trunca con puntos suspensivos sin mostrar el título completo, pese a haber espacio disponible si se redujera el badge '7 días'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "texto secundario de las filas ('pasado → próximo', 'entregables', 'prompts · skills')",
+   "desc": "Contraste muy bajo sobre el fondo oscuro, apenas legible frente a los títulos en blanco de cada fila."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área principal visible a la derecha del sidebar (borde derecho de la captura)",
+   "desc": "Fragmentos del contenido ('s, @', botón '→', 'More controls') quedan a medio cortar bajo el drawer, con sensación de solape en vez de transición limpia."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-proyectos.png"
+}

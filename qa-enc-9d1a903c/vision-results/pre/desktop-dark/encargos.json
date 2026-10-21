@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Encargos: sidebar izquierdo con navegación, secciones del sistema, FILES y Settings; área principal con header (5 activos / 228 total), pestañas de filtro (En curso/Activos, Todos, Completados), filtro por área, y lista de 4 tarjetas de encargos con badges de estado, dificultad, categoría, descripción y botón de acción.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Card 2 (BUG visibilidad sesiones…), línea de título en el centro-superior de la tarjeta",
+   "desc": "El título termina cortado en «…ExoHuman UI (Actividad): la vis» — el texto se trunca sin mostrar «…» y se pierde el final del título completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Cards 3 y 4 (QA visual móvil… / Fuente única…), botón «Ir a sesión de trabajo»",
+   "desc": "El botón de acción aparece alineado a la derecha en las cards 3 y 4, pero en las cards 1 y 2 está alineado a la izquierda: inconsistencia de layout vertical entre tarjetas del mismo listado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, bloque «SECCIONES DEL SISTEMA» y fila «FIJADOS»",
+   "desc": "Varios textos quedan truncados con elipsis o cortados sin ellipsis («P… 20», «Surf Plátan…», «Rutinas · enc-aca74f1f» se ve cortado en el borde inferior visible), lo que impide identificar los elementos sin hover/expansión."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

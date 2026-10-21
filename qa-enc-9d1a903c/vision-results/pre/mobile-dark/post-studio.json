@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Post Studio en móvil: barra superior con menú, '...' y 'Session info'; cabecera con título, subtítulo y botón 'Cerrar'; debajo una única tarjeta de post ('La Herradura · Cumple 27 + Buceo') y el resto de la pantalla en blanco.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Tarjeta de post — línea de metadatos y cabecera (junto al subtítulo)",
+   "desc": "Varios iconos/emojis se renderizan como cuadros vacíos (tofu: □ antes de 'La Herradura', '15/28', '2' y el icono junto al subtítulo), indicando glifos que no cargan en el tema oscuro."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Barra superior — 'Session info' y botón '...'",
+   "desc": "Son targets táctiles pequeños para móvil: altura del texto/área muy por debajo de 44px, difíciles de tocar con precisión."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Área bajo la tarjeta de post (2/3 inferiores de la pantalla)",
+   "desc": "Espacio vacío enorme tras una única tarjeta, sin mensaje de contexto ni CTA; la vista parece incompleta en vez de aprovechar el espacio."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-studio.png"
+}

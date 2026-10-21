@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Paneles e Informes en móvil: cabecera con acciones, pestañas de filtro, buscador, banner de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con acciones por panel.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "botones de acción de las tarjetas (Fijar / Demanda / Archivar / Sesiones) y cabeceras de sección",
+   "desc": "Los iconos se renderizan como cuadros vacíos (tofu/glyph faltante): se ven rectángulos huecos en lugar de los iconos, indicando fuente de iconos/emoji no cargada"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "banner 'Cómo crear un panel reutilizable' y esquina superior derecha de la tarjeta Post Studio",
+   "desc": "El icono de play/ícono de la tarjeta también aparece como cuadro sin renderizar, aspecto de asset roto"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabeceras de sección 'STUDIOS & APPS 1' / 'INFORMES 6'",
+   "desc": "El icono pequeño a la izquierda del título de sección es un cuadro vacío y el contador queda suelto sin separación tipográfica clara respecto al título"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}

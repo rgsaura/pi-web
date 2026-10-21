@@ -1,0 +1,23 @@
+{
+ "desc": "Vista de Decisiones en móvil con filtros (Pendientes/Todas, orden por urgencia, categoría) y una propuesta del sistema con descripción, origen y dos opciones propuestas en tarjetas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "filtros superiores: pestañas 'Pendientes/Todas', select 'Por urgencia / caducidad'",
+   "desc": "Los iconos de estos controles se renderizan como cajas vacías (glyph faltante/tofu: '▯ Pendientes', '▯ Todas (154)', '▯ Por urgencia'), señal de fuente de iconos no cargada"
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón pequeño a la derecha del select de ordenación (junto a 'Por urgencia')",
+   "desc": "Muestra un icono/texto truncado y sin sentido ('←.'), probable control roto o label mal renderizado, además de target táctil pequeño (~50px) poco identificable"
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de opción 'Instalar WisprFlow en la VM (Rodrigo)': avatar con letra 'N'",
+   "desc": "El icono/avatar oscuro con 'N' sobresale y se solapa sobre el borde izquierdo de la tarjeta, con un artefacto blanco detrás; alineación rota respecto al icono 'A' de la opción superior"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

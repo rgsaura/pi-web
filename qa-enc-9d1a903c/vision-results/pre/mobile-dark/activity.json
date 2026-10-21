@@ -1,0 +1,33 @@
+{
+ "desc": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Panel 'Modo de Inversión y Gasto' → selector Turbo/Normal/Ahorro y badges 'Cuota de Tokens', 'Valle', 'Renovación de ciclo'",
+   "desc": "Todos los iconos/emojis se renderizan como cajas vacías (tofu) porque falta la fuente emoji: junto a Turbo, Normal, Cuota de Tokens, Valle (50% off) y Renovación de ciclo. Rompe la lectura y da sensación de UI rota."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Panel de tokens → línea inferior 'Renovación de ciclo: mar 17:17 (6 días restantes) Proveedor principal: ZAI'",
+   "desc": "Salto de línea que parte el paréntesis: '(6' queda al final de la línea y 'días restantes)' al inicio de la siguiente; además 'Proveedor principal: ZAI' se parte en dos. Lectura entrecortada en 390px, debería ir en línea propia."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tarjetas de canal 'Voz' vs 'ROT'/'FaceSearch'",
+   "desc": "Las tarjetas ROT y FaceSearch tienen la fila 'Sesión activa: ... + Abrir sesión →' pero la tarjeta Voz no la tiene; las tres tarjetas quedan con alturas y estructura inconsistente sin estado explícito de 'sin sesión'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Header superior izquierdo → botones hamburguesa y '…'",
+   "desc": "Los dos botones quedan apilados a la izquierda sin separación ni aire y el de '…' es estrecho; en el borde izquierdo los targets táctiles se sienten apretados respecto al resto de controles."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Selector de modo → opción 'Normal'",
+   "desc": "La etiqueta 'Normal' va en gris muy apagado sobre fondo oscuro, con contraste notablemente inferior a 'Ahorro' (verde activo); jerarquía del segmento difusa."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "activity.png"
+}

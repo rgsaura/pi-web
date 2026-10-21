@@ -1,0 +1,18 @@
+{
+ "desc": "Vista Paneles e Informes en móvil: cabecera con menú y 'Session info', título con badge de activos, botones de acción, pestañas de filtro, buscador, acordeón de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con descripciones y acciones Fijar/Demanda/Archivar.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "Todos los iconos inline de la vista (a la izquierda de 'Fijar', 'Demanda', 'Archivar', 'Sesiones · 2', marcadores de sección 'STUDIOS & APPS' / 'INFORMES', cabecera de tarjeta 'Post Studio', acordeón 'Cómo crear un panel reutilizable')",
+   "desc": "Los iconos se renderizan como rectángulos vacíos (tofu/glifos faltantes), por lo que los botones y marcadores pierden su significado visual y parecen defectos de fuente."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Acordeón 'Cómo crear un panel reutilizable' (parte superior de la lista)",
+   "desc": "El glifo de apertura a la izquierda del título es un rectángulo vacío sin contexto y el chevron de la derecha está muy pegado al borde del contenedor, dando aspecto de elemento sin icono y con padding asimétrico."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}

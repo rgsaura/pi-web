@@ -1,0 +1,23 @@
+{
+ "desc": "Panel de Ajustes (Settings/General) sobre la app en móvil 390x844, tema claro: secciones Appearance, Fonts & layout, Chat y Sidebar con inputs de fuentes, sliders, toggles y segmented controls. La app subyacente apenas asoma por detrás del panel.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Fonts & layout > Monospace font (input, centro-izquierda)",
+   "desc": "El valor 'Default: Noto Sa…' está truncado y se corta contra el borde del input sin elipsis ni scroll visible, sin poder leer el nombre completo de la fuente."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fonts & layout > Chat content width (slider, centro)",
+   "desc": "El valor mostrado es 820px pero el thumb está al extremo izquierdo del track, mientras que el resto de sliders muestran posición coherente con su valor; sugiere desajuste valor/posición del slider."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Chat > toggles (lado derecho)",
+   "desc": "Los toggles 'Expand thinking blocks by default' y 'Show actions for selected text' son pequeños y de bajo contraste (gris sobre gris), target táctil justo para móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "settings-open.png"
+}

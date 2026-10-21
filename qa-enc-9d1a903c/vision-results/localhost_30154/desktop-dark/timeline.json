@@ -1,0 +1,48 @@
+{
+ "desc": "Vista Timeline (modo oscuro, 1440x900): sidebar izquierdo con navegación, secciones del sistema, fijados y files; área principal con cabecera 'Línea de tiempo', pestañas Eventos/Patrones por hora, chips de filtros por tipo, buscador y lista de eventos agrupados por fecha (PRÓXIMO 13).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips 'SECCIONES DEL SISTEMA' (parte media-baja)",
+   "desc": "Los chips quedan muy truncados sin indicación: 'P... 20', 'Rutin...', 'Decis...', 'Reci...' — no se distingue a qué sección llevan y no hay tooltip visible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila 'Rutinas • call-intake' justo encima de 'FIJADOS · 1 v'",
+   "desc": "El texto está cortado/pisado por la barra 'FIJADOS': la altura de la fila no alcanza y el texto se solapa con el separador inferior."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, tarjeta fijada 'Surf Plátan...' + chip '7 días'",
+   "desc": "Nombre del elemento fijado truncado a 'Surf Plátan...' con el chip '7 días' pegado encima, imposible identificar el fijado completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, barra de filtros inferior ('Todo 418' / 'En Vivo 0' / 'Encarg...')",
+   "desc": "Los chips de filtro se cortan ('Encarg...') y se salen del contenedor, sin scroll horizontal ni indicación de más filtros."
+  },
+  {
+   "sev": "friccion",
+   "zona": "eventos del timeline, descripción de 'Exploración de planes: Exposición retrospectiva de Cruz Novillo'",
+   "desc": "La descripción se corta con '...' a media frase ('combinando diseño...') sin control 'ver más' ni enlace para expandir el contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "todos los eventos del timeline, delante de la etiqueta 'caduca:'",
+   "desc": "Aparece un cuadrado vacío (□) en cada evento, aspecto de icono no renderizado o placeholder sin significado claro."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "listado de eventos, texto secundario gris de las descripciones",
+   "desc": "El texto de detalle (hora·categoría·estado + descripción) es gris muy tenue sobre fondo oscuro a ~12px, contraste justo/bajo para lectura prolongada."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, sección FILES (parte inferior) + input bajo la barra de búsqueda",
+   "desc": "El último input aparece recortado por el borde inferior del panel ('...' apenas visible), como si el contenedor tuviera altura insuficiente."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

@@ -502,6 +502,7 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
     alignItems: "center",
     gap: 6,
     padding: "6px 12px",
+    minHeight: 36,
     borderRadius: 8,
     border: "1px solid var(--border)",
     background: "var(--bg)",
@@ -640,6 +641,7 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
             }}
             style={{
               padding: "3px 10px",
+              minHeight: isMobile ? 36 : undefined,
               borderRadius: 20,
               fontSize: 11.5,
               fontWeight: categoryFilter === "all" ? 600 : 400,
@@ -665,6 +667,7 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
                 alignItems: "center",
                 gap: 4,
                 padding: "3px 10px",
+                minHeight: isMobile ? 36 : undefined,
                 borderRadius: 20,
                 fontSize: 11.5,
                 fontWeight: categoryFilter === c.key ? 600 : 400,

@@ -1,0 +1,28 @@
+{
+ "desc": "Detalle de post del Post Studio en móvil oscuro: cabecera con título del proyecto y metadatos, tabs Carrusel/Reel, previsualización del slide (foto de grupo al atardecer) y barra inferior con validaciones y CTA 'Confirmar decisión → OpenPost'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera: título 'Post Studio · La Herradura · Cu…'",
+   "desc": "El título del proyecto está truncado con puntos suspensivos y no se puede saber el nombre completo del encargo (p.ej. 'Cuenca'/'Cuenta'); no hay forma de verlo sin acción."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de metadatos (bajo el título), tabs 'Carrusel'/'Reel' y pie 'Otro Atardecer'",
+   "desc": "Varios iconos se renderizan como cajas vacías (□): junto a 'La Herradura', a las fechas '10-09 → 10-14', al número '6', dentro de los tabs Carrusel y Reel y junto a 'Otro Atardecer'. Glyphs/icon-font no cargados: los controles quedan ambiguos y se pierde la referencia visual."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "previsualización del slide (parte inferior de la imagen)",
+   "desc": "El slide se corta por el panel inferior de controles ('música real', validaciones, CTA) sin indicador de scroll ni separación clara entre la previsualización y la barra de acciones."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón 'Confirmar decisión → OpenPost'",
+   "desc": "CTA principal en estado muy apagado (contraste bajo sobre el fondo oscuro) junto a 'validación caducada (revalida)', lo que hace difícil distinguir si está deshabilitado o es el estilo real del botón."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-detail.png"
+}

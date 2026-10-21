@@ -1,0 +1,43 @@
+{
+ "desc": "Vista de Decisiones con sidebar izquierdo de navegación y panel principal en estado vacío (\"Bandeja al día\", sin decisiones pendientes), con barra de filtros superior (Pendientes/Todas(154)/urgencia) y categoría Todas(154).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, items de navegación (Línea de tiempo, Post Studio, Agentes, Encargos, Decisiones, Hablar por Voz) y estado vacío central",
+   "desc": "Los iconos se renderizan como cuadrados vacíos/tofu en lugar de glifos: la fuente de iconos parece rota o no cargada (también en los checkboxes de filtros y el icono del estado vacío)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, fila de chips bajo \"SECCIONES DEL SISTEMA\"",
+   "desc": "Los chips de secciones están truncados hasta ser ilegibles: \"P... 20\", \"Rutin...\", \"Decis...\", \"Recl...\"; el texto no se lee y da sensación de desbordamiento contenido a la fuerza."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar inferior, fila de filtros \"Cronológico/Proyectos\" y \"Todo 418 / En Vivo 0 / Encargos\"",
+   "desc": "Desbordamiento horizontal: el chip \"Encargos\" queda cortado por el borde derecho del sidebar y \"En Vivo 0\" aparece truncado, sin scroll ni indicación de más contenido."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar, bloque \"Fijados\" (item \"Surf Plátan...\")",
+   "desc": "Nombre del fijado truncado a \"Surf Plátan...\" sin tooltip ni forma de leer el nombre completo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, bloque bajo \"exohuman\" (36 sesiones)",
+   "desc": "El texto \"Rutinas + call-intake\" aparece cortado por el borde inferior del contenedor (clip vertical), quedando a media línea."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar, item \"Línea de tiempo\"",
+   "desc": "El título ocupa dos líneas y el descriptor \"pasado → próximo\" queda apretado a su derecha, con alineación y espaciado inconsistentes respecto al resto de items."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar inferior, avatar \"N\" sobre el campo de búsqueda de FILES",
+   "desc": "El círculo del avatar se solapa con el borde del input/área de FILES, generando choque visual en la esquina inferior izquierda."
+  }
+ ],
+ "empty": true,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

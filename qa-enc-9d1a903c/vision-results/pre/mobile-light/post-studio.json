@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Post Studio en móvil: topbar con menú, título con descripción y botón Cerrar, y una única tarjeta de post (La Herradura · Cumple 27 + Buceo) con metadatos; el resto de la pantalla está en blanco.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "card 'La Herradura · Cumple 27 + Buceo', fila de tags/etiquetas",
+   "desc": "Los iconos de las etiquetas (lugar, fecha, número) se renderizan como glifos rotos/cuadrados (□), probablemente emoji sin soporte de fuente, y no comunican nada."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona de listado, bajo la tarjeta",
+   "desc": "Sólo hay una tarjeta y el resto (~80% de la pantalla) queda vacío sin ningún estado alternativo, CTA o ayuda; la sensación es de contenido incompleto o carga a medias."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera Post Studio, icono a la izquierda del título",
+   "desc": "El icono junto a 'Post Studio' aparece como un rectángulo con marcas laterales, mismo patrón de glifo dudoso/no reconocible que el de la esquina superior derecha."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-studio.png"
+}

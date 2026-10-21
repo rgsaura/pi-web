@@ -1,0 +1,27 @@
+{
+ "desc": "Vista de inspector de agentes en móvil 390px: cabecera con título 'Agentes', badge de conteo, selector de perfil 'failover-normal' con botón cerrar, y lista de tarjetas de agentes (nombre + badge de modelo + chevron + descripción). Tema claro, sin errores visibles ni estados vacíos.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "botón chevron de expandir de cada tarjeta (esquina superior derecha)",
+   "desc": "El icono de despliegue es muy pequeño (≈24px), por debajo del mínimo táctil recomendado de 44px en móvil; difícil de alcanzar con el pulgar."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante 'N' (esquina inferior izquierda) sobre la última tarjeta 'rot'",
+   "desc": "El FAB solapa el contenido de la tarjeta inferior: tapa parcialmente el nombre del agente y su badge, dificultando leerlos y acceder a esa zona."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'exohuman-ui' (fila de cabecera)",
+   "desc": "El badge del modelo 'litellm/failover-fast' es largo y empuja el chevron a una segunda línea, rompiendo la alineación vertical respecto al resto de tarjetas donde todo queda en una fila."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior (fila 'failover-normal' + botón X)",
+   "desc": "En 390px la fila queda muy apretada: el selector de perfil y su botón de cierre quedan casi pegados al borde derecho y junto al badge '6 agentes', con poco aire entre controles."
+  }
+ ],
+ "_model": "mimo-v2.6-pro",
+ "_file": "agents.png"
+}

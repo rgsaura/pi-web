@@ -1,0 +1,28 @@
+{
+ "desc": "Vista móvil oscura de detalle de panel: barra superior con menú y 'Session info', cabecera con botón '← Paneles', título 'Mejoras del Sistema' y acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar), barra de sesiones y el panel embebido con métricas en tarjetas 2 columnas.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "borde derecho del viewport, zona superior derecha (junto a la cabecera)",
+   "desc": "Desbordamiento horizontal: hay un bloque de contenido pegado y cortado en el borde derecho (badge 'INFORM...' truncado y texto cortado a mitad de palabra: '20 oct 20', 'Qué se h', 'completa', 'rama/wor', 'propuesta'...), ilegible y sin elipsis."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón 'Fijar', título del panel embebido y badge 'candidato a fijar · regla 29'",
+   "desc": "Los iconos se renderizan como glifos vacíos (cuadrado/tocu) en lugar del icono esperado, rompiendo la señal visual de esas acciones."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona central de la cabecera, entre el título 'Mejoras del Sistema' y la fila de acciones",
+   "desc": "Gran hueco vertical vacío (~300px) que separa el título de los botones de acción, dejando la cabecera con aspecto de layout roto o elemento fantasma."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra 'SESIONES · 0 + más... · 2 sin archivo'",
+   "desc": "Contador en 0 con '+ más...' y '2 sin archivo' resulta confuso y poco jerárquico: mismo peso/estilo para datos contradictorios."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "panel-detail.png"
+}

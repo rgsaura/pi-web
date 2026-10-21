@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Post Studio en móvil: barra superior con menú, header con título, subtítulo y botón Cerrar, y una única card de proyecto ('La Herradura · Cumple 27 + Buceo'); el resto de la pantalla queda en blanco.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "card 'La Herradura · Cumple 27 + Buceo', fila de metadatos inferior",
+   "desc": "Los iconos que preceden a 'La Herradura', '15/28' y '2' se renderizan como cuadrados vacíos (glyph faltante/tofu), mostrando placeholders □ en lugar del icono real."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona central/inferior de la vista, bajo la única card",
+   "desc": "La gran mayoría de la pantalla (más del 70%) está en blanco sin contenido, estado vacío, ayuda ni CTA: sólo hay una card y el resto es espacio muerto sin indicación de qué hacer o si falta contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "header, icono de panel a la izquierda del subtítulo 'Estudio de posts...'",
+   "desc": "El icono de panel es un rectángulo de línea casi irreconocible y queda suelto, desalineado respecto al texto del subtítulo y con aspecto de placeholder."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-studio.png"
+}

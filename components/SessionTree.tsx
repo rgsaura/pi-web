@@ -177,7 +177,9 @@ export function sessionRowTitle(session: SessionInfo): string {
   const firstLine = lines[0] || "";
 
   if (firstLine.length > 3) {
-    return firstLine.slice(0, 60);
+    // Sliced at 60, the row would show a title cut mid-word; the ellipsis says
+    // there is more and the row's tooltip carries it whole.
+    return firstLine.length > 60 ? firstLine.slice(0, 59) + "…" : firstLine;
   }
 
   return session.id.slice(0, 12);

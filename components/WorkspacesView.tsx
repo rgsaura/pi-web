@@ -81,6 +81,7 @@ export function WorkspacesView({ onClose, onStartInCwd }: WorkspacesViewProps) {
     alignItems: "center",
     gap: 6,
     padding: "5px 10px",
+    minHeight: 36,
     borderRadius: 6,
     border: "1px solid var(--border)",
     background: "var(--bg)",

@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Timeline en móvil con pestañas 'Eventos' y 'Patrones por hora' activa, cabecera con título, contador de eventos y botón 'Añadir'; el contenido muestra un estado vacío centrado en la parte superior con gran espacio en blanco debajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera y pestañas (título 'Línea de tiempo', píldoras 'Eventos' y 'Patrones por hora', botón 'Añadir') y texto vacío",
+   "desc": "Los iconos inline se renderizan como cuadrados tofu/glyph faltante (□) en lugar del icono real, tanto en la cabecera como en las pestañas, el botón 'Añadir' y la frase 'Añade cosas del pasado con □'."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona de contenido, texto del estado vacío (centrado, parte superior)",
+   "desc": "El mensaje del estado vacío se muestra en gris muy tenue sobre fondo oscuro, con contraste bajo que dificulta su lectura, además de contener el glyph roto que rompe la frase."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "contenido de 'Patrones por hora', parte central e inferior de la pantalla",
+   "desc": "El estado vacío ocupa solo la parte superior y deja más del 75% de la pantalla en negro vacío, sin ilustración ni CTA destacado, generando una sensación de pantalla rota/incompleta."
+  }
+ ],
+ "empty": true,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline-patrones.png"
+}

@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Decisiones en móvil: cabecera con menú, botón Volver, pestañas Pendientes/Todas, orden por urgencia, chips de categoría, y una propuesta de SISTEMA con título, origen, descripción y opciones A/B en tarjetas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Pestañas 'Pendientes (1)' y 'Todas (152)', selector 'Por urgencia / caducidad' y chips de categoría",
+   "desc": "Los iconos previstos se renderizan como cajas vacías (tofu/emoji no soportados): aparece '□' delante de 'Pendientes', 'Todas' y 'Por urgencia / caducidad', en lugar del glifo real."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Botón circular al derecha del selector de orden (parte superior, junto a 'Por urgencia / caducidad')",
+   "desc": "El icono interior parece renderizarse mal (glifo cortado/desconocido tipo '«-'), no se identifica qué acción realiza (colapsar paneles?)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Chip de origen 'enc-a802372d · 21-10' (bajo el título de la propuesta)",
+   "desc": "El texto del chip se parte en dos líneas ('21-' y '10') dentro de la caja, con aspecto de corte de ID en vez de salto de línea limpio."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fila 'Origen:' + chip + enlace 'Ver sesión en vivo' (mitad del card de propuesta)",
+   "desc": "El enlace 'Ver sesión en vivo' envuelve en dos líneas y queda muy cerca del chip de origen, la fila se siente apretada y desalineada en 390px."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

@@ -1,0 +1,23 @@
+{
+ "desc": "Vista de actividad móvil con barra superior, botón Volver + indicador EN VIVO, tarjetas de canales principales (ROT, Voz, FaceSearch), panel de palanca de gasto/tokens con segmented control y barra de progreso, y cabecera de sesiones pi en vivo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Iconos de 'Turbo', 'Normal', 'Ahorro', 'Cuota de Tokens', 'Valle', 'Ajustado', 'Renovación de ciclo' y badges",
+   "desc": "Los iconos/emojis se renderizan como cuadrados vacíos (tofu, □), indicando glyphs que no existen en la fuente; se ve un rectángulo hueco antes de cada etiqueta."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila 'Renovación de ciclo' del panel de tokens (parte inferior de la tarjeta)",
+   "desc": "El texto se parte de forma ilegible: '(6' queda en una línea y 'días restantes)' en la siguiente, mezclándose con 'Proveedor principal: ZAI'; el paréntesis queda cortado entre líneas y la lectura de las dos columnas se interleava."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Iconos '?' (ayuda) en la esquina superior derecha de cada tarjeta de canal",
+   "desc": "Target táctil muy pequeño y de contraste bajo (gris sobre blanco), difícil de alcanzar con el dedo en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "activity.png"
+}

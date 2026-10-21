@@ -172,7 +172,7 @@ function loadLocalEncargos(): NonNullable<ExoData["encargos"]> {
       if (status === "pending") pendingCount++;
       list.push({
         id,
-        titulo: it.titulo || it.descripcion?.slice(0, 60) || "Sin título",
+        titulo: it.titulo || (it.descripcion ? it.descripcion.slice(0, 59) + (it.descripcion.length > 59 ? "…" : "") : "") || "Sin título",
         descripcion: it.descripcion ?? "",
         categoria: it.categoria ?? "general",
         status,

@@ -1,0 +1,33 @@
+{
+ "desc": "Vista de Workspaces en móvil: barra superior (menú, Session info), fila con 'Volver' + resumen '5 workspaces · 4 activos', categoría 'SANDBOXES & PREVIEWS UI (4)' con botón de recarga y tarjetas de workspace (título, punto de estado, rama, Puerto, botones 'Abrir Preview'/'Sesión Pi', bloque de feedback registrado o input + 'Guardar').",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera de categoría y cajas de 'Feedback registrado' (tarjetas 1 y 2), parte superior/izquierda del texto",
+   "desc": "Aparecen glifos sin renderizar tipo tofu (cuadrado hueco '▯') antes de 'SANDBOXES & PREVIEWS UI (4)' y antes del texto de feedback: icono/emoji inexistente que rompe la lectura."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta 'Variante B', campo de feedback inferior ('Escribe feedback o decisión…')",
+   "desc": "El placeholder se corta justo contra el borde derecho del input, sin padding visible: 'decisión…' queda tocando/clipping en el borde del campo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "todas las tarjetas, botón 'Sesión Pi' a la derecha de 'Abrir Preview'",
+   "desc": "Botón demasiado estrecho (~70px de ancho): el texto 'Sesión Pi' se parte en dos líneas dentro del control y el área táctil resulta justa comparada con 'Abrir Preview'."
+  },
+  {
+   "sev": "friccion",
+   "zona": "esquina inferior izquierda, sobre la tarjeta 'Variante B'",
+   "desc": "El badge flotante 'N' (overlay de Next.js) solapa el contenido de la tarjeta y queda pegado al borde de la pantalla, tapando parte del bloque de feedback."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior ('Session info'), fila resumen ('5 workspaces · 4 activos') y badges 'Puerto 30205/30200/30201'",
+   "desc": "Texto gris muy claro sobre fondo blanco/gris claro con contraste por debajo de AA, apenas legible en móvil a cierta distancia."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "workspaces.png"
+}

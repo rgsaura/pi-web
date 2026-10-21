@@ -1,0 +1,43 @@
+{
+ "desc": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de 'SECCIONES DEL SISTEMA' (media del panel)",
+   "desc": "Los chips quedan truncados sin poder leerse: 'P... 20', 'De... 1', 'Recie…' y el último chip se corta contra el borde derecho del sidebar; overflow horizontal no resuelto en 390px."
+  },
+  {
+   "sev": "friccion",
+   "zona": "campo de búsqueda 'Buscar sesiones, encarg...' (bajo FIJADOS)",
+   "desc": "El placeholder se corta de golpe contra el borde del panel sin elipsis ni indicación de scroll, sugiriendo desbordamiento del texto fuera del contenedor."
+  },
+  {
+   "sev": "friccion",
+   "zona": "lista de resultados bajo los filtros rápidos ('En Vivo 0' activo)",
+   "desc": "El filtro 'En Vivo' está activo con 0 resultados y no se muestra ningún estado vacío ni mensaje (solo hueco en blanco hasta 'Settings'), el usuario no sabe si no hay datos o si algo falló."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (tab 'Session info' + icono de panel)",
+   "desc": "El texto 'Session info' y el icono de panel quedan pegados/cortados por el borde del viewport móvil, sin margen de seguridad."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de filtros rápidos inferior ('Todo 418 / En Vivo 0 / Encargos 2')",
+   "desc": "El chip 'Encargos 2' se corta contra el borde derecho; la fila no tiene indicación de scroll ni padding final, se ve overflow horizontal."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta de sesión fijada 'Surf Plátano · ...'",
+   "desc": "El nombre de la sesión se trunca con puntos suspensivos muy pronto por el badge '7 días' y el icono de drag, quedando identificable solo a medias."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "título 'SECCIONES DEL SISTEMA'",
+   "desc": "El título parte en dos líneas ('SISTEMA' suelto en la segunda) ocupando altura extra y desalineando visualmente el bloque de chips respecto al icono de colapso y los controles de vista."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-envivo.png"
+}

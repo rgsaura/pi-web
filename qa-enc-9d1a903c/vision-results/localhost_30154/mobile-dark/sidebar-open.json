@@ -1,0 +1,38 @@
+{
+ "desc": "Vista móvil con el sidebar de navegación abierto como overlay: barra superior de tabs, lista de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque 'Secciones del Sistema', fijados, buscador, chips de orden/filtro y barra inferior de Settings. A la derecha queda una franja del contenido de fondo parcialmente visible y cortado.",
+ "issues": [
+  {
+   "sev": "bloqueante",
+   "zona": "Múltiples elementos del sidebar: iconos de 'Línea de tiempo', 'Paneles', 'Post Studio', 'Agente', 'Proyectos', 'Decisiones', 'Recientes', 'Buscar...', ítem 'Surf Plátano' y chip '7 días'",
+   "desc": "Los iconos se renderizan como rectángulos vacíos (glyphs faltantes/tofu): hay ~10 placeholders sin forma reconocible, rompiendo toda la señalización visual."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Borde derecho de la pantalla (franja derecha, ~25% del ancho) junto al drawer",
+   "desc": "El overlay del sidebar no cubre ni atenúa el resto del ancho: se ve contenido de fondo cortado a medias ('...s, @' del campo de entrada, 'More controls'), dando sensación de layout roto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila de chips inferior ('Todo 418', 'En Vivo 0', 'Encargos 2')",
+   "desc": "La fila queda cortada en el borde inferior/derecho ('Encargos 2' truncado a media palabra) y el chip 'Todo 418' queda solapado por el botón flotante 'N', que además invade la barra de 'Settings'."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Drawer en móvil: parte superior",
+   "desc": "No hay botón de cierre (X) visible en el panel abierto; el usuario móvil solo podría cerrarlo tocando fuera, pero no hay pista ni control de salida."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Ítem fijado 'Surf Plátano · ...' en la sección FIJADOS",
+   "desc": "El nombre de la sesión aparece truncado con puntos suspensivos, impidiendo identificar el ítem fijado en el ancho disponible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Textos secundarios de las tarjetas del sidebar ('pasado → próximo', 'entregables', 'prompts · skills')",
+   "desc": "Contraste muy bajo respecto al fondo de las tarjetas; apenas legibles a tamaño móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-open.png"
+}

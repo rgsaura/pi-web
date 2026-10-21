@@ -869,7 +869,7 @@ export const SessionsExplorer = forwardRef<SessionsExplorerHandle, SessionsExplo
               value={query}
               maxLength={120}
               aria-label="Buscar sesiones, encargos y proyectos"
-              placeholder="Buscar sesiones, encargos, proyectos…"
+              placeholder="Buscar…"
               onChange={(event) => setQuery(event.target.value)}
               onFocus={() => onSearchFocusChange?.(true)}
               onBlur={() => onSearchFocusChange?.(false)}

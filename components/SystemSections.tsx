@@ -796,7 +796,7 @@ export function SystemSections({
 
       {!collapsed && variant === "full" && (
         <>
-          <div role="group" aria-label="Subsección del sistema" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 3, padding: "0 10px 6px", flex: "0 0 auto" }}>
+          <div role="group" aria-label="Subsección del sistema" style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: 3, padding: "0 10px 6px", flex: "0 0 auto" }}>
             {SEGMENTS.map((entry) => {
               const active = segment === entry.id;
               const badge = entry.id === "decisiones"
@@ -818,7 +818,7 @@ export function SystemSections({
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 4,
-                    minHeight: isMobile ? 32 : 26,
+                    minHeight: isMobile ? 36 : 26,
                     padding: "3px 2px",
                     borderRadius: 6,
                     border: "none",

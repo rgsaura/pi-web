@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Encargos en móvil con cabecera, título con badge de activos, controles (Actualizar/Cerrar), filtros por estado y área, y una tarjeta de encargo activo con metadatos, título, descripción y botón de acción. Contenido no vacío (1 encargo en curso sobre 228 totales).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de encargo, fila de metadatos (derecha, junto al chip UI)",
+   "desc": "El identificador 'enc-9d1a903c' se parte en dos líneas cortando el ID por la mitad ('enc-' / '9d1a903c'), ilegible de un vistazo y con aspecto de desbordamiento de columna."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de encargo, fila de metadatos (centro, junto a Llevan)",
+   "desc": "'🕐 Llevan 2h 13m' se parte en dos líneas ('Llevan' / '2h 13m'), metadatos apretados y sin espacio suficiente entre chips (UI, tiempo e ID compiten en la misma fila)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "filtros de estado, primer tab 'En curso / Activos'",
+   "desc": "El texto del tab seleccionado ocupa dos líneas mientras 'Todos' y 'Completados' van en una, rompiendo la alineación óptica de la fila de filtros en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior izquierda, botón '...'",
+   "desc": "El botón '...' comparte un contenedor con el hamburguesa con muy poco padding y separación, controles del header amontonados y target táctil apretado en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "encima del título / cabecera, texto '228 total' y 'Session info'",
+   "desc": "Texto secundario en gris muy tenue sobre fondo oscuro ('228 total', 'Session info'), contraste bajo y difícil de leer en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

@@ -1,0 +1,28 @@
+{
+ "desc": "Vista de detalle de panel en móvil: cabecera superior, un panel lateral (Session info) abierto a la derecha, cabecera clara con '← Paneles' + título, fila de acciones y el panel embebido en fondo oscuro con tarjetas de métricas (193, 618, 86, 6, 2).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "panel lateral derecho (drawer 'Session info', badge 'INFORMAC...') — borde derecho de la captura",
+   "desc": "todo el contenido del panel está desbordado y cortado por el borde del viewport: el badge 'INFORMAC...' aparece truncado y cada línea del texto se corta a mitad de palabra ('hecho y o', 'encargos completa', 'activas. D', 'ledgers y'), ilegible y sin respetar el ancho disponible"
+  },
+  {
+   "sev": "friccion",
+   "zona": "panel lateral derecho sobre la zona clara central",
+   "desc": "el drawer se solapa con el contenido principal: el título 'Mejoras del Sistema' queda embutido contra el panel y la zona clara pierde ancho útil, jerarquía confusa entre ambos niveles"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón 'Fijar', título del panel embebido y badge 'candidato a fijar · regla 29'",
+   "desc": "iconos sin renderizar (cajas tofu/glyph faltante) en los tres puntos: cuadrado vacío antes de 'Fijar', antes de 'Mejoras del Sistema' y antes de 'candidato a fijar'"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "zona clara central, entre el título 'Mejoras del Sistema' y la fila de botones de acción",
+   "desc": "gran hueco en blanco vertical sin contenido ni separación visual, desperdicio de espacio en móvil que empuja los controles hacia abajo"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "panel-detail.png"
+}

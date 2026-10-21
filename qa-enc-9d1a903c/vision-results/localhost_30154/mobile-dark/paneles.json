@@ -1,0 +1,23 @@
+{
+ "desc": "Vista de galería 'Paneles e Informes' en móvil: cabecera con acciones, chips de filtro, buscador, banner de ayuda y tarjetas agrupadas por secciones (STUDIOS & APPS, INFORMES) con descripción, fecha y tres acciones por tarjeta. Estado con datos, sin overflow horizontal visible.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Iconos/botones de todas las tarjetas, cabeceras de sección y banner: 'Fijar', 'Demanda', 'Archivar', 'Sesiones · 2', 'STUDIOS & APPS', 'INFORMES', 'Cómo crear un panel reutilizable'",
+   "desc": "Los iconos se renderizan como rectángulos huecos (glifos rotos / tofu): se pierde el significado visual de cada acción y de las etiquetas de sección, y en el botón superior derecho de la tarjeta 'Post Studio' el mismo problema."
+  },
+  {
+   "sev": "friccion",
+   "zona": "FAB/avatar flotante 'N' (esquina inferior izquierda) sobre la tercera tarjeta 'Auditoría de estructura + preview'",
+   "desc": "El botón flotante solapa el badge 'INFORME' y el borde superior izquierdo de la tarjeta siguiente, tapando contenido y dificultando el toque del badge."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Tercera tarjeta (parte inferior de la captura)",
+   "desc": "El título 'Auditoría de estructura + preview' queda cortado por el borde de la ventana sin separador/indicador claro de continuación, solo el recorte natural del scroll."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}

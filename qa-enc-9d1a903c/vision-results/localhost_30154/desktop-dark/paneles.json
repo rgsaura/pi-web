@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Paneles e Informes con tema oscuro: barra lateral de navegación con secciones del sistema, y zona principal con pestañas (Activos/Archivados/Todos), buscador, banner de ayuda y galería de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' en rejilla de 4 columnas.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta 'Auditoría de estructura + preview-first + agentes a medida' (centro, fila INFORMES), texto descriptivo",
+   "desc": "La descripción se corta a mitad de palabra: termina con un 'q' suelto tras 'y qué queda propuesto', indicando truncado/clamp incorrecto del texto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra lateral izquierda, fila 'Encargos' dentro de los filtros (Todo 418 / En Vivo 0 / Encargos)",
+   "desc": "El chip 'Encargos' se desborda y queda cortado por el borde derecho de la sidebar, sin desplazamiento visible ni degradación elegante (overflow horizontal recortado)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra lateral izquierda, sección 'SECCIONES DEL SISTEMA' fila superior (P... 20 Rutin... Decl... Rece...)",
+   "desc": "Los chips/quadrantes tienen texto severamente truncado ('P...', 'Rutin...', 'Decl...', 'Rece...') y muy apretados entre sí, ilegibles en este ancho."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra lateral izquierda, ítems de navegación y botones de tarjetas (Línea de tiempo, Paneles, Post Studio, Agentes, Encargos, Decisiones, Fijar/Demanda/Archivar/Sesiones)",
+   "desc": "Varios iconos aparecen como cuadrados huecos (placeholder/glifo faltante) mientras otros ítems sí tienen icono real, rompiendo la consistencia visual."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra lateral izquierda, elemento fijado 'Surf Plátan... (7 días)'",
+   "desc": "Nombre del elemento fijado truncado ('Surf Plátan...') con el badge '7 días' muy pegado al texto, sin indicación clara del nombre completo."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}
