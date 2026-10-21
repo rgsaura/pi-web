@@ -27,6 +27,9 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm test
 
+  # Deploy split pieces (enc-29d7943d): the api container embeds the runner
+  # (process mode); its unit tests cover lib/detached-runner + lib/runner-auth.
+
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 20

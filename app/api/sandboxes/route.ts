@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
 import { NextResponse, type NextRequest } from "next/server";
@@ -58,7 +58,8 @@ export async function POST(req: NextRequest) {
     writeFileSync(filePath, JSON.stringify(content, null, 2), "utf8");
 
     return NextResponse.json({ success: true, sandbox: content });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || "Error guardando feedback" }, { status: 500 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Error guardando feedback";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

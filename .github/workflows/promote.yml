@@ -1,0 +1,81 @@
+# promote.yml — promoción pre→prod y rollback (enc-29d7943d)
+#
+# La promoción NO reconstruye nada: retagea en GHCR la MISMA imagen (digest
+# idéntico) que ya pasó QA y la despliega con compose. Rollback = ejecutar de
+# nuevo con el tag anterior.
+#
+# Targets:
+#   qa   → stack Docker en :30152 (registro rg-port, enc-29d7943d)
+#   pre  → :30149 (requiere cutover aprobado: hoy es systemd, el guard del
+#          deploy.sh lo bloquea hasta FORCE_CUTOVER=1)
+#   prod → :30141 (ídem; además exige confirm="promote-to-prod")
+#
+# Requiere (igual que build.yml): vars.DEPLOY_QA_HOST + secrets.DEPLOY_QA_SSH_KEY.
+name: promote
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag a promover (sha-xxxxxxx o el nombre de entorno actual)"
+        required: true
+      target:
+        description: Entorno destino
+        type: choice
+        options: [qa, pre, prod]
+        default: qa
+      confirm:
+        description: 'Para prod escribe "promote-to-prod"'
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Guard
+        run: |
+          if [[ "${{ inputs.target }}" == "prod" && "${{ inputs.confirm }}" != "promote-to-prod" ]]; then
+            echo "::error::promover a prod requiere confirm=\"promote-to-prod\""; exit 1
+          fi
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Retag same digest — la misma imagen que pasó QA
+        run: |
+          set -e
+          repo="ghcr.io/${GITHUB_REPOSITORY,,}"
+          src="$repo:${{ inputs.tag }}"
+          dst="$repo:${{ inputs.target }}"
+          if docker buildx imagetools inspect "$src" >/dev/null 2>&1; then
+            docker buildx imagetools create -t "$dst" "$src"
+            echo "» $src → $dst (mismo digest)"
+          else
+            echo "::error::$src no existe en GHCR"; exit 1
+          fi
+
+      - name: Deploy target stack (compose, puerto del entorno)
+        if: ${{ vars.DEPLOY_QA_HOST != '' }}
+        uses: appleboy/ssh-action@v1
+        env:
+          TAG: ${{ inputs.tag }}
+          TARGET: ${{ inputs.target }}
+        with:
+          host: ${{ vars.DEPLOY_QA_HOST }}
+          username: ${{ vars.DEPLOY_QA_USER || 'rgsaura' }}
+          key: ${{ secrets.DEPLOY_QA_SSH_KEY }}
+          envs: TAG,TARGET
+          script: |
+            set -e
+            cd ~/workspaces/exohuman/qa-deploy
+            export ENV="$TARGET"
+            ./deploy/deploy.sh all --tag "$TAG"

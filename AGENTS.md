@@ -51,7 +51,7 @@ app/api/
   sessions/ui-state/route.ts       GET/POST sidebar pins, archive, project order and names (set, restore, pin-project, add-projects, move-project, rename-project)
   sessions/[id]/auto-name/route.ts POST generate a session title
   sessions/search/route.ts         GET session search
-  agent/new/route.ts               POST { cwd, type: prompt|ensure_session (start only), message?, toolNames?, provider?, modelId?, thinkingLevel? }
+  agent/new/route.ts               POST { cwd, type: prompt|ensure_session (start only), message?, toolNames?, provider?, modelId?, thinkingLevel?, detached? } — detached:true runs the prompt as an out-of-process `pi --print` in its own systemd scope (survives server restarts; commands 409 while it runs, `abort` stops the scope)
   agent/[id]/route.ts              GET state | POST any command
   agent/[id]/events/route.ts       GET SSE stream
   agent/running/route.ts           GET running + awaiting-input session ids, sidebar pins/archive revision
@@ -249,6 +249,7 @@ Design decisions and traps live in `docs/agents/`, one note per area. Read every
 - [exo-decisiones.md](docs/agents/exo-decisiones.md): the Exo panel — decisiones (ExoProposalsView) data flow from the rg-proposal ledger, resolve/discard/undo, and visual decisions with per-option images (media dir, /api/exo/media, lightbox). Files: `lib/exo-data.ts`, `lib/exo-media.ts`, `lib/exo-types.ts`, `app/api/exo/**`, `components/ExoProposalsView.tsx`, `components/EncargosView.tsx`.
 - [timeline.md](docs/agents/timeline.md): the merged Timeline view and the retroactive ledger — quick entry of past events by hour, the JSONL store under `~/.local/state/timeline/`, hour bands and learned suggestions, the merged route plus the events route, the view's Eventos/Patrones tabs. Files: `lib/timeline-retro.ts`(+test), `lib/timeline-retro-store.ts`, `lib/timeline-data.ts`, `app/api/timeline/**`, `components/TimelineView.tsx`.
 - [client-platform.md](docs/agents/client-platform.md): mobile software keyboard and viewport height, the terminal's extra keys, completion sound. Files: `hooks/useViewportHeight.ts`, `hooks/useAudio.ts`, `components/TerminalExtraKeys.tsx`, `lib/terminal-extra-keys.ts`, the keyboard-open CSS.
+- [deploy-docker.md](docs/agents/deploy-docker.md): the UI/API Docker split and the host runner (enc-29d7943d, prop-60ea3410=B): PI_WEB_ROLE gates and the runner token, SSE-safe proxying (api-proxy + caddy + Next), the standalone image that also feeds the host runner, the nftables rules that unblock Docker bridges. Files: `proxy.ts`, `lib/runner-auth.ts`, `deploy/api-proxy/server.mjs`, `deploy/compose.yaml`, `deploy/Caddyfile`, `deploy/deploy.sh`, `deploy/runner/*`, `Dockerfile`, `.github/workflows/build.yml`, `.github/workflows/promote.yml`, system pieces under `~/.config/exohuman/pi-web-runner/`, `~/.config/systemd/user/pi-web-runner.service` and `~/workspaces/exohuman/runner/`.
 
 ---
 

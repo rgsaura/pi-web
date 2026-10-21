@@ -1,0 +1,88 @@
+# ExoHuman UI/API split — deployable unit (enc-29d7943d, arquitectura fusionada)
+#
+#   :30141/:30149/:3015x ─▶ front (caddy, SSE-safe, token interno)
+#                            ├─ /api/* ─▶ api  (app COMPLETA en contenedor: SDK pi
+#                            │             embebido, PTY, git; mounts ~/.pi rw +
+#                            │             workspaces rw; runner detached modo process)
+#                            └─ /* ─────▶ web  (UI-only, stateless, desechable)
+#
+# Una imagen, dos roles (PI_WEB_ROLE). El host NO corre piezas de app: sólo
+# docker + mounts. deploy/deploy.sh genera .env y conduce; no editar a mano.
+#
+# Entornos: WEB_PORT + APP_TAG (deploy.sh pre/prod/qa) — misma imagen promovida.
+
+name: exohuman-web
+
+x-app: &app
+  image: ${APP_IMAGE:-exohuman-app:local}
+  init: true
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *app
+    networks: [exonet]
+    environment:
+      PI_WEB_ROLE: web
+      PI_WEB_ALLOWED_HOSTS: ${PI_WEB_ALLOWED_HOSTS:-}
+      PI_WEB_PASSWORD: ${PI_WEB_PASSWORD:-}
+
+  api:
+    <<: *app
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      # VM101: egress proxy-only loopback → host network + proxy build-args
+      network: host
+      args:
+        HTTP_PROXY: ${HTTP_PROXY:-http://127.0.0.1:1056}
+        HTTPS_PROXY: ${HTTPS_PROXY:-http://127.0.0.1:1056}
+        NO_PROXY: localhost,127.0.0.1
+    # host network: litellm (Tailscale 100.x) no acepta tráfico reenviado del
+    # bridge, y así las skills alcanzan el proxy 127.0.0.1:1056. Caddy llega
+    # vía host-gateway. El puerto :3000 queda en el host (sin conflicto: el
+    # rango dev es 3015x y prod/pre son 30141/30149).
+    network_mode: host
+    environment:
+      PI_WEB_ROLE: api
+      PORT: ${API_PORT:-3300}
+      EXO_RUNNER_MODE: process
+      # Egress proxy-only: litellm (100.x) SÓLO responde vía el proxy loopback
+      HTTP_PROXY: ${HTTP_PROXY:-http://127.0.0.1:1056}
+      HTTPS_PROXY: ${HTTPS_PROXY:-http://127.0.0.1:1056}
+      NO_PROXY: localhost,127.0.0.1,192.168.100.0/24
+      PI_WEB_RUNNER_TOKEN: ${INTERNAL_TOKEN:-}
+      PI_WEB_ALLOWED_HOSTS: ${PI_WEB_ALLOWED_HOSTS:-}
+      PI_WEB_PASSWORD: ${PI_WEB_PASSWORD:-}
+      # Rutas idénticas host↔contenedor: los cwd de sesiones resuelven igual
+    volumes:
+      - /home/rgsaura/.pi:/home/rgsaura/.pi
+      - /home/rgsaura/workspaces:/home/rgsaura/workspaces
+      - /home/rgsaura/.local/share/exohuman:/home/rgsaura/.local/share/exohuman:ro
+      # rw: decisiones (ledger de propuestas), encargos y registro de puertos se
+      # escriben DESDE la API (resolver decisiones / cerrar encargos desde la UI)
+      - /home/rgsaura/.local/state:/home/rgsaura/.local/state:rw
+      - /home/rgsaura/.config/exohuman:/home/rgsaura/.config/exohuman:ro
+      - /home/rgsaura/.local/bin:/home/rgsaura/.local/bin:ro
+
+  front:
+    image: caddy:2-alpine
+    environment:
+      WEB_PORT: ${WEB_PORT:-30152}
+      API_UPSTREAM: http://host.docker.internal:${API_PORT:-3300}
+      UI_UPSTREAM: http://web:3000
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      - "${WEB_PORT:-30152}:${WEB_PORT:-30152}"
+    init: true
+    restart: unless-stopped
+    depends_on: [web, api]
+    networks: [exonet]
+
+networks:
+  exonet:
+    driver: bridge

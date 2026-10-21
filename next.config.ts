@@ -17,6 +17,11 @@ try {
 const gfmAutolinkEmailLoader = join(configDir, "lib/gfm-autolink-email-loader.cjs");
 
 const nextConfig: NextConfig = {
+  // Deployable standalone server (Docker role split, enc-29d7943d): the web
+  // image and the host runner both consume .next/standalone (the api image is a
+  // plain Node proxy). Host dev builds opt out with PI_WEB_BUILD_STANDALONE=0
+  // to keep the classic `next start` flow; images leave it unset (standalone on).
+  ...(process.env.PI_WEB_BUILD_STANDALONE === "0" ? {} : { output: "standalone" as const }),
   outputFileTracingRoot: configDir,
   experimental: {
     // proxy.ts matches /api/:path*, and Next buffers the request body whenever

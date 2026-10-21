@@ -59,7 +59,7 @@ export async function POST(req: Request) {
             updated_at: new Date().toISOString(),
           }, null, 2)
         );
-      } catch (e) {
+      } catch {
         return NextResponse.json({ error: "Could not save override" }, { status: 500 });
       }
 
