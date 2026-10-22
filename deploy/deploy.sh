@@ -21,7 +21,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEPLOY_DIR="$REPO_ROOT/deploy"
-GHCR="${GHCR:-ghcr.io/agegr/pi-web}"
+GHCR="${GHCR:-ghcr.io/rgsaura/pi-web}"
 DOCKER="${DOCKER:-sudo docker}"
 ENV="${ENV:-qa}"
 

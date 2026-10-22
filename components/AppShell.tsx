@@ -18,7 +18,6 @@ import { ActivityView } from "./ActivityView";
 import { TimelineView } from "./TimelineView";
 import { AgentsInspectorView } from "./AgentsInspectorView";
 import { PostStudioView } from "./PostStudioView";
-import { WorkspacesView } from "./WorkspacesView";
 import { VoiceModal } from "./VoiceModal";
 import { ProjectTrustDialog, type ProjectTrustFailure } from "./ProjectTrustDialog";
 import { BranchNavigator, hasSessionBranches } from "./BranchNavigator";
@@ -244,7 +243,6 @@ export function AppShell() {
   const [proposalsViewOpen, setProposalsViewOpen] = useState(() => initialView === "proposals");
   const [encargosViewOpen, setEncargosViewOpen] = useState(() => initialView === "encargos");
   const [activityViewOpen, setActivityViewOpen] = useState(() => initialView === "activity");
-  const [workspacesViewOpen, setWorkspacesViewOpen] = useState(() => initialView === "workspaces");
   const [timelineViewOpen, setTimelineViewOpen] = useState(() => initialView === "timeline");
   const [panelesViewOpen, setPanelesViewOpen] = useState(() => initialView === "paneles");
   /** The panel the catalog opens at: a `?panel=` deep link, or the last one
@@ -259,7 +257,6 @@ export function AppShell() {
     setProposalsViewOpen(false);
     setEncargosViewOpen(false);
     setActivityViewOpen(false);
-    setWorkspacesViewOpen(false);
     setTimelineViewOpen(false);
     setPanelesViewOpen(false);
     setAgentsInspectorOpen(false);
@@ -1491,7 +1488,6 @@ export function AppShell() {
         onOpenProposalsView={() => openOverlay(setProposalsViewOpen)}
         onOpenEncargosView={() => openOverlay(setEncargosViewOpen)}
         onOpenActivityView={() => openOverlay(setActivityViewOpen)}
-        onOpenWorkspacesView={() => openOverlay(setWorkspacesViewOpen)}
         onOpenTimelineView={() => openOverlay(setTimelineViewOpen)}
         onOpenPanelesView={() => {
           setPanelDirRequest(null);
@@ -2329,11 +2325,11 @@ export function AppShell() {
           {!isMobile && (
             <>
               {renderProjectTrustWarning(false)}
-              {!activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderChatToolbarActions(false)}
-              {!activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderSessionStatsButton(false)}
+              {!activityViewOpen && !proposalsViewOpen && renderChatToolbarActions(false)}
+              {!activityViewOpen && !proposalsViewOpen && renderSessionStatsButton(false)}
             </>
           )}
-          {!isMobile && !activityViewOpen && !workspacesViewOpen && !proposalsViewOpen && renderMainFileToggle(false)}
+          {!isMobile && !activityViewOpen && !proposalsViewOpen && renderMainFileToggle(false)}
           {isMobile && sessionHasBranches && (
             <BranchNavigator
               tree={branchTree}
@@ -2610,11 +2606,6 @@ export function AppShell() {
                 }
                 setActivityViewOpen(false);
               }}
-            />
-          ) : workspacesViewOpen ? (
-            <WorkspacesView
-              onClose={() => setWorkspacesViewOpen(false)}
-              onStartInCwd={(cwd) => sidebarControlRef.current?.startNewSessionIn({ cwd })}
             />
           ) : timelineViewOpen ? (
             <TimelineView

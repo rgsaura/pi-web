@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ExoProposal } from "@/lib/exo-types";
 import { formatCountdownEs } from "@/lib/activity-data";
-import { formatWorkspaceAge } from "@/lib/workspaces-data";
 import { isFamilyArchived, projectNameOf } from "@/lib/session-tree";
 import { listSessionFamilies, type SessionFamily } from "@/lib/session-family";
 import { storedProjectName, type SessionUiState } from "@/lib/session-ui-state-shared";
@@ -20,6 +19,22 @@ import {
 import type { SessionInfo } from "@/lib/types";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { workspaceKeyOf } from "@/lib/workspace-memory";
+
+/** Age of a workspace family's latest activity, in Rodrigo's short style.
+ *  Inlined from the retired lib/workspaces-data (fork/c778f4b2 removed the panel). */
+function formatWorkspaceAge(iso: string | null, now: number): string | null {
+  if (!iso) return null;
+  const time = Date.parse(iso);
+  if (!Number.isFinite(time)) return null;
+  const seconds = Math.max(0, Math.floor((now - time) / 1000));
+  if (seconds < 60) return "ahora";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `hace ${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `hace ${hours} h`;
+  const days = Math.floor(hours / 24);
+  return `hace ${days} d`;
+}
 
 /**
  * "Secciones del Sistema" — the collapsible strip between the voice button

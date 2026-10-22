@@ -444,7 +444,6 @@ test("the system views keep their original full-row buttons, not the explorer po
     onOpenPanelesView: noop,
     onOpenPostStudio: noop,
     onOpenAgentsInspector: noop,
-    onOpenWorkspacesView: noop,
     onOpenEncargosView: noop,
     onOpenProposalsView: noop,
     onOpenVoiceModal: noop,
@@ -477,4 +476,25 @@ test("the running poll keeps the same Set while the running ids stay the same", 
   assert.deepEqual([...sameIdsOr(previous, ["a", "c"])], ["a", "c"]);
   const empty = new Set();
   assert.equal(sameIdsOr(empty, []), empty);
+});
+
+test("the system strip has no Workspaces entry: the legacy panel is gone, the live views stay", () => {
+  // enc-c778f4b2: the Workspaces view read the pre-2026-10-20
+  // workspaces-active files (frozen since 15-10, zero sessions, sandboxes
+  // pointing at pruned worktrees). It was removed; the strip keeps the
+  // entries backed by live data.
+  const html = render({
+    onOpenActivityView: noop,
+    onOpenTimelineView: noop,
+    onOpenAgentsInspector: noop,
+    onOpenProposalsView: noop,
+    onOpenEncargosView: noop,
+  });
+  assert.doesNotMatch(html, /aria-label="Workspaces"/);
+  assert.doesNotMatch(html, /Workspaces por categoría/);
+  assert.doesNotMatch(html, /&gt;Workspaces&lt;|>Workspaces</);
+  assert.match(html, /aria-label="Actividad del sistema"/);
+  assert.match(html, /aria-label="Línea de tiempo"/);
+  assert.match(html, /aria-label="Agentes"/);
+  assert.match(html, /aria-label="Encargos"/);
 });
