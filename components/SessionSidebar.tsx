@@ -233,8 +233,6 @@ interface Props {
   onBackgroundTaskDone?: () => void;
   onRunningSessionIdsChange?: (ids: Set<string>) => void;
   onSessionsChange?: (sessions: SessionInfo[]) => void;
-  /** Opens Exo at one proposal (`null`: its full list). */
-  onOpenExoProposal?: (id: string | null) => void;
   /** Opens the full dedicated Proposals view. */
   onOpenProposalsView?: () => void;
   /** Opens the full dedicated Encargos view. */
@@ -3001,8 +2999,8 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
             <button
               type="button"
               onClick={onOpenEncargosView}
-              title="Encargos y tareas activas pedidas a ROT"
-              aria-label="Encargos"
+              title={`Encargos y tareas pedidas a ROT · ${exoData?.encargos?.pendingCount ?? 0} activos · ${exoData?.encargos?.total ?? 0} registrados`}
+              aria-label={`Encargos: ${exoData?.encargos?.pendingCount ?? 0} activos`}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -3066,7 +3064,7 @@ export function SessionSidebar({ selectedSessionId, onSelectSession, onNewSessio
           <button
             type="button"
             onClick={onOpenProposalsView}
-            title="Abrir vista de decisiones pendientes"
+            title={`Decisiones pendientes de criterio · ${pendingProposalsCount} activas · ${exoProposals.length} en historial`}
             aria-label={`Decisiones: ${pendingProposalsCount} pendientes`}
             style={{
               display: "flex",

@@ -8,14 +8,36 @@ read-mostly: the one write is Rodrigo's explicit choice on a decision.
 - `lib/exo-data.ts` reads `~/.local/state/proposals/ledger.json` (written by the
   `rg-proposal` CLI) through `loadLocalActiveProposals()`; if that ledger has no
   proposals it falls back to the DSH private snapshot routes on loopback
-  (`readPrivate`, header-identical to a local browser session). A 30 s cache
-  (`getExoData`) keeps the panel light; every mutation calls
-  `invalidateExoData()`.
+  (`readPrivate`, header-identical to a local browser session).
+  `RG_PROPOSALS_LEDGER`/`RG_ENCARGOS_LEDGER` override both ledger paths (the
+  CLI honors the same variables; `lib/exo-data.test.mjs` uses them).
+- **Live cache**: `getExoData` serves its 30 s cache only while both ledger
+  files' `mtimeMs:size` stamps are unchanged — any external write (the CLIs,
+  another agent session) is re-read at once, not when the TTL lapses; the TTL
+  only bounds the upstream snapshot path (no local proposals). Every mutation
+  through our routes also calls `invalidateExoData()`.
 - `app/api/exo/data/route.ts` exposes the merged snapshot; `app/api/exo/resolve`
   records choices/discard/undo (local ledger first, EXO private route second).
-- `hooks/useExoData` polls it; `components/ExoProposalsView.tsx` renders one
-  decision at a time (pager + keyboard A–E/1–5, arrows, Esc), plus free text and
-  voice-note answers, discard-with-learning, and undo toasts.
+- **One shared live store** (`hooks/use-live-store.ts`) backs every number:
+  `useExoData` (15 s poll) and `useWorkspaces` (45 s) subscribe to a single
+  store per endpoint, so the sidebar badges and the views can never disagree —
+  one reader's `refresh()` (after a resolve/discard/undo) updates every badge
+  at once. The store polls while any reader is mounted and the tab is visible,
+  pauses when hidden, and refetches on foreground. Views no longer keep their
+  own intervals (`ExoProposalsView` only forces one read on mount).
+- **Pending-first counters**: a badge shows the number that needs action, the
+  historical total is secondary. Sidebar strip: Decisiones =
+  `relevantProposals(...)` length (activas pendientes; tooltip adds «N en
+  historial»), Encargos = `pendingCount` (tooltip «N registrados»), Workspaces =
+  active workspaces (tooltip «N registrados»). In `ExoProposalsView` the
+  «Todas» category pill counts the active filter's base (pending when Pendientes
+  is on), never the historical total; the header switch keeps «🎯 Pendientes»
+  first with «📋 Todas» secondary. `EncargosView` shows «N activos» then
+  «M total».
+- The old `ExoPanel` dialog («Centro de Control») and `DashboardView` were
+  unreachable leftovers (AppShell never rendered them) with total-based
+  Decisiones counters; both were removed with their dead wiring
+  (`exoPanelOpen`, `onOpenExoProposal`).
 
 ## Visual decisions (option images)
 
@@ -45,3 +67,30 @@ choice between interface styles is made by looking, not reading labels.
 Files: `lib/exo-media.ts`(+test), `lib/exo-data.ts`, `lib/exo-types.ts`,
 `app/api/exo/media/**`, `components/ExoProposalsView.tsx`, `~/.local/bin/rg-proposal`
 (backup `rg-proposal.bak-YYYYMMDD` alongside).
+
+## Live counters QA
+
+`e2e/counters-check.mjs` (Playwright, against the dev server) verifies the
+whole chain with the real ledgers: badges match the ledger's real pending
+counts, an externally injected proposal reaches the badge within the poll
+window without any reload, resolving it from the view drops the badge at once
+(the shared store), and restoring the ledger returns it to the original
+number. It backs up and restores the ledger byte-for-byte around the run, and
+recomputes every expected value on each poll (the system is live: other
+agents write the ledgers mid-run).
+
+Run it from a worktree against the dev server:
+
+```bash
+# Start the dev server on the encargo's registered port with a CLEAN env —
+# this harness's sessions can inherit the production runner's
+# NEXT_DEPLOYMENT_ID=""/PI_WEB_ROLE, and that empty deployment id makes
+# Turbopack panic at boot ("Invalid distDirRoot … should not navigate out of
+# the projectPath"):
+env -i HOME=$HOME PATH=$PATH node_modules/.bin/next dev -H 127.0.0.1 -p <port>
+# Playwright's chromium needs the extracted system libs on this host:
+LD_LIBRARY_PATH=/tmp/chromium-libs/root/usr/lib/x86_64-linux-gnu:\
+/tmp/chromium-libs/root/usr/lib/x86_64-linux-gnu/nss:\
+/tmp/chromium-libs/root/lib/x86_64-linux-gnu \
+COUNTERS_CHECK_BASE=http://127.0.0.1:<port> node e2e/counters-check.mjs
+```
