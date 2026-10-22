@@ -3,10 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { InspectorSnapshot, SkillInfo } from "@/lib/agents-inspector";
 
-export interface AgentsInspectorViewProps {
-  onClose?: () => void;
-}
-
 /** Herramientas base del runtime que todo agente tiene disponibles. */
 const BASE_TOOLS = ["Read", "Bash", "Edit", "Write", "Subagents", "Codemode"];
 
@@ -20,7 +16,7 @@ function skillSourceBadge(source: SkillInfo["source"]) {
     : { bg: "rgba(168, 85, 247, 0.15)", color: "#a855f7", label: "user" };
 }
 
-export function AgentsInspectorView({ onClose }: AgentsInspectorViewProps) {
+export function AgentsInspectorView() {
   const [data, setData] = useState<InspectorSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -131,23 +127,6 @@ export function AgentsInspectorView({ onClose }: AgentsInspectorViewProps) {
             </span>
           )}
         </div>
-        {onClose && (
-          <button
-            type="button"
-            aria-label="Cerrar"
-            onClick={onClose}
-            className="config-button config-button-small config-button-secondary"
-            style={{
-              fontSize: 14,
-              padding: "4px 12px",
-              borderRadius: 6,
-              cursor: "pointer",
-              lineHeight: 1.4,
-            }}
-          >
-            ✕
-          </button>
-        )}
       </header>
 
       {/* Contenido scrolleable */}

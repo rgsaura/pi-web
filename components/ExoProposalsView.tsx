@@ -8,7 +8,6 @@ import type { ExoProposal } from "@/lib/exo-types";
 import { relevantProposals } from "@/lib/exo-visibility";
 
 export interface ExoProposalsViewProps {
-  onClose?: () => void;
   onOpenSession?: (sessionId: string) => void;
   /** Opens at this proposal (a decision row's deep link); consumed once found. */
   initialProposalId?: string | null;
@@ -81,7 +80,7 @@ type SpeechRecognitionLike = {
 type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 
 
-export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, onInitialProposalConsumed }: ExoProposalsViewProps) {
+export function ExoProposalsView({ onOpenSession, initialProposalId, onInitialProposalConsumed }: ExoProposalsViewProps) {
   const { data, loading, error, refresh } = useExoData();
   const isMobile = useIsMobile();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("pending");
@@ -464,11 +463,6 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
         setZoom(null);
         return;
       }
-      if (event.key === "Escape" && onClose) {
-        event.preventDefault();
-        onClose();
-        return;
-      }
       if (!currentProposal) return;
       if (event.key === "ArrowLeft" && currentIndex > 0) {
         event.preventDefault();
@@ -487,7 +481,7 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending, zoom]);
+  }, [currentProposal, currentIndex, total, goPrev, goNext, resolve, sending, zoom]);
 
   const pendingCount = useMemo(() => relevantProposals(proposals, referenceMs).length, [proposals, referenceMs]);
   const receipt = currentProposal ? sentReceipts.get(currentProposal.id) : undefined;
@@ -534,23 +528,10 @@ export function ExoProposalsView({ onClose, onOpenSession, initialProposalId, on
           flexShrink: 0,
         }}
       >
-        {/* On phones the row wraps (Volver / filters / order) instead of
-            overflowing the viewport: each control keeps its size and the
-            bar simply grows taller. */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
-          <button
-            type="button"
-            onClick={onClose}
-            title="Volver al chat (Esc)"
-            aria-label="Volver al chat"
-            style={{ ...buttonBase, flexShrink: 0 }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            <span>Volver</span>
-          </button>
-
+        {/* On phones the row wraps (filters / order) instead of overflowing
+            the viewport: each control keeps its size and the bar simply
+            grows taller. */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap", rowGap: 8 }}>
           {/* Pending vs All switch */}
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
             <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg)", padding: 2 }}>

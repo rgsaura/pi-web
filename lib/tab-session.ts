@@ -7,13 +7,16 @@
  * any other tab overwrites when it switches sessions.
  *
  * New session is a selection too: the tab stores the composer cwd so a reload
- * returns to the new-session UI instead of the previous chat. Deleting the
+ * returns to the new-session UI instead of the previous chat. A dashboard
+ * view that owns the screen is stored the same way, so a reload reopens that
+ * dashboard instead of the chat underneath it. Deleting the
  * current session forgets that id so it cannot come back on refresh.
  *
  * sessionStorage is the only per-tab store the browser offers: it survives
  * reloads and in-app navigations and is never shared with other tabs. A tab
- * that was just opened starts empty and falls back to the workspace memory;
- * there is no stable cross-tab window identity to key a localStorage entry on.
+ * that was just opened starts empty and falls back to the default dashboard
+ * view; there is no stable cross-tab window identity to key a localStorage
+ * entry on.
  *
  * Stored in sessionStorage; best-effort (silently ignored when unavailable).
  * Legacy values are a bare session id; current values are a small JSON object.
@@ -29,7 +32,8 @@ interface StorageLike {
 
 export type TabOpen =
   | { kind: "session"; sessionId: string }
-  | { kind: "new"; cwd: string };
+  | { kind: "new"; cwd: string }
+  | { kind: "view"; view: string };
 
 function getBrowserStorage(): StorageLike | null {
   if (typeof window === "undefined") return null;
@@ -46,12 +50,15 @@ function parseTabOpen(raw: string | null): TabOpen | null {
     try {
       const parsed: unknown = JSON.parse(raw);
       if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return null;
-      const record = parsed as { kind?: unknown; sessionId?: unknown; cwd?: unknown };
+      const record = parsed as { kind?: unknown; sessionId?: unknown; cwd?: unknown; view?: unknown };
       if (record.kind === "session" && typeof record.sessionId === "string" && record.sessionId) {
         return { kind: "session", sessionId: record.sessionId };
       }
       if (record.kind === "new" && typeof record.cwd === "string" && record.cwd.trim()) {
         return { kind: "new", cwd: record.cwd };
+      }
+      if (record.kind === "view" && typeof record.view === "string" && record.view.trim()) {
+        return { kind: "view", view: record.view.trim() };
       }
       return null;
     } catch {
@@ -97,6 +104,20 @@ export function setTabOpenNewSession(
   if (!storage || !trimmed) return;
   try {
     writeTabOpen({ kind: "new", cwd: trimmed }, storage);
+  } catch {
+    // storage unavailable — memory is best-effort
+  }
+}
+
+/** Remember the dashboard view this tab is showing (e.g. "activity"). */
+export function setTabOpenView(
+  view: string,
+  storage: StorageLike | null = getBrowserStorage(),
+): void {
+  const trimmed = view.trim();
+  if (!storage || !trimmed) return;
+  try {
+    writeTabOpen({ kind: "view", view: trimmed }, storage);
   } catch {
     // storage unavailable — memory is best-effort
   }

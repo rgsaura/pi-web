@@ -7,7 +7,6 @@ import {
 } from "@/lib/activity-data";
 
 export interface ActivityViewProps {
-  onClose?: () => void;
   onSelectSession?: (sessionId: string) => void;
 }
 
@@ -28,7 +27,7 @@ function cpuCells(cpuText: string): { filled: number; total: number } {
   return { filled, total };
 }
 
-export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
+export function ActivityView({ onSelectSession }: ActivityViewProps) {
   const [snapshot, setSnapshot] = useState<ActivitySnapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -101,17 +100,6 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
     const timer = window.setInterval(() => setNow(Date.now()), 15_000);
     return () => window.clearInterval(timer);
   }, []);
-
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape" && onClose) {
-        event.preventDefault();
-        onClose();
-      }
-    }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
 
   const capturedAgo = snapshot ? formatCountdownEs(snapshot.capturedAt, now) : null;
 
@@ -197,17 +185,19 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
     <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "var(--bg)", color: "var(--text)", overflow: "hidden" }}>
       {/* Top bar */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "8px 14px", borderBottom: "1px solid var(--border)", background: "var(--bg-panel)", flexShrink: 0 }}>
-        <button type="button" onClick={onClose} title="Volver al chat (Esc)" aria-label="Volver al chat" style={buttonBase}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Volver
-        </button>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <span style={{ color: "var(--accent)" }} aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </span>
+          <span style={{ fontSize: 13.5, fontWeight: 700, letterSpacing: "-0.01em" }}>Actividad</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11.5, fontWeight: 600, color: "#16a34a" }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#16a34a", animation: "pulse 1.6s ease-in-out infinite" }} />
             EN VIVO
           </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <button type="button" onClick={load} disabled={loading} title="Actualizar (se actualiza solo cada 10 s)" aria-label="Actualizar actividad" style={{ ...buttonBase, padding: "5px 8px" }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ animation: loading ? "spin 1s linear infinite" : undefined }}>
               <path d="M21 12a9 9 0 1 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
@@ -238,7 +228,6 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
                     onClick={() => {
                       if (hasSession && onSelectSession && channel.activeSessionId) {
                         onSelectSession(channel.activeSessionId);
-                        onClose?.();
                       }
                     }}
                     style={{
@@ -583,7 +572,6 @@ export function ActivityView({ onClose, onSelectSession }: ActivityViewProps) {
                     onClick={() => {
                       if (onSelectSession && session.sessionId) {
                         onSelectSession(session.sessionId);
-                        onClose?.();
                       }
                     }}
                     style={{

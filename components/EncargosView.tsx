@@ -5,7 +5,6 @@ import { useExoData } from "@/hooks/useExoData";
 import type { ExoEncargo } from "@/lib/exo-types";
 
 export interface EncargosViewProps {
-  onClose?: () => void;
   onSelectSession?: (sessionId: string) => void;
 }
 
@@ -43,7 +42,7 @@ function getDifficultyBadge(diff?: string) {
   }
 }
 
-export function EncargosView({ onClose, onSelectSession }: EncargosViewProps) {
+export function EncargosView({ onSelectSession }: EncargosViewProps) {
   const { data, loading, refresh } = useExoData();
   const [filter, setFilter] = useState<Filter>("pending");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -106,16 +105,6 @@ export function EncargosView({ onClose, onSelectSession }: EncargosViewProps) {
           >
             Actualizar
           </button>
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="config-button config-button-small config-button-secondary"
-              style={{ fontSize: 12, padding: "5px 12px", borderRadius: 6, cursor: "pointer" }}
-            >
-              Cerrar
-            </button>
-          )}
         </div>
       </header>
 

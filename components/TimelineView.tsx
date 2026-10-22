@@ -19,7 +19,6 @@ import {
 } from "@/lib/timeline-retro";
 
 export interface TimelineViewProps {
-  onClose?: () => void;
   onSelectSession?: (sessionId: string) => void;
 }
 
@@ -100,7 +99,7 @@ function groupByDay(events: TimelineEvent[], nowMs: number): DayGroup[] {
   }));
 }
 
-export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
+export function TimelineView({ onSelectSession }: TimelineViewProps) {
   const [data, setData] = useState<TimelineResponse | null>(null);
   const [retroEvents, setRetroEvents] = useState<RetroEvent[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -787,7 +786,7 @@ export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
           <button
             type="button"
             onClick={() => setEntryOpen(true)}
@@ -811,11 +810,6 @@ export function TimelineView({ onClose, onSelectSession }: TimelineViewProps) {
           >
             ＋ Añadir
           </button>
-          {onClose && (
-            <button type="button" onClick={onClose} aria-label="Cerrar" style={{ ...smallButtonStyle() }}>
-              ✕
-            </button>
-          )}
         </div>
       </header>
 
