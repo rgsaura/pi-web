@@ -14,6 +14,9 @@ export interface ExoProposalOption {
   kind?: string;
   /** Renderable image src (media route or https) for visual decisions. */
   image?: string;
+  /** Same-origin /api/paneles src of the option's live preview panel
+   *  (embedded comparative previews), when the ledger links one. */
+  previewUrl?: string;
 }
 
 export interface ExoProposalEvidence {

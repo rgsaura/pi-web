@@ -5,6 +5,12 @@
  * so deliverables render inside the app with no external port (:30150 stays
  * a compatibility route until it is retired).
  *
+ * Two roots are served: the canonical one above (panels promoted by Rodrigo)
+ * and the staging root under ~/.local/state/exohuman/paneles, where agent
+ * sessions create panels because the write-guard keeps ~/.local/share
+ * read-only. A slug in both roots resolves to the canonical copy (promotion
+ * wins over its draft), so the same URL keeps working after a promotion.
+ *
  * Read-only: creating and archiving panels remains `rg-panel`'s job.
  */
 
@@ -55,6 +61,36 @@ export function panelesRoot(): string {
   return process.env.PANELES_ROOT
     ? process.env.PANELES_ROOT
     : join(homedir(), ".local", "share", "exohuman", "paneles");
+}
+
+/** The staging root: panels agent sessions create (write-guard keeps
+ *  ~/.local/share read-only, so `rg-panel` writes here during F1 previews).
+ *  Served by the same /api/paneles routes, same-origin, no promotion needed. */
+export function panelesStagingRoot(): string {
+  return process.env.PANELES_STAGING_ROOT
+    ? process.env.PANELES_STAGING_ROOT
+    : join(homedir(), ".local", "state", "exohuman", "paneles");
+}
+
+/** Every root a panel file may resolve against, canonical first, deduped
+ *  (the same dir configured twice reads once). */
+export function panelesRoots(): string[] {
+  const roots = [panelesRoot(), panelesStagingRoot()];
+  return roots.filter((root, index) => roots.indexOf(root) === index);
+}
+
+/** The directory of one panel slug across roots (canonical wins), or null
+ *  when no root holds it. Callers still validate what they serve from it. */
+export function resolvePanelDirSync(slug: string): string | null {
+  for (const root of panelesRoots()) {
+    const dir = join(root, slug);
+    try {
+      if (statSync(dir).isDirectory()) return dir;
+    } catch {
+      // Not in this root; try the next.
+    }
+  }
+  return null;
 }
 
 /** A panel directory name is dated; templates (_plantillas) and dotfiles are internal. */
@@ -122,9 +158,8 @@ export function isServablePanelSegment(segment: string): boolean {
   return segment.length > 0 && !segment.startsWith(".") && !segment.startsWith("_");
 }
 
-/** Read the metadata of every panel directory under root (best-effort per dir). */
-export function listPanelsSync(): PanelMeta[] {
-  const root = panelesRoot();
+/** Read the metadata of every panel directory under one root (best-effort per dir). */
+function listPanelsInRootSync(root: string): PanelMeta[] {
   let entries;
   try {
     entries = readdirSync(root, { withFileTypes: true });
@@ -151,5 +186,17 @@ export function listPanelsSync(): PanelMeta[] {
     }
     panels.push({ ...parsePanelMeta(entry.name, raw), mtime });
   }
-  return sortPanels(panels);
+  return panels;
+}
+
+/** Read the metadata of every panel across roots: canonical panels first,
+ *  then staging ones whose slug was not already promoted. */
+export function listPanelsSync(): PanelMeta[] {
+  const bySlug = new Map<string, PanelMeta>();
+  for (const root of panelesRoots()) {
+    for (const panel of listPanelsInRootSync(root)) {
+      if (!bySlug.has(panel.slug)) bySlug.set(panel.slug, panel);
+    }
+  }
+  return sortPanels([...bySlug.values()]);
 }

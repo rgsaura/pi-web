@@ -62,6 +62,121 @@ function summaryText(proposal: ExoProposal): string {
   return (proposal.question?.trim() || proposal.summary?.trim() || "").slice(0, 500);
 }
 
+/** One option of the embedded comparative preview: its decision letter plus
+ *  the same-origin /api/paneles src it embeds (lib/exo-panels resolves it). */
+interface PreviewOption {
+  id: string;
+  label: string;
+  letter: string;
+  previewUrl: string;
+}
+
+const PREVIEW_SANDBOX = "allow-scripts allow-same-origin allow-forms allow-popups";
+
+/** The A/B/C switcher of the embedded comparative preview: mirar, no elegir.
+ *  Letters match the option cards below, so what you see as A is what you
+ *  choose as A. */
+function PreviewSwitcher({
+  options,
+  activeId,
+  onSelect,
+}: {
+  options: PreviewOption[];
+  activeId: string | null;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Opciones de la comparativa"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        overflowX: "auto",
+        padding: "8px 12px",
+        borderBottom: "1px solid var(--border)",
+        background: "var(--bg)",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      {options.map((option, index) => {
+        const isActive = option.id === activeId;
+        return (
+          <button
+            key={option.id}
+            type="button"
+            role="tab"
+            aria-selected={isActive}
+            onClick={() => onSelect(index)}
+            title={`Ver ${option.letter}: ${option.label}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              flex: "none",
+              padding: "5px 12px 5px 5px",
+              borderRadius: 8,
+              border: `1.5px solid ${isActive ? "var(--accent)" : "var(--border)"}`,
+              background: isActive ? "var(--bg-selected)" : "var(--bg)",
+              color: isActive ? "var(--accent)" : "var(--text-muted)",
+              fontSize: 12.5,
+              fontWeight: isActive ? 600 : 500,
+              cursor: "pointer",
+              maxWidth: 240,
+              transition: "border-color 0.12s, background 0.12s, color 0.12s",
+            }}
+          >
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 24,
+                height: 24,
+                borderRadius: 6,
+                background: isActive ? "var(--accent)" : "var(--bg-selected)",
+                color: isActive ? "#fff" : "var(--accent)",
+                fontSize: 12,
+                fontWeight: 700,
+                fontFamily: "var(--font-mono)",
+                flexShrink: 0,
+              }}
+            >
+              {option.letter}
+            </span>
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {option.label || option.letter}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** The embedded panel iframe: same-origin /api/paneles bytes, the same
+ *  sandbox the Paneles view uses (live-data panels fetch /api/live/*). */
+function PreviewFrame({ option, frameKey }: { option: PreviewOption; frameKey: number }) {
+  return (
+    <iframe
+      key={`${option.id}-${frameKey}`}
+      src={option.previewUrl}
+      title={`Preview ${option.letter}: ${option.label}`}
+      loading="lazy"
+      sandbox={PREVIEW_SANDBOX}
+      style={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        minHeight: 0,
+        border: "none",
+        background: "var(--bg)",
+      }}
+    />
+  );
+}
+
 type SpeechRecognitionResultItem = { transcript?: string };
 type SpeechRecognitionEventLike = { results: ArrayLike<ArrayLike<SpeechRecognitionResultItem>> };
 type SpeechRecognitionLike = {
@@ -87,6 +202,9 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
   const [failure, setFailure] = useState<ResolveFailure | null>(null);
   const [pulse, setPulse] = useState(0);
   const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
+  const [previewIdx, setPreviewIdx] = useState(0);
+  const [previewKey, setPreviewKey] = useState(0);
+  const [previewExpanded, setPreviewExpanded] = useState(false);
 
   const [customText, setCustomText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -188,6 +306,21 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
 
   const currentProposal = filteredList[currentIndex];
 
+  // The options that carry an embedded live preview (in decision order, with
+  // their letter): the comparative A/B/C block renders only these.
+  const previewOptions: PreviewOption[] = useMemo(() => {
+    if (!currentProposal) return [];
+    return currentProposal.options
+      .map((option, index) => ({ option, letter: optionLetter(index) }))
+      .flatMap(({ option, letter }) =>
+        option.previewUrl ? [{ id: option.id, label: option.label || letter, letter, previewUrl: option.previewUrl }] : []);
+  }, [currentProposal]);
+  const activePreview = previewOptions[Math.min(previewIdx, previewOptions.length - 1)] ?? null;
+
+  useEffect(() => {
+    setPreviewIdx((index) => Math.min(index, Math.max(0, previewOptions.length - 1)));
+  }, [previewOptions.length]);
+
   useEffect(() => {
     setFailure(null);
     setSending(null);
@@ -195,6 +328,8 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     setDiscardMenuOpen(false);
     setCustomText("");
     setMicError(null);
+    setPreviewIdx(0);
+    setPreviewExpanded(false);
     if (isRecording) {
       stopRecording();
     }
@@ -439,6 +574,11 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
         setZoom(null);
         return;
       }
+      if (event.key === "Escape" && previewExpanded) {
+        event.preventDefault();
+        setPreviewExpanded(false);
+        return;
+      }
       if (event.key === "Escape" && onClose) {
         event.preventDefault();
         onClose();
@@ -462,7 +602,7 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending, zoom]);
+  }, [currentProposal, currentIndex, total, goPrev, goNext, onClose, resolve, sending, zoom, previewExpanded]);
 
   const pendingCount = useMemo(() => relevantProposals(proposals, referenceMs).length, [proposals, referenceMs]);
   const receipt = currentProposal ? sentReceipts.get(currentProposal.id) : undefined;
@@ -883,6 +1023,103 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
                 >
                   {currentProposal.summary || currentProposal.question}
                 </div>
+              )}
+
+              {/* Embedded comparative preview: A/B/C switchable in-situ,
+                  same-origin panels, without leaving Decisiones. */}
+              {previewOptions.length > 0 && activePreview && (
+                <section
+                  aria-label="Comparativa de opciones con vista previa"
+                  style={{
+                    margin: "0 0 22px",
+                    borderRadius: 12,
+                    border: "1px solid var(--border)",
+                    background: "var(--bg-panel)",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 8,
+                      padding: "8px 12px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, fontWeight: 600, color: "var(--text-muted)" }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <rect x="2" y="4" width="20" height="14" rx="2" />
+                        <path d="M8 21h8M12 18v3" />
+                      </svg>
+                      Comparativa en vivo
+                      <span style={{ fontSize: 10.5, fontWeight: 700, padding: "1px 7px", borderRadius: 5, background: "var(--bg-selected)", color: "var(--accent)", letterSpacing: "0.03em" }}>
+                        {previewOptions.length}
+                      </span>
+                    </span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <button
+                        type="button"
+                        onClick={() => setPreviewKey((key) => key + 1)}
+                        title="Recargar la vista previa"
+                        aria-label="Recargar la vista previa"
+                        style={{ ...buttonBase, padding: "4px 8px" }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <path d="M21 12a9 9 0 1 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                          <path d="M3 3v5h5" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPreviewExpanded(true)}
+                        title="Ampliar a pantalla completa"
+                        aria-label="Ampliar la comparativa"
+                        style={{ ...buttonBase, padding: "4px 8px" }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => window.open(activePreview.previewUrl, "_blank", "noopener")}
+                        title="Abrir este panel en una pestaña nueva"
+                        aria-label="Abrir en pestaña nueva"
+                        style={{ ...buttonBase, padding: "4px 8px" }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <path d="M15 3h6v6M10 14L21 3" />
+                        </svg>
+                      </button>
+                    </span>
+                  </div>
+                  <PreviewSwitcher
+                    options={previewOptions}
+                    activeId={activePreview.id}
+                    onSelect={(index) => setPreviewIdx(index)}
+                  />
+                  <div style={{ height: "clamp(300px, 56vh, 600px)", borderBottom: "1px solid var(--border)" }}>
+                    <PreviewFrame option={activePreview} frameKey={previewKey} />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "6px 12px",
+                      fontSize: 11,
+                      color: "var(--text-dim)",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <span>Mismo origen (/api/paneles) · sin salir de Decisiones</span>
+                    <span aria-hidden="true">·</span>
+                    <span>las letras coinciden con las opciones de abajo</span>
+                  </div>
+                </section>
               )}
 
               {/* Predefined Options List */}
@@ -1393,6 +1630,75 @@ export function ExoProposalsView({ onClose, onOpenSession }: ExoProposalsViewPro
           >
             {undoing ? "Deshaciendo…" : "Deshacer"}
           </button>
+        </div>
+      )}
+      {/* Fullscreen comparative preview: the same A/B/C switcher with the
+          panel filling the viewport (Esc or ✕ closes; the view-level Esc
+          yields to it). */}
+      {previewExpanded && activePreview && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Comparativa ampliada"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 10000,
+            background: "var(--bg)",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 8,
+              padding: "10px 14px",
+              borderBottom: "1px solid var(--border)",
+              background: "var(--bg-panel)",
+              flexShrink: 0,
+              flexWrap: "wrap",
+              paddingTop: "calc(10px + env(safe-area-inset-top, 0px))",
+            }}
+          >
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, fontWeight: 700, minWidth: 0 }}>
+              <span style={{ color: "var(--text-muted)", fontSize: 12, fontWeight: 600 }}>Comparativa</span>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{currentProposal?.title}</span>
+            </span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <button
+                type="button"
+                onClick={() => setPreviewKey((key) => key + 1)}
+                title="Recargar la vista previa"
+                aria-label="Recargar la vista previa"
+                style={{ ...buttonBase, padding: "5px 9px" }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M21 12a9 9 0 1 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                  <path d="M3 3v5h5" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => setPreviewExpanded(false)}
+                title="Cerrar (Esc)"
+                aria-label="Cerrar la comparativa ampliada"
+                style={{ ...buttonBase, padding: "5px 10px" }}
+              >
+                ✕ Cerrar
+              </button>
+            </span>
+          </div>
+          <PreviewSwitcher
+            options={previewOptions}
+            activeId={activePreview.id}
+            onSelect={(index) => setPreviewIdx(index)}
+          />
+          <div style={{ flex: 1, minHeight: 0, paddingBottom: "env(safe-area-inset-bottom)" }}>
+            <PreviewFrame option={activePreview} frameKey={previewKey} />
+          </div>
         </div>
       )}
       {/* Image lightbox: one tap on an option image shows it full-screen */}

@@ -7,10 +7,18 @@ touching `app/api/paneles/**`, `lib/paneles*.ts`, `hooks/usePaneles.ts`,
 
 ## Serving and listing
 
-- `lib/paneles.ts` is the only reader of the root: dated directories
+- `lib/paneles.ts` is the only reader of the roots: dated directories
   (`isPanelDirName`) with an `index.html` list; `_plantillas` and dotfiles are
-  internal. `PANELES_ROOT` overrides the root (production sets it in the
-  systemd drop-in).
+  internal. `PANELES_ROOT` overrides the canonical root (production sets it in
+  the systemd drop-in); `PANELES_STAGING_ROOT` overrides the staging root.
+- **Two roots are served**: canonical `~/.local/share/exohuman/paneles`
+  (promoted panels) and staging `~/.local/state/exohuman/paneles`, where
+  agent sessions create panels (the write-guard keeps `~/.local/share`
+  read-only). `panelesRoots()` orders them canonical-first; a slug in both
+  resolves to the canonical copy, so promotion never breaks a URL.
+  `listPanelsSync()` merges both (canonical wins by slug); the file and
+  sessions routes resolve each request across `panelesRoots()` /
+  `resolvePanelDirSync()`.
 - `app/api/paneles/[...path]/route.ts` serves one panel's bytes with a
   `<base href>` injected into HTML (relative assets survive Next's
   slashless-directory normalization). No traversal, no symlink escapes,
@@ -56,4 +64,7 @@ each slug's response 20 s; `hooks/usePanelSessions.ts` adds a 30 s module
 cache shared by the strip and the cards (cards only fetch once expanded).
 
 Creating and archiving panels stays `rg-panel`'s job; the routes never write
-to the root.
+to a root. An agent session creates its panel in staging with
+`PANELES_ROOT=$HOME/.local/state/exohuman/paneles rg-panel new …` — it is
+served by `/api/paneles` immediately, no promotion and no dev port needed;
+promotion to the canonical root remains a deliberate later copy.
