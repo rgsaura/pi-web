@@ -18,7 +18,7 @@ const gfmAutolinkEmailLoader = join(configDir, "lib/gfm-autolink-email-loader.cj
 
 // rg-worktree shares the base tree's node_modules into a worktree via a
 // symlink (routing.json shareNodeModules). Turbopack resolves modules only
-// inside the filesystem root, so a worktree whose node_modules points outside
+ inside the filesystem root, so a worktree whose node_modules points outside
 // its own tree panics at startup ("Symlink [project]/node_modules is invalid").
 // When that happens, widen turbopack.root to the common ancestor of the
 // worktree and the shared node_modules (Next docs › turbopack › Root

@@ -4,12 +4,16 @@ import { join } from "path";
 import { NextResponse } from "next/server";
 import {
   ACTIVITY_CHANNELS,
+  classifySessionKind,
   parseHerdrAgents,
   parsePiSessions,
   parseSystemctlState,
   parseTimers,
+  type ActivityPiSession,
   type ActivitySnapshot,
 } from "@/lib/activity-data";
+import { detachedRoot, getActiveDetachedSessionIds, listDetachedRuns } from "@/lib/detached-runner";
+import { getRunningRpcSessionIds } from "@/lib/rpc-manager";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -176,8 +180,15 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
     }
   } catch {}
 
-  // Gather active and recent Pi sessions with full titles and categories
-  const resolvedPiSessions: import("@/lib/activity-data").ActivityPiSession[] = [];
+  // Gather active and recent Pi sessions with full titles and categories.
+  // enc-aca74f1f: real liveness decides. Detached runs are probed through
+  // their registry (wrapper pid or systemd unit) and in-process wrappers
+  // through the RPC manager; a session in either set is live whatever its
+  // jsonl phase says (a long tool call can leave the file quiet for half an
+  // hour). The jsonl mtime stays only as the fallback signal for sessions
+  // this server never spawned (host routines: ROT, triage, watchers) — the
+  // same 45-min window the dispatcher's reconciler trusts.
+  const resolvedPiSessions: ActivityPiSession[] = [];
   try {
     const { readdirSync, statSync, readFileSync, existsSync } = await import("fs");
     const baseDir = join(homedir(), ".pi/agent/sessions");
@@ -200,7 +211,6 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
     };
 
     if (existsSync(baseDir)) walk(baseDir);
-    sessionFiles.sort((a, b) => b.mtime - a.mtime);
 
     // Also include routines sessions if recently active
     const routinesDir = join(homedir(), ".local/state/routines/sessions");
@@ -208,6 +218,10 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
     sessionFiles.sort((a, b) => b.mtime - a.mtime);
 
     const basePsSessions = parsePiSessions(psOutput);
+
+    // The live sets: detached registry probe + in-process wrappers.
+    const detachedActive = new Set(await getActiveDetachedSessionIds());
+    const liveIds = new Set([...detachedActive, ...getRunningRpcSessionIds()]);
 
     // Map files into rich session descriptors
     const fileSessionMap = new Map<string, {
@@ -219,9 +233,12 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
       cwd: string;
       currentAction: string;
       lastActiveMs: number;
+      kind: "work" | "routine";
     }>();
 
-    for (const sf of sessionFiles.slice(0, 15)) {
+    // Routine churn (ROT one-shots) writes fast; keep enough headroom for the
+    // long encargos that only touch their file every few minutes.
+    for (const sf of sessionFiles.slice(0, 60)) {
       try {
         const content = readFileSync(sf.path, "utf8");
         const lines = content.split("\n").filter(Boolean);
@@ -229,8 +246,14 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
         let cwd = "";
         let firstUser = "";
         type ContentPart = { type?: string; text?: string; name?: string };
+        // One-shot routine runs write the prompt as a plain string; chats as
+        // a parts array — both must yield the user text (enc-aca74f1f).
         const asParts = (value: unknown): ContentPart[] =>
-          Array.isArray(value) ? (value as ContentPart[]) : [];
+          Array.isArray(value)
+            ? (value as ContentPart[])
+            : typeof value === "string"
+              ? [{ type: "text", text: value }]
+              : [];
         let lastTool = "";
         let lastAssistant = "";
         let sessionInfoName = "";
@@ -262,9 +285,7 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
           } catch {}
         }
 
-        if (!id || isFinished) continue;
-
-        
+        if (!id) continue;
         let encargoId = "";
         let title = "";
         let category = "General";
@@ -294,7 +315,7 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
         const combinedText = `${cwd} ${title} ${firstUser}`.toLowerCase();
         if (combinedText.includes("facesearch")) {
           category = "FaceSearch"; icon = "🔍"; color = "#38bdf8";
-        } else if (combinedText.includes("exohuman-ui") || combinedText.includes("piweb") || combinedText.includes("ui") || combinedText.includes("frontend")) {
+        } else if (combinedText.includes("exohuman-ui") || combinedText.includes("piweb") || /(?:^|[^a-z])ui(?:[^a-z]|$)/.test(combinedText) || combinedText.includes("frontend")) {
           category = "UI / Frontend"; icon = "🎨"; color = "#a855f7";
         } else if (combinedText.includes("exohuman") || combinedText.includes("memoria") || combinedText.includes("exo")) {
           category = "ExoHuman OS"; icon = "🧠"; color = "#ec4899";
@@ -319,6 +340,10 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
           currentAction = "Procesando encargo";
         }
 
+        // Live sessions are listed whatever their file phase says; the rest
+        // need fresh ink (< 45 min) and an unfinished last turn.
+        if (!liveIds.has(id) && (isFinished || Date.now() - sf.mtime >= 45 * 60 * 1000)) continue;
+
         fileSessionMap.set(id, {
           title,
           encargoId,
@@ -328,36 +353,71 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
           cwd,
           currentAction,
           lastActiveMs: sf.mtime,
+          kind: classifySessionKind({ path: sf.path, cwd, title, firstUserText: firstUser }),
         });
       } catch {}
     }
 
-    // Merge with currently running processes
+    // Merge with the live signals
     const seenSessionIds = new Set<string>();
 
-    // First: insert all actual active/working sessions from files and recent runs
+    // First: insert all live or recently-active sessions from files
     for (const [id, meta] of fileSessionMap.entries()) {
-      // Check if session has recent activity (last 30 minutes)
-      if (Date.now() - meta.lastActiveMs < 30 * 60 * 1000) {
-        seenSessionIds.add(id);
-        resolvedPiSessions.push({
-          pid: "pi",
-          cpu: "0.0",
-          profile: "asistente",
-          sessionId: id,
-          title: meta.title,
-          encargoId: meta.encargoId,
-          category: meta.category,
-          icon: meta.icon,
-          color: meta.color,
-          cwd: meta.cwd,
-          currentAction: meta.currentAction,
-          lastActiveMs: meta.lastActiveMs,
-        });
-      }
+      seenSessionIds.add(id);
+      resolvedPiSessions.push({
+        pid: "pi",
+        cpu: "0.0",
+        profile: "asistente",
+        sessionId: id,
+        title: meta.title,
+        encargoId: meta.encargoId,
+        category: meta.category,
+        icon: meta.icon,
+        color: meta.color,
+        cwd: meta.cwd,
+        currentAction: meta.currentAction,
+        lastActiveMs: meta.lastActiveMs,
+        kind: meta.kind,
+      });
     }
 
-    // Second: if any psRow had an actual UUID session that was missed, include it
+    // Second: live detached runs whose jsonl fell outside the 2-hour walk
+    // (long encargos between writes) still belong in the map — the registry
+    // knows their cwd and their prompt file carries the title.
+    for (const run of listDetachedRuns()) {
+      if (!detachedActive.has(run.sessionId) || seenSessionIds.has(run.sessionId)) continue;
+      seenSessionIds.add(run.sessionId);
+      let title = "Encargo en marcha";
+      let encargoId: string | undefined;
+      try {
+        const promptPath = join(detachedRoot(), "prompts", `${run.sessionId}.txt`);
+        if (existsSync(promptPath)) {
+          const head = readFileSync(promptPath, "utf8").split("\n").slice(0, 6).join(" ");
+          const m = head.match(/ENCARGO OFICIAL(?:\s*\(([a-z0-9-]+)\))?:\s*([^\n]{5,})/i);
+          if (m) {
+            encargoId = m[1] || undefined;
+            title = m[2].trim().slice(0, 90);
+          }
+        }
+      } catch {}
+      resolvedPiSessions.push({
+        pid: "pi",
+        cpu: "0.0",
+        profile: "asistente",
+        sessionId: run.sessionId,
+        title,
+        encargoId,
+        category: "General",
+        icon: "⚡",
+        color: "#38bdf8",
+        cwd: run.cwd,
+        currentAction: "Sesión viva (sin escritura reciente)",
+        lastActiveMs: Date.parse(run.startedAt),
+        kind: "work",
+      });
+    }
+
+    // Third: if any psRow had an actual UUID session that was missed, include it
     for (const psRow of basePsSessions) {
       if (psRow.sessionId && psRow.sessionId.startsWith("01a1") && !seenSessionIds.has(psRow.sessionId)) {
         seenSessionIds.add(psRow.sessionId);
@@ -375,6 +435,7 @@ async function readSnapshot(): Promise<ActivitySnapshot> {
           cwd: match?.cwd,
           currentAction: match?.currentAction || "En ejecución activa",
           lastActiveMs: match?.lastActiveMs || Date.now(),
+          kind: match?.kind ?? "work",
         });
       }
     }

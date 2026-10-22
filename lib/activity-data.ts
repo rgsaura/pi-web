@@ -38,6 +38,25 @@ export interface ActivityPiSession {
   currentAction?: string;
   /** Timestamp of last activity in ms. */
   lastActiveMs?: number;
+  /** Work session (encargo, interactive) vs background routine (ROT, triage, watchers). */
+  kind?: "work" | "routine";
+}
+
+/**
+ * Work session (an encargo or interactive chat) vs background routine (ROT,
+ * triage, watchers). Routine jsonl lives under routines/sessions; detached or
+ * interactive runs are classified by their own words (enc-aca74f1f).
+ */
+export function classifySessionKind(source: {
+  path?: string;
+  cwd?: string;
+  title?: string;
+  firstUserText?: string;
+}): "work" | "routine" {
+  if (source.path && source.path.includes("/routines/")) return "routine";
+  const text = `${source.cwd ?? ""} ${source.title ?? ""} ${source.firstUserText ?? ""}`.toLowerCase();
+  if (/\brutina\b|briefing matinal|brief-morning|triage de correo|triage de llamadas/.test(text)) return "routine";
+  return "work";
 }
 
 /** A Herdr agent. */

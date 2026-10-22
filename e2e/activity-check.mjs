@@ -58,6 +58,9 @@ try {
   assert.deepEqual(data.channels.map((channel) => channel.id), ["rot", "voz", "facesearch"]);
   assert.ok(data.channels.every((channel) => ["active", "inactive", "failed", "unknown"].includes(channel.state)));
   assert.ok(Array.isArray(data.piSessions));
+  // enc-aca74f1f: every session row says whether it is an encargo/interactive
+  // session (work) or a background routine, so the view can group them.
+  assert.ok(data.piSessions.every((s) => ["work", "routine"].includes(s.kind ?? "work")));
   assert.ok(Array.isArray(data.herdrAgents));
   assert.ok(Array.isArray(data.timers) && data.timers.length > 0, "timers listed");
   assert.ok(data.timers.every((timer) => /^(rg|rot)-/.test(timer.unit)));

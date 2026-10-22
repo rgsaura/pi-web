@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   formatCountdownEs,
+  type ActivityPiSession,
   type ActivitySnapshot,
 } from "@/lib/activity-data";
 
@@ -114,14 +115,14 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
     if (categoryFilter !== "all") {
       list = list.filter((s) => {
         const cat = (s.category || "").toLowerCase();
-        if (categoryFilter === "working") {
-          return s.pid !== "-" || s.currentAction?.startsWith("Ejecutando");
-        }
+        // Work sessions (encargos, interactive chats) vs background routines
+        // (ROT, triage, watchers) — enc-aca74f1f: the kind the API reports.
+        if (categoryFilter === "working") return (s.kind ?? "work") === "work";
+        if (categoryFilter === "rutinas") return s.kind === "routine";
         if (categoryFilter === "ui") return cat.includes("ui") || cat.includes("frontend");
         if (categoryFilter === "facesearch") return cat.includes("facesearch");
         if (categoryFilter === "comms") return cat.includes("comunicac") || cat.includes("comms");
         if (categoryFilter === "infra") return cat.includes("infra") || cat.includes("sistema");
-        if (categoryFilter === "rutinas") return cat.includes("rutina");
         if (categoryFilter === "planes") return cat.includes("planes") || cat.includes("agenda");
         return true;
       });
@@ -152,6 +153,31 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
       return (b.lastActiveMs || 0) - (a.lastActiveMs || 0);
     });
   }, [snapshot?.piSessions, categoryFilter, searchQuery, sortMode]);
+
+  // Work (encargos, interactive) vs background routines, already filtered/sorted.
+  const workSessions = useMemo(
+    () => filteredPiSessions.filter((s) => (s.kind ?? "work") === "work"),
+    [filteredPiSessions],
+  );
+  const routineSessions = useMemo(
+    () => filteredPiSessions.filter((s) => s.kind === "routine"),
+    [filteredPiSessions],
+  );
+
+  // The card list, grouped: work sessions first, then background routines.
+  type DisplayRow =
+    | { type: "header"; id: string; icon: string; label: string; count: number; note?: string }
+    | { type: "session"; session: ActivityPiSession };
+  const displayRows = useMemo<DisplayRow[]>(() => {
+    const rows: DisplayRow[] = [];
+    rows.push({ type: "header", id: "work", icon: "🎯", label: "Encargos y trabajo", count: workSessions.length });
+    for (const session of workSessions) rows.push({ type: "session", session });
+    if (routineSessions.length > 0) {
+      rows.push({ type: "header", id: "routines", icon: "⏱️", label: "Rutinas de fondo", count: routineSessions.length, note: "ROT · triage · watchers" });
+      for (const session of routineSessions) rows.push({ type: "session", session });
+    }
+    return rows;
+  }, [workSessions, routineSessions]);
 
   const sectionTitle: React.CSSProperties = {
     fontSize: 11,
@@ -413,7 +439,7 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <h2 style={{ ...sectionTitle, margin: 0 }}>
-                  Sesiones Pi en Vivo · {snapshot ? `${filteredPiSessions.length} activas` : "…"}
+                  Sesiones Pi en Vivo · {snapshot ? `${workSessions.length} encargos${routineSessions.length > 0 ? ` · ${routineSessions.length} rutinas` : ""}` : "…"}
                 </h2>
                 {snapshot && filteredPiSessions.length !== snapshot.piSessions.length && (
                   <span style={{ fontSize: 11, color: "var(--accent)", fontWeight: 600 }}>
@@ -422,8 +448,10 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
                 )}
               </div>
               {snapshot && snapshot.piSessions.length > 0 && (
-                <span style={{ fontSize: 11, color: "var(--text-dim)" }}>
-                  Detalle del encargo y contexto en curso
+                <span style={{ fontSize: 11, color: "var(--text-dim)", display: "inline-flex", gap: 8 }}>
+                  {workSessions.length > 0 && <span>🎯 {workSessions.length} encargos</span>}
+                  {routineSessions.length > 0 && <span>⏱️ {routineSessions.length} rutinas</span>}
+                  {workSessions.length === 0 && routineSessions.length === 0 && <span>sin sesiones</span>}
                 </span>
               )}
             </div>
@@ -560,7 +588,31 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
             )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {filteredPiSessions.map((session, idx) => {
+              {displayRows.map((row, idx) => {
+                if (row.type === "header") {
+                  return (
+                    <div key={`group-${row.id}-${idx}`} style={{ display: "flex", alignItems: "center", gap: 8, marginTop: idx === 0 ? 0 : 10 }}>
+                      <span style={{ fontSize: 13 }} aria-hidden="true">{row.icon}</span>
+                      <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--text)" }}>{row.label}</span>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 700,
+                          padding: "1px 8px",
+                          borderRadius: 999,
+                          background: "var(--bg-selected)",
+                          color: "var(--text-muted)",
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        {row.count}
+                      </span>
+                      {row.note && <span style={{ fontSize: 10.5, color: "var(--text-dim)" }}>{row.note}</span>}
+                      <span style={{ flex: 1, height: 1, background: "var(--border)" }} aria-hidden="true" />
+                    </div>
+                  );
+                }
+                const session = row.session;
                 const { filled, total } = cpuCells(session.cpu);
                 const hasSessionId = Boolean(session.sessionId && session.sessionId.startsWith("01a1"));
                 const categoryColor = session.color || "var(--accent)";
@@ -680,7 +732,7 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
                     </div>
 
                     {/* Footer Row: Current Action & Workspace CWD */}
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, fontSize: 11, color: "var(--text-dim)", paddingTop: 4, borderTop: "1px dashed var(--border)" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, fontSize: 11, color: "var(--text-dim)", paddingTop: 4, borderTop: "1px dashed var(--border)", flexWrap: "wrap" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 5, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         <span style={{ color: "var(--accent)" }}>⚡</span>
                         <span style={{ color: "var(--text-muted)" }}>{session.currentAction || "En ejecución"}</span>
