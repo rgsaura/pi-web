@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Secciones especialistas — ExoHuman UI</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="panel-page">
+  <div class="panel-nav">
+    <a class="brand" href="index.html">Exohuman UI · <span class="f1">F1 v2</span></a>
+    <nav>
+      <a href="index.html">Hub</a>
+      <a href="home-desktop.html">Home desktop</a>
+      <a href="home-movil.html">Home móvil</a>
+      <a href="lateral.html">Lateral</a>
+      <a class="current" href="secciones.html">Secciones</a>
+    </nav>
+    <div class="right" data-theme-switch></div>
+  </div>
+
+  <header class="panel-header">
+    <span class="mock-badge">● Mockup · datos de ejemplo</span>
+    <h1>Secciones especialistas</h1>
+    <p class="sub">Cada apartado de la app es especialista en algo. La ficha define <b>qué aporta</b>,
+    <b>qué NO duplica</b> y su <b>dato clave</b> — la prueba de coherencia para el home y el lateral.</p>
+  </header>
+
+  <div class="ficha-grid">
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">💬</span> Decisiones</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>Todo lo que necesita tu sí o tu no</b>: propuestas, aprobaciones, descartes con imagen por opción.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>El progreso del trabajo (eso es de Encargos) ni el estado del sistema (eso es de Actividad).</dd>
+        <dt>Dato clave</dt>
+        <dd>15 pendientes · caducidad visible por propuesta.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Decisiones</span>
+          <span class="state-pill"><span class="dot"></span>PENDIENTE 15</span>
+          <span class="exo-pill">OCIO 4 · TRABAJO 7 · SISTEMA 4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">✏️</span> Encargos</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>El qué y el para qué del trabajo</b>: encargos con objetivo, prioridad y ciclo F1→F2.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>No lista sesiones (Sesiones) ni decide nada (Decisiones).</dd>
+        <dt>Dato clave</dt>
+        <dd>2 en curso · 278 total.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Encargos y Objetivos</span>
+          <span class="exo-pill exo-pill-amber">2 activos</span>
+          <span class="exo-pill">278 total</span>
+        </div>
+        <div class="sm-filters">
+          <span class="sm-filter is-active">En curso</span>
+          <span class="sm-filter">Todos</span>
+          <span class="sm-filter">Completados</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">📊</span> Paneles</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>Los entregables visuales vivos</b>: previews F1, comparativas, QA — publicables y enlazables.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>No es un dashboard de estado (Actividad) ni decide (Decisiones).</dd>
+        <dt>Dato clave</dt>
+        <dd>8 activos · cada panel con su encargo de origen.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Paneles</span>
+          <span class="exo-pill">8</span>
+        </div>
+        <div class="sm-filters">
+          <span class="sm-filter is-active">comparativa</span>
+          <span class="sm-filter">preview</span>
+          <span class="sm-filter">qa</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">⚡</span> Actividad</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>El pulso en vivo</b>: quién trabaja ahora, eventos del sistema, salud de rutinas y timers.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>No es historial de sesión (Sesiones) ni registro biográfico (Línea de tiempo).</dd>
+        <dt>Dato clave</dt>
+        <dd>4 sesiones en curso · todo operativo.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Actividad</span>
+          <span class="exo-pill exo-pill-green">EN VIVO</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">🗓️</span> Línea de tiempo</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>Pasado y próximo de ti y del sistema</b>: ledgers, eventos, patrones, retroalimentación.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>No muestra estado actual (Actividad) ni decisiones abiertas (Decisiones).</dd>
+        <dt>Dato clave</dt>
+        <dd>Hoy: 6 eventos · 2 próximos.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Timeline</span>
+          <span class="exo-pill">HOY</span>
+        </div>
+        <div class="sm-filters">
+          <span class="sm-filter is-active">Eventos</span>
+          <span class="sm-filter">Patrones</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card exo-card-pad ficha">
+      <h3 class="ficha-title"><span class="ico">🎬</span> Post Studio</h3>
+      <dl>
+        <dt>Qué aporta</dt>
+        <dd><b>La fábrica de contenido</b>: ideas, guiones y publicaciones con su propio flujo.</dd>
+        <dt>Qué NO duplica</dt>
+        <dd>No hace encargos de UI (Encargos) ni reemplaza a Paneles para previews.</dd>
+        <dt>Dato clave</dt>
+        <dd>3 ideas · 1 guion en marcha · estado <b>pre</b>.</dd>
+      </dl>
+      <div class="section-mock">
+        <div class="sm-head">
+          <span class="sm-title">Post Studio</span>
+          <span class="exo-nav-pill-pre">pre</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="note" style="margin-top:18px">
+    <b>Prueba de coherencia:</b> si un dato aparece en dos secciones, una de las dos está de más.
+    El home resume estas fichas; nunca las sustituye.
+  </section>
+
+  <footer class="panel-footer">enc-3767cbf2 · variaciones v2 en el design system real de ExoHuman UI · 22-10 · responde en Decisiones con tu variación (ej. «Home A · Móvil B · Lateral B»).</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

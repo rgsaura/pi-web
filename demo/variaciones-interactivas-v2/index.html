@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Variaciones home/lateral/secciones v2 · estilo ExoHuman real — F1</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="panel-page">
+  <div class="panel-nav">
+    <a class="brand" href="index.html">Exohuman UI · <span class="f1">F1 v2</span></a>
+    <nav>
+      <a class="current" href="index.html">Hub</a>
+      <a href="home-desktop.html">Home desktop</a>
+      <a href="home-movil.html">Home móvil</a>
+      <a href="lateral.html">Lateral</a>
+      <a href="secciones.html">Secciones</a>
+    </nav>
+    <div class="right" data-theme-switch></div>
+  </div>
+
+  <header class="panel-header">
+    <span class="mock-badge">● F1 · preview interactiva · datos mockup</span>
+    <h1>Variaciones home · lateral · secciones <span style="color:var(--accent)">v2</span> — en el estilo real de ExoHuman UI</h1>
+    <p class="sub">Rehacimiento del F1 anterior (rechazado por estilo propio). Esta vez <b>cero estilo propio</b>:
+    tokens, temas, tarjetas, chips, tipografía y cromo son literalmente los de la app. Toca las variaciones
+    A/B/C de cada pantalla, conmuta los temas reales (Oscuro · Claro · Mist · Rose · Pine) y responde en
+    <b>Decisiones</b> con tu mix.</p>
+  </header>
+
+  <div class="hub-grid">
+    <a class="hub-card" href="home-desktop.html">
+      <h3>🖥 Home desktop · A/B/C</h3>
+      <p>Estado de un vistazo · Bandeja de atención · Panel de instrumentos. Cada bloque con su «el detalle vive en…».</p>
+      <div class="kpi-inline"><span class="num">3</span><span class="lbl">variaciones</span></div>
+      <span class="go">Abrir y tocar →</span>
+    </a>
+    <a class="hub-card" href="home-movil.html">
+      <h3>📱 Home móvil · A/B/C</h3>
+      <p>Tiles grandes · Urgencias primero · Dock + lista. Barra móvil real y targets táctiles ≥ 44 px.</p>
+      <div class="kpi-inline"><span class="num">3</span><span class="lbl">variaciones</span></div>
+      <span class="go">Abrir y tocar →</span>
+    </a>
+    <a class="hub-card" href="lateral.html">
+      <h3>↔️ Lateral · A/B/C</h3>
+      <p>Dos bloques fijos · Fijo + temporal con caducidad · Todo fijable + catálogo. Fija y desfija en vivo (B y C).</p>
+      <div class="kpi-inline"><span class="num">3</span><span class="lbl">modelos</span></div>
+      <span class="go">Abrir y tocar →</span>
+    </a>
+    <a class="hub-card" href="secciones.html">
+      <h3>🗂 Secciones especialistas</h3>
+      <p>Las 6 fichas: qué aporta, qué NO duplica, dato clave. La prueba de coherencia para home y lateral.</p>
+      <div class="kpi-inline"><span class="num">6</span><span class="lbl">fichas</span></div>
+      <span class="go">Abrir →</span>
+    </a>
+  </div>
+
+  <h2 style="font-size:16px;font-weight:700;margin:26px 0 4px">Antes / Después</h2>
+  <p class="sub" style="margin-top:0">El F1 v1 usaba un estilo propio (paleta GitHub-dark, tipografías ajenas).
+  El v2 se dibuja con el design system real — mismas variables, mismos temas.</p>
+  <div class="compare">
+    <figure>
+      <img src="assets/antes-v1-home.png" alt="F1 v1 (rechazado): home con estilo propio" loading="lazy">
+      <figcaption><b>ANTES · v1 (rechazado)</b> — panel propio, estilo ajeno a la app.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/despues-v2-home.png" alt="F1 v2: home en el estilo real de ExoHuman UI" loading="lazy">
+      <figcaption><b>DESPUÉS · v2</b> — misma barra, mismo lateral, mismos tokens y temas reales.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/antes-real-home-dark.png" alt="Home real de la app hoy (referencia de coherencia)" loading="lazy">
+      <figcaption><b>REFERENCIA · la app real hoy</b> — la captura contra la que se valida la coherencia.</figcaption>
+    </figure>
+  </div>
+
+  <h2 style="font-size:16px;font-weight:700;margin:26px 0 4px">Guía de decisión</h2>
+  <div class="table-wrap">
+    <table class="guia">
+      <thead>
+        <tr><th>Pantalla</th><th>Recomendado</th><th>Por qué</th><th>Si prefieres…</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Home desktop</b></td>
+          <td><b>A</b> · Estado de un vistazo</td>
+          <td>Resume sin robar protagonismo a las secciones; cada cifra enlaza.</td>
+          <td>B si quieres actuar nada más abrir; C si vigilas el sistema a diario.</td>
+        </tr>
+        <tr>
+          <td><b>Home móvil</b></td>
+          <td><b>B</b> · Urgencias primero</td>
+          <td>En móvil entras a resolver, no a pasear; el launcher queda debajo.</td>
+          <td>A si el uso real es de salto entre secciones; C si quieres flujo tipo feed.</td>
+        </tr>
+        <tr>
+          <td><b>Lateral</b></td>
+          <td><b>B</b> · Fijo + temporal</td>
+          <td>El trabajo de la semana vive en el lateral sin quedarse para siempre; caducidad visible.</td>
+          <td>A si valoras orden estable ante todo; C si quieres control total con catálogo.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="note">
+    <b>Cómo responder:</b> en Decisiones, con tu mix — por ejemplo «Home A · Móvil B · Lateral B» —
+    o eligiendo una de las opciones preparadas (mix recomendado, actuar rápido, profundidad, o por pantalla).
+    Con tu OK se abre el F2 de implementación con tests.
+  </section>
+
+  <section class="note">
+    <b>QA visual:</b> cada pantalla probada como usuario real — móvil y desktop, claro y oscuro —
+    y contrastada contra las vistas actuales de la app (coherencia de estilo).
+  </section>
+
+  <footer class="panel-footer">enc-3767cbf2 · variaciones v2 · design system real de ExoHuman UI · 22-10 · este panel se ve también desde Decisiones.</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
