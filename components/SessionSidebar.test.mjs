@@ -457,8 +457,9 @@ test("the system views keep their original full-row buttons, not the explorer po
     assert.match(button[0], /font-size:12\.5px/, `${label} keeps the strip's button font size`);
     assert.match(button[0], /min-height:38px/, `${label} is a full row`);
   }
-  // The strip's original order, all as rows of the same look.
-  const order = ["Actividad del sistema", "Línea de tiempo", "Paneles", "Post Studio", "Agentes", 'aria-label="Workspaces"', "Encargos", "Decisiones: ", 'aria-label="Hablar por voz con ROT"'];
+  // The strip's original order, all as rows of the same look (Workspaces
+  // retired by enc-c778f4b2: dead pre-20-10 data, no entry anymore).
+  const order = ["Actividad del sistema", "Línea de tiempo", "Paneles", "Post Studio", "Agentes", "Encargos", "Decisiones: ", 'aria-label="Hablar por voz con ROT"'];
   const positions = order.map((label) => html.indexOf(label));
   assert.ok(positions.every((p) => p !== -1), `every strip entry rendered: ${order}`);
   assert.deepEqual([...positions].sort((a, b) => a - b), positions, "the strip keeps its original order");
@@ -496,5 +497,5 @@ test("the system strip has no Workspaces entry: the legacy panel is gone, the li
   assert.match(html, /aria-label="Actividad del sistema"/);
   assert.match(html, /aria-label="Línea de tiempo"/);
   assert.match(html, /aria-label="Agentes"/);
-  assert.match(html, /aria-label="Encargos"/);
+  assert.match(html, /aria-label="Encargos[^"]*"/); // carries its live count since enc-4aa40abd
 });

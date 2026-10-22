@@ -457,7 +457,7 @@ test("renders the model built from a catalog with unique row keys", () => {
 
 test("row titles fall back from the name to the first message to the id", () => {
   assert.equal(sessionRowTitle(session("x", { name: "Named" })), "Named");
-  assert.equal(sessionRowTitle(session("x", { firstMessage: "y".repeat(80) })), "y".repeat(60));
+  assert.equal(sessionRowTitle(session("x", { firstMessage: "y".repeat(80) })), "y".repeat(59) + "…"); // enc-9d1a903c: elipsis instead of a hard 60-char cut
   assert.equal(sessionRowTitle(session("abcdefghijklmnop", { firstMessage: "" })), "abcdefghijkl");
   const skill = '<skill name="review" location="/skills/review/SKILL.md">\nReferences are relative to /skills/review.\n\nbody\n</skill>\n\nthe diff';
   assert.equal(sessionRowTitle(session("x", { firstMessage: skill })), "/skill:review the diff");
