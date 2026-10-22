@@ -11,7 +11,13 @@ suggestions.
   propuestas, failure-ledger, routine reports/recibos, recent Pi sessions,
   systemd timers, `exo-control read personal.calendar` and the retro ledger
   (mapped to `kind: "manual"` by `toTimelineEvent`). 15 s in-memory cache,
-  every source best-effort.
+  every source best-effort. The failure-ledger feed reads the last 400 lines
+  through `mapFailureLines` (`lib/timeline-data.ts`, enc-2c9ac33b): benign
+  kinds (`session-rotate`, `recovered`, `lesson` — normal operation, not
+  errors) are skipped, and same-kind retry bursts ≤15 min apart collapse
+  into one "×N (M min)" event at the burst's first ts. rot-bridge applies the
+  same 15-min dedup when writing, so a transient storm is one line at the
+  source and one event here even for old history.
 - `GET /api/timeline/events` returns the raw retro ledger (newest first,
   no cache — mutations reflect instantly); `POST` appends one event, taking
   either the form's authoritative `{ title, ts, endTs?, category? }` or a

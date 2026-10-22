@@ -5,9 +5,9 @@ import { basename, join } from "path";
 import { NextResponse } from "next/server";
 import {
   mapEncargos,
+  mapFailureLines,
   mapProposals,
   parseCalendarText,
-  parseFailureLine,
   splitTimeline,
   type TimelineEvent,
 } from "@/lib/timeline-data";
@@ -59,18 +59,16 @@ function readLedgerEvents(): TimelineEvent[] {
   return events;
 }
 
-/** Últimas líneas del failure-ledger de rutinas. */
+/** Líneas del failure-ledger de rutinas (enc-2c9ac33b: últimas 400 →
+ * mapFailureLines filtra kinds benignos y colapsa ráfagas de reintento). */
 function readFailures(): TimelineEvent[] {
-  const events: TimelineEvent[] = [];
   try {
     const path = join(home, ".local/state/routines/failure-ledger.jsonl");
-    const lines = readFileSync(path, "utf8").split("\n").filter(Boolean).slice(-40);
-    for (const line of lines) {
-      const event = parseFailureLine(line);
-      if (event) events.push(event);
-    }
-  } catch {}
-  return events;
+    const lines = readFileSync(path, "utf8").split("\n").filter(Boolean).slice(-400);
+    return mapFailureLines(lines);
+  } catch {
+    return [];
+  }
 }
 
 /** Informes de rutinas y recibos: un evento por archivo (mtime). */

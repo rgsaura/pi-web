@@ -229,6 +229,80 @@ export function parseFailureLine(line: string): TimelineEvent | null {
   };
 }
 
+/**
+ * Failure-ledger kinds that are normal operation, not errors (enc-2c9ac33b):
+ * session-rotate = contexto reiniciado (cap 512KB o recuperación), recovered =
+ * una recuperación background que SÍ entregó, lesson = nota post-mortem.
+ * Nunca fueron fallos; dejar de pintarlos en rojo.
+ */
+const BENIGN_FAILURE_KINDS = new Set(["session-rotate", "recovered", "lesson"]);
+
+/** Ventana de ráfaga: reintentos del mismo kind con <15 min entre sí. */
+export const FAILURE_BURST_WINDOW_MS = 15 * 60_000;
+
+/**
+ * Failure-ledger lines → timeline fallo events (enc-2c9ac33b):
+ * benign kinds are skipped, and retry bursts of one kind (a 502 storm writes
+ * one line per poll cycle) collapse into a single "×N" event placed at the
+ * burst's first ts. Matches the 15-min dedup rot-bridge now applies at the
+ * source, so old history renders clean too.
+ */
+export function mapFailureLines(lines: string[]): TimelineEvent[] {
+  const parsed: { tsMs: number; kind: string; event: TimelineEvent }[] = [];
+  for (const line of lines) {
+    let entry: Record<string, unknown> | null = null;
+    try {
+      const raw: unknown = JSON.parse(line);
+      if (isRecord(raw)) entry = raw;
+    } catch {}
+    if (!entry) continue;
+    const ts = str(entry.ts);
+    if (!validIso(ts)) continue;
+    const kind = str(entry.kind) || "fallo";
+    if (BENIGN_FAILURE_KINDS.has(kind)) continue;
+    const detail = str(entry.detail);
+    parsed.push({
+      tsMs: Date.parse(ts),
+      kind,
+      event: {
+        id: `fallo-${ts}-${kind}`,
+        kind: "fallo",
+        title: detail ? `${kind}: ${detail}` : kind,
+        detail: str(entry.fix) || undefined,
+        ts,
+      },
+    });
+  }
+  parsed.sort((a, b) => a.tsMs - b.tsMs);
+
+  const events: TimelineEvent[] = [];
+  let cluster: { tsMs: number; kind: string; event: TimelineEvent }[] = [];
+  const flush = () => {
+    if (!cluster.length) return;
+    const first = cluster[0].event;
+    if (cluster.length === 1) {
+      events.push(first);
+    } else {
+      const minutes = Math.round((cluster[cluster.length - 1].tsMs - cluster[0].tsMs) / 60_000);
+      const suffix = ` ×${cluster.length}` + (minutes >= 1 ? ` (${minutes} min)` : "");
+      events.push({
+        ...first,
+        title: `${first.title}${suffix}`,
+        detail: [first.detail, "reintentos del mismo incidente"].filter(Boolean).join(" · "),
+      });
+    }
+    cluster = [];
+  };
+  for (const item of parsed) {
+    if (cluster.length && (item.kind !== cluster[0].kind || item.tsMs - cluster[cluster.length - 1].tsMs > FAILURE_BURST_WINDOW_MS)) {
+      flush();
+    }
+    cluster.push(item);
+  }
+  flush();
+  return events;
+}
+
 /** Local YYYY-MM-DD key for a date (the timeline's grouping unit). */
 export function dayKey(date: Date): string {
   const year = date.getFullYear();
