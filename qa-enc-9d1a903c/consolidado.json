@@ -1,0 +1,3801 @@
+{
+ "resumen": {
+  "capturas": 42,
+  "visionIssues": 189,
+  "visionGrupos": 188,
+  "mechFindings": 193
+ },
+ "vision": [
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline-patrones",
+   "sev": "bloqueante",
+   "zona": "vista",
+   "desc": "VISTA VACÍA/SIN DATOS: Vista Timeline en móvil con cabecera (título, 787 eventos, botón Añadir, cerrar), pestañas Eventos/Patrones por hora y zona de contenido en estado vacío con mensaje informativo sobre fondo oscuro.",
+   "empty": true,
+   "evidencias": [
+    "pre/mobile-dark/timeline-patrones",
+    "pre/mobile-light/timeline-patrones"
+   ],
+   "count": 2
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "panel-detail",
+   "sev": "bloqueante",
+   "zona": "borde derecho del viewport, zona superior derecha (junto a la cabecera)",
+   "desc": "Desbordamiento horizontal: hay un bloque de contenido pegado y cortado en el borde derecho (badge 'INFORM...' truncado y texto cortado a mitad de palabra: '20 oct 20', 'Qué se h', 'completa', 'rama/wor', 'propuesta'...), ilegible y sin elipsis.",
+   "empty": false,
+   "desc_vista": "Vista móvil oscura de detalle de panel: barra superior con menú y 'Session info', cabecera con botón '← Paneles', título 'Mejoras del Sistema' y acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar), barra de sesiones y el panel embebido con métricas en tarjetas 2 columnas.",
+   "evidencias": [
+    "pre/mobile-dark/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "bloqueante",
+   "zona": "vista",
+   "desc": "VISTA VACÍA/SIN DATOS: Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "empty": true,
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "encargos",
+   "sev": "friccion",
+   "zona": "Card 2 (BUG visibilidad sesiones…), línea de título en el centro-superior de la tarjeta",
+   "desc": "El título termina cortado en «…ExoHuman UI (Actividad): la vis» — el texto se trunca sin mostrar «…» y se pierde el final del título completo.",
+   "empty": false,
+   "desc_vista": "Vista Encargos: sidebar izquierdo con navegación, secciones del sistema, FILES y Settings; área principal con header (5 activos / 228 total), pestañas de filtro (En curso/Activos, Todos, Completados), filtro por área, y lista de 4 tarjetas de encargos con badges de estado, dificultad, categoría, descripción y botón de acción.",
+   "evidencias": [
+    "pre/desktop-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "encargos",
+   "sev": "friccion",
+   "zona": "Cards 3 y 4 (QA visual móvil… / Fuente única…), botón «Ir a sesión de trabajo»",
+   "desc": "El botón de acción aparece alineado a la derecha en las cards 3 y 4, pero en las cards 1 y 2 está alineado a la izquierda: inconsistencia de layout vertical entre tarjetas del mismo listado.",
+   "empty": false,
+   "desc_vista": "Vista Encargos: sidebar izquierdo con navegación, secciones del sistema, FILES y Settings; área principal con header (5 activos / 228 total), pestañas de filtro (En curso/Activos, Todos, Completados), filtro por área, y lista de 4 tarjetas de encargos con badges de estado, dificultad, categoría, descripción y botón de acción.",
+   "evidencias": [
+    "pre/desktop-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips 'SECCIONES DEL SISTEMA' (mitad izquierda, ~y=510)",
+   "desc": "Los chips ('P... 20', 'Rutin...', 'D... 1', 'Recl...') quedan cortados horizontalmente contra el borde del sidebar: overflow sin scroll visible, texto ilegible.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips de filtro inferior (~y=770)",
+   "desc": "El chip 'Encargos' se corta contra el borde derecho del sidebar; la fila desborda y se pierde información.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, encabezado de grupo entre 'exohuman' y 'FIJADOS' (~y=595)",
+   "desc": "El texto 'Rutinas · qa-aca74f1f' aparece recortado verticalmente/pegado al borde del separador de 'FIJADOS', como si la fila quedara ocluida.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, campo de búsqueda (~y=697)",
+   "desc": "Placeholder 'Buscar sesiones, encargos,' truncado a la mitad de la frase dentro del input; se pierde el resto del texto descriptivo.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "paneles",
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, bloque 'SECCIONES DEL SISTEMA' (fila tipo P... / Rutin... / D... / Recel...)",
+   "desc": "Fila de chips excede el ancho del sidebar: el texto queda cortado y los elementos se salen por el borde derecho (overflow horizontal), sin scroll ni indicación clara.",
+   "empty": false,
+   "desc_vista": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+   "evidencias": [
+    "pre/desktop-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "paneles",
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila 'FILJADOS · 1 v' -> 'Surf Plátan...'",
+   "desc": "Nombre del elemento truncado a 'Surf Plátan...' sin tooltip ni ancho suficiente; el badge '7 días' empuja el texto.",
+   "empty": false,
+   "desc_vista": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+   "evidencias": [
+    "pre/desktop-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "paneles",
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de filtros inferiores ('Todo 418', 'En Vivo 0', 'Encargos')",
+   "desc": "Los chips desbordan el ancho del panel: 'Encargos' queda cortado por el borde derecho del sidebar.",
+   "empty": false,
+   "desc_vista": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+   "evidencias": [
+    "pre/desktop-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila horizontal 'SECCIONES DEL SISTEMA' (parte media-baja)",
+   "desc": "Los chips de sección van truncados con puntos suspensivos ('P... 20', 'Rutin...', 'D...', 'Rece...') y se aprietan en una fila que se corta en el borde del sidebar; los nombres no son legibles.",
+   "empty": false,
+   "desc_vista": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+   "evidencias": [
+    "pre/desktop-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, bloque intermedio bajo 'exohuman' / encima de 'FIJADOS'",
+   "desc": "La línea 'Rutinas · ra-aca74f1f' aparece recortada por la mitad, solapada/cortada por el encabezado 'FIJADOS · 1 ▾ gestionar'.",
+   "empty": false,
+   "desc_vista": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+   "evidencias": [
+    "pre/desktop-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, zona de lista de sesiones entre 'SECCIONES DEL SISTEMA' y 'FIJADOS'",
+   "desc": "La fila 'Rutinas · 3a-acra-f41f' aparece cortada/clipada a media altura y solapada por el header 'FIJADOS', texto ilegible a medias.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de chips bajo 'SECCIONES DEL SISTEMA'",
+   "desc": "Chips con nombres fuertemente truncados ('P...', 'Rutina...', 'D...', 'Rece...') y recortados contra el borde derecho del sidebar; se pierde la identificación de los elementos.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "panel principal, descripciones de eventos",
+   "desc": "Las descripciones de los eventos se truncan con '...' sin control visible de expansión (ej. 'combinando diseño...', 'sin ruido.'... 'Objetivo: que EXO capture el contexto ANTES de que se olvide'), obligando a cortar información relevante del plan.",
+   "empty": false,
+   "desc_vista": "Vista Timeline con sidebar de navegación/actividad a la izquierda y panel principal con pestañas Eventos/Patrones por hora, filtros por tipo, buscador y lista de eventos agrupados por fecha con contadores.",
+   "evidencias": [
+    "pre/desktop-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, secciones del sistema",
+   "desc": "Textos recortados por el borde del panel: 'Rutinas · exo-arca74f1f' parcialmente cortado, 'Fijados · 1 v' truncado, fila de chips 'P... 20 / Rutin... / D... / Rece...' con labels ilegibles.",
+   "empty": false,
+   "desc_vista": "Vista Timeline con sidebar de navegación/actividad a la izquierda y panel principal con pestañas Eventos/Patrones por hora, filtros por tipo, buscador y lista de eventos agrupados por fecha con contadores.",
+   "evidencias": [
+    "pre/desktop-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, item fijado y buscador",
+   "desc": "El item fijado muestra 'Surf Plátan...' truncado y el placeholder del input de búsqueda se corta en 'Buscar sesiones, encargos,' sin acabar la frase.",
+   "empty": false,
+   "desc_vista": "Vista Timeline con sidebar de navegación/actividad a la izquierda y panel principal con pestañas Eventos/Patrones por hora, filtros por tipo, buscador y lista de eventos agrupados por fecha con contadores.",
+   "evidencias": [
+    "pre/desktop-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "activity",
+   "sev": "friccion",
+   "zona": "Panel 'Modo de Inversión y Gasto' → selector Turbo/Normal/Ahorro y badges 'Cuota de Tokens', 'Valle', 'Renovación de ciclo'",
+   "desc": "Todos los iconos/emojis se renderizan como cajas vacías (tofu) porque falta la fuente emoji: junto a Turbo, Normal, Cuota de Tokens, Valle (50% off) y Renovación de ciclo. Rompe la lectura y da sensación de UI rota.",
+   "empty": false,
+   "desc_vista": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+   "evidencias": [
+    "pre/mobile-dark/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "activity",
+   "sev": "friccion",
+   "zona": "Panel de tokens → línea inferior 'Renovación de ciclo: mar 17:17 (6 días restantes) Proveedor principal: ZAI'",
+   "desc": "Salto de línea que parte el paréntesis: '(6' queda al final de la línea y 'días restantes)' al inicio de la siguiente; además 'Proveedor principal: ZAI' se parte en dos. Lectura entrecortada en 390px, debería ir en línea propia.",
+   "empty": false,
+   "desc_vista": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+   "evidencias": [
+    "pre/mobile-dark/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "agents",
+   "sev": "friccion",
+   "zona": "tarjeta \"exohuman-ui\" (2ª tarjeta, centro de la captura)",
+   "desc": "El chevron de expandir cae a una línea inferior, desalineado respecto al nombre/chip de modelo; en las tarjetas \"dev\" y \"rot\" el chevron sí está alineado con el nombre, lo que rompe la consistencia visual entre tarjetas.",
+   "empty": false,
+   "desc_vista": "Vista móvil del inspector de Agentes en tema oscuro: barra superior (menú, \"...\", Session info, toggle de panel), cabecera con título \"Agentes\", badge \"3 agentes\" y chip de filtro \"failover-normal\" (engranaje + X), y 3 tarjetas de agente (dev, exohuman-ui, rot) con nombre, chip de modelo y descripción, con mucho espacio libre inferior.",
+   "evidencias": [
+    "pre/mobile-dark/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "agents",
+   "sev": "friccion",
+   "zona": "chevrons de expandir de las 3 tarjetas (esquina superior derecha de cada tarjeta)",
+   "desc": "El control de expandir es un triángulo pequeño (~20px) suelto en la esquina, con target táctil por debajo de lo recomendado en móvil y difícil de distinguir como control accionable.",
+   "empty": false,
+   "desc_vista": "Vista móvil del inspector de Agentes en tema oscuro: barra superior (menú, \"...\", Session info, toggle de panel), cabecera con título \"Agentes\", badge \"3 agentes\" y chip de filtro \"failover-normal\" (engranaje + X), y 3 tarjetas de agente (dev, exohuman-ui, rot) con nombre, chip de modelo y descripción, con mucho espacio libre inferior.",
+   "evidencias": [
+    "pre/mobile-dark/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "encargos",
+   "sev": "friccion",
+   "zona": "tarjeta de encargo, fila de badges, borde derecho (parte media de la captura)",
+   "desc": "El identificador 'enc-a802372d…' queda cortado/desbordado fuera del borde derecho de la tarjeta; se rompe en varias líneas y no se puede leer completo, generando overflow horizontal dentro del card.",
+   "empty": false,
+   "desc_vista": "Vista Encargos en móvil 390x844 con tema oscuro: cabecera con título 'Encargos y Objetivos' y badge '6 activos', controles Actualizar/Cerrar, filtros (En curso/Activos, Todos, Completados) y selector de Área, seguido de una tarjeta de encargo con badges de estado, título y descripción larga con CTA.",
+   "evidencias": [
+    "pre/mobile-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "zona superior de la vista (debajo de la barra superior hasta el logo)",
+   "desc": "Más del 50% de la pantalla (unos 600px) está vacío sin estado vacío ni indicación; no se ve el sidebar de sesiones prometido y la composición queda colgando sin jerarquía",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "barra de controles bajo el composer (iconos imagen, micrófono, ajustes)",
+   "desc": "Los iconos son de ~20px sin área táctil aparente de 44px mínima, mientras que junto a ellos 'Failover Normal' y 'More controls' son texto grande: mezcla de targets pequeños y grandes en la misma fila",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "barra de controles bajo el composer, derecha",
+   "desc": "'Failover Normal' y 'More controls' son texto plano sin affordance de botón ni separación clara respecto a los iconos, jerarquía confusa en la misma línea",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "panel-detail",
+   "sev": "friccion",
+   "zona": "botón 'Fijar', título del panel embebido y badge 'candidato a fijar · regla 29'",
+   "desc": "Los iconos se renderizan como glifos vacíos (cuadrado/tocu) en lugar del icono esperado, rompiendo la señal visual de esas acciones.",
+   "empty": false,
+   "desc_vista": "Vista móvil oscura de detalle de panel: barra superior con menú y 'Session info', cabecera con botón '← Paneles', título 'Mejoras del Sistema' y acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar), barra de sesiones y el panel embebido con métricas en tarjetas 2 columnas.",
+   "evidencias": [
+    "pre/mobile-dark/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "paneles",
+   "sev": "friccion",
+   "zona": "botones de acción de las tarjetas (Fijar / Demanda / Archivar / Sesiones) y cabeceras de sección",
+   "desc": "Los iconos se renderizan como cuadros vacíos (tofu/glyph faltante): se ven rectángulos huecos en lugar de los iconos, indicando fuente de iconos/emoji no cargada",
+   "empty": false,
+   "desc_vista": "Vista Paneles e Informes en móvil: cabecera con acciones, pestañas de filtro, buscador, banner de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con acciones por panel.",
+   "evidencias": [
+    "pre/mobile-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-detail",
+   "sev": "friccion",
+   "zona": "cabecera: título 'Post Studio · La Herradura · Cu…'",
+   "desc": "El título del proyecto está truncado con puntos suspensivos y no se puede saber el nombre completo del encargo (p.ej. 'Cuenca'/'Cuenta'); no hay forma de verlo sin acción.",
+   "empty": false,
+   "desc_vista": "Detalle de post del Post Studio en móvil oscuro: cabecera con título del proyecto y metadatos, tabs Carrusel/Reel, previsualización del slide (foto de grupo al atardecer) y barra inferior con validaciones y CTA 'Confirmar decisión → OpenPost'.",
+   "evidencias": [
+    "pre/mobile-dark/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-detail",
+   "sev": "friccion",
+   "zona": "fila de metadatos (bajo el título), tabs 'Carrusel'/'Reel' y pie 'Otro Atardecer'",
+   "desc": "Varios iconos se renderizan como cajas vacías (□): junto a 'La Herradura', a las fechas '10-09 → 10-14', al número '6', dentro de los tabs Carrusel y Reel y junto a 'Otro Atardecer'. Glyphs/icon-font no cargados: los controles quedan ambiguos y se pierde la referencia visual.",
+   "empty": false,
+   "desc_vista": "Detalle de post del Post Studio en móvil oscuro: cabecera con título del proyecto y metadatos, tabs Carrusel/Reel, previsualización del slide (foto de grupo al atardecer) y barra inferior con validaciones y CTA 'Confirmar decisión → OpenPost'.",
+   "evidencias": [
+    "pre/mobile-dark/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-studio",
+   "sev": "friccion",
+   "zona": "Tarjeta de post — línea de metadatos y cabecera (junto al subtítulo)",
+   "desc": "Varios iconos/emojis se renderizan como cuadros vacíos (tofu: □ antes de 'La Herradura', '15/28', '2' y el icono junto al subtítulo), indicando glifos que no cargan en el tema oscuro.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: barra superior con menú, '...' y 'Session info'; cabecera con título, subtítulo y botón 'Cerrar'; debajo una única tarjeta de post ('La Herradura · Cumple 27 + Buceo') y el resto de la pantalla en blanco.",
+   "evidencias": [
+    "pre/mobile-dark/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-studio",
+   "sev": "friccion",
+   "zona": "Barra superior — 'Session info' y botón '...'",
+   "desc": "Son targets táctiles pequeños para móvil: altura del texto/área muy por debajo de 44px, difíciles de tocar con precisión.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: barra superior con menú, '...' y 'Session info'; cabecera con título, subtítulo y botón 'Cerrar'; debajo una única tarjeta de post ('La Herradura · Cumple 27 + Buceo') y el resto de la pantalla en blanco.",
+   "evidencias": [
+    "pre/mobile-dark/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "Pestañas 'Pendientes (1)' / 'Todas (152)' y selector 'Por urgencia / caducidad'",
+   "desc": "Los iconos que preceden al texto se renderizan como cuadrados vacíos (tofu): emoji/glifo faltante en esas tres ubicaciones, mientras que '⚡ Sistema (1)' sí renderiza su emoji.",
+   "empty": false,
+   "desc_vista": "Vista de Decisiones en móvil (tema oscuro): barra superior, botón Volver, filtros (pestañas Pendientes/Todas, orden por urgencia, chips de categoría) y una propuesta SISTEMA con título, origen, descripción y opciones A/B/C en scroll.",
+   "evidencias": [
+    "pre/mobile-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "Fila 'Origen:' de la tarjeta de propuesta",
+   "desc": "El chip de código 'enc-a802372d · 21-10' se parte en dos líneas cortando el valor '21-10', y el enlace 'Ver sesión en vivo' también se parte en dos líneas dejando el icono de enlace externo suelto arriba; conjunto desordenado y difícil de escanear.",
+   "empty": false,
+   "desc_vista": "Vista de Decisiones en móvil (tema oscuro): barra superior, botón Volver, filtros (pestañas Pendientes/Todas, orden por urgencia, chips de categoría) y una propuesta SISTEMA con título, origen, descripción y opciones A/B/C en scroll.",
+   "evidencias": [
+    "pre/mobile-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "Botón de invertir orden junto al dropdown de ordenación (parte superior derecha del bloque de filtros)",
+   "desc": "Target táctil muy pequeño (~28x28 px reales, por debajo de 44 px) y con un glyph ambiguo apenas legible; difícil de pulsar en móvil.",
+   "empty": false,
+   "desc_vista": "Vista de Decisiones en móvil (tema oscuro): barra superior, botón Volver, filtros (pestañas Pendientes/Todas, orden por urgencia, chips de categoría) y una propuesta SISTEMA con título, origen, descripción y opciones A/B/C en scroll.",
+   "evidencias": [
+    "pre/mobile-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session-scrolled",
+   "sev": "friccion",
+   "zona": "zona de metadatos del mensaje (bajo los chips de archivos, mitad inferior del contenido)",
+   "desc": "La línea '522 in · 1,078 out · 191,936 cache' se rompe: queda una 'R' huérfana al inicio de la segunda línea y la fecha 'Oct 15 03:13 PM' parte en dos líneas ('Oct 15 03:13' / 'PM'), layout de metadatos roto.",
+   "empty": false,
+   "desc_vista": "Vista móvil de una sesión tras scroll: barra superior con menú, métricas de tokens y toggle de panel; cuerpo con mensaje largo (secciones numeradas, texto en negrita, chips inline de código y chips de archivos), línea de metadatos y caja de input con controles inferiores.",
+   "evidencias": [
+    "pre/mobile-dark/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session-scrolled",
+   "sev": "friccion",
+   "zona": "barra de controles inferior (iconos imagen/micrófono/engranaje + 'Failover Fast' + 'More controls')",
+   "desc": "Mezcla de iconos pequeños y dos botones de texto en la misma fila: los iconos (imagen, engranaje) son targets táctiles pequeños y los 5 controles quedan amontonados en el ancho disponible.",
+   "empty": false,
+   "desc_vista": "Vista móvil de una sesión tras scroll: barra superior con menú, métricas de tokens y toggle de panel; cuerpo con mensaje largo (secciones numeradas, texto en negrita, chips inline de código y chips de archivos), línea de metadatos y caja de input con controles inferiores.",
+   "evidencias": [
+    "pre/mobile-dark/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session",
+   "sev": "friccion",
+   "zona": "barra inferior de controles (bajo el input)",
+   "desc": "'More controls' queda pegado al borde derecho (casi sin margen) y 'Failover Fast' se muestra como texto plano sin contenedor ni target táctil definido; los iconos (imagen, micrófono, engranaje) son pequeños y dispersos, poco claros como targets en móvil.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior (menú, '...', métricas ↑243k ↓85k 18%, icono panel), cuerpo de mensaje largo con listas, tokens inline, chips de ficheros, footer de meta (tokens/fecha), campo de input con botón enviar y barra inferior de controles.",
+   "evidencias": [
+    "pre/mobile-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "settings-open",
+   "sev": "friccion",
+   "zona": "> Fonts & layout > Monospace font > input (centro)",
+   "desc": "El valor 'Default: Noto Sa...' queda cortado contra el borde del input, sin scroll visible ni elipsis; el nombre completo de la fuente es ilegible.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+   "evidencias": [
+    "pre/mobile-dark/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "settings-open",
+   "sev": "friccion",
+   "zona": "> Fonts & layout > botones reset (↺) junto a 400/14px/820px (derecha)",
+   "desc": "Los botones de restablecer son iconos de ~24px, por debajo del mínimo táctil recomendado en móvil y muy pegados al valor numérico.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+   "evidencias": [
+    "pre/mobile-dark/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "settings-open",
+   "sev": "friccion",
+   "zona": "> Sidebar > File browser (parte inferior)",
+   "desc": "Se muestra un control con dos opciones pero la propia nota 'Phones always use tabs.' indica que en móviles no aplica: es un control inerte/confuso en este viewport.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+   "evidencias": [
+    "pre/mobile-dark/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "fila de chips de 'SECCIONES DEL SISTEMA' (media del panel)",
+   "desc": "Los chips quedan truncados sin poder leerse: 'P... 20', 'De... 1', 'Recie…' y el último chip se corta contra el borde derecho del sidebar; overflow horizontal no resuelto en 390px.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "campo de búsqueda 'Buscar sesiones, encarg...' (bajo FIJADOS)",
+   "desc": "El placeholder se corta de golpe contra el borde del panel sin elipsis ni indicación de scroll, sugiriendo desbordamiento del texto fuera del contenedor.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "lista de resultados bajo los filtros rápidos ('En Vivo 0' activo)",
+   "desc": "El filtro 'En Vivo' está activo con 0 resultados y no se muestra ningún estado vacío ni mensaje (solo hueco en blanco hasta 'Settings'), el usuario no sabe si no hay datos o si algo falló.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": "todo el sidebar: iconos de cada tarjeta de módulo (Línea de tiempo, Paneles, Post Studio, Agentes), chips (Rutinas/De…/Recie…), fila FIJADOS, input de búsqueda, botones Cronológico/Proyectos, chips Todo/En Vivo/Encargos",
+   "desc": "Los iconos se renderizan como cuadrados huecos (tofu / glyph faltante): la fuente de iconos no carga y se ven rectángulos en lugar de iconos",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": "tab-bar superior, extremo derecho: 'Session info' y el icono de panel",
+   "desc": "La barra de pestañas desborda horizontalmente: 'Session info' queda cortado por el borde derecho y el icono de panel se ve a medio cortar, sin indicación de scroll",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": "chips de filtro rápido bajo 'SECCIONES DEL SISTEMA'",
+   "desc": "Etiquetas truncadas con puntos suspensivos: 'P… 20', 'De… 1', 'Recie…' — no se distingue a qué sección corresponden (Prob…? Decisiones? Recientes?)",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": "input 'Buscar sesiones, encar…' (bloque buscador, tercio inferior del sidebar)",
+   "desc": "El placeholder del buscador queda cortado a mitad de palabra ('encar') dentro del propio campo, sin padding de fin de texto",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": "chips inferiores de filtro: fila 'Todo 418 / En Vivo 0 / Encargos 2' (abajo del sidebar)",
+   "desc": "El chip 'Encargos 2' se corta contra el borde derecho de la pantalla y la fila parece desbordar sin margen ni scroll visible",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "fila de chips 'SECCIONES DEL SISTEMA' (mitad de la captura, bajo los botones de vista)",
+   "desc": "La fila desborda el ancho del sidebar: 'P…' y 'De…' aparecen truncados y 'Recie…' queda cortado a la mitad en el borde derecho, con scroll horizontal implícito.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "fila de filtros inferior ('Todo 418', 'En Vivo 0', 'Encargos 2…')",
+   "desc": "Desborde horizontal: 'Encargos 2…' cortado en el borde derecho y el chip activo 'Todo 418' queda pegado/cortado contra el borde izquierdo de la pantalla.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "input de búsqueda ('Buscar sesiones, encarg…')",
+   "desc": "El placeholder se corta a media palabra ('encarg') sin elipsis en el borde del contenedor, dando aspecto de texto desbordado.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "iconos de las filas del menú (Línea de tiempo, Paneles, Post Studio, Agentes, Fijados) y de chips/filtros",
+   "desc": "Los glifos se renderizan como cuadrados huecos (tofu □) en lugar de iconos/emoji: falta de fuente o de iconografía, afecta a toda la lista.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "cabecera 'SECCIONES DEL SISTEMA' + botones de vista (lista/tabla/grid)",
+   "desc": "El título salta a dos líneas y queda apiñado contra los 3 botones de vista a la derecha, sin separación ni alineación clara entre título y controles.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline-patrones",
+   "sev": "friccion",
+   "zona": "botón 'Añadir', pestañas 'Eventos' y 'Patrones por hora', y texto del estado vacío ('con ▯')",
+   "desc": "Los iconos no cargan: se ven glifos de sustitución (rectángulo hueco ▯) en todos los botones, pestañas y dentro del propio mensaje, rompiendo la comprensión de la acción que se menciona ('Añade cosas del pasado con ▯').",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título, 787 eventos, botón Añadir, cerrar), pestañas Eventos/Patrones por hora y zona de contenido en estado vacío con mensaje informativo sobre fondo oscuro.",
+   "evidencias": [
+    "pre/mobile-dark/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline-patrones",
+   "sev": "friccion",
+   "zona": "cabecera vs. zona de contenido",
+   "desc": "Inconsistencia de datos: la cabecera indica '787 eventos · pasado / hoy / próximo' pero el estado vacío dice 'Aún no hay eventos retroactivos' en la pestaña Patrones por hora, lo que confunde al usuario sobre si hay datos o no.",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título, 787 eventos, botón Añadir, cerrar), pestañas Eventos/Patrones por hora y zona de contenido en estado vacío con mensaje informativo sobre fondo oscuro.",
+   "evidencias": [
+    "pre/mobile-dark/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "Global: botón 'Añadir', pestañas (Eventos/Patrones por hora), chips de filtro (Todos/Encargos/Decisiones) y filas de eventos",
+   "desc": "Todos los iconos/emojis se renderizan como cajas vacías (tofu □): falta de glifo/fuente de iconos, aparecen cuadrados huecos antes de cada etiqueta y duplicados (□ □) delante de 'caduca' en cada evento.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil en tema oscuro: barra superior con menú y 'Session info', cabecera con título, contador de eventos y botón Añadir; pestañas Eventos/Patrones, chips de filtro, buscador y lista de eventos agrupados por fecha bajo 'PRÓXIMO 13'.",
+   "evidencias": [
+    "pre/mobile-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "Fila de chips de filtro, borde derecho de la pantalla",
+   "desc": "Los chips desbordan horizontalmente: el 4º chip (con icono de aviso) aparece cortado a la mitad contra el borde derecho sin indicador de scroll ni desvanecido, por lo que se pierde parte del control.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil en tema oscuro: barra superior con menú y 'Session info', cabecera con título, contador de eventos y botón Añadir; pestañas Eventos/Patrones, chips de filtro, buscador y lista de eventos agrupados por fecha bajo 'PRÓXIMO 13'.",
+   "evidencias": [
+    "pre/mobile-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "workspaces",
+   "sev": "friccion",
+   "zona": "Cabecera de sección 'SANDBOXES & PREVIEWS UI (4)' y bloques de 'Feedback registrado:' (todas las tarjetas)",
+   "desc": "El icono/emoji previo al texto no renderiza y se muestra un glifo tofu (rectángulo vacío) tanto en el título de sección como al inicio de los textos de feedback ('▯ Fork activo en puerto 30205…', '▯ Revisado: diseño muy limpio…').",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil (390x844, tema oscuro): barra superior con menú y 'Session info', fila de cabecera con 'Volver', contador '5 workspaces · 4 activos' y expandir; debajo sección 'SANDBOXES & PREVIEWS UI (4)' con tarjetas por workspace (título, badge de puerto, rama, botones Abrir Preview / Sesión Pi, bloque de feedback o input de feedback).",
+   "evidencias": [
+    "pre/mobile-dark/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "activity",
+   "sev": "friccion",
+   "zona": "Iconos de 'Turbo', 'Normal', 'Ahorro', 'Cuota de Tokens', 'Valle', 'Ajustado', 'Renovación de ciclo' y badges",
+   "desc": "Los iconos/emojis se renderizan como cuadrados vacíos (tofu, □), indicando glyphs que no existen en la fuente; se ve un rectángulo hueco antes de cada etiqueta.",
+   "empty": false,
+   "desc_vista": "Vista de actividad móvil con barra superior, botón Volver + indicador EN VIVO, tarjetas de canales principales (ROT, Voz, FaceSearch), panel de palanca de gasto/tokens con segmented control y barra de progreso, y cabecera de sesiones pi en vivo.",
+   "evidencias": [
+    "pre/mobile-light/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "activity",
+   "sev": "friccion",
+   "zona": "Fila 'Renovación de ciclo' del panel de tokens (parte inferior de la tarjeta)",
+   "desc": "El texto se parte de forma ilegible: '(6' queda en una línea y 'días restantes)' en la siguiente, mezclándose con 'Proveedor principal: ZAI'; el paréntesis queda cortado entre líneas y la lectura de las dos columnas se interleava.",
+   "empty": false,
+   "desc_vista": "Vista de actividad móvil con barra superior, botón Volver + indicador EN VIVO, tarjetas de canales principales (ROT, Voz, FaceSearch), panel de palanca de gasto/tokens con segmented control y barra de progreso, y cabecera de sesiones pi en vivo.",
+   "evidencias": [
+    "pre/mobile-light/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "agents",
+   "sev": "friccion",
+   "zona": "cabecera de la vista: chip de filtro con engranaje 'failover-normal' (parte superior)",
+   "desc": "El chip indica un filtro 'failover-normal' pero la lista muestra 3 agentes, dos de ellos con 'litellm/failover-fast' (exohuman-ui y rot): la lista no parece filtrada o el chip no refleja el estado real, lo que genera confusión sobre qué se está viendo.",
+   "empty": false,
+   "desc_vista": "Vista Agentes en móvil: cabecera con menú, título 'Agentes' con badge '3 agentes' y chip de filtro 'failover-normal', seguida de 3 tarjetas de agente (dev, exohuman-ui, rot) con badge de modelo, descripción y chevron de desplegable.",
+   "evidencias": [
+    "pre/mobile-light/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "agents",
+   "sev": "friccion",
+   "zona": "chevrons de desplegable de las 3 tarjetas (esquina superior derecha)",
+   "desc": "El área táctil del chevron es pequeña (~20px) para interacción en móvil, objetivo por debajo del mínimo recomendado de 44px.",
+   "empty": false,
+   "desc_vista": "Vista Agentes en móvil: cabecera con menú, título 'Agentes' con badge '3 agentes' y chip de filtro 'failover-normal', seguida de 3 tarjetas de agente (dev, exohuman-ui, rot) con badge de modelo, descripción y chevron de desplegable.",
+   "evidencias": [
+    "pre/mobile-light/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "encargos",
+   "sev": "friccion",
+   "zona": "fila superior de la tarjeta (extremo derecho)",
+   "desc": "El identificador 'enc-a802372d' queda cortado/clipped contra el borde derecho de la tarjeta, sin margen ni opción visible de copiarlo; el texto se parte mid-token.",
+   "empty": false,
+   "desc_vista": "Vista de Encargos en móvil: cabecera con título 'Encargos y Objativos' + badge '6 activos', contador '228 total', botones Actualizar/Cerrar, pestañas de filtro (En curso/Todos/Completados) y selector de Área; debajo una tarjeta de encargo con badges de estado, título, cuerpo largo y botón 'Ir a sesión de trabajo'.",
+   "evidencias": [
+    "pre/mobile-light/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "encargos",
+   "sev": "friccion",
+   "zona": "fila superior de la tarjeta",
+   "desc": "Se amontonan 5 elementos en una sola fila (EN CURSO, Dificultad: Media, SISTEMA, Llevan 31m, id): 'Llevan 31m' se parte en dos líneas y el conjunto queda apretado y difícil de escanear en 390px.",
+   "empty": false,
+   "desc_vista": "Vista de Encargos en móvil: cabecera con título 'Encargos y Objativos' + badge '6 activos', contador '228 total', botones Actualizar/Cerrar, pestañas de filtro (En curso/Todos/Completados) y selector de Área; debajo una tarjeta de encargo con badges de estado, título, cuerpo largo y botón 'Ir a sesión de trabajo'.",
+   "evidencias": [
+    "pre/mobile-light/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "composer (input de mensaje, centro-inferior)",
+   "desc": "El placeholder 'Message... Type / for commands, @' se corta/desborda contra el botón de enviar: el texto termina abruptamente en '@' y queda oculto tras el botón, sin indicar las opciones completas.",
+   "empty": true,
+   "desc_vista": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "friccion",
+   "zona": "zona superior de contenido (entre la barra superior y la marca Exohuman UI)",
+   "desc": "Estado vacío pobre: ~40% de la pantalla en blanco sin mensaje de estado, ni lista de sesiones, ni CTA; el usuario no sabe que no hay sesiones o qué hacer.",
+   "empty": true,
+   "desc_vista": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "panel-detail",
+   "sev": "friccion",
+   "zona": "panel lateral derecho (drawer 'Session info', badge 'INFORMAC...') — borde derecho de la captura",
+   "desc": "todo el contenido del panel está desbordado y cortado por el borde del viewport: el badge 'INFORMAC...' aparece truncado y cada línea del texto se corta a mitad de palabra ('hecho y o', 'encargos completa', 'activas. D', 'ledgers y'), ilegible y sin respetar el ancho disponible",
+   "empty": false,
+   "desc_vista": "Vista de detalle de panel en móvil: cabecera superior, un panel lateral (Session info) abierto a la derecha, cabecera clara con '← Paneles' + título, fila de acciones y el panel embebido en fondo oscuro con tarjetas de métricas (193, 618, 86, 6, 2).",
+   "evidencias": [
+    "pre/mobile-light/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "panel-detail",
+   "sev": "friccion",
+   "zona": "panel lateral derecho sobre la zona clara central",
+   "desc": "el drawer se solapa con el contenido principal: el título 'Mejoras del Sistema' queda embutido contra el panel y la zona clara pierde ancho útil, jerarquía confusa entre ambos niveles",
+   "empty": false,
+   "desc_vista": "Vista de detalle de panel en móvil: cabecera superior, un panel lateral (Session info) abierto a la derecha, cabecera clara con '← Paneles' + título, fila de acciones y el panel embebido en fondo oscuro con tarjetas de métricas (193, 618, 86, 6, 2).",
+   "evidencias": [
+    "pre/mobile-light/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "paneles",
+   "sev": "friccion",
+   "zona": "Acordeón 'Cómo crear un panel reutilizable' (parte superior de la lista)",
+   "desc": "El glifo de apertura a la izquierda del título es un rectángulo vacío sin contexto y el chevron de la derecha está muy pegado al borde del contenedor, dando aspecto de elemento sin icono y con padding asimétrico.",
+   "empty": false,
+   "desc_vista": "Vista Paneles e Informes en móvil: cabecera con menú y 'Session info', título con badge de activos, botones de acción, pestañas de filtro, buscador, acordeón de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con descripciones y acciones Fijar/Demanda/Archivar.",
+   "evidencias": [
+    "pre/mobile-light/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-detail",
+   "sev": "friccion",
+   "zona": "título principal (parte superior de la captura)",
+   "desc": "El título queda truncado con puntos suspensivos: 'Post Studio · La Herradura · Cu…'; el nombre completo del proyecto/carrusel no se lee en móvil.",
+   "empty": false,
+   "desc_vista": "Detalle de un post del Post Studio en móvil: cabecera con título y metadatos, pestañas Carrusel/Reel, preview del carrusel estilo Instagram con foto y overlay, y barra inferior con badges de validación, botón de confirmar y pie del carrusel.",
+   "evidencias": [
+    "pre/mobile-light/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-detail",
+   "sev": "friccion",
+   "zona": "fila de metadatos bajo el título, pestañas 'Carrusel'/'Reel' y pie 'Otro Atardecer'",
+   "desc": "Varios iconos se renderizan como cuadrado vacío (□ tofu) en toda la vista: junto a 'La Herradura', en ambos botones de pestaña y en el pie del carrusel; iconografía/emoji rota que aporta ruido visual.",
+   "empty": false,
+   "desc_vista": "Detalle de un post del Post Studio en móvil: cabecera con título y metadatos, pestañas Carrusel/Reel, preview del carrusel estilo Instagram con foto y overlay, y barra inferior con badges de validación, botón de confirmar y pie del carrusel.",
+   "evidencias": [
+    "pre/mobile-light/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-detail",
+   "sev": "friccion",
+   "zona": "overlay superior de la preview de imagen (tarjeta del carrusel)",
+   "desc": "El texto 'rgsaura · La Herradura' se corta contra el borde de la tarjeta y 'La Herradura' queda con bajo contraste (gris sobre cielo claro), apenas legible.",
+   "empty": false,
+   "desc_vista": "Detalle de un post del Post Studio en móvil: cabecera con título y metadatos, pestañas Carrusel/Reel, preview del carrusel estilo Instagram con foto y overlay, y barra inferior con badges de validación, botón de confirmar y pie del carrusel.",
+   "evidencias": [
+    "pre/mobile-light/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-studio",
+   "sev": "friccion",
+   "zona": "zona de listado, bajo la tarjeta",
+   "desc": "Sólo hay una tarjeta y el resto (~80% de la pantalla) queda vacío sin ningún estado alternativo, CTA o ayuda; la sensación es de contenido incompleto o carga a medias.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: topbar con menú, título con descripción y botón Cerrar, y una única tarjeta de post (La Herradura · Cumple 27 + Buceo) con metadatos; el resto de la pantalla está en blanco.",
+   "evidencias": [
+    "pre/mobile-light/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "proposals",
+   "sev": "friccion",
+   "zona": "Pestañas 'Pendientes (1)' y 'Todas (152)', selector 'Por urgencia / caducidad' y chips de categoría",
+   "desc": "Los iconos previstos se renderizan como cajas vacías (tofu/emoji no soportados): aparece '□' delante de 'Pendientes', 'Todas' y 'Por urgencia / caducidad', en lugar del glifo real.",
+   "empty": false,
+   "desc_vista": "Vista Decisiones en móvil: cabecera con menú, botón Volver, pestañas Pendientes/Todas, orden por urgencia, chips de categoría, y una propuesta de SISTEMA con título, origen, descripción y opciones A/B en tarjetas.",
+   "evidencias": [
+    "pre/mobile-light/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session-scrolled",
+   "sev": "friccion",
+   "zona": "línea de metadatos del mensaje, esquina inferior derecha del bloque (junto a '191,936 cache')",
+   "desc": "La fecha 'Oct 15 03:13 PM' se parte en varias líneas dentro de un contenedor estrecho y deja una 'R' suelta colgando bajo la columna izquierda, señal de wrap/truncado del texto del timestamp.",
+   "empty": false,
+   "desc_vista": "Vista móvil (390x844) de una sesión con scroll: barra superior con menú, acciones y stats de tokens; cuerpo con informe markdown (listas, negritas, inline code), chips de archivos, línea de metadatos, campo de input con enviar y barra de controles inferiores.",
+   "evidencias": [
+    "pre/mobile-light/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session",
+   "sev": "friccion",
+   "zona": "pie del mensaje (metadatos, abajo a la izquierda)",
+   "desc": "Aparece una 'R' huérfana suelta en su propia línea bajo '522 in · 1,078 out · 191,936 cache', probablemente resto de un token partido o texto truncado al hacer wrap, rompiendo la línea de metadatos.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil (390×844) con mensaje de chat largo (texto enriquecido con numeraciones y negritas), chips de archivos, línea de metadatos + fecha, campo de input con botón enviar y barra inferior de controles (iconos + 'Failover Fast' / 'More controls').",
+   "evidencias": [
+    "pre/mobile-light/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "settings-open",
+   "sev": "friccion",
+   "zona": "Fonts & layout > Monospace font (input, centro-izquierda)",
+   "desc": "El valor 'Default: Noto Sa…' está truncado y se corta contra el borde del input sin elipsis ni scroll visible, sin poder leer el nombre completo de la fuente.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (Settings/General) sobre la app en móvil 390x844, tema claro: secciones Appearance, Fonts & layout, Chat y Sidebar con inputs de fuentes, sliders, toggles y segmented controls. La app subyacente apenas asoma por detrás del panel.",
+   "evidencias": [
+    "pre/mobile-light/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "settings-open",
+   "sev": "friccion",
+   "zona": "Fonts & layout > Chat content width (slider, centro)",
+   "desc": "El valor mostrado es 820px pero el thumb está al extremo izquierdo del track, mientras que el resto de sliders muestran posición coherente con su valor; sugiere desajuste valor/posición del slider.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (Settings/General) sobre la app en móvil 390x844, tema claro: secciones Appearance, Fonts & layout, Chat y Sidebar con inputs de fuentes, sliders, toggles y segmented controls. La app subyacente apenas asoma por detrás del panel.",
+   "evidencias": [
+    "pre/mobile-light/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "barra superior (tabs) - borde derecho de la captura",
+   "desc": "'Session info' aparece cortado y el icono de panel lateral queda a medio pintar: la barra de tabs desborda el ancho del viewport (overflow horizontal).",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "fila de chips de 'SECCIONES DEL SISTEMA'",
+   "desc": "Los chips llevan texto truncado ('P...', 'De...', 'Recie...') sin indicación clara de scroll ni de contenido completo; el último chip se corta contra el borde del drawer.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "campo de búsqueda 'Buscar sesiones...' - centro inferior",
+   "desc": "El placeholder se corta a media palabra ('Buscar sesiones, enca...') contra el borde del panel; el campo desborda el ancho disponible.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "fila de filtros rápidos (Todo / En Vivo / Encargos) - borde inferior derecho",
+   "desc": "El chip 'Encargos 2...' se corta en el borde derecho: overflow horizontal y target táctil incompleto, no se ve el conteo ni el final del chip.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "friccion",
+   "zona": "chip 'En Vivo' (filtro activo) vs listado",
+   "desc": "El filtro 'En Vivo' está activo pero el badge indica 0 elementos, mientras la lista sigue mostrando 'exohuman 36 sesiones' y el fijado 'Surf Plátano': estado del filtro y resultados no cuadran visualmente.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": ": fila de chips bajo 'SECCIONES DEL SISTEMA' (P.../Rutinas/De.../Recie...)",
+   "desc": "Los chips se truncan ('P...', 'De...', 'Recie...') y la fila se corta contra el borde derecho sin affordance de scroll; el usuario no puede leer qué filtro representa cada chip.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": ": campo de búsqueda 'Buscar sesiones, encarg...' (tercio inferior)",
+   "desc": "El placeholder se corta a media palabra contra el borde del input, dando sensación de desborte y dejando el hint incompleto.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": ": iconos de varias filas (Línea de tiempo, Paneles, Post Studio, Agentes, chips, buscador, toggle Cronológico/Proyectos, 'FIJADOS', '7 días')",
+   "desc": "Muchos iconos se renderizan como cuadrados/glyphs vacíos (iconos rotos o fuente faltante), mientras otros sí cargan (Actividad, Encargos, Decisiones, Voz, Workspaces): inconsistencia visual evidente.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "friccion",
+   "zona": ": chips inferiores 'Todo 418 / En Vivo 0 / Encargos 2...'",
+   "desc": "El chip 'Encargos' queda cortado por el borde derecho ('2...' sin cifra completa), con la fila desbordada sin indicación de scroll horizontal.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "barra superior de pestañas (parte superior del sidebar)",
+   "desc": "Desbordamiento horizontal: 'Session info' queda cortado y el icono del panel derecho se recorta contra el borde de la pantalla, sin indicio de scroll.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "iconos de las filas Línea de tiempo / Paneles / Post Studio / Agentes, chips 'Todo', 'En Vivo', 'Encargos', 'FIJADOS', 'De...', 'Recie...' e icono del buscador",
+   "desc": "Glifos de icono no renderizados: aparecen como cajas vacías (tofu/missing glyph) en lugar de un icono real.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "fila de chips de filtro junto a 'SECCIONES DEL SISTEMA'",
+   "desc": "Etiquetas fuertemente truncadas ('P...', 'De...', 'Recie...') con badges apretados: el usuario no puede identificar las secciones.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "friccion",
+   "zona": "fila de chips inferiores (Todo / En Vivo / Encargos)",
+   "desc": "Desbordamiento horizontal: 'Encargos 2' se corta contra el borde derecho del sidebar, sin scroll ni degradación visible.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline-patrones",
+   "sev": "friccion",
+   "zona": "cabecera vs. área de contenido (estado vacío)",
+   "desc": "La cabecera indica '787 eventos · pasado / hoy / próximo' pero el contenido dice 'Aún no hay eventos retroactivos', lo que genera una contradicción/confusión para el usuario que no sabe si hay datos o no.",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título 'Línea de tiempo', contador de eventos, botón Añadir y cerrar), dos pestañas 'Eventos' y 'Patrones por hora' (esta activa) y un estado vacío con mensaje centrado en el área de contenido.",
+   "evidencias": [
+    "pre/mobile-light/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline-patrones",
+   "sev": "friccion",
+   "zona": "iconos/emojis en todo el encabezado, pestañas y mensaje del estado vacío",
+   "desc": "Los iconos no se renderizan: aparecen como cuadrados vacíos (tofu/□) junto a 'Línea de tiempo', en las pestañas 'Eventos' y 'Patrones por hora' y en el mensaje ('Añade cosas del pasado con □'), rompiendo la comprensión de la acción referenciada.",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título 'Línea de tiempo', contador de eventos, botón Añadir y cerrar), dos pestañas 'Eventos' y 'Patrones por hora' (esta activa) y un estado vacío con mensaje centrado en el área de contenido.",
+   "evidencias": [
+    "pre/mobile-light/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "Todo el contenido (iconos de pestañas, chips de filtro, iconos de fila de evento y detalles)",
+   "desc": "Todos los iconos/emojis se renderizan como cuadrados vacíos (tofu □): antes de 'caduca:' en cada evento, en las pestañas 'Eventos' y 'Patrones por hora', y en los chips 'Encargos'/'Decisiónes'. La interfaz parece rota y se pierde toda la señalización visual.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+   "evidencias": [
+    "pre/mobile-light/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline",
+   "sev": "friccion",
+   "zona": "Fila de chips de filtro (tercer bloque), extremo derecho",
+   "desc": "Desborde horizontal: la fila de filtros se corta en el borde derecho y queda un icono de advertencia (⚠) a medio mostrar, sin indicación clara de scroll; 'Decisiónes 283' queda parcialmente junto al corte.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+   "evidencias": [
+    "pre/mobile-light/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "encargos",
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, bloque «SECCIONES DEL SISTEMA» y fila «FIJADOS»",
+   "desc": "Varios textos quedan truncados con elipsis o cortados sin ellipsis («P… 20», «Surf Plátan…», «Rutinas · enc-aca74f1f» se ve cortado en el borde inferior visible), lo que impide identificar los elementos sin hover/expansión.",
+   "empty": false,
+   "desc_vista": "Vista Encargos: sidebar izquierdo con navegación, secciones del sistema, FILES y Settings; área principal con header (5 activos / 228 total), pestañas de filtro (En curso/Activos, Todos, Completados), filtro por área, y lista de 4 tarjetas de encargos con badges de estado, dificultad, categoría, descripción y botón de acción.",
+   "evidencias": [
+    "pre/desktop-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, sesión fijada 'Surf Plátan...' (~y=645)",
+   "desc": "Nombre de sesión truncado ('Surf Plátan...') sin tooltip visible, junto a badge '7 días'; poco contexto para identificar la sesión.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "barra superior, items 'Full history' y 'Generate title'",
+   "desc": "Texto en gris muy apagado sobre fondo oscuro, casi ilegible; no queda claro si están deshabilitados o solo atenuados.",
+   "empty": false,
+   "desc_vista": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+   "evidencias": [
+    "pre/desktop-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "paneles",
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila 'Rutinas · pa-ara74f1f' y etiqueta 'FILJADOS'",
+   "desc": "Texto cortado en el borde derecho y posible typo 'FILJADOS' (¿FIJADOS?), lo que rompe la pulcritud visual de la sección.",
+   "empty": false,
+   "desc_vista": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+   "evidencias": [
+    "pre/desktop-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "paneles",
+   "sev": "cosmetica",
+   "zona": "Tarjeta 'Tablero de Tareas y Encargos Activos' (columna derecha, fila INFORMES)",
+   "desc": "Fecha '16 oct 2026' muy pegada al borde derecho de la tarjeta, con margen inferior al del resto de tarjetas.",
+   "empty": false,
+   "desc_vista": "Galería de paneles (Paneles e Informes) con sidebar izquierdo de navegación/actividad, banner de ayuda, filtros (Activos/Archivados/Todos + buscador) y rejilla de tarjetas agrupadas en 'STUDIOS & APPS' e 'INFORMES' con acciones (Fijar, Demanda, Archivar, Sesiones).",
+   "evidencias": [
+    "pre/desktop-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, fila de filtros 'Cronológico / Proyectos / Todo 418 / En Vivo 0 / Encargos'",
+   "desc": "El chip 'Encargos' queda cortado por el borde derecho del sidebar, texto incompleto.",
+   "empty": false,
+   "desc_vista": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+   "evidencias": [
+    "pre/desktop-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, item fijado 'Surf Plátan...'",
+   "desc": "Nombre del archivo fijado truncado con puntos suspensivos, se pierde el identificador del recurso.",
+   "empty": false,
+   "desc_vista": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+   "evidencias": [
+    "pre/desktop-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "zona principal, botón 'Enviar respuesta' (inferior del formulario)",
+   "desc": "El botón de envío tiene aspecto deshabilitado/casi sin contraste frente al fondo del panel, jerarquía poco clara respecto a 'Dictar audio'.",
+   "empty": false,
+   "desc_vista": "Vista de decisión con sidebar izquierdo (navegación, secciones del sistema, fijados, files) y zona principal: cabecera con filtros, ficha de propuesta 'Ruta de visión global' con contexto, 3 opciones A/B/C y formulario de respuesta personalizada con textarea y botón de envío.",
+   "evidencias": [
+    "pre/desktop-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila de filtros bajo el buscador ('Todo 418', 'En Vivo 0', 'Encargos')",
+   "desc": "El chip 'Encargos' queda cortado/clipeado contra el borde derecho del sidebar, sin indicación clara de scroll horizontal.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, campo de búsqueda 'Buscar sesiones, encargos,'",
+   "desc": "Placeholder del buscador truncado a media frase ('...encargos,'), texto cortado sin ellipsis.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, sección FILES (fila de iconos)",
+   "desc": "Fila de iconos de acciones muy juntos y de tamaño pequeño (~12-16px), difícil de distinguir y apuntar; sin etiquetas ni separación clara.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "Barra superior derecha (stats 243k/85k/26.5M/18% 1.0M)",
+   "desc": "Indicadores de uso amontonados con muy poco espaciado entre ellos y etiquetas mínimas, jerarquía poco clara.",
+   "empty": false,
+   "desc_vista": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+   "evidencias": [
+    "pre/desktop-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "desktop-dark",
+   "view": "timeline",
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, fila inferior de filtros/FILES",
+   "desc": "El chip 'Encargos' de la fila de filtros queda cortado por el borde derecho del sidebar, sugiriendo overflow horizontal no scrollable en esa franja.",
+   "empty": false,
+   "desc_vista": "Vista Timeline con sidebar de navegación/actividad a la izquierda y panel principal con pestañas Eventos/Patrones por hora, filtros por tipo, buscador y lista de eventos agrupados por fecha con contadores.",
+   "evidencias": [
+    "pre/desktop-dark/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "activity",
+   "sev": "cosmetica",
+   "zona": "Tarjetas de canal 'Voz' vs 'ROT'/'FaceSearch'",
+   "desc": "Las tarjetas ROT y FaceSearch tienen la fila 'Sesión activa: ... + Abrir sesión →' pero la tarjeta Voz no la tiene; las tres tarjetas quedan con alturas y estructura inconsistente sin estado explícito de 'sin sesión'.",
+   "empty": false,
+   "desc_vista": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+   "evidencias": [
+    "pre/mobile-dark/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "activity",
+   "sev": "cosmetica",
+   "zona": "Header superior izquierdo → botones hamburguesa y '…'",
+   "desc": "Los dos botones quedan apilados a la izquierda sin separación ni aire y el de '…' es estrecho; en el borde izquierdo los targets táctiles se sienten apretados respecto al resto de controles.",
+   "empty": false,
+   "desc_vista": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+   "evidencias": [
+    "pre/mobile-dark/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "activity",
+   "sev": "cosmetica",
+   "zona": "Selector de modo → opción 'Normal'",
+   "desc": "La etiqueta 'Normal' va en gris muy apagado sobre fondo oscuro, con contraste notablemente inferior a 'Ahorro' (verde activo); jerarquía del segmento difusa.",
+   "empty": false,
+   "desc_vista": "Vista de actividad en móvil 390x844 con tema oscuro: header con menú y 'EN VIVO', bloque 'CANALES PRINCIPALES' con 3 tarjetas (ROT, Voz, FaceSearch), panel 'PALANCA DE GASTO & PRESUPUESTO DE TOKENS' con selector de modo y barra de cuota, e inicio de 'SESIONES PI EN VIVO · 7 ACTIVAS'.",
+   "evidencias": [
+    "pre/mobile-dark/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "agents",
+   "sev": "cosmetica",
+   "zona": "chip de filtro \"failover-normal\" (cabecera, derecha)",
+   "desc": "El botón de cierre (X) dentro del chip es muy pequeño y queda muy pegado al texto \"failover-normal\", con target táctil mínimo y riesgo de toque accidental.",
+   "empty": false,
+   "desc_vista": "Vista móvil del inspector de Agentes en tema oscuro: barra superior (menú, \"...\", Session info, toggle de panel), cabecera con título \"Agentes\", badge \"3 agentes\" y chip de filtro \"failover-normal\" (engranaje + X), y 3 tarjetas de agente (dev, exohuman-ui, rot) con nombre, chip de modelo y descripción, con mucho espacio libre inferior.",
+   "evidencias": [
+    "pre/mobile-dark/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "encargos",
+   "sev": "cosmetica",
+   "zona": "tarjeta de encargo, fila de badges, junto a 'SISTEMA'",
+   "desc": "'Llevan 29m' con su icono se parte en varias líneas ('Llevan' / '29m') y queda amontonado contra 'SISTEMA' y el ID; la fila de metadatos es densa y desalineada en móvil.",
+   "empty": false,
+   "desc_vista": "Vista Encargos en móvil 390x844 con tema oscuro: cabecera con título 'Encargos y Objetivos' y badge '6 activos', controles Actualizar/Cerrar, filtros (En curso/Activos, Todos, Completados) y selector de Área, seguido de una tarjeta de encargo con badges de estado, título y descripción larga con CTA.",
+   "evidencias": [
+    "pre/mobile-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "encargos",
+   "sev": "cosmetica",
+   "zona": "tarjeta de encargo, cuerpo de texto (parte inferior de la captura)",
+   "desc": "La descripción del avance es un bloque de texto muy largo sin resumen ni truncado, desplazando el CTA 'Ir a sesión de trabajo' fuera del primer pantallazo y dificultando el escaneo en móvil.",
+   "empty": false,
+   "desc_vista": "Vista Encargos en móvil 390x844 con tema oscuro: cabecera con título 'Encargos y Objetivos' y badge '6 activos', controles Actualizar/Cerrar, filtros (En curso/Activos, Todos, Completados) y selector de Área, seguido de una tarjeta de encargo con badges de estado, título y descripción larga con CTA.",
+   "evidencias": [
+    "pre/mobile-dark/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "composer nueva sesión, placeholder del input",
+   "desc": "El placeholder se ve truncado: 'Message... Type / for commands, @' termina en '@' cortado a mitad de texto, sin indicación de continuar",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "selector de workspace bajo el título",
+   "desc": "Se lee 'workspaces/exohuman' pero con espaciado roto ('workspace s/exohuman'), aspecto de texto cortado o kerning incorrecto en la parte inferior del texto",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "barra de controles bajo el composer",
+   "desc": "El icono de micrófono aparece en verde mientras el resto de iconos y controles son grises/blancos, estado (grabando/activo) no explicado visualmente",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "barra superior, 'Session info'",
+   "desc": "'Session info' aparece en gris tenue sobre fondo oscuro con menor contraste que el resto de la barra, casi parece texto deshabilitado cuando es un control activo",
+   "empty": false,
+   "desc_vista": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+   "evidencias": [
+    "pre/mobile-dark/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "panel-detail",
+   "sev": "cosmetica",
+   "zona": "zona central de la cabecera, entre el título 'Mejoras del Sistema' y la fila de acciones",
+   "desc": "Gran hueco vertical vacío (~300px) que separa el título de los botones de acción, dejando la cabecera con aspecto de layout roto o elemento fantasma.",
+   "empty": false,
+   "desc_vista": "Vista móvil oscura de detalle de panel: barra superior con menú y 'Session info', cabecera con botón '← Paneles', título 'Mejoras del Sistema' y acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar), barra de sesiones y el panel embebido con métricas en tarjetas 2 columnas.",
+   "evidencias": [
+    "pre/mobile-dark/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "panel-detail",
+   "sev": "cosmetica",
+   "zona": "barra 'SESIONES · 0 + más... · 2 sin archivo'",
+   "desc": "Contador en 0 con '+ más...' y '2 sin archivo' resulta confuso y poco jerárquico: mismo peso/estilo para datos contradictorios.",
+   "empty": false,
+   "desc_vista": "Vista móvil oscura de detalle de panel: barra superior con menú y 'Session info', cabecera con botón '← Paneles', título 'Mejoras del Sistema' y acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar), barra de sesiones y el panel embebido con métricas en tarjetas 2 columnas.",
+   "evidencias": [
+    "pre/mobile-dark/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "paneles",
+   "sev": "cosmetica",
+   "zona": "banner 'Cómo crear un panel reutilizable' y esquina superior derecha de la tarjeta Post Studio",
+   "desc": "El icono de play/ícono de la tarjeta también aparece como cuadro sin renderizar, aspecto de asset roto",
+   "empty": false,
+   "desc_vista": "Vista Paneles e Informes en móvil: cabecera con acciones, pestañas de filtro, buscador, banner de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con acciones por panel.",
+   "evidencias": [
+    "pre/mobile-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "paneles",
+   "sev": "cosmetica",
+   "zona": "cabeceras de sección 'STUDIOS & APPS 1' / 'INFORMES 6'",
+   "desc": "El icono pequeño a la izquierda del título de sección es un cuadro vacío y el contador queda suelto sin separación tipográfica clara respecto al título",
+   "empty": false,
+   "desc_vista": "Vista Paneles e Informes en móvil: cabecera con acciones, pestañas de filtro, buscador, banner de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con acciones por panel.",
+   "evidencias": [
+    "pre/mobile-dark/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-detail",
+   "sev": "cosmetica",
+   "zona": "previsualización del slide (parte inferior de la imagen)",
+   "desc": "El slide se corta por el panel inferior de controles ('música real', validaciones, CTA) sin indicador de scroll ni separación clara entre la previsualización y la barra de acciones.",
+   "empty": false,
+   "desc_vista": "Detalle de post del Post Studio en móvil oscuro: cabecera con título del proyecto y metadatos, tabs Carrusel/Reel, previsualización del slide (foto de grupo al atardecer) y barra inferior con validaciones y CTA 'Confirmar decisión → OpenPost'.",
+   "evidencias": [
+    "pre/mobile-dark/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-detail",
+   "sev": "cosmetica",
+   "zona": "botón 'Confirmar decisión → OpenPost'",
+   "desc": "CTA principal en estado muy apagado (contraste bajo sobre el fondo oscuro) junto a 'validación caducada (revalida)', lo que hace difícil distinguir si está deshabilitado o es el estilo real del botón.",
+   "empty": false,
+   "desc_vista": "Detalle de post del Post Studio en móvil oscuro: cabecera con título del proyecto y metadatos, tabs Carrusel/Reel, previsualización del slide (foto de grupo al atardecer) y barra inferior con validaciones y CTA 'Confirmar decisión → OpenPost'.",
+   "evidencias": [
+    "pre/mobile-dark/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "post-studio",
+   "sev": "cosmetica",
+   "zona": "Área bajo la tarjeta de post (2/3 inferiores de la pantalla)",
+   "desc": "Espacio vacío enorme tras una única tarjeta, sin mensaje de contexto ni CTA; la vista parece incompleta en vez de aprovechar el espacio.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: barra superior con menú, '...' y 'Session info'; cabecera con título, subtítulo y botón 'Cerrar'; debajo una única tarjeta de post ('La Herradura · Cumple 27 + Buceo') y el resto de la pantalla en blanco.",
+   "evidencias": [
+    "pre/mobile-dark/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "'Session info' (barra superior) y rótulo 'OPCIONES PROPUESTAS:'",
+   "desc": "Texto gris muy tenue sobre fondo oscuro: contraste bajo para texto informativo y para el rótulo de sección que jerarquiza las opciones.",
+   "empty": false,
+   "desc_vista": "Vista de Decisiones en móvil (tema oscuro): barra superior, botón Volver, filtros (pestañas Pendientes/Todas, orden por urgencia, chips de categoría) y una propuesta SISTEMA con título, origen, descripción y opciones A/B/C en scroll.",
+   "evidencias": [
+    "pre/mobile-dark/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session-scrolled",
+   "sev": "cosmetica",
+   "zona": "caja de input inferior (placeholder)",
+   "desc": "El placeholder muestra solo 'for files', aparentemente truncado/cortado respecto a un texto más largo, se lee sin contexto.",
+   "empty": false,
+   "desc_vista": "Vista móvil de una sesión tras scroll: barra superior con menú, métricas de tokens y toggle de panel; cuerpo con mensaje largo (secciones numeradas, texto en negrita, chips inline de código y chips de archivos), línea de metadatos y caja de input con controles inferiores.",
+   "evidencias": [
+    "pre/mobile-dark/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session-scrolled",
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (métricas ↑243k ↓85k 18%)",
+   "desc": "Los contadores de tokens y porcentaje van muy juntos entre sí y contra el icono de panel, sin apenas separación, en viewport angosto.",
+   "empty": false,
+   "desc_vista": "Vista móvil de una sesión tras scroll: barra superior con menú, métricas de tokens y toggle de panel; cuerpo con mensaje largo (secciones numeradas, texto en negrita, chips inline de código y chips de archivos), línea de metadatos y caja de input con controles inferiores.",
+   "evidencias": [
+    "pre/mobile-dark/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "footer del mensaje, meta derecha",
+   "desc": "La fecha 'Oct 15 03:13 PM' se parte por wrap y 'PM' cae a una segunda línea, desalineada respecto al resto de la línea de meta.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior (menú, '...', métricas ↑243k ↓85k 18%, icono panel), cuerpo de mensaje largo con listas, tokens inline, chips de ficheros, footer de meta (tokens/fecha), campo de input con botón enviar y barra inferior de controles.",
+   "evidencias": [
+    "pre/mobile-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "footer del mensaje, meta izquierda",
+   "desc": "Aparece una 'R' huérfana en su propia línea bajo '522 in · 1,078 out · 191,936 cache': texto cortado/partido por wrap que rompe la línea de metadatos.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior (menú, '...', métricas ↑243k ↓85k 18%, icono panel), cuerpo de mensaje largo con listas, tokens inline, chips de ficheros, footer de meta (tokens/fecha), campo de input con botón enviar y barra inferior de controles.",
+   "evidencias": [
+    "pre/mobile-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "cuerpo del mensaje, línea de código inline",
+   "desc": "El chip de código '( console/proposals/activity/mobile-check )' ocupa casi todo el ancho útil y su borde derecho queda muy próximo al padding del contenedor, sin aire visual respecto al resto de bloques.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior (menú, '...', métricas ↑243k ↓85k 18%, icono panel), cuerpo de mensaje largo con listas, tokens inline, chips de ficheros, footer de meta (tokens/fecha), campo de input con botón enviar y barra inferior de controles.",
+   "evidencias": [
+    "pre/mobile-dark/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "settings-open",
+   "sev": "cosmetica",
+   "zona": "> Fonts & layout > etiquetas 'Interface font' / 'Monospace font' y sliders",
+   "desc": "El input y el valor/reset se agrupan a la derecha mientras el slider de debajo ocupa todo el ancho, generando una alineación en escalera poco consistente entre filas.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+   "evidencias": [
+    "pre/mobile-dark/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "settings-open",
+   "sev": "cosmetica",
+   "zona": "> Fonts & layout > placeholder 'System default' (centro)",
+   "desc": "El placeholder del input de Interface font tiene contraste bajo respecto al fondo del campo, apenas distinguible de un valor real.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+   "evidencias": [
+    "pre/mobile-dark/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (tab 'Session info' + icono de panel)",
+   "desc": "El texto 'Session info' y el icono de panel quedan pegados/cortados por el borde del viewport móvil, sin margen de seguridad.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "fila de filtros rápidos inferior ('Todo 418 / En Vivo 0 / Encargos 2')",
+   "desc": "El chip 'Encargos 2' se corta contra el borde derecho; la fila no tiene indicación de scroll ni padding final, se ve overflow horizontal.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "tarjeta de sesión fijada 'Surf Plátano · ...'",
+   "desc": "El nombre de la sesión se trunca con puntos suspensivos muy pronto por el badge '7 días' y el icono de drag, quedando identificable solo a medias.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "título 'SECCIONES DEL SISTEMA'",
+   "desc": "El título parte en dos líneas ('SISTEMA' suelto en la segunda) ocupando altura extra y desalineando visualmente el bloque de chips respecto al icono de colapso y los controles de vista.",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tema oscuro: barra superior de tabs, lista de módulos (Actividad, Línea de tiempo, Paneles…), bloque de secciones del sistema con chips, sesión fijada, buscador, orden Cronológico/Proyectos y filtros rápidos con 'En Vivo 0' activo; a la derecha se asoma el contenido principal tapado por el panel.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "cosmetica",
+   "zona": "tarjeta 'Línea de tiempo' (segunda tarjeta del menú de módulos)",
+   "desc": "El título ocupa dos líneas ('Línea de / tiempo') y el descriptor 'pasado → próximo' también parte en dos, rompiendo la altura y alineación respecto al resto de tarjetas de una línea",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-open",
+   "sev": "cosmetica",
+   "zona": "fila fijada 'Surf Plátano · ... 7 días' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión queda truncado con '…' sin tooltip ni segunda línea, dejando ver solo 'Surf Plátano ·'",
+   "empty": false,
+   "desc_vista": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "sesión fijada 'Surf Plátano · …' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión se trunca con puntos suspensivos sin mostrar el título completo, pese a haber espacio disponible si se redujera el badge '7 días'.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "texto secundario de las filas ('pasado → próximo', 'entregables', 'prompts · skills')",
+   "desc": "Contraste muy bajo sobre el fondo oscuro, apenas legible frente a los títulos en blanco de cada fila.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "área principal visible a la derecha del sidebar (borde derecho de la captura)",
+   "desc": "Fragmentos del contenido ('s, @', botón '→', 'More controls') quedan a medio cortar bajo el drawer, con sensación de solape en vez de transición limpia.",
+   "empty": false,
+   "desc_vista": "Drawer/sidebar móvil con módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), cabecera de secciones del sistema, lista agrupada por proyecto (exohuman: 36 sesiones), fijados, buscador y filtros Cronológico/Proyectos con contadores; el contenido principal queda tapado a la derecha.",
+   "evidencias": [
+    "pre/mobile-dark/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "timeline-patrones",
+   "sev": "cosmetica",
+   "zona": "mensaje de estado vacío (centro de la pantalla)",
+   "desc": "El texto del estado vacío tiene contraste bajo (gris apagado sobre fondo oscuro navy) y ocupa una franja pequeña arriba dejando el 80% de la pantalla en blanco, sin CTA ni acción directa para añadir el primer evento retroactivo.",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título, 787 eventos, botón Añadir, cerrar), pestañas Eventos/Patrones por hora y zona de contenido en estado vacío con mensaje informativo sobre fondo oscuro.",
+   "evidencias": [
+    "pre/mobile-dark/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Campo 'Rama:' de la tarjeta 'Fork Brand Design' (parte central-izquierda)",
+   "desc": "El nombre de rama 'fork/brand-design' se parte a mitad de segmento y envuelve en dos líneas ('fork/brand-' / 'design'), rompiendo la lectura del path justo donde se une a los botones de la derecha.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil (390x844, tema oscuro): barra superior con menú y 'Session info', fila de cabecera con 'Volver', contador '5 workspaces · 4 activos' y expandir; debajo sección 'SANDBOXES & PREVIEWS UI (4)' con tarjetas por workspace (título, badge de puerto, rama, botones Abrir Preview / Sesión Pi, bloque de feedback o input de feedback).",
+   "evidencias": [
+    "pre/mobile-dark/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-dark",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Valores de 'Rama:' (mono) y etiqueta 'Puerto' de los badges en todas las tarjetas",
+   "desc": "Contraste muy bajo del texto secundario gris sobre fondo oscuro (rama 'sandbox/variant-a', 'sandbox/variant-b' y label 'Puerto'), apenas diferenciable del fondo de la tarjeta en móvil.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil (390x844, tema oscuro): barra superior con menú y 'Session info', fila de cabecera con 'Volver', contador '5 workspaces · 4 activos' y expandir; debajo sección 'SANDBOXES & PREVIEWS UI (4)' con tarjetas por workspace (título, badge de puerto, rama, botones Abrir Preview / Sesión Pi, bloque de feedback o input de feedback).",
+   "evidencias": [
+    "pre/mobile-dark/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "activity",
+   "sev": "cosmetica",
+   "zona": "Iconos '?' (ayuda) en la esquina superior derecha de cada tarjeta de canal",
+   "desc": "Target táctil muy pequeño y de contraste bajo (gris sobre blanco), difícil de alcanzar con el dedo en móvil.",
+   "empty": false,
+   "desc_vista": "Vista de actividad móvil con barra superior, botón Volver + indicador EN VIVO, tarjetas de canales principales (ROT, Voz, FaceSearch), panel de palanca de gasto/tokens con segmented control y barra de progreso, y cabecera de sesiones pi en vivo.",
+   "evidencias": [
+    "pre/mobile-light/activity"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "agents",
+   "sev": "cosmetica",
+   "zona": "tarjeta 'exohuman-ui' y 'rot': chevron de desplegable (esquina superior derecha de cada tarjeta)",
+   "desc": "El chevron cae a una fila propia por debajo del nombre+badge (hueco vacío entre el badge y el chevron), mientras en la tarjeta 'dev' sí está alineado con el título: alineación inconsistente entre tarjetas y espacio muerto.",
+   "empty": false,
+   "desc_vista": "Vista Agentes en móvil: cabecera con menú, título 'Agentes' con badge '3 agentes' y chip de filtro 'failover-normal', seguida de 3 tarjetas de agente (dev, exohuman-ui, rot) con badge de modelo, descripción y chevron de desplegable.",
+   "evidencias": [
+    "pre/mobile-light/agents"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "encargos",
+   "sev": "cosmetica",
+   "zona": "título de la tarjeta (final 3ª línea)",
+   "desc": "El título termina en '~22:5', texto cortado de forma sospechosa (posible hora '22:50' truncada o falta de línea final).",
+   "empty": false,
+   "desc_vista": "Vista de Encargos en móvil: cabecera con título 'Encargos y Objativos' + badge '6 activos', contador '228 total', botones Actualizar/Cerrar, pestañas de filtro (En curso/Todos/Completados) y selector de Área; debajo una tarjeta de encargo con badges de estado, título, cuerpo largo y botón 'Ir a sesión de trabajo'.",
+   "evidencias": [
+    "pre/mobile-light/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "encargos",
+   "sev": "cosmetica",
+   "zona": "barra superior (izquierda)",
+   "desc": "Los iconos de menú (☰ y '...') están muy cerca entre sí y divididos por separadores verticales, creando diana táctil pequeña y aspecto de controles amontonados.",
+   "empty": false,
+   "desc_vista": "Vista de Encargos en móvil: cabecera con título 'Encargos y Objativos' + badge '6 activos', contador '228 total', botones Actualizar/Cerrar, pestañas de filtro (En curso/Todos/Completados) y selector de Área; debajo una tarjeta de encargo con badges de estado, título, cuerpo largo y botón 'Ir a sesión de trabajo'.",
+   "evidencias": [
+    "pre/mobile-light/encargos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "barra superior izquierda (botones hamburguesa y '...')",
+   "desc": "Los dos iconos de menú quedan muy pegados entre sí y a borde, con targets táctiles pequeños y sin separación clara, fácil de pulsar erróneamente en móvil.",
+   "empty": true,
+   "desc_vista": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "fila de controles bajo el composer (iconos + 'Failover Normal' + 'More controls')",
+   "desc": "Controles desiguales y amontonados: iconos pequeños (imagen, mic, gear) mezclados con dos textos-botón largos sin contenedor ni jerarquía; 'Failover Normal' y 'More controls' aprietan la fila en 390px.",
+   "empty": true,
+   "desc_vista": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "home",
+   "sev": "cosmetica",
+   "zona": "placeholder del composer",
+   "desc": "El placeholder es demasiado largo para el ancho disponible en móvil, se pierde información de atajos ('Type / for commands, @...').",
+   "empty": true,
+   "desc_vista": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+   "evidencias": [
+    "pre/mobile-light/home"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "panel-detail",
+   "sev": "cosmetica",
+   "zona": "botón 'Fijar', título del panel embebido y badge 'candidato a fijar · regla 29'",
+   "desc": "iconos sin renderizar (cajas tofu/glyph faltante) en los tres puntos: cuadrado vacío antes de 'Fijar', antes de 'Mejoras del Sistema' y antes de 'candidato a fijar'",
+   "empty": false,
+   "desc_vista": "Vista de detalle de panel en móvil: cabecera superior, un panel lateral (Session info) abierto a la derecha, cabecera clara con '← Paneles' + título, fila de acciones y el panel embebido en fondo oscuro con tarjetas de métricas (193, 618, 86, 6, 2).",
+   "evidencias": [
+    "pre/mobile-light/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "panel-detail",
+   "sev": "cosmetica",
+   "zona": "zona clara central, entre el título 'Mejoras del Sistema' y la fila de botones de acción",
+   "desc": "gran hueco en blanco vertical sin contenido ni separación visual, desperdicio de espacio en móvil que empuja los controles hacia abajo",
+   "empty": false,
+   "desc_vista": "Vista de detalle de panel en móvil: cabecera superior, un panel lateral (Session info) abierto a la derecha, cabecera clara con '← Paneles' + título, fila de acciones y el panel embebido en fondo oscuro con tarjetas de métricas (193, 618, 86, 6, 2).",
+   "evidencias": [
+    "pre/mobile-light/panel-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "paneles",
+   "sev": "cosmetica",
+   "zona": "Todos los iconos inline de la vista (a la izquierda de 'Fijar', 'Demanda', 'Archivar', 'Sesiones · 2', marcadores de sección 'STUDIOS & APPS' / 'INFORMES', cabecera de tarjeta 'Post Studio', acordeón 'Cómo crear un panel reutilizable')",
+   "desc": "Los iconos se renderizan como rectángulos vacíos (tofu/glifos faltantes), por lo que los botones y marcadores pierden su significado visual y parecen defectos de fuente.",
+   "empty": false,
+   "desc_vista": "Vista Paneles e Informes en móvil: cabecera con menú y 'Session info', título con badge de activos, botones de acción, pestañas de filtro, buscador, acordeón de ayuda y lista de tarjetas agrupadas por secciones (Studios & Apps, Informes) con descripciones y acciones Fijar/Demanda/Archivar.",
+   "evidencias": [
+    "pre/mobile-light/paneles"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-detail",
+   "sev": "cosmetica",
+   "zona": "botón 'Confirmar decisión → OpenPost' (barra inferior)",
+   "desc": "El botón aparece en estado deshabilitado con texto gris muy claro sobre fondo claro; cuesta leerlo y no se distingue bien de un elemento inactivo frente a uno activo.",
+   "empty": false,
+   "desc_vista": "Detalle de un post del Post Studio en móvil: cabecera con título y metadatos, pestañas Carrusel/Reel, preview del carrusel estilo Instagram con foto y overlay, y barra inferior con badges de validación, botón de confirmar y pie del carrusel.",
+   "evidencias": [
+    "pre/mobile-light/post-detail"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-studio",
+   "sev": "cosmetica",
+   "zona": "card 'La Herradura · Cumple 27 + Buceo', fila de tags/etiquetas",
+   "desc": "Los iconos de las etiquetas (lugar, fecha, número) se renderizan como glifos rotos/cuadrados (□), probablemente emoji sin soporte de fuente, y no comunican nada.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: topbar con menú, título con descripción y botón Cerrar, y una única tarjeta de post (La Herradura · Cumple 27 + Buceo) con metadatos; el resto de la pantalla está en blanco.",
+   "evidencias": [
+    "pre/mobile-light/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "post-studio",
+   "sev": "cosmetica",
+   "zona": "cabecera Post Studio, icono a la izquierda del título",
+   "desc": "El icono junto a 'Post Studio' aparece como un rectángulo con marcas laterales, mismo patrón de glifo dudoso/no reconocible que el de la esquina superior derecha.",
+   "empty": false,
+   "desc_vista": "Vista Post Studio en móvil: topbar con menú, título con descripción y botón Cerrar, y una única tarjeta de post (La Herradura · Cumple 27 + Buceo) con metadatos; el resto de la pantalla está en blanco.",
+   "evidencias": [
+    "pre/mobile-light/post-studio"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "Botón circular al derecha del selector de orden (parte superior, junto a 'Por urgencia / caducidad')",
+   "desc": "El icono interior parece renderizarse mal (glifo cortado/desconocido tipo '«-'), no se identifica qué acción realiza (colapsar paneles?).",
+   "empty": false,
+   "desc_vista": "Vista Decisiones en móvil: cabecera con menú, botón Volver, pestañas Pendientes/Todas, orden por urgencia, chips de categoría, y una propuesta de SISTEMA con título, origen, descripción y opciones A/B en tarjetas.",
+   "evidencias": [
+    "pre/mobile-light/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "Chip de origen 'enc-a802372d · 21-10' (bajo el título de la propuesta)",
+   "desc": "El texto del chip se parte en dos líneas ('21-' y '10') dentro de la caja, con aspecto de corte de ID en vez de salto de línea limpio.",
+   "empty": false,
+   "desc_vista": "Vista Decisiones en móvil: cabecera con menú, botón Volver, pestañas Pendientes/Todas, orden por urgencia, chips de categoría, y una propuesta de SISTEMA con título, origen, descripción y opciones A/B en tarjetas.",
+   "evidencias": [
+    "pre/mobile-light/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "proposals",
+   "sev": "cosmetica",
+   "zona": "Fila 'Origen:' + chip + enlace 'Ver sesión en vivo' (mitad del card de propuesta)",
+   "desc": "El enlace 'Ver sesión en vivo' envuelve en dos líneas y queda muy cerca del chip de origen, la fila se siente apretada y desalineada en 390px.",
+   "empty": false,
+   "desc_vista": "Vista Decisiones en móvil: cabecera con menú, botón Volver, pestañas Pendientes/Todas, orden por urgencia, chips de categoría, y una propuesta de SISTEMA con título, origen, descripción y opciones A/B en tarjetas.",
+   "evidencias": [
+    "pre/mobile-light/proposals"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session-scrolled",
+   "sev": "cosmetica",
+   "zona": "campo de input inferior, placeholder",
+   "desc": "El placeholder del composer muestra solo 'for files', texto sin contexto aparente (parece truncado o incoherente para un campo de envío de mensajes).",
+   "empty": false,
+   "desc_vista": "Vista móvil (390x844) de una sesión con scroll: barra superior con menú, acciones y stats de tokens; cuerpo con informe markdown (listas, negritas, inline code), chips de archivos, línea de metadatos, campo de input con enviar y barra de controles inferiores.",
+   "evidencias": [
+    "pre/mobile-light/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session-scrolled",
+   "sev": "cosmetica",
+   "zona": "barra de controles inferior",
+   "desc": "Mezcla de iconos sueltos (imagen, micrófono, engranaje) con enlaces de texto ('Failover Fast', 'More controls') sin contenedor ni jerarquía clara; 'Failover Fast' no tiene aspecto de control accionable y los targets de los iconos quedan pequeños y muy separados.",
+   "empty": false,
+   "desc_vista": "Vista móvil (390x844) de una sesión con scroll: barra superior con menú, acciones y stats de tokens; cuerpo con informe markdown (listas, negritas, inline code), chips de archivos, línea de metadatos, campo de input con enviar y barra de controles inferiores.",
+   "evidencias": [
+    "pre/mobile-light/session-scrolled"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "pie del mensaje (fecha, abajo a la derecha)",
+   "desc": "'Oct 15 03:13 PM' se parte en dos líneas dejando 'PM' solo en la segunda por ancho insuficiente de la columna de fecha.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil (390×844) con mensaje de chat largo (texto enriquecido con numeraciones y negritas), chips de archivos, línea de metadatos + fecha, campo de input con botón enviar y barra inferior de controles (iconos + 'Failover Fast' / 'More controls').",
+   "evidencias": [
+    "pre/mobile-light/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "barra inferior de controles (bajo el input)",
+   "desc": "Los iconos de imagen, micrófono y engranaje son pequeños y están bastante juntos entre sí y respecto a los textos 'Failover Fast' y 'More controls', lo que dificulta toques precisos en móvil.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil (390×844) con mensaje de chat largo (texto enriquecido con numeraciones y negritas), chips de archivos, línea de metadatos + fecha, campo de input con botón enviar y barra inferior de controles (iconos + 'Failover Fast' / 'More controls').",
+   "evidencias": [
+    "pre/mobile-light/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "session",
+   "sev": "cosmetica",
+   "zona": "metadatos del mensaje (línea inferior izquierda)",
+   "desc": "El texto '522 in · 1,078 out · 191,936 cache' está en gris muy claro sobre blanco, contraste bajo de lectura.",
+   "empty": false,
+   "desc_vista": "Vista de sesión en móvil (390×844) con mensaje de chat largo (texto enriquecido con numeraciones y negritas), chips de archivos, línea de metadatos + fecha, campo de input con botón enviar y barra inferior de controles (iconos + 'Failover Fast' / 'More controls').",
+   "evidencias": [
+    "pre/mobile-light/session"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "settings-open",
+   "sev": "cosmetica",
+   "zona": "Chat > toggles (lado derecho)",
+   "desc": "Los toggles 'Expand thinking blocks by default' y 'Show actions for selected text' son pequeños y de bajo contraste (gris sobre gris), target táctil justo para móvil.",
+   "empty": false,
+   "desc_vista": "Panel de Ajustes (Settings/General) sobre la app en móvil 390x844, tema claro: secciones Appearance, Fonts & layout, Chat y Sidebar con inputs de fuentes, sliders, toggles y segmented controls. La app subyacente apenas asoma por detrás del panel.",
+   "evidencias": [
+    "pre/mobile-light/settings-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "tarjeta 'FIJADOS' - elemento 'Surf Plátano · ...'",
+   "desc": "El nombre de la sesión se trunca ('Surf Plátano · ...') sin elipsis visible ni tooltip, solo se ve el inicio del título.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "tarjeta 'Línea de tiempo'",
+   "desc": "El título ocupa dos líneas mientras el resto de tarjetas son de una, rompiendo la altura/ritmo vertical de la lista.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-envivo",
+   "sev": "cosmetica",
+   "zona": "textos secundarios ('pasado → próximo', '36 sesiones · 13 recientes', badges) ",
+   "desc": "Gris muy claro sobre blanco con contraste bajo, cerca de no cumplir AA en móvil; difícil de leer con luz ambiental.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-envivo"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "cosmetica",
+   "zona": ": sesión fijada 'Surf Plátano · ...' (bloque FIJADOS)",
+   "desc": "El título de la sesión fijada se truncia con puntos suspensivos y no se llega a ver el nombre completo del contexto.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "cosmetica",
+   "zona": ": textos secundarios 'pasado → próximo' (Línea de tiempo) y 'prompts · skills' (Agentes)",
+   "desc": "Contraste muy bajo (gris claro sobre blanco), apenas legibles en móvil con luz ambiental.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-open",
+   "sev": "cosmetica",
+   "zona": ": barra de pestañas superior ('Session info' y icono de panel, borde derecho)",
+   "desc": "La barra superior queda parcialmente tapada/cortada por el drawer y el icono de panel queda pegado al borde derecho con el texto 'Session info' truncado visualmente por el overlay.",
+   "empty": false,
+   "desc_vista": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-open"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "input de búsqueda (parte inferior)",
+   "desc": "Placeholder truncado a 'Buscar sesiones, enca...' sin terminar la palabra 'encargos'.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "tarjeta fijada 'Surf Plátano' (bloque FIJADOS)",
+   "desc": "Nombre truncado como 'Surf Plátano · ...' con el badge '7 días' pegado al texto cortado, se pierde la info del proyecto.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "sidebar-proyectos",
+   "sev": "cosmetica",
+   "zona": "cabecera 'SECCIONES DEL SISTEMA'",
+   "desc": "Título en dos líneas amontonado junto a los tres iconos de vista (lista/tabla/grid), con la flecha de colapso desalineada respecto al bloque.",
+   "empty": false,
+   "desc_vista": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+   "evidencias": [
+    "pre/mobile-light/sidebar-proyectos"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline-patrones",
+   "sev": "cosmetica",
+   "zona": "mensaje del estado vacío, línea 2",
+   "desc": "El texto hace referencia a un icono ('con □') sin etiqueta textual ni botón de acción, por lo que el usuario no puede saber a qué control se refiere ni lanzar la acción desde el propio estado vacío (sin CTA).",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título 'Línea de tiempo', contador de eventos, botón Añadir y cerrar), dos pestañas 'Eventos' y 'Patrones por hora' (esta activa) y un estado vacío con mensaje centrado en el área de contenido.",
+   "evidencias": [
+    "pre/mobile-light/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline-patrones",
+   "sev": "cosmetica",
+   "zona": "mensaje del estado vacío, texto completo",
+   "desc": "El texto del estado vacío usa un gris muy claro sobre fondo casi blanco, con contraste bajo que lo hace poco legible en móvil.",
+   "empty": true,
+   "desc_vista": "Vista Timeline en móvil con cabecera (título 'Línea de tiempo', contador de eventos, botón Añadir y cerrar), dos pestañas 'Eventos' y 'Patrones por hora' (esta activa) y un estado vacío con mensaje centrado en el área de contenido.",
+   "evidencias": [
+    "pre/mobile-light/timeline-patrones"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline",
+   "sev": "cosmetica",
+   "zona": "Chips de filtro, tercera pastilla",
+   "desc": "Error tipográfico: aparece 'Decisiónes 283' en lugar de 'Decisiones'.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+   "evidencias": [
+    "pre/mobile-light/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline",
+   "sev": "cosmetica",
+   "zona": "Metadatos de cada evento (línea gris bajo el título)",
+   "desc": "Contraste bajo: la línea '20:00 · ocio · pendiente · ...' en gris muy claro sobre blanco apenas se distingue del fondo, difícil de leer en móvil.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+   "evidencias": [
+    "pre/mobile-light/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "timeline",
+   "sev": "cosmetica",
+   "zona": "Descripciones de evento (2ª línea de metadatos)",
+   "desc": "Los textos se cortan con '…' a ~2 líneas ('Recorrido no línea…', 'detectar canciones/playlists nuevas con contexto de cuándo …'), quedando información clave incompleta sin acción de 'ver más' visible.",
+   "empty": false,
+   "desc_vista": "Vista Timeline móvil (390x844) con cabecera 'Línea de tiempo' + botón Añadir, pestañas Eventos/Patrones por hora, fila de filtros (Todos/Encargos/Decisiónes) y buscador, seguidos de la lista de eventos agrupados por día (Próximo 13) con títulos y metadatos.",
+   "evidencias": [
+    "pre/mobile-light/timeline"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Icono de la cabecera de sección 'SANDBOXES & PREVIEWS UI (4)', parte superior del listado",
+   "desc": "El glifo del icono aparece como cuadrado de reemplazo (□ / tofu) en lugar del icono real: fuente de iconos/emoji no cargada o glifo inexistente.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+   "evidencias": [
+    "pre/mobile-light/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Bloque 'Feedback registrado' de las tarjetas 'Fork Brand Design' y 'Variante A'",
+   "desc": "El carácter inicial del texto de feedback se renderiza como cuadrado de reemplazo (□) en vez del emoji/símbolo original, en ambos registros.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+   "evidencias": [
+    "pre/mobile-light/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Campo 'Rama:' de la tarjeta 'Fork Brand Design: Estilo y Marca ExoHuman', fila central",
+   "desc": "El nombre de rama 'fork/brand-design' se parte en dos líneas ('fork/brand-' / 'design') rompiendo el nombre del repositorio y desalineando la fila respecto al resto de tarjetas.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+   "evidencias": [
+    "pre/mobile-light/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Botón 'Sesión Pi' de todas las tarjetas, derecha de la fila de acciones",
+   "desc": "El label se parte en dos líneas ('Sesión' / 'Pi') por ancho insuficiente del botón, en lugar de mantener el texto en una línea.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+   "evidencias": [
+    "pre/mobile-light/workspaces"
+   ],
+   "count": 1
+  },
+  {
+   "server": "pre",
+   "combo": "mobile-light",
+   "view": "workspaces",
+   "sev": "cosmetica",
+   "zona": "Etiqueta 'Rama:' de las tarjetas, columna izquierda",
+   "desc": "El texto de la etiqueta 'Rama:' tiene contraste muy bajo sobre el fondo claro, apenas legible comparado con el resto de la tarjeta.",
+   "empty": false,
+   "desc_vista": "Vista Workspaces en móvil con header (menú, Session info), barra de volver/contador y tarjetas apiladas por categoría (SANDBOXES & PREVIEWS UI) con título, badge de puerto, rama, botones Abrir Preview / Sesión Pi y bloque de feedback o input con Guardar.",
+   "evidencias": [
+    "pre/mobile-light/workspaces"
+   ],
+   "count": 1
+  }
+ ],
+ "mecanico": [
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 177x36px (<44px): BUTTON \"workspaces/exohuman\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 40x40px (<44px): BUTTON \"Send\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 40x40px (<44px): BUTTON \"Hablar por voz con ROT\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 167x32px (<44px): BUTTON \"Failover Normal\""
+  },
+  {
+   "view": "home",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 101x32px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 163x24px (<30px): BUTTON \"Open SessionSidebar.tsx\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 149x24px (<30px): BUTTON \"Open SidebarIcons.tsx\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 206x24px (<30px): BUTTON \"Open workspaces-data.test.mj\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 211x24px (<30px): BUTTON \"Open session-activity.test.m\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 164x24px (<30px): BUTTON \"Open workspaces-data.ts\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 149x24px (<30px): BUTTON \"Open mobile-check.mjs\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 198x24px (<30px): BUTTON \"Open SessionSidebar.test.mjs\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 93x24px (<30px): BUTTON \"Open route.ts\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 59x22px (<30px): BUTTON \"Copy\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 163x24px (<44px): BUTTON \"Open SessionSidebar.tsx\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 149x24px (<44px): BUTTON \"Open SidebarIcons.tsx\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 206x24px (<44px): BUTTON \"Open workspaces-data.test.mj\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 211x24px (<44px): BUTTON \"Open session-activity.test.m\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 164x24px (<44px): BUTTON \"Open workspaces-data.ts\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 149x24px (<44px): BUTTON \"Open mobile-check.mjs\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 198x24px (<44px): BUTTON \"Open SessionSidebar.test.mjs\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x24px (<44px): BUTTON \"Open route.ts\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 59x22px (<44px): BUTTON \"Copy\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 40x40px (<44px): BUTTON \"Send\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 40x40px (<44px): BUTTON \"Hablar por voz con ROT\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 167x32px (<44px): BUTTON \"Failover Fast\""
+  },
+  {
+   "view": "session",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 101x32px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 84x34px (<44px): BUTTON \"Añadir evento pasado\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 34x34px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 85x30px (<44px): BUTTON \"📜 Eventos\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 150x30px (<44px): BUTTON \"📊 Patrones por hora\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 87x30px (<44px): BUTTON \"Todos 780\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 120x30px (<44px): BUTTON \"📦 Encargos 443\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 131x30px (<44px): BUTTON \"🎯 Decisiones 281\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 94x30px (<44px): BUTTON \"⚠️ Fallos 40\""
+  },
+  {
+   "view": "timeline",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 366x38px (<44px): INPUT \"Buscar eventos\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 31x27px (<30px): BUTTON \"Actualizar decisiones\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 98x25px (<30px): BUTTON \"Todas (150)\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 85x33px (<44px): BUTTON \"Volver al chat\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 115x40px (<44px): BUTTON \"🎯 Pendientes\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 108x40px (<44px): BUTTON \"📋 Todas (150)\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 255x41px (<44px): SELECT \"⏰ Por urgencia / caducidad⚡ \""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 31x27px (<44px): BUTTON \"Actualizar decisiones\""
+  },
+  {
+   "view": "proposals",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 98x25px (<44px): BUTTON \"Todas (150)\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 64x28px (<30px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "post-studio",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 64x28px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 86x28px (<30px): BUTTON \"Actualizar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 64x28px (<30px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 178x27px (<30px): BUTTON \"Ir a sesión de trabajo\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x28px (<44px): BUTTON \"Actualizar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 64x28px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 188x31px (<44px): SELECT \"TodasAUTOMATIZACIONAYUDABOTC\""
+  },
+  {
+   "view": "encargos",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 178x27px (<44px): BUTTON \"Ir a sesión de trabajo\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 86x28px (<30px): BUTTON \"Actualizar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 64x28px (<30px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 61x28px (<30px): BUTTON \"📌Fijar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 93x28px (<30px): BUTTON \"🔍Demanda\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 86x28px (<30px): BUTTON \"🗄️Archivar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 126x28px (<30px): BUTTON \"💬Sesiones · 2▼\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x28px (<44px): BUTTON \"Actualizar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 64x28px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 75x30px (<44px): BUTTON \"Activos\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 101x30px (<44px): BUTTON \"Archivados\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 65x30px (<44px): BUTTON \"Todos\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 280x38px (<44px): INPUT \"Buscar panel\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 348x39px (<44px): BUTTON \"🛠️Cómo crear un panel reuti\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 61x28px (<44px): BUTTON \"📌Fijar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x28px (<44px): BUTTON \"🔍Demanda\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x28px (<44px): BUTTON \"🗄️Archivar\""
+  },
+  {
+   "view": "paneles",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 126x28px (<44px): BUTTON \"💬Sesiones · 2▼\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "elemento cortado fuera del viewport (right 424px): SPAN \"informe20 oct 2026· Qué se ha \""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "elemento cortado fuera del viewport (right 406px): SPAN \"informe\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "elemento cortado fuera del viewport (right 405px): SPAN \"20 oct 2026\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "elemento cortado fuera del viewport (right 424px): SPAN \"· Qué se ha hecho y qué está e\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 86x28px (<30px): BUTTON \"← Paneles\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 62x28px (<30px): BUTTON \"📌 Fijar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 108x28px (<30px): BUTTON \"Copiar enlace\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 80x28px (<30px): BUTTON \"Recargar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 114x28px (<30px): BUTTON \"Pestaña nueva\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 64x28px (<30px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x28px (<44px): BUTTON \"← Paneles\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 62x28px (<44px): BUTTON \"📌 Fijar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 108x28px (<44px): BUTTON \"Copiar enlace\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 80x28px (<44px): BUTTON \"Recargar\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 114x28px (<44px): BUTTON \"Pestaña nueva\""
+  },
+  {
+   "view": "panel-detail",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 64x28px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 38x28px (<30px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "agents",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 38x28px (<44px): BUTTON \"Cerrar\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 31x25px (<30px): BUTTON \"Actualizar actividad\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 74x28px (<30px): BUTTON \"🚀 Turbo\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 82x28px (<30px): BUTTON \"⚖️ Normal\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 75x28px (<30px): BUTTON \"🌱 Ahorro\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 81x31px (<44px): BUTTON \"Volver al chat\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 31x25px (<44px): BUTTON \"Actualizar actividad\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 74x28px (<44px): BUTTON \"🚀 Turbo\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 82x28px (<44px): BUTTON \"⚖️ Normal\""
+  },
+  {
+   "view": "activity",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 75x28px (<44px): BUTTON \"🌱 Ahorro\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 31x25px (<30px): BUTTON \"Actualizar workspaces\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 23x23px (<30px): BUTTON \"↻\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "friccion",
+   "desc": "target táctil 67x28px (<30px): BUTTON \"Guardar\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 109x40px (<44px): BUTTON \"🎯Encargos229\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 93x40px (<44px): BUTTON \"⏱️Rutinas69\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 86x40px (<44px): BUTTON \"🛠️Trabajo5\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 105x40px (<44px): BUTTON \"🏠Personal111\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show sidebar\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"More controls\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 282x35px (<44px): BUTTON \"Session info\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 36x36px (<44px): BUTTON \"Show file panel\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 81x31px (<44px): BUTTON \"Volver al chat\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 31x25px (<44px): BUTTON \"Actualizar workspaces\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 23x23px (<44px): BUTTON \"↻\""
+  },
+  {
+   "view": "workspaces",
+   "vp": "mobile",
+   "sev": "cosmetica",
+   "desc": "target táctil 67x28px (<44px): BUTTON \"Guardar\""
+  },
+  {
+   "view": "session",
+   "vp": "tablet",
+   "sev": "friccion",
+   "desc": "elemento cortado fuera del viewport (right 828px): BUTTON \"\""
+  }
+ ]
+}

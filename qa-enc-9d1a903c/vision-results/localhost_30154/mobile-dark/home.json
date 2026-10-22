@@ -1,0 +1,28 @@
+{
+ "desc": "Home en móvil con tema oscuro: barra superior (menú hamburguesa, '...', 'Session info', toggle de panel) y bloque central con logo 'Exohuman UI' + versión, ruta de workspace, composer con botón de envío y fila de controles (adjuntar, micrófono, chip 'Failover Normal', 'More controls'); enorme espacio vacío arriba y abajo y avatar 'N' fijo abajo-izquierda. No se ve el sidebar de sesiones ni ninguna sesión/estado vacío explicativo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "composer / campo de mensaje (centro de la captura)",
+   "desc": "El placeholder 'Message... Type / for commands, @' se corta: el texto sigue ('@' para menciones, etc.) pero se trunca contra el borde del input, sin indicación de desbordamiento."
+  },
+  {
+   "sev": "friccion",
+   "zona": ">60% de la pantalla (bloques superior e inferior alrededor del bloque central)",
+   "desc": ">No hay sidebar de lista de sesiones ni estado vacío (mensaje/título/CTA 'nueva sesión'): la vista queda como pantalla casi vacía sin explicar qué hacer, la jerarquía queda centrada en un punto con mucho espacio muerto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de controles bajo el composer (iconos + textos 'Failover Normal' y 'More controls')",
+   "desc": "Targets táctiles pequeños en móvil: los iconos de adjuntar/micrófono/gear son ~20px visibles y 'More controls' es texto sin contorno ni área de botón definida, poco reconocible como control pulsable."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "metadatos bajo el título 'Exohuman UI' y ruta 'workspace/exohuman'",
+   "desc": "Contraste muy bajo del texto secundario (v1.0.0 · pi v1.2.0 y 'workspace/') sobre fondo oscuro, difícil de leer en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

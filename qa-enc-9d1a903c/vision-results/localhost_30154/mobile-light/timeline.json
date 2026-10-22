@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Timeline en móvil (390x844, tema claro): barra superior, cabecera con 'Añadir'/cerrar, pestañas Eventos/Patrones, chips de filtro, buscador y lista de eventos agrupados por día (PRÓXIMO, fechas con contador).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro (Todos/Encargos/Decisiones) — borde derecho de la pantalla",
+   "desc": "La fila desborda horizontalmente: el cuarto chip queda cortado por el borde derecho, mostrando solo el icono ⚠, sin indicación de scroll ni de contenido oculto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante circular 'N' — esquina inferior izquierda",
+   "desc": "El FAB solapa el texto de la última tarjeta ('…Action-Black-Alcalá)'), tapando parte del contenido en vez de respetar un margen inferior."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "iconos de pestañas/chips y de cada evento (izquierda de los títulos)",
+   "desc": "Los iconos se renderizan como cuadrados vacíos (tofu): glifo/emoji no soportado o falta de fallback, dando sensación de elemento roto en 'Eventos', 'Patrones por hora', 'Encargos', 'Decisiones' y en las cabeceras de evento."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "línea de metadatos de cada evento (20:00 · ocio · pendiente · …)",
+   "desc": "Texto secundario en gris muy claro sobre fondo blanco con contraste bajo y elipsis a mitad de palabra ('no línea…', 'cuándo …'), dificultando la lectura rápida."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

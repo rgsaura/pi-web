@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Actividad en móvil: cabecera con menú, 'Volver' e indicador EN VIVO; sección 'Canales Principales' con 3 tarjetas de servicio (ROT, Voz, FaceSearch), panel 'Palanca de Gasto & Presupuesto de Tokens' con selector de modo, cuota semanal y progreso, y el inicio de 'Secciones Pi en vivo'.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Selector Turbo/Normal/Ahorro y bloque de Cuota de Tokens (palanca de gasto)",
+   "desc": "Los iconos/emojis no renderizan y aparecen como cajas vacías (tofu) delante de 'Turbo', 'Ahorro', 'Cuota de Tokens', 'Valle', 'Renovación de ciclo' y 'Proveedor principal'; se pierde el significado del icono y da sensación de interfaz rota."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Botón flotante circular 'N' (esquina inferior izquierda) sobre el título 'SESIONES PI EN VIVO · 1 ACTIVAS'",
+   "desc": "El botón flotante solapa y tapa las primeras letras del encabezado de sección ('SE...'), impidiendo leer el título completo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Pie de la tarjeta Palanca de Gasto (línea de renovación de ciclo y proveedor)",
+   "desc": "El texto '(6 días restantes)' se parte entre líneas y se intercala visualmente con la columna derecha 'Proveedor principal: ZAI', mezclando dos bloques de información y generando saltos de línea confusos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Icono '?' (ayuda) en la esquina superior derecha de las tarjetas ROT, Voz y FaceSearch",
+   "desc": "Icono gris muy claro con bajo contraste sobre fondo blanco y área táctil muy pequeña para un viewport móvil de 390px."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "activity.png"
+}

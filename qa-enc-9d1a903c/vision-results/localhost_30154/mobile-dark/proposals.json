@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Decisiones en móvil (tema oscuro): cabecera con menú y 'Session info', botón Volver, pestañas Pendientes/Todas, selector de orden con botón auxiliar, chips de categoría, y tarjeta de propuesta de SISTEMA con título, origen, descripción y dos opciones (A/B) al final.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Fila de orden (botón a la derecha del desplegable 'Por urgencia / caducidad')",
+   "desc": "El icono dentro del botón aparece recortado/glyph roto ('←.'), se ve un carácter cortado en vez de un símbolo legible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Botón auxiliar junto al desplegable de orden (parte superior derecha del bloque de filtros)",
+   "desc": "El control mide aprox. 30x30px CSS, por debajo del mínimo de 44x44px recomendado para móvil; target táctil demasiado pequeño y pegado al select."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Opción B 'Instalar WisprFlow en la VM (Rodrigo)' - badge de letra (fila inferior)",
+   "desc": "El avatar circular 'N' se solapa sobre el badge 'B', ocultando su letra; iconos montados y badge ilegible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Pestañas y desplegable de orden ('Pendientes (1)', 'Todas (154)', 'Por urgencia / caducidad')",
+   "desc": "Los emojis/iconos previos a los textos no renderizan y se muestran como cuadrados vacíos (tofu), rompiendo la señal visual de cada control."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Línea de metadatos de la tarjeta ('hace 43 minutos')",
+   "desc": "El texto temporal en gris apagado sobre el fondo oscuro tiene contraste bajo frente a los badges vecinos, con jerarquía menos clara."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

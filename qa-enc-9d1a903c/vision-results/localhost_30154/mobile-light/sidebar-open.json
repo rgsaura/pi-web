@@ -1,0 +1,38 @@
+{
+ "desc": "Drawer lateral de sesiones en móvil (tema claro) superpuesto sobre la vista principal: menú de navegación con badges, sección 'SECCIONES DEL SISTEMA' con chips, fijados, buscador, filtros y footer con Settings; el contenido de la app se ve atenuado a la derecha.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "menú de navegación del drawer (Línea de tiempo, Paneles, Post Studio, Agentes, Proyectos, Recientes, Buscar…, Cronológico, Todo, Encargos, Settings, badge '7 días')",
+   "desc": "Los iconos de estos elementos no renderizan y aparecen como cajas vacías (tofu ▯): icon font/emoji no cargado, mientras otros iconos (Sessions, Files, Actividad, Workspaces) sí se ven. Se pierde el anclaje visual de cada fila."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro inferior ('Todo 418', 'En Vivo 0', 'Encargos 2…')",
+   "desc": "La fila se desborda del ancho del drawer: el chip 'Encargos 2…' queda cortado por el borde derecho sin scroll ni indicación de que hay más chips."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante 'N' (esquina inferior izquierda)",
+   "desc": "El FAB solapa el chip 'Todo 418' y tapa parte de su texto, bloqueando el acceso táctil a ese filtro."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra superior (header), extremo derecho",
+   "desc": "'Session info' y el icono de panel quedan recortados por el borde derecho de la pantalla; overflow horizontal del header en 390px."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "item fijado 'Surf Plátano · …' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión se trunca con puntos suspensivos casi de inmediato; el chip '7 días' ocupa espacio que podría usar el título."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "item 'Línea de tiempo' del menú",
+   "desc": "El rótulo salta a dos líneas mientras el resto de filas son de una, generando alturas de fila irregulares y 'pasado → próximo' descentrado verticalmente."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-open.png"
+}

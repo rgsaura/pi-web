@@ -33,6 +33,7 @@ export function TurnWrittenFiles({ files, onOpenFile }: {
               alignItems: "center",
               gap: 4,
               padding: "2px 8px",
+              minHeight: 32,
               fontSize: 12,
               fontFamily: "var(--font-mono)",
               color: "var(--text)",

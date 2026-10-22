@@ -1,0 +1,28 @@
+{
+ "desc": "Panel de Ajustes (sección General) sobre la app en móvil 390x844 con tema oscuro: selector de tema, fuentes/anchos con sliders, opciones de chat y sidebar. Contenido largo con scroll vertical dentro del panel.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "campo 'Monospace font' (Fonts & layout, parte central)",
+   "desc": "El valor por defecto 'Default: Noto Sa...' aparece truncado dentro del input; no se ve el nombre completo de la fuente y el placeholder es más largo que el campo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona inferior 'Sidebar' (borde inferior de la captura)",
+   "desc": "El botón flotante circular 'N' se solapa sobre la etiqueta 'File browser' y el texto de ayuda 'Phones always use tabs', que además queda cortado por el borde inferior de la pantalla."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "campo 'Interface font' y 'Monospace font' (fila de sliders)",
+   "desc": "Los inputs de fuente y el valor '400' con botón reset quedan muy apretados en móvil: el texto del input apenas tiene margen derecho antes del valor numérico."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sección Appearance (parte superior)",
+   "desc": "Los 6 temas se distribuyen en 2 filas de 3 pero con espaciado irregular: 'Light' y 'Mist' quedan más alejados del borde que 'Rose'/'System', dando una rejilla desalineada."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "settings-open.png"
+}

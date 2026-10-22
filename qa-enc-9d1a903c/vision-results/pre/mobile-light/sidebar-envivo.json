@@ -1,0 +1,48 @@
+{
+ "desc": "Sidebar móvil (drawer) con navegación de sesión: tarjetas de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones), bloque 'SECCIONES DEL SISTEMA' con chips, listado de proyectos/sesiones fijadas, buscador y filtros rápidos con 'En Vivo' activo; detrás se ve el contenido principal atenuado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra superior (tabs) - borde derecho de la captura",
+   "desc": "'Session info' aparece cortado y el icono de panel lateral queda a medio pintar: la barra de tabs desborda el ancho del viewport (overflow horizontal)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de 'SECCIONES DEL SISTEMA'",
+   "desc": "Los chips llevan texto truncado ('P...', 'De...', 'Recie...') sin indicación clara de scroll ni de contenido completo; el último chip se corta contra el borde del drawer."
+  },
+  {
+   "sev": "friccion",
+   "zona": "campo de búsqueda 'Buscar sesiones...' - centro inferior",
+   "desc": "El placeholder se corta a media palabra ('Buscar sesiones, enca...') contra el borde del panel; el campo desborda el ancho disponible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros rápidos (Todo / En Vivo / Encargos) - borde inferior derecho",
+   "desc": "El chip 'Encargos 2...' se corta en el borde derecho: overflow horizontal y target táctil incompleto, no se ve el conteo ni el final del chip."
+  },
+  {
+   "sev": "friccion",
+   "zona": "chip 'En Vivo' (filtro activo) vs listado",
+   "desc": "El filtro 'En Vivo' está activo pero el badge indica 0 elementos, mientras la lista sigue mostrando 'exohuman 36 sesiones' y el fijado 'Surf Plátano': estado del filtro y resultados no cuadran visualmente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'FIJADOS' - elemento 'Surf Plátano · ...'",
+   "desc": "El nombre de la sesión se trunca ('Surf Plátano · ...') sin elipsis visible ni tooltip, solo se ve el inicio del título."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'Línea de tiempo'",
+   "desc": "El título ocupa dos líneas mientras el resto de tarjetas son de una, rompiendo la altura/ritmo vertical de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "textos secundarios ('pasado → próximo', '36 sesiones · 13 recientes', badges) ",
+   "desc": "Gris muy claro sobre blanco con contraste bajo, cerca de no cumplir AA en móvil; difícil de leer con luz ambiental."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-envivo.png"
+}

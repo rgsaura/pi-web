@@ -1180,6 +1180,19 @@
   font-size: 11px;
 }
 
+/* Touch devices (regla 27): targets táctiles ≥36px — 28px de alto es in-tocable en móvil. */
+@media (pointer: coarse) {
+  .config-button-small {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .config-button-default {
+    height: 40px;
+  }
+}
+
 .config-button-primary {
   border-color: var(--accent);
   background: var(--accent);

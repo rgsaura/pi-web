@@ -1,0 +1,33 @@
+{
+ "desc": "Vista home móvil con barra superior (menú, '...', 'Session info', toggle de sidebar), gran área vacía central y bloque inferior con marca Exohuman UI, selector de workspace y composer de mensaje con fila de controles (imagen, mic, gear, 'Failover Normal', 'More controls'). No se ve sidebar de sesiones ni datos: la pantalla está casi completamente vacía.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "composer (input de mensaje, centro-inferior)",
+   "desc": "El placeholder 'Message... Type / for commands, @' se corta/desborda contra el botón de enviar: el texto termina abruptamente en '@' y queda oculto tras el botón, sin indicar las opciones completas."
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona superior de contenido (entre la barra superior y la marca Exohuman UI)",
+   "desc": "Estado vacío pobre: ~40% de la pantalla en blanco sin mensaje de estado, ni lista de sesiones, ni CTA; el usuario no sabe que no hay sesiones o qué hacer."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior izquierda (botones hamburguesa y '...')",
+   "desc": "Los dos iconos de menú quedan muy pegados entre sí y a borde, con targets táctiles pequeños y sin separación clara, fácil de pulsar erróneamente en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de controles bajo el composer (iconos + 'Failover Normal' + 'More controls')",
+   "desc": "Controles desiguales y amontonados: iconos pequeños (imagen, mic, gear) mezclados con dos textos-botón largos sin contenedor ni jerarquía; 'Failover Normal' y 'More controls' aprietan la fila en 390px."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "placeholder del composer",
+   "desc": "El placeholder es demasiado largo para el ancho disponible en móvil, se pierde información de atajos ('Type / for commands, @...')."
+  }
+ ],
+ "empty": true,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

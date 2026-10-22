@@ -1,0 +1,28 @@
+{
+ "desc": "Vista de Decisiones en móvil (tema oscuro): barra superior, botón Volver, filtros (pestañas Pendientes/Todas, orden por urgencia, chips de categoría) y una propuesta SISTEMA con título, origen, descripción y opciones A/B/C en scroll.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Pestañas 'Pendientes (1)' / 'Todas (152)' y selector 'Por urgencia / caducidad'",
+   "desc": "Los iconos que preceden al texto se renderizan como cuadrados vacíos (tofu): emoji/glifo faltante en esas tres ubicaciones, mientras que '⚡ Sistema (1)' sí renderiza su emoji."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Fila 'Origen:' de la tarjeta de propuesta",
+   "desc": "El chip de código 'enc-a802372d · 21-10' se parte en dos líneas cortando el valor '21-10', y el enlace 'Ver sesión en vivo' también se parte en dos líneas dejando el icono de enlace externo suelto arriba; conjunto desordenado y difícil de escanear."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Botón de invertir orden junto al dropdown de ordenación (parte superior derecha del bloque de filtros)",
+   "desc": "Target táctil muy pequeño (~28x28 px reales, por debajo de 44 px) y con un glyph ambiguo apenas legible; difícil de pulsar en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "'Session info' (barra superior) y rótulo 'OPCIONES PROPUESTAS:'",
+   "desc": "Texto gris muy tenue sobre fondo oscuro: contraste bajo para texto informativo y para el rótulo de sección que jerarquiza las opciones."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "proposals.png"
+}

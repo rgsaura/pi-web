@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Timeline en móvil con cabecera (título, 787 eventos, botón Añadir, cerrar), pestañas Eventos/Patrones por hora y zona de contenido en estado vacío con mensaje informativo sobre fondo oscuro.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "botón 'Añadir', pestañas 'Eventos' y 'Patrones por hora', y texto del estado vacío ('con ▯')",
+   "desc": "Los iconos no cargan: se ven glifos de sustitución (rectángulo hueco ▯) en todos los botones, pestañas y dentro del propio mensaje, rompiendo la comprensión de la acción que se menciona ('Añade cosas del pasado con ▯')."
+  },
+  {
+   "sev": "friccion",
+   "zona": "cabecera vs. zona de contenido",
+   "desc": "Inconsistencia de datos: la cabecera indica '787 eventos · pasado / hoy / próximo' pero el estado vacío dice 'Aún no hay eventos retroactivos' en la pestaña Patrones por hora, lo que confunde al usuario sobre si hay datos o no."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "mensaje de estado vacío (centro de la pantalla)",
+   "desc": "El texto del estado vacío tiene contraste bajo (gris apagado sobre fondo oscuro navy) y ocupa una franja pequeña arriba dejando el 80% de la pantalla en blanco, sin CTA ni acción directa para añadir el primer evento retroactivo."
+  }
+ ],
+ "empty": true,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline-patrones.png"
+}

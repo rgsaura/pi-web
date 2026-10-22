@@ -1,0 +1,33 @@
+{
+ "desc": "Vista de detalle de panel en móvil: cabecera con botón atrás, título 'Mejoras del Sistema', badge INFORME, descripción y dos filas de acciones; franja de sesiones y panel embebido con título, badge de candidato, tarjetas de métricas y sección de sesiones activas con una tarjeta de encargo al final.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta inferior 'ENCARGO OFICIAL' (abajo, parte izquierda)",
+   "desc": "El avatar circular con la 'N' se solapa con el texto del título, tapando las primeras letras de 'ENCARGO OFICIAL (enc-c1f96651)'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha",
+   "desc": "El icono de toggle de panel queda pegado al borde derecho del viewport y aparece parcialmente cortado por el margen de la pantalla."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "badge amarillo 'candidato a fijar · regla 29'",
+   "desc": "La palabra 'fijar' aparece con un tachado (strikethrough) encima del texto, lo que sugiere un error de render o un estado inconsistente en el badge."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera + inicio del panel embebido",
+   "desc": "El título 'Mejoras del Sistema' aparece duplicado a poca distancia (cabecera y panel), lo que ensucia la jerarquía y consume espacio vertical."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "franja 'SESIONES · 0 + más... · 2 sin archivo'",
+   "desc": "La franja mezcla '0' sesiones con '2 sin archivo' y un enlace '+ más...' de texto pequeño, un mensaje contradictorio y difícil de tocar en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "panel-detail.png"
+}

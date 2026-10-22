@@ -1,0 +1,22 @@
+{
+ "desc": "Vista móvil del inspector de Agentes en tema oscuro: barra superior (menú, \"...\", Session info, toggle de panel), cabecera con título \"Agentes\", badge \"3 agentes\" y chip de filtro \"failover-normal\" (engranaje + X), y 3 tarjetas de agente (dev, exohuman-ui, rot) con nombre, chip de modelo y descripción, con mucho espacio libre inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta \"exohuman-ui\" (2ª tarjeta, centro de la captura)",
+   "desc": "El chevron de expandir cae a una línea inferior, desalineado respecto al nombre/chip de modelo; en las tarjetas \"dev\" y \"rot\" el chevron sí está alineado con el nombre, lo que rompe la consistencia visual entre tarjetas."
+  },
+  {
+   "sev": "friccion",
+   "zona": "chevrons de expandir de las 3 tarjetas (esquina superior derecha de cada tarjeta)",
+   "desc": "El control de expandir es un triángulo pequeño (~20px) suelto en la esquina, con target táctil por debajo de lo recomendado en móvil y difícil de distinguir como control accionable."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "chip de filtro \"failover-normal\" (cabecera, derecha)",
+   "desc": "El botón de cierre (X) dentro del chip es muy pequeño y queda muy pegado al texto \"failover-normal\", con target táctil mínimo y riesgo de toque accidental."
+  }
+ ],
+ "_model": "mimo-v2.6-pro",
+ "_file": "agents.png"
+}

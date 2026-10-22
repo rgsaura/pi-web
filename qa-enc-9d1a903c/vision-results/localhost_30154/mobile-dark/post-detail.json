@@ -1,0 +1,28 @@
+{
+ "desc": "Detalle de post del Post Studio en móvil (tema oscuro): cabecera con título y metadatos, badge PRE y Cerrar, pestañas Carrusel/Reel, preview de slide del carrusel con cabecera de usuario, y zona inferior con estado de música/validación, botón de confirmación y footer de resumen.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Título de cabecera ('Post Studio · La Herradura · Cu...')",
+   "desc": "El título del post queda truncado con puntos suspensivos y no se lee completo en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Línea de metadatos y pestañas 'Carrusel'/'Reel'",
+   "desc": "Los iconos se renderizan como cajas vacías (glyph faltante/tofu) en vez de los iconos reales, tanto en metadatos como en las pestañas."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Cabecera de la slide del carrusel (sobre la imagen, arriba a la izquierda)",
+   "desc": "El texto 'La Herradura' del header de la slide se corta/queda pegado al borde derecho del contenedor de la imagen sin margen."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Footer inferior ('Carrusel · 15 fotos · Otro Atardecer')",
+   "desc": "Texto en gris muy tenue sobre fondo oscuro, contraste bajo y apenas legible."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-detail.png"
+}

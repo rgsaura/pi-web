@@ -1,0 +1,43 @@
+{
+ "desc": "Home móvil en tema oscuro: barra superior con menú, '...' y 'Session info'; bloque central con logo 'Exohuman UI', selector de workspace y composer de nueva sesión con controles debajo; el resto de la pantalla está vacío.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "composer nueva sesión, placeholder del input",
+   "desc": "El placeholder se ve truncado: 'Message... Type / for commands, @' termina en '@' cortado a mitad de texto, sin indicación de continuar"
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona superior de la vista (debajo de la barra superior hasta el logo)",
+   "desc": "Más del 50% de la pantalla (unos 600px) está vacío sin estado vacío ni indicación; no se ve el sidebar de sesiones prometido y la composición queda colgando sin jerarquía"
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra de controles bajo el composer (iconos imagen, micrófono, ajustes)",
+   "desc": "Los iconos son de ~20px sin área táctil aparente de 44px mínima, mientras que junto a ellos 'Failover Normal' y 'More controls' son texto grande: mezcla de targets pequeños y grandes en la misma fila"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "selector de workspace bajo el título",
+   "desc": "Se lee 'workspaces/exohuman' pero con espaciado roto ('workspace s/exohuman'), aspecto de texto cortado o kerning incorrecto en la parte inferior del texto"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de controles bajo el composer",
+   "desc": "El icono de micrófono aparece en verde mientras el resto de iconos y controles son grises/blancos, estado (grabando/activo) no explicado visualmente"
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra de controles bajo el composer, derecha",
+   "desc": "'Failover Normal' y 'More controls' son texto plano sin affordance de botón ni separación clara respecto a los iconos, jerarquía confusa en la misma línea"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, 'Session info'",
+   "desc": "'Session info' aparece en gris tenue sobre fondo oscuro con menor contraste que el resto de la barra, casi parece texto deshabilitado cuando es un control activo"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

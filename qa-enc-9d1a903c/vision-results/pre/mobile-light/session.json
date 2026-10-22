@@ -1,0 +1,28 @@
+{
+ "desc": "Vista de sesión en móvil (390×844) con mensaje de chat largo (texto enriquecido con numeraciones y negritas), chips de archivos, línea de metadatos + fecha, campo de input con botón enviar y barra inferior de controles (iconos + 'Failover Fast' / 'More controls').",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "pie del mensaje (metadatos, abajo a la izquierda)",
+   "desc": "Aparece una 'R' huérfana suelta en su propia línea bajo '522 in · 1,078 out · 191,936 cache', probablemente resto de un token partido o texto truncado al hacer wrap, rompiendo la línea de metadatos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "pie del mensaje (fecha, abajo a la derecha)",
+   "desc": "'Oct 15 03:13 PM' se parte en dos líneas dejando 'PM' solo en la segunda por ancho insuficiente de la columna de fecha."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior de controles (bajo el input)",
+   "desc": "Los iconos de imagen, micrófono y engranaje son pequeños y están bastante juntos entre sí y respecto a los textos 'Failover Fast' y 'More controls', lo que dificulta toques precisos en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "metadatos del mensaje (línea inferior izquierda)",
+   "desc": "El texto '522 in · 1,078 out · 191,936 cache' está en gris muy claro sobre blanco, contraste bajo de lectura."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

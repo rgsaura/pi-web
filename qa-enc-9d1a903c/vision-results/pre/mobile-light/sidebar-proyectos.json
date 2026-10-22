@@ -1,0 +1,43 @@
+{
+ "desc": "Sidebar drawer de sesiones en móvil (iPhone 390x844, tema claro) sobre contenido atenuado: barra superior de pestañas, tarjetas de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), bloque 'SECCIONES DEL SISTEMA' con chips de filtro, lista de proyectos, fijados, buscador y filtros inferiores + Settings.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "barra superior de pestañas (parte superior del sidebar)",
+   "desc": "Desbordamiento horizontal: 'Session info' queda cortado y el icono del panel derecho se recorta contra el borde de la pantalla, sin indicio de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos de las filas Línea de tiempo / Paneles / Post Studio / Agentes, chips 'Todo', 'En Vivo', 'Encargos', 'FIJADOS', 'De...', 'Recie...' e icono del buscador",
+   "desc": "Glifos de icono no renderizados: aparecen como cajas vacías (tofu/missing glyph) en lugar de un icono real."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtro junto a 'SECCIONES DEL SISTEMA'",
+   "desc": "Etiquetas fuertemente truncadas ('P...', 'De...', 'Recie...') con badges apretados: el usuario no puede identificar las secciones."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de chips inferiores (Todo / En Vivo / Encargos)",
+   "desc": "Desbordamiento horizontal: 'Encargos 2' se corta contra el borde derecho del sidebar, sin scroll ni degradación visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "input de búsqueda (parte inferior)",
+   "desc": "Placeholder truncado a 'Buscar sesiones, enca...' sin terminar la palabra 'encargos'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta fijada 'Surf Plátano' (bloque FIJADOS)",
+   "desc": "Nombre truncado como 'Surf Plátano · ...' con el badge '7 días' pegado al texto cortado, se pierde la info del proyecto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera 'SECCIONES DEL SISTEMA'",
+   "desc": "Título en dos líneas amontonado junto a los tres iconos de vista (lista/tabla/grid), con la flecha de colapso desalineada respecto al bloque."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-proyectos.png"
+}

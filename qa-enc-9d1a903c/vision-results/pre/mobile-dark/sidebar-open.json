@@ -1,0 +1,43 @@
+{
+ "desc": "Sidebar de sesiones en móvil (390x844) con tab-bar superior, menú de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque SECCIONES DEL SISTEMA con chips, árbol de sesiones (exohuman, FIJADOS), buscador y filtros (Cronológico/Proyectos, Todo/En Vivo/Encargos). El contenido principal queda parcialmente visible sin scrim detrás del sidebar.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "todo el sidebar: iconos de cada tarjeta de módulo (Línea de tiempo, Paneles, Post Studio, Agentes), chips (Rutinas/De…/Recie…), fila FIJADOS, input de búsqueda, botones Cronológico/Proyectos, chips Todo/En Vivo/Encargos",
+   "desc": "Los iconos se renderizan como cuadrados huecos (tofu / glyph faltante): la fuente de iconos no carga y se ven rectángulos en lugar de iconos"
+  },
+  {
+   "sev": "friccion",
+   "zona": "tab-bar superior, extremo derecho: 'Session info' y el icono de panel",
+   "desc": "La barra de pestañas desborda horizontalmente: 'Session info' queda cortado por el borde derecho y el icono de panel se ve a medio cortar, sin indicación de scroll"
+  },
+  {
+   "sev": "friccion",
+   "zona": "chips de filtro rápido bajo 'SECCIONES DEL SISTEMA'",
+   "desc": "Etiquetas truncadas con puntos suspensivos: 'P… 20', 'De… 1', 'Recie…' — no se distingue a qué sección corresponden (Prob…? Decisiones? Recientes?)"
+  },
+  {
+   "sev": "friccion",
+   "zona": "input 'Buscar sesiones, encar…' (bloque buscador, tercio inferior del sidebar)",
+   "desc": "El placeholder del buscador queda cortado a mitad de palabra ('encar') dentro del propio campo, sin padding de fin de texto"
+  },
+  {
+   "sev": "friccion",
+   "zona": "chips inferiores de filtro: fila 'Todo 418 / En Vivo 0 / Encargos 2' (abajo del sidebar)",
+   "desc": "El chip 'Encargos 2' se corta contra el borde derecho de la pantalla y la fila parece desbordar sin margen ni scroll visible"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'Línea de tiempo' (segunda tarjeta del menú de módulos)",
+   "desc": "El título ocupa dos líneas ('Línea de / tiempo') y el descriptor 'pasado → próximo' también parte en dos, rompiendo la altura y alineación respecto al resto de tarjetas de una línea"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila fijada 'Surf Plátano · ... 7 días' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión queda truncado con '…' sin tooltip ni segunda línea, dejando ver solo 'Surf Plátano ·'"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-open.png"
+}

@@ -1,0 +1,43 @@
+{
+ "desc": "Sidebar móvil de sesiones abierto sobre la app (overlay atenuado): pestañas superiores, menú vertical de módulos (Actividad, Timeline, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Voz), sección de árbol con chips de filtro, búsqueda, toggle de orden y chips de estado abajo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": ": fila de chips bajo 'SECCIONES DEL SISTEMA' (P.../Rutinas/De.../Recie...)",
+   "desc": "Los chips se truncan ('P...', 'De...', 'Recie...') y la fila se corta contra el borde derecho sin affordance de scroll; el usuario no puede leer qué filtro representa cada chip."
+  },
+  {
+   "sev": "friccion",
+   "zona": ": campo de búsqueda 'Buscar sesiones, encarg...' (tercio inferior)",
+   "desc": "El placeholder se corta a media palabra contra el borde del input, dando sensación de desborte y dejando el hint incompleto."
+  },
+  {
+   "sev": "friccion",
+   "zona": ": iconos de varias filas (Línea de tiempo, Paneles, Post Studio, Agentes, chips, buscador, toggle Cronológico/Proyectos, 'FIJADOS', '7 días')",
+   "desc": "Muchos iconos se renderizan como cuadrados/glyphs vacíos (iconos rotos o fuente faltante), mientras otros sí cargan (Actividad, Encargos, Decisiones, Voz, Workspaces): inconsistencia visual evidente."
+  },
+  {
+   "sev": "friccion",
+   "zona": ": chips inferiores 'Todo 418 / En Vivo 0 / Encargos 2...'",
+   "desc": "El chip 'Encargos' queda cortado por el borde derecho ('2...' sin cifra completa), con la fila desbordada sin indicación de scroll horizontal."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": ": sesión fijada 'Surf Plátano · ...' (bloque FIJADOS)",
+   "desc": "El título de la sesión fijada se truncia con puntos suspensivos y no se llega a ver el nombre completo del contexto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": ": textos secundarios 'pasado → próximo' (Línea de tiempo) y 'prompts · skills' (Agentes)",
+   "desc": "Contraste muy bajo (gris claro sobre blanco), apenas legibles en móvil con luz ambiental."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": ": barra de pestañas superior ('Session info' y icono de panel, borde derecho)",
+   "desc": "La barra superior queda parcialmente tapada/cortada por el drawer y el icono de panel queda pegado al borde derecho con el texto 'Session info' truncado visualmente por el overlay."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-open.png"
+}

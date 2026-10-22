@@ -1,0 +1,38 @@
+{
+ "desc": "Home con sidebar izquierdo de navegación, secciones del sistema, listado de sesiones/filtros y, en el centro, el composer de nueva sesión con título, selector de workspace, input de mensaje y barra de herramientas. Tema oscuro, sin datos de sesión todavía.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips 'SECCIONES DEL SISTEMA' (mitad izquierda, ~y=510)",
+   "desc": "Los chips ('P... 20', 'Rutin...', 'D... 1', 'Recl...') quedan cortados horizontalmente contra el borde del sidebar: overflow sin scroll visible, texto ilegible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips de filtro inferior (~y=770)",
+   "desc": "El chip 'Encargos' se corta contra el borde derecho del sidebar; la fila desborda y se pierde información."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, encabezado de grupo entre 'exohuman' y 'FIJADOS' (~y=595)",
+   "desc": "El texto 'Rutinas · qa-aca74f1f' aparece recortado verticalmente/pegado al borde del separador de 'FIJADOS', como si la fila quedara ocluida."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, campo de búsqueda (~y=697)",
+   "desc": "Placeholder 'Buscar sesiones, encargos,' truncado a la mitad de la frase dentro del input; se pierde el resto del texto descriptivo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, sesión fijada 'Surf Plátan...' (~y=645)",
+   "desc": "Nombre de sesión truncado ('Surf Plátan...') sin tooltip visible, junto a badge '7 días'; poco contexto para identificar la sesión."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior, items 'Full history' y 'Generate title'",
+   "desc": "Texto en gris muy apagado sobre fondo oscuro, casi ilegible; no queda claro si están deshabilitados o solo atenuados."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

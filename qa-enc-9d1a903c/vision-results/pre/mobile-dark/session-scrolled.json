@@ -1,0 +1,28 @@
+{
+ "desc": "Vista móvil de una sesión tras scroll: barra superior con menú, métricas de tokens y toggle de panel; cuerpo con mensaje largo (secciones numeradas, texto en negrita, chips inline de código y chips de archivos), línea de metadatos y caja de input con controles inferiores.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "zona de metadatos del mensaje (bajo los chips de archivos, mitad inferior del contenido)",
+   "desc": "La línea '522 in · 1,078 out · 191,936 cache' se rompe: queda una 'R' huérfana al inicio de la segunda línea y la fecha 'Oct 15 03:13 PM' parte en dos líneas ('Oct 15 03:13' / 'PM'), layout de metadatos roto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "caja de input inferior (placeholder)",
+   "desc": "El placeholder muestra solo 'for files', aparentemente truncado/cortado respecto a un texto más largo, se lee sin contexto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha (métricas ↑243k ↓85k 18%)",
+   "desc": "Los contadores de tokens y porcentaje van muy juntos entre sí y contra el icono de panel, sin apenas separación, en viewport angosto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra de controles inferior (iconos imagen/micrófono/engranaje + 'Failover Fast' + 'More controls')",
+   "desc": "Mezcla de iconos pequeños y dos botones de texto en la misma fila: los iconos (imagen, engranaje) son targets táctiles pequeños y los 5 controles quedan amontonados en el ancho disponible."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session-scrolled.png"
+}

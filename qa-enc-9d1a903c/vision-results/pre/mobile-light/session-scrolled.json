@@ -1,0 +1,23 @@
+{
+ "desc": "Vista móvil (390x844) de una sesión con scroll: barra superior con menú, acciones y stats de tokens; cuerpo con informe markdown (listas, negritas, inline code), chips de archivos, línea de metadatos, campo de input con enviar y barra de controles inferiores.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "línea de metadatos del mensaje, esquina inferior derecha del bloque (junto a '191,936 cache')",
+   "desc": "La fecha 'Oct 15 03:13 PM' se parte en varias líneas dentro de un contenedor estrecho y deja una 'R' suelta colgando bajo la columna izquierda, señal de wrap/truncado del texto del timestamp."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "campo de input inferior, placeholder",
+   "desc": "El placeholder del composer muestra solo 'for files', texto sin contexto aparente (parece truncado o incoherente para un campo de envío de mensajes)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra de controles inferior",
+   "desc": "Mezcla de iconos sueltos (imagen, micrófono, engranaje) con enlaces de texto ('Failover Fast', 'More controls') sin contenedor ni jerarquía clara; 'Failover Fast' no tiene aspecto de control accionable y los targets de los iconos quedan pequeños y muy separados."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session-scrolled.png"
+}

@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Encargos en móvil 390x844 con tema oscuro: cabecera con título 'Encargos y Objetivos' y badge '6 activos', controles Actualizar/Cerrar, filtros (En curso/Activos, Todos, Completados) y selector de Área, seguido de una tarjeta de encargo con badges de estado, título y descripción larga con CTA.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "tarjeta de encargo, fila de badges, borde derecho (parte media de la captura)",
+   "desc": "El identificador 'enc-a802372d…' queda cortado/desbordado fuera del borde derecho de la tarjeta; se rompe en varias líneas y no se puede leer completo, generando overflow horizontal dentro del card."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta de encargo, fila de badges, junto a 'SISTEMA'",
+   "desc": "'Llevan 29m' con su icono se parte en varias líneas ('Llevan' / '29m') y queda amontonado contra 'SISTEMA' y el ID; la fila de metadatos es densa y desalineada en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta de encargo, cuerpo de texto (parte inferior de la captura)",
+   "desc": "La descripción del avance es un bloque de texto muy largo sin resumen ni truncado, desplazando el CTA 'Ir a sesión de trabajo' fuera del primer pantallazo y dificultando el escaneo en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

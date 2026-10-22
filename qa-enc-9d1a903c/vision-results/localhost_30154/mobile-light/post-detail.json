@@ -1,0 +1,38 @@
+{
+ "desc": "Vista de detalle de post en Post Studio (móvil, tema claro): barra superior con menú y 'Session info', cabecera con título y metadatos, badge PRE y botón Cerrar, pestañas Carrusel/Reel, previsualización del slide tipo Instagram con overlay de autor, pills de música/validación/revisión y CTA 'Confirmar decisión → OpenPost' más pie con resumen.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera, título principal (parte superior)",
+   "desc": "El título 'Post Studio · La Herradura · Cu...' se trunca con elipsis y no se puede ver completo (parece cortar 'Cuenta' o similar), sin indicación de scroll ni tooltip."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de metadatos, pestañas Carrusel/Reel y pie 'Otro Atardecer'",
+   "desc": "Los iconos se renderizan como cuadrados huecos (glifos tofu ▯): antes de 'La Herradura', antes de '10-09 → 10-14', antes de '6', en ambos tabs y en el pie. Iconografía rota/no cargada en toda la vista."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón 'Confirmar decisión → OpenPost' (parte inferior)",
+   "desc": "Texto del CTA en gris muy claro sobre fondo gris, con contraste casi ilegible; no se distingue si está deshabilitado o es el estilo normal."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "overlay de la previsualización (barra oscura superior de la imagen)",
+   "desc": "El nombre de autor se ve espaciado irregularmente ('r gsaura') y 'La Herradura' queda muy pegado al borde derecho del slide, casi tocándolo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón flotante 'N' (esquina inferior izquierda)",
+   "desc": "El FAB flota sobre la zona del pie y queda pegado al borde izquierdo, pudiendo solapar el resumen 'Carrusel · 15 fotos · ...'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "chips 'validación caducada (revalida)' y 'revisión 0/15'",
+   "desc": "Texto de los chips en gris claro sobre fondo blanco con muy poco contraste, apenas legible; además los radios '○' parecen placeholders sin estado visual."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-detail.png"
+}

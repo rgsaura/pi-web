@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Agentes en móvil: cabecera con menú, título 'Agentes' con badge '3 agentes' y chip de filtro 'failover-normal', seguida de 3 tarjetas de agente (dev, exohuman-ui, rot) con badge de modelo, descripción y chevron de desplegable.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "cabecera de la vista: chip de filtro con engranaje 'failover-normal' (parte superior)",
+   "desc": "El chip indica un filtro 'failover-normal' pero la lista muestra 3 agentes, dos de ellos con 'litellm/failover-fast' (exohuman-ui y rot): la lista no parece filtrada o el chip no refleja el estado real, lo que genera confusión sobre qué se está viendo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta 'exohuman-ui' y 'rot': chevron de desplegable (esquina superior derecha de cada tarjeta)",
+   "desc": "El chevron cae a una fila propia por debajo del nombre+badge (hueco vacío entre el badge y el chevron), mientras en la tarjeta 'dev' sí está alineado con el título: alineación inconsistente entre tarjetas y espacio muerto."
+  },
+  {
+   "sev": "friccion",
+   "zona": "chevrons de desplegable de las 3 tarjetas (esquina superior derecha)",
+   "desc": "El área táctil del chevron es pequeña (~20px) para interacción en móvil, objetivo por debajo del mínimo recomendado de 44px."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "agents.png"
+}

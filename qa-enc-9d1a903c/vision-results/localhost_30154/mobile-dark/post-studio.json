@@ -1,0 +1,23 @@
+{
+ "desc": "Vista Post Studio en móvil con barra superior (menú, «...», Session info), cabecera con título/descripción y botón «Cerrar», y una única card de post («La Herradura · Cumple 27 + Buceo») con metadatos; el resto de la pantalla está vacío.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de metadatos de la card («La Herradura», «15/28», «2») y junto al subtítulo del header",
+   "desc": "Los iconos/emoji no renderizan: se ven cuadros vacíos (tofu □) en lugar de los glifos, rompiendo la lectura de esas métricas"
+  },
+  {
+   "sev": "friccion",
+   "zona": "zona inferior/mayor parte del viewport bajo la card",
+   "desc": "Más de dos tercios de la pantalla quedan en vacío tras una única card, sin CTA de crear post ni estado que guíe al usuario; la sensación es de vista sin contenido terminar de cargar"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "esquina inferior izquierda",
+   "desc": "Badge circular «N» (indicador dev de Next.js) superpuesto a la UI y pegado al borde, tapando la esquina de la vista"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "post-studio.png"
+}

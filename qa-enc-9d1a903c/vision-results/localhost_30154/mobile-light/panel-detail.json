@@ -1,0 +1,23 @@
+{
+ "desc": "Vista de detalle de panel en móvil (tema claro) con cabecera: botón ← Paneles, título 'Mejoras del Sistema', tag INFORME, fecha, descripción, fila de acciones (Fijar, Copiar enlace, Recargar, Pestaña nueva, Cerrar) y barra de sesiones. Debajo se embebe el panel en tema oscuro con métricas (193, 618, 86, 6, 2), badge 'candidato a fijar' y sección 'Sesiones activas ahora' con tarjeta de encargo.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "iconos: botón 'Fijar' (fila de acciones), título del panel embebido y badge 'candidato a fijar · regla 29'",
+   "desc": "Los glifos de icono se renderizan como cuadrado vacío (□): falta la fuente de iconos/emoji, se ve roto en 3 sitios"
+  },
+  {
+   "sev": "friccion",
+   "zona": "avatar fijo abajo-izquierda sobre la tarjeta 'ENCARGO OFICIAL (enc-c1f96651)'",
+   "desc": "El círculo con 'N' se superpone al texto del título ('ENCARGO OFICIAL'), tapando las primeras letras; elemento flotante solapando contenido"
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera superior derecha, botón 'Session info'",
+   "desc": "Texto en gris muy claro sobre blanco: contraste bajo, poco legible frente al resto de la barra"
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "panel-detail.png"
+}

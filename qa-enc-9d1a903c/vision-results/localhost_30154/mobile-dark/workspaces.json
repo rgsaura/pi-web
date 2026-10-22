@@ -1,0 +1,38 @@
+{
+ "desc": "Vista Workspaces en móvil (390x844, tema oscuro): cabecera con menú y Session info, subcabecera con 'Volver' y resumen '5 workspaces · 4 activos', y sección 'SAND BOXES & PREVIEWS UI (4)' con tarjetas de variantes que incluyen título, rama, badge de puerto, botones Abrir Preview / Sesión Pi y bloque de feedback registrado / campo de feedback.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "título de categoría 'SAND BOXES & PREVIEWS UI (4)' y cajas 'Feedback registrado' de las tarjetas 1 y 2",
+   "desc": "Aparecen cuadros tofu (▯) de glifo no renderizado en lugar de emojis/iconos: texto ilegible por fuente/emoji faltante."
+  },
+  {
+   "sev": "friccion",
+   "zona": "campo de feedback de la tarjeta 'Variante B' (parte inferior de la pantalla)",
+   "desc": "Placeholder 'Escribe feedback o decisió...' truncado: se corta a 'decisió...' porque el input es demasiado estrecho junto al botón Guardar."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "label 'Feedback registrado:' dentro de las tarjetas",
+   "desc": "La línea discontinua de separación cruza/solapa el texto del label, dándole apariencia de tachado y rompiendo la lectura."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "campo 'Rama:' de las tarjetas Variante A y Variante B",
+   "desc": "El label 'Rama:' y su valor ('sandbox/variant-a', 'sandbox/variant-b') caen en líneas separadas aunque hay hueco, inconsistente con la tarjeta 1; alineación partida."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "botón flotante circular 'N' esquina inferior izquierda",
+   "desc": "Solapa el borde de la tarjeta y tapa parte del contenido de 'Variante C', compitiendo con la scroll de la lista."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "badge de puerto de la tarjeta 1 ('Puerto 30205')",
+   "desc": "El badge parte el texto en dos líneas ('Puerto' / '30205'), mientras que en las demás tarjetas el formato es distinto; ancho justo que fuerza el salto de línea."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "workspaces.png"
+}

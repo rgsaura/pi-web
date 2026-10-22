@@ -1,0 +1,38 @@
+{
+ "desc": "Vista de Encargos con sidebar izquierdo (navegación, secciones, listas y FILES) y área principal con cabecera, pestañas/filtros y una única tarjeta de encargo en curso; el resto del área principal está vacío.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila de chips bajo SECCIONES DEL SISTEMA",
+   "desc": "Los chips muestran texto truncado e ilegible ('P... 20', 'Rutin...', 'Decis...', 'Recei...') sin posibilidad de leer la sección completa."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, fila 'Rutinas · call-intake'",
+   "desc": "La fila aparece recortada verticalmente y solapada por el bloque FIJADOS justo debajo: el texto queda cortado a media línea."
+  },
+  {
+   "sev": "friccion",
+   "zona": "sidebar izquierdo, filtro por chips inferior ('Todo 418 / En Vivo 0 / Encargos')",
+   "desc": "El chip 'Encargos' se desborda y queda cortado por el borde derecho del sidebar; hay overflow horizontal no resuelto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sidebar izquierdo, item fijado 'Surf Plátan...'",
+   "desc": "El nombre del elemento fijado está truncado con puntos suspensivos, sin tooltip visible ni forma de identificarlo."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera principal, contador de encargos",
+   "desc": "Texto con acuerdo incorrecto: '1 activos' debería ser '1 activo'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "área principal bajo la tarjeta de encargo",
+   "desc": "Con '228 total' en cabecera pero sólo 1 tarjeta visible en el filtro activo, la zona central queda enorme vacía sin ningún indicador de scroll/paginación o 'fin de lista'."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

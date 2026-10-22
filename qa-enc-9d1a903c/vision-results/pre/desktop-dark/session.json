@@ -1,0 +1,38 @@
+{
+ "desc": "Vista de sesión de agente en ExoHuman UI: sidebar izquierdo con navegación (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), secciones del sistema, lista de sesiones, buscador, filtros y FILES; panel principal con mensaje largo del agente (informe numerado con listas y código inline), chips de archivos, footer con input de mensaje y barra de estado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, zona de lista de sesiones entre 'SECCIONES DEL SISTEMA' y 'FIJADOS'",
+   "desc": "La fila 'Rutinas · 3a-acra-f41f' aparece cortada/clipada a media altura y solapada por el header 'FIJADOS', texto ilegible a medias."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Sidebar izquierdo, fila de chips bajo 'SECCIONES DEL SISTEMA'",
+   "desc": "Chips con nombres fuertemente truncados ('P...', 'Rutina...', 'D...', 'Rece...') y recortados contra el borde derecho del sidebar; se pierde la identificación de los elementos."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, fila de filtros bajo el buscador ('Todo 418', 'En Vivo 0', 'Encargos')",
+   "desc": "El chip 'Encargos' queda cortado/clipeado contra el borde derecho del sidebar, sin indicación clara de scroll horizontal."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, campo de búsqueda 'Buscar sesiones, encargos,'",
+   "desc": "Placeholder del buscador truncado a media frase ('...encargos,'), texto cortado sin ellipsis."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Sidebar izquierdo, sección FILES (fila de iconos)",
+   "desc": "Fila de iconos de acciones muy juntos y de tamaño pequeño (~12-16px), difícil de distinguir y apuntar; sin etiquetas ni separación clara."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Barra superior derecha (stats 243k/85k/26.5M/18% 1.0M)",
+   "desc": "Indicadores de uso amontonados con muy poco espaciado entre ellos y etiquetas mínimas, jerarquía poco clara."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

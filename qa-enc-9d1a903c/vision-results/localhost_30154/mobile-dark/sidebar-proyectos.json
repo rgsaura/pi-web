@@ -1,0 +1,38 @@
+{
+ "desc": "Sidebar de navegación de ExoHuman en móvil (390x844, tema oscuro) con menú de secciones (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes, Workspaces, Encargos, Decisiones, Hablar por Voz), bloque de secciones del sistema con pestañas, área fijados con búsqueda, filtros y barra inferior de Settings; a la derecha queda un resto del panel principal con el input de chat cortado.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "parte inferior del sidebar: fila de chips de filtro (Todo 418 / En Vivo 0 / Encargos 2)",
+   "desc": "La fila de filtros queda solapada por la barra fija 'Settings' y por el botón flotante circular 'N': el chip 'Todo 418' aparece cortado a la mitad y 'Encargos 2' se recorta contra el borde derecho del sidebar (overflow horizontal sin scroll visible), impidiendo leer/usar esos filtros."
+  },
+  {
+   "sev": "friccion",
+   "zona": "iconos de todo el sidebar (Línea de tiempo, Paneles, Post Studio, Agentes, Buscar…, Fijados, Proyectos, Decisiones, Recientes, Cronológico, Todo, Encargos)",
+   "desc": "Muchos iconos se renderizan como el mismo rectángulo/glyph vacío (tofu), señal de fuente/emoji o icono no cargado; la navegación pierde reconocimiento visual y parece un bug de assets."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "item fijado 'Surf Plátano · ...' (bloque FIJADOS)",
+   "desc": "El nombre de la sesión está fuertemente truncado con puntos suspensivos mientras el badge '7 días' ocupa espacio a la derecha; se pierde información clave del proyecto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cabecera 'SECCIONES DEL SISTEMA' (centro del sidebar)",
+   "desc": "El título se parte en dos líneas centradas y rompe el ritmo del resto de alineaciones a la izquierda; en móvil ocupa altura extra innecesaria."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "textos secundarios de las filas del menú ('pasado → próximo', 'entregables', 'prompts · skills', pestaña 'Session info')",
+   "desc": "Contraste muy bajo del gris sobre el fondo azul oscuro; apenas legibles en móvil, especialmente 'Session info' de la barra superior."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "resto visible del panel principal a la derecha del sidebar (input con flecha →, 'More controls')",
+   "desc": "No hay scrim de fondo al abrir el sidebar en móvil: queda una franja de contenido cortada a la derecha con controles a medio mostrar, lo que da sensación de layout roto."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-proyectos.png"
+}

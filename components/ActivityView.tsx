@@ -198,6 +198,7 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
     alignItems: "center",
     gap: 6,
     padding: "5px 10px",
+    minHeight: 36,
     borderRadius: 6,
     border: "1px solid var(--border)",
     background: "var(--bg)",
@@ -331,6 +332,7 @@ export function ActivityView({ onSelectSession }: ActivityViewProps) {
                         onClick={() => handleSetGovernorMode(m)}
                         style={{
                           padding: "5px 12px",
+                          minHeight: 36,
                           fontSize: 12,
                           fontWeight: isSel ? 650 : 500,
                           borderRadius: 6,

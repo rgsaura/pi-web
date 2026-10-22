@@ -1,0 +1,28 @@
+{
+ "desc": "Vista Encargos en móvil: barra superior con menús y 'Session info', cabecera con título, badge '1 activos', total y botones; fila de pestañas de filtro, select de Área y una tarjeta de encargo activo con badges, meta, título, subtítulo y CTA. Debajo queda gran espacio libre al haber solo 1 encargo.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta del encargo, fila meta (delante de 'Llevan')",
+   "desc": "El icono/emoji que precede a 'Llevan 2h 15m' se renderiza como caja vacía (tofu/glifo roto) en lugar de un reloj visible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "tarjeta del encargo, fila meta derecha ('enc-9d1a903c')",
+   "desc": "El identificador 'enc-9d1a903c' se parte por el guion en dos líneas ('enc-' / '9d1a903c') porque la fila meta está demasiado comprimida y no hay espacio; se lee cortado y desalineado respecto a 'Llevan 2h 15m'."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fila de pestañas, primera pestaña 'En curso / Activos'",
+   "desc": "El texto de la pestaña seleccionada ocupa dos líneas mientras 'Todos' y 'Completados' tienen una, rompiendo la altura/ritmo de la fila y apretando las pestañas entre sí en 390px."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "tarjeta del encargo, badges superiores",
+   "desc": "Los badges 'EN CURSO', 'Dificultad: Media', 'UI' y la meta se amontonan en la misma fila con poco aire, generando un bloque de 4 elementos contiguos difícil de escanear en móvil."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "encargos.png"
+}

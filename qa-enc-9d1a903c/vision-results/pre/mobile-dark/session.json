@@ -1,0 +1,28 @@
+{
+ "desc": "Vista de sesión en móvil 390x844 con tema oscuro: barra superior (menú, '...', métricas ↑243k ↓85k 18%, icono panel), cuerpo de mensaje largo con listas, tokens inline, chips de ficheros, footer de meta (tokens/fecha), campo de input con botón enviar y barra inferior de controles.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "footer del mensaje, meta derecha",
+   "desc": "La fecha 'Oct 15 03:13 PM' se parte por wrap y 'PM' cae a una segunda línea, desalineada respecto al resto de la línea de meta."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "footer del mensaje, meta izquierda",
+   "desc": "Aparece una 'R' huérfana en su propia línea bajo '522 in · 1,078 out · 191,936 cache': texto cortado/partido por wrap que rompe la línea de metadatos."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra inferior de controles (bajo el input)",
+   "desc": "'More controls' queda pegado al borde derecho (casi sin margen) y 'Failover Fast' se muestra como texto plano sin contenedor ni target táctil definido; los iconos (imagen, micrófono, engranaje) son pequeños y dispersos, poco claros como targets en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "cuerpo del mensaje, línea de código inline",
+   "desc": "El chip de código '( console/proposals/activity/mobile-check )' ocupa casi todo el ancho útil y su borde derecho queda muy próximo al padding del contenedor, sin aire visual respecto al resto de bloques."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

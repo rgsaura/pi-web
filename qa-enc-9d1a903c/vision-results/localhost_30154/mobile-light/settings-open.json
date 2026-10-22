@@ -1,0 +1,27 @@
+{
+ "desc": "Panel de Ajustes (modal) en móvil 390x844 con secciones Appearance, Fonts & layout, Chat y Sidebar: selector de tema en rejilla 3x2, sliders de fuente/anchura, toggles y control segmentado de envío. Contenido legible y bien jerarquizado, pero con solapes y recortes en la parte inferior.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "zona inferior izquierda: botón flotante circular 'N' sobre la sección Sidebar",
+   "desc": "El FAB flotante se superpone al label 'File browser' y a la línea de ayuda 'Phones always use tabs.', ocultando parte del texto y del control, lo que dificulta leer/usar esa opción."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fonts & layout: input 'Monospace font' (2ª fila de fuentes)",
+   "desc": "El valor del input aparece truncado a 'Default: Noto Sa' sin indicación clara de que hay más texto; en móvil no se puede ver el nombre completo de la fuente."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "sección Sidebar: fila 'File browser', borde inferior del panel",
+   "desc": "El texto de ayuda 'Phones always use tabs.' queda cortado por el borde inferior de la pantalla/panel, a medio mostrar (sin margen inferior visible para indicar fin de scroll)."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Fonts & layout: input 'Interface font'",
+   "desc": "El placeholder 'System default' tiene contraste muy bajo respecto al fondo del input, apenas legible en tema claro."
+  }
+ ],
+ "_model": "mimo-v2.6-pro",
+ "_file": "settings-open.png"
+}

@@ -1,0 +1,38 @@
+{
+ "desc": "Home móvil (390x844) con barra superior (menú, más opciones, 'Session info', toggle de panel), zona central casi vacía con branding 'Exohuman UI' + breadcrumb del workspace, composer de nueva sesión con input y fila de controles, y badge 'N' flotante abajo-izquierda. No se ve la sidebar de sesiones.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "zona central / parte superior de la captura",
+   "desc": "Gran área en blanco sin contenido ni estado: no se muestra la lista de sesiones ni ningún mensaje de estado vacío (ej. 'no hay sesiones'), la vista parece vacía/rota salvo el bloque inferior."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles bajo el composer (iconos imagen, micrófono, ajustes)",
+   "desc": "Targets táctiles pequeños (~20-24px visibles) por debajo del mínimo de 44px recomendado para móvil; iconos amontonados sin área de toque definida."
+  },
+  {
+   "sev": "friccion",
+   "zona": "fila de controles, lado derecho ('Failover Normal', 'More controls')",
+   "desc": "Mezcla de iconos sin contenedor con botones de texto sin forma de botón; 'Failover Normal' y 'More controls' quedan como texto suelto sin área táctil diferenciada y jerarquía confusa respecto al resto de controles."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "esquina inferior izquierda",
+   "desc": "Badge circular 'N' (posible overlay de Next.js/dev) visible y muy pegado al borde inferior del viewport, solapando la zona de contenido."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior derecha",
+   "desc": "El icono de toggle de panel queda muy pegado al borde derecho del viewport, con menor margen que el resto de elementos de la barra."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "input del composer (placeholder)",
+   "desc": "El placeholder 'Message... Type / for commands, @' es muy largo y ocupa casi todo el ancho, quedando a un paso de solaparse con el botón de envío en anchos menores."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "home.png"
+}

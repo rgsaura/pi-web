@@ -1,0 +1,18 @@
+{
+ "desc": "Vista de sesión en móvil con tema oscuro: barra superior con stats y toggles, mensaje largo de chat con markdown (encabezados, listas, código inline), chips de archivos referenciados, línea de metadatos/timestamp, campo de mensaje y barra inferior de controles.",
+ "issues": [
+  {
+   "sev": "cosmetica",
+   "zona": "metadatos del mensaje (esquina inferior derecha del bloque de chat)",
+   "desc": "El timestamp 'Oct 15 03:13 PM' se parte en dos líneas ('Oct 15 03:13' / 'PM') por ancho reservado insuficiente, wrap innecesario."
+  },
+  {
+   "sev": "friccion",
+   "zona": "bajo la línea de metadatos, esquina inferior izquierda del mensaje",
+   "desc": "Aparece una 'R' huérfana suelta en su propia línea, texto partido/truncado sin contexto visible junto al resto de metadatos."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

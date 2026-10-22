@@ -1,0 +1,33 @@
+{
+ "desc": "Vista Timeline móvil en tema oscuro: barra superior con menú y Session info, cabecera con título/795 eventos y botón Añadir, pestañas Eventos/Patrones, fila de filtros por tipo con buscador, y lista de eventos agrupados por días (Jue 22 Oct → Dom 25 Oct) con estado PRÓXIMO.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de chips de filtros (Todos 795 / Encargos 453 / Decisiones 286) bajo las pestañas",
+   "desc": "Desbordamiento horizontal: el cuarto chip se corta en el borde derecho (se ve un icono ⚠ troceado) sin indicación de scroll, por lo que hay filtros ocultos e inaccesibles en móvil."
+  },
+  {
+   "sev": "friccion",
+   "zona": "botón flotante 'N' esquina inferior izquierda",
+   "desc": "El FAB solapa y tapa parte del encabezado de fecha 'Dom... 25 Oct' y invade la zona de lectura de la lista, sin margen de seguridad con el contenido."
+  },
+  {
+   "sev": "friccion",
+   "zona": "encabezado de fecha 'Dom... 25 Oct' (última visible)",
+   "desc": "El nombre del día aparece truncado con puntos suspensivos ('Dom...') mientras el resto de encabezados muestran el día completo ('Jue 22 Oct'), inconsistencia de truncado en contenedor estrecho."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "iconos de pestañas y de eventos (junto a 'Eventos', 'Patrones por hora' y junto a 'caduca:')",
+   "desc": "Varios glifos se renderizan como cuadrados vacíos (tofu), sugiriendo iconos/emoji no soportados en la fuente o sin fallback."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "descripción del evento 'Automatización de entrenamientos Action Black Alcalá…'",
+   "desc": "La línea final del texto ('Action-Black-Alcalá), Rodrigo entrena de 3 a 5 veces/semana (Tonic,…') llega y se corta en el borde derecho sin el mismo padding que el resto de líneas."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "timeline.png"
+}

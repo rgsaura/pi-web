@@ -1,0 +1,43 @@
+{
+ "desc": "Sidebar móvil en tema oscuro con navegación de módulos (Actividad, Línea de tiempo, Paneles, Post Studio, Agentes...), bloque de SECCIONES DEL SISTEMA, fijados, buscador, orden y filtros rápidos (\"En Vivo\" activo con 0), con el contenido principal parcialmente asomando por la derecha.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "fila de filtros rápidos inferior (Todo / En Vivo / Encargos)",
+   "desc": "Desbordamiento horizontal: \"Encargos 2\" queda cortado por el borde derecho del viewport y se intuyen más filtros ocultos sin indicador de scroll."
+  },
+  {
+   "sev": "friccion",
+   "zona": "filtro \"En Vivo 0\" activo + zona de lista de sesiones",
+   "desc": "El filtro activo da 0 resultados pero no se muestra ningún estado vacío ni mensaje de \"sin sesiones en vivo\"; la zona simplemente desaparece y va directa a Settings."
+  },
+  {
+   "sev": "friccion",
+   "zona": "avatar \"N\" abajo a la izquierda / botón Settings",
+   "desc": "El avatar circular se solapa con el borde izquierdo del botón \"Settings\", tapando parte del control."
+  },
+  {
+   "sev": "friccion",
+   "zona": "toggles de vista (lista / cuadrícula / puntos) junto a \"SECCIONES DEL SISTEMA\"",
+   "desc": "Targets táctiles muy pequeños (≈28px reales con escala 2x) para móvil; difícil de pulsar con precisión."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior de pestañas, extremo derecho",
+   "desc": "\"Session info\" y el icono de panel quedan cortados por el borde del viewport, sin respiro ni scroll visible."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "item fijado \"Surf Plátano · ...\"",
+   "desc": "Nombre de sesión truncado con elipsis y badge \"7 días\" pegado; no se distingue a qué sesión corresponde."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "borde derecho del viewport, detrás del sidebar",
+   "desc": "El contenido principal (input \"s, @ →\" y \"More controls\") aparece parcialmente visible y cortado sin scrim de fondo, generando doble interfaz confusa."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "sidebar-envivo.png"
+}

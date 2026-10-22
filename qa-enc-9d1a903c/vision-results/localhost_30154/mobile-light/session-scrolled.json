@@ -1,0 +1,33 @@
+{
+ "desc": "Vista móvil de una sesión con scroll aplicado: barra superior con métricas (↑243k ↓85k 18%), cuerpo de mensaje del agente con listas, código inline y chips de archivos, línea de metadatos de tokens/fecha, campo de input 'for files' y barra inferior de controles (avatar, mic, ajustes, Failover Fast, More controls).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "parte superior del cuerpo del mensaje, bajo la barra sticky",
+   "desc": "La primera línea del contenido ('4. Filtro: Activas ahora en la lista de sesiones') queda cortada/oculta por la barra superior: falta padding-top o scroll-margin al hacer scroll, el texto se solapa con el header fijo."
+  },
+  {
+   "sev": "friccion",
+   "zona": "línea de metadatos bajo los chips de archivos",
+   "desc": "El texto '522 in · 1.078 out · 191,936 cache' parte una palabra al final ('...cache' + 'R' en la línea siguiente) por wrap forzado en contenedor estrecho; la fecha 'Oct 15 03:13 PM' también se parte dejando 'PM' huérfano en una segunda línea."
+  },
+  {
+   "sev": "friccion",
+   "zona": "barra inferior derecha, botón 'More controls'",
+   "desc": "El texto 'More controls' llega pegado al borde derecho del viewport sin padding lateral, con riesgo de truncado/toque accidental en zona edge; los controles de la barra inferior están amontonados sin separación clara del borde."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior izquierda, botón '…'",
+   "desc": "El borde/caja del botón '…' se ve recortado en el borde inferior de la header bar, apariencia de elemento desbordado o focus ring cortado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "metadatos de tokens y fecha (gris claro)",
+   "desc": "El texto secundario en gris muy claro sobre fondo blanco tiene contraste bajo, apenas legible (522 in · 1,078 out · 191,936 cache y Oct 15 03:13 PM)."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session-scrolled.png"
+}

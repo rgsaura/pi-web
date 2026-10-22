@@ -1,0 +1,33 @@
+{
+ "desc": "Vista móvil (390x844) de una sesión con mensaje del agente: barra superior con menú, overflow, stats de tokens y toggle de panel; cuerpo con texto largo, código inline y chips de archivos; pie del mensaje con métricas y timestamp; input de mensaje y barra inferior de controles.",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "pie del mensaje (centro-inferior del contenido, línea '522 in · 1,078 out · 191,936 cache')",
+   "desc": "La línea de métricas parte con letra huérfana: 'cache' queda en la línea y la 'R' suelta salta a la línea siguiente, rompiendo la lectura."
+  },
+  {
+   "sev": "friccion",
+   "zona": "pie del mensaje (esquina inferior derecha, timestamp 'Oct 15 03:13 PM')",
+   "desc": "El timestamp se parte en dos líneas ('Oct 15 03:13' / 'PM'), lo que además empuja la fila hacia abajo y desalinea el pie del mensaje."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra superior / primer renglón del mensaje",
+   "desc": "El encabezado '4. Filtro — Activas ahora' aparece cortado a media línea justo bajo la barra superior, pegado sin separación ni máscara de scroll."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "código inline en el párrafo 'Calidad: ... ( console/proposals/activity/mobile-check )'",
+   "desc": "El chip de código inline lleva tanto padding interno que deja huecos grandes entre los paréntesis y el texto, dando sensación de despegue/espaciado roto."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "input de mensaje (parte inferior, placeholder)",
+   "desc": "El placeholder 'Message... Type / for commands, @' queda cortado contra el botón de envío sin elipsis clara, sugiriendo texto truncado."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session.png"
+}

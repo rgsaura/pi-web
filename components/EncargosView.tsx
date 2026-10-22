@@ -257,7 +257,7 @@ export function EncargosView({ onSelectSession }: EncargosViewProps) {
 
               {/* BIG CLEAR TITLE (Objetivo principal) */}
               <div style={{ fontSize: 17, fontWeight: 700, color: "var(--text)", lineHeight: 1.35 }}>
-                {item.titulo || item.descripcion?.slice(0, 60)}
+                {item.titulo || (item.descripcion ? item.descripcion.slice(0, 59) + (item.descripcion.length > 59 ? "…" : "") : "")}
               </div>
 
               {/* Status and Action Buttons */}
@@ -279,6 +279,7 @@ export function EncargosView({ onSelectSession }: EncargosViewProps) {
                       alignItems: "center",
                       gap: 6,
                       padding: "4px 10px",
+                      minHeight: 36,
                       borderRadius: 6,
                       background: "rgba(56, 189, 248, 0.12)",
                       border: "1px solid rgba(56, 189, 248, 0.3)",

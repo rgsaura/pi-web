@@ -1,0 +1,33 @@
+{
+ "desc": "Panel de Ajustes (pestaña General) en móvil 390x844, tema oscuro, superpuesto sobre la app: cabecera con título, selector 'General' y cierre; secciones Appearance (6 temas), Fonts & layout (inputs + sliders), Chat (toggles, send key) y Sidebar (segmentado + nota).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "> Fonts & layout > Monospace font > input (centro)",
+   "desc": "El valor 'Default: Noto Sa...' queda cortado contra el borde del input, sin scroll visible ni elipsis; el nombre completo de la fuente es ilegible."
+  },
+  {
+   "sev": "friccion",
+   "zona": "> Fonts & layout > botones reset (↺) junto a 400/14px/820px (derecha)",
+   "desc": "Los botones de restablecer son iconos de ~24px, por debajo del mínimo táctil recomendado en móvil y muy pegados al valor numérico."
+  },
+  {
+   "sev": "friccion",
+   "zona": "> Sidebar > File browser (parte inferior)",
+   "desc": "Se muestra un control con dos opciones pero la propia nota 'Phones always use tabs.' indica que en móviles no aplica: es un control inerte/confuso en este viewport."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "> Fonts & layout > etiquetas 'Interface font' / 'Monospace font' y sliders",
+   "desc": "El input y el valor/reset se agrupan a la derecha mientras el slider de debajo ocupa todo el ancho, generando una alineación en escalera poco consistente entre filas."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "> Fonts & layout > placeholder 'System default' (centro)",
+   "desc": "El placeholder del input de Interface font tiene contraste bajo respecto al fondo del campo, apenas distinguible de un valor real."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "settings-open.png"
+}

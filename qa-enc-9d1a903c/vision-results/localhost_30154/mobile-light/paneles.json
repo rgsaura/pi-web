@@ -1,0 +1,28 @@
+{
+ "desc": "Vista 'Paneles e Informes' en móvil: barra superior con sesión, título con badge '10 activos', botones Actualizar/Cerrar, tabs Activos/Archivados/Todos, buscador, tarjeta de ayuda y secciones 'Studios & Apps' e 'Informes' con tarjetas (título, descripción, acciones Fijar/Demanda/Archivar).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "Botones de acción de cada tarjeta (Fijar, Demanda, Archivar) — parte central/inferior de las tarjetas",
+   "desc": "Los iconos de los botones se renderizan como cajas vacías (tofu/glyph faltante) en lugar de un símbolo reconocible, igual en 'Sesiones · 2'."
+  },
+  {
+   "sev": "friccion",
+   "zona": "Cabeceras de sección 'STUDIOS & APPS' e 'INFORMES' y esquina superior derecha de la tarjeta 'Post Studio'",
+   "desc": "Los iconos de sección y de panel aparecen como rectángulos vacíos sin significado, rompiendo la jerarquía visual."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Badge '10 activos' junto al título (parte superior)",
+   "desc": "Texto azul claro sobre fondo azul muy claro con contraste insuficiente, difícil de leer en móvil."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "Botón flotante circular oscuro (N) esquina inferior izquierda",
+   "desc": "Solapa la tarjeta inferior y tapa parcialmente el badge 'INFORME' de la siguiente tarjeta."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "paneles.png"
+}

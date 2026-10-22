@@ -1,0 +1,33 @@
+{
+ "desc": "Vista móvil (390x844, tema oscuro) de una sesión de agente ya con scroll: barra superior con menú, uso de tokens (↑243k ↓85k 18%) y toggle de panel; cuerpo con un mensaje largo (puntos 4-5, sección 'Calidad') seguido de chips de archivos tocados, línea de metadatos y fecha; abajo input con placeholder y barra de controles (avatar, mic, settings, Failover Fast, More controls).",
+ "issues": [
+  {
+   "sev": "friccion",
+   "zona": "bloque de código inline dentro del párrafo 'Calidad' (línea '( console/proposals/activity/mobile-check )')",
+   "desc": "el chip de código desborda hacia la izquierda: se sale del padding del texto y su esquina redondeada izquierda queda cortada, rompiendo la alineación con el resto del párrafo (overflow horizontal del inline code)."
+  },
+  {
+   "sev": "friccion",
+   "zona": "línea de metadatos del mensaje ('522 in · 1,078 out · 191,936 cache')",
+   "desc": "aparece una letra 'R' suelta saltando a su propia línea debajo de las métricas, resto de un wrap roto o de un elemento cortado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "fecha del mensaje, esquina inferior derecha del mensaje ('Oct 15 03:13 PM')",
+   "desc": "la fecha se parte en dos líneas ('Oct 15 03:13' / 'PM'), wrap antinatural que desalinea la meta del mensaje."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "barra inferior de controles, avatar circular 'N' (izquierda)",
+   "desc": "dentro del avatar se aprecia un glifo/icono superpuesto al 'N', dando sensación de solape o de icono mal posicionado."
+  },
+  {
+   "sev": "cosmetica",
+   "zona": "campo de input inferior ('for files')",
+   "desc": "el placeholder muestra solo 'for files', texto que parece truncado o cortado a media frase (posible 'Reply for files'/'Ask for files')."
+  }
+ ],
+ "empty": false,
+ "_model": "mimo-v2.6-pro",
+ "_file": "session-scrolled.png"
+}
