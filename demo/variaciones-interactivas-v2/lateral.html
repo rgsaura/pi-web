@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lateral · Variaciones A/B/C — ExoHuman UI</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="panel-page">
+  <div class="panel-nav">
+    <a class="brand" href="index.html">ExoHuman UI · <span class="f1">F1 v2</span></a>
+    <nav>
+      <a href="index.html">Hub</a>
+      <a href="home-desktop.html">Home desktop</a>
+      <a href="home-movil.html">Home móvil</a>
+      <a class="current" href="lateral.html">Lateral</a>
+      <a href="secciones.html">Secciones</a>
+    </nav>
+    <div class="right" data-theme-switch></div>
+  </div>
+
+  <header class="panel-header">
+    <span class="mock-badge">● Mockup · interactivo</span>
+    <h1>Modelo de lateral · 3 variaciones</h1>
+    <p class="sub">Qué es fijo, qué es temporal y quién manda. En las variaciones B y C puedes
+    <b>fijar y desfijar</b> con el botón de chincheta (los iconos PinIcon/PinOffIcon de la app) — el lateral
+    propone desfijar, nunca lo hace solo.</p>
+  </header>
+
+  <div data-switcher data-default-variant="A">
+    <div class="switcher" role="tablist" aria-label="Variación del lateral">
+      <button type="button" data-variant="A" role="tab" aria-selected="true">A · Dos bloques fijos<span class="k">sistema + proyectos</span></button>
+      <button type="button" data-variant="B" role="tab" aria-selected="false">B · Fijo + temporal<span class="k">con caducidad visible</span></button>
+      <button type="button" data-variant="C" role="tab" aria-selected="false">C · Todo fijable + catálogo<span class="k">pin desde cada vista</span></button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;align-items:start">
+
+      <!-- ================= VARIACIÓN A ================= -->
+      <section class="variant active" data-variant="A">
+        <div class="variant-head">
+          <span class="letra">A</span>
+          <h2>Dos bloques fijos</h2>
+        </div>
+        <span class="claim" style="display:block;margin:-8px 0 10px">todo fijo, orden estable — es el lateral de la app real tal cual</span>
+        <div class="phone" style="width:100%;max-width:360px">
+          <div class="phone-screen" style="min-height:auto">
+            <div class="app-sidebar" style="width:100%;border-right:0;padding:14px">
+              <div class="exo-subheading">FIJO · SISTEMA</div>
+              <div class="exo-nav">
+                <button class="exo-nav-btn"><span class="lbl">⚡ Actividad</span><span class="exo-nav-live"><span class="dot"></span>en vivo</span></button>
+                <button class="exo-nav-btn"><span class="lbl">🗓️ Línea de tiempo</span><span class="meta">pasado → próximo</span></button>
+                <button class="exo-nav-btn"><span class="lbl">📊 Paneles</span><span class="meta">entregables</span></button>
+                <button class="exo-nav-btn"><span class="lbl">🎬 Post Studio</span><span class="exo-nav-pill-pre">pre</span></button>
+                <button class="exo-nav-btn"><span class="lbl">🤖 Agentes</span><span class="meta">prompts · skills</span></button>
+                <button class="exo-nav-btn"><span class="lbl">Workspaces</span><span class="exo-nav-count">5</span></button>
+                <button class="exo-nav-btn"><span class="lbl">✏️ Encargos</span><span class="exo-nav-count is-amber">2</span></button>
+                <button class="exo-nav-btn"><span class="lbl">💬 Decisiones</span><span class="exo-nav-count is-red">15</span></button>
+                <button class="exo-nav-btn is-voice"><span class="lbl">🎙 Hablar por Voz</span><span class="exo-nav-pill-pre" style="background:rgba(52,211,153,0.2);color:#34d399">ROT Live</span></button>
+              </div>
+              <div class="exo-sidebar-sep"></div>
+              <div class="exo-subheading">PROYECTOS</div>
+              <div class="exo-project-row"><span class="chev">›</span> enc-b9034e06</div>
+              <div class="exo-project-row"><span class="chev">›</span> general</div>
+              <div class="exo-project-row"><span class="chev">›</span> Rutina: call-intake</div>
+              <div class="exo-project-row"><span class="chev">›</span> app</div>
+            </div>
+          </div>
+        </div>
+        <div class="note" style="max-width:360px"><b>Ventaja:</b> cero sorpresas, músculo memo.<br>
+        <b>Límite:</b> crece mal — a 20 secciones deja de caber.</div>
+      </section>
+
+      <!-- ================= VARIACIÓN B ================= -->
+      <section class="variant" data-variant="B">
+        <div class="variant-head">
+          <span class="letra">B</span>
+          <h2>Fijo + temporal</h2>
+        </div>
+        <span class="claim" style="display:block;margin:-8px 0 10px">un bloque TEMPORAL con caducidad visible — toca 📌 para mover</span>
+        <div class="phone" style="width:100%;max-width:360px">
+          <div class="phone-screen" style="min-height:auto">
+            <div class="app-sidebar" style="width:100%;border-right:0;padding:14px" data-lateral="B">
+              <div class="exo-subheading">FIJO · SISTEMA</div>
+              <div class="exo-nav" data-pin-slot="fijo">
+                <button class="exo-nav-btn"><span class="lbl">⚡ Actividad</span><span class="exo-nav-live"><span class="dot"></span>en vivo</span></button>
+                <button class="exo-nav-btn"><span class="lbl">📊 Paneles</span><span class="meta">entregables</span></button>
+                <button class="exo-nav-btn"><span class="lbl">✏️ Encargos</span><span class="exo-nav-count is-amber">2</span></button>
+                <button class="exo-nav-btn"><span class="lbl">💬 Decisiones</span><span class="exo-nav-count is-red">15</span></button>
+              </div>
+              <div class="lateral-block">
+                <div class="lateral-block-head">
+                  <h4>Temporal · caduca solo</h4>
+                  <span class="meta" style="color:var(--text-dim);font-size:11px">propone desfijarse, nunca sola</span>
+                </div>
+                <div class="exo-nav" data-pin-slot="temporal">
+                  <button class="exo-nav-btn" data-pinnable>
+                    <span class="lbl">🧪 Variaciones v2</span>
+                    <span class="expiry"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 2d<span class="dim-amber"> de 3</span></span>
+                    <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Variaciones v2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                  </button>
+                  <button class="exo-nav-btn" data-pinnable>
+                    <span class="lbl">🔁 Comparador F1</span>
+                    <span class="expiry"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 5d<span class="dim-amber"> de 7</span></span>
+                    <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Comparador F1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                  </button>
+                </div>
+                <div class="note" style="margin:10px 0 0;font-size:11.5px">Fuente de cada temporal visible (encargo o rutina que lo pidió).</div>
+              </div>
+              <div class="exo-sidebar-sep"></div>
+              <div class="exo-subheading">PROYECTOS</div>
+              <div class="exo-project-row"><span class="chev">›</span> enc-b9034e06</div>
+              <div class="exo-project-row"><span class="chev">›</span> general</div>
+            </div>
+          </div>
+        </div>
+        <div class="note" style="max-width:360px"><b>Ventaja:</b> el trabajo de esta semana ocupa el lateral sin quedarse para siempre.<br>
+        <b>Regla:</b> caducidad siempre visible; al expirar, propuesta de limpieza (nunca borrado directo).</div>
+      </section>
+
+      <!-- ================= VARIACIÓN C ================= -->
+      <section class="variant" data-variant="C">
+        <div class="variant-head">
+          <span class="letra">C</span>
+          <h2>Todo fijable + catálogo</h2>
+        </div>
+        <span class="claim" style="display:block;margin:-8px 0 10px">cada vista puede ofrecer «fíjame» — el lateral es TU panel, no el del sistema</span>
+        <div class="phone" style="width:100%;max-width:360px">
+          <div class="phone-screen" style="min-height:auto">
+            <div class="app-sidebar" style="width:100%;border-right:0;padding:14px" data-lateral="C">
+              <div class="exo-subheading">TU PANEL</div>
+              <div class="exo-nav" data-pin-slot="fijo">
+                <button class="exo-nav-btn" data-pinnable>
+                  <span class="lbl">💬 Decisiones</span>
+                  <span class="exo-nav-count is-red">15</span>
+                  <span class="pin-btn is-pinned" role="button" tabindex="0" title="Desfijar" aria-label="Desfijar Decisiones"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M15 9.3V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8.5"/><path d="m2 2 20 20"/><path d="M9 9v1.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h11"/></svg></span>
+                </button>
+                <button class="exo-nav-btn" data-pinnable>
+                  <span class="lbl">🧪 Variaciones v2</span>
+                  <span class="pin-btn is-pinned" role="button" tabindex="0" title="Desfijar" aria-label="Desfijar Variaciones v2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M15 9.3V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8.5"/><path d="m2 2 20 20"/><path d="M9 9v1.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h11"/></svg></span>
+                </button>
+                <button class="exo-nav-btn" data-pinnable>
+                  <span class="lbl">📊 Paneles</span>
+                  <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Paneles"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                </button>
+              </div>
+              <div class="lateral-block">
+                <div class="lateral-block-head"><h4>Catálogo · +6 disponibles</h4></div>
+                <div class="exo-nav" data-pin-slot="catalogo">
+                  <button class="exo-nav-btn" data-pinnable>
+                    <span class="lbl" style="color:var(--text-muted)">🗓️ Línea de tiempo</span>
+                    <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Línea de tiempo"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                  </button>
+                  <button class="exo-nav-btn" data-pinnable>
+                    <span class="lbl" style="color:var(--text-muted)">🎬 Post Studio</span>
+                    <span class="exo-nav-pill-pre">pre</span>
+                    <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Post Studio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                  </button>
+                  <button class="exo-nav-btn" data-pinnable>
+                    <span class="lbl" style="color:var(--text-muted)">🤖 Agentes</span>
+                    <span class="pin-btn" role="button" tabindex="0" title="Fijar" aria-label="Fijar Agentes"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></span>
+                  </button>
+                </div>
+                <div class="note" style="margin:10px 0 0;font-size:11.5px">Procedencia en cada fila: quién lo fijó y cuándo.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="note" style="max-width:360px"><b>Ventaja:</b> máximo control, escala sin límite.<br>
+        <b>Coste:</b> un paso más para descubrir una sección nueva (el catálogo manda).</div>
+      </section>
+    </div>
+  </div>
+
+  <section class="note" style="margin-top:18px">
+    <b>Regla de oro aplicada:</b> el lateral ordena y señala, no duplica contadores de otras vistas
+    ni esconde secciones por gusto del sistema.
+  </section>
+
+  <footer class="panel-footer">enc-3767cbf2 · variaciones v2 en el design system real de ExoHuman UI · 22-10 · responde en Decisiones con tu variación (ej. «Home A · Móvil B · Lateral B»).</footer>
+</div>
+<script src="app.js"></script>
+<script src="lateral.js"></script>
+</body>
+</html>

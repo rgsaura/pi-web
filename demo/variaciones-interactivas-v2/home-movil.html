@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home móvil · Variaciones A/B/C — ExoHuman UI</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="panel-page">
+  <div class="panel-nav">
+    <a class="brand" href="index.html">ExoHuman UI · <span class="f1">F1 v2</span></a>
+    <nav>
+      <a href="index.html">Hub</a>
+      <a href="home-desktop.html">Home desktop</a>
+      <a class="current" href="home-movil.html">Home móvil</a>
+      <a href="lateral.html">Lateral</a>
+      <a href="secciones.html">Secciones</a>
+    </nav>
+    <div class="right" data-theme-switch></div>
+  </div>
+
+  <header class="panel-header">
+    <span class="mock-badge">● Mockup · datos de ejemplo</span>
+    <h1>Home móvil · 3 variaciones</h1>
+    <p class="sub">La misma barra móvil real de la app (☰ ··· Session info) y el mismo sistema de temas.
+    Objetivo móvil: <b>tocar grande, pensar poco</b> — una decisión en el pulgar y a otra cosa.</p>
+  </header>
+
+  <div data-switcher data-default-variant="A">
+    <div class="switcher" role="tablist" aria-label="Variación del home móvil">
+      <button type="button" data-variant="A" role="tab" aria-selected="true">A · Tiles grandes<span class="k">launcher táctil</span></button>
+      <button type="button" data-variant="B" role="tab" aria-selected="false">B · Urgencias primero<span class="k">alerta arriba + tiles</span></button>
+      <button type="button" data-variant="C" role="tab" aria-selected="false">C · Dock + lista<span class="k">navegación fija + flujo</span></button>
+    </div>
+
+    <!-- ================= VARIACIÓN A ================= -->
+    <section class="variant active" data-variant="A">
+      <div class="variant-head">
+        <span class="letra">A</span>
+        <h2>Tiles grandes</h2>
+        <span class="claim">launcher táctil — cada tile un apartado, con su contador y flecha</span>
+      </div>
+      <div data-chrome="mobile">
+        <div class="kpi-inline" style="margin-bottom:12px">
+          <span class="num">62%</span>
+          <span class="lbl">progreso general · trabajo 62 · salud 40 · ocio 25 · social 50</span>
+        </div>
+        <div class="tile-grid">
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">💬</span><span style="color:#ef4444">15</span></span>
+            Decisiones
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">✏️</span><span style="color:#f59e0b">2</span></span>
+            Encargos
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">⚡</span><span class="exo-nav-live" style="padding:1px 6px"><span class="dot"></span>en vivo</span></span>
+            Actividad
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">🗓️</span><span>hoy</span></span>
+            Línea de tiempo
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">📊</span><span>8</span></span>
+            Paneles
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">🎙</span><span class="exo-nav-pill-pre" style="padding:1px 6px">ROT</span></span>
+            Hablar por Voz
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VARIACIÓN B ================= -->
+    <section class="variant" data-variant="B">
+      <div class="variant-head">
+        <span class="letra">B</span>
+        <h2>Urgencias primero</h2>
+        <span class="claim">lo que caduca o espera tu sí, arriba; el launcher debajo</span>
+      </div>
+      <div data-chrome="mobile">
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+          <button class="exo-option" type="button">
+            <span class="exo-option-letter" style="background:rgba(239,68,68,0.15);color:#ef4444">!</span>
+            <span>
+              <b style="font-size:13px">15 decisiones pendientes</b>
+              <span style="display:block;color:var(--text-dim);font-size:11px;margin-top:2px">3 caducan pronto</span>
+            </span>
+          </button>
+          <button class="exo-option" type="button">
+            <span class="exo-option-letter" style="background:rgba(245,158,11,0.15);color:#f59e0b">⏱</span>
+            <span>
+              <b style="font-size:13px">2 encargos en curso</b>
+              <span style="display:block;color:var(--text-dim);font-size:11px;margin-top:2px">ambos a 17 min</span>
+            </span>
+          </button>
+        </div>
+        <div class="tile-grid">
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">💬</span><span style="color:#ef4444">15</span></span>
+            Decisiones
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">✏️</span><span style="color:#f59e0b">2</span></span>
+            Encargos
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">⚡</span><span class="exo-nav-live" style="padding:1px 6px"><span class="dot"></span>en vivo</span></span>
+            Actividad
+          </button>
+          <button class="tile" type="button">
+            <span class="tile-top"><span class="tile-ico">📊</span><span>8</span></span>
+            Paneles
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VARIACIÓN C ================= -->
+    <section class="variant" data-variant="C">
+      <div class="variant-head">
+        <span class="letra">C</span>
+        <h2>Dock + lista</h2>
+        <span class="claim">navegación fija abajo, el cuerpo es el flujo de última actividad</span>
+      </div>
+      <div data-chrome="mobile">
+        <div class="exo-subheading">Última actividad</div>
+        <div class="exo-card exo-card-pad" style="padding:12px;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:600">Decisiones · nueva propuesta</div>
+          <div style="color:var(--text-dim);font-size:11.5px;margin-top:2px">Write-guard para watchers de ROT · hace 32 min</div>
+        </div>
+        <div class="exo-card exo-card-pad" style="padding:12px;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:600">Encargos · arranque</div>
+          <div style="color:var(--text-dim);font-size:11.5px;margin-top:2px">REHACER F1 variaciones v2 · enc-3767cbf2 · hace 17 min</div>
+        </div>
+        <div class="exo-card exo-card-pad" style="padding:12px;margin-bottom:8px">
+          <div style="font-size:13px;font-weight:600">Timeline · registro</div>
+          <div style="color:var(--text-dim);font-size:11.5px;margin-top:2px">Café + arranque de mañana · hace 1 h</div>
+        </div>
+        <div class="exo-card exo-card-pad" style="padding:12px">
+          <div style="font-size:13px;font-weight:600">Sesión · completada</div>
+          <div style="color:var(--text-dim);font-size:11.5px;margin-top:2px">Rutina call-intake · hace 2 h</div>
+        </div>
+        <div class="dock" style="margin:14px 0 0">
+          <button class="dock-btn" type="button">🏠<br>Home</button>
+          <button class="dock-btn" type="button">💬<br>Decisiones</button>
+          <button class="dock-btn" type="button">⚡<br>Actividad</button>
+          <button class="dock-btn" type="button">🎙<br>Voz</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="note" style="margin-top:18px">
+    <b>Móvil real:</b> probado como usuario (no como diseñador) — targets ≥ 44 px, una mano, scroll mínimo.
+    Cada variación respeta la barra móvil y los temas actuales de la app.
+  </section>
+
+  <footer class="panel-footer">enc-3767cbf2 · variaciones v2 en el design system real de ExoHuman UI · 22-10 · responde en Decisiones con tu variación (ej. «Home A · Móvil B · Lateral B»).</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
