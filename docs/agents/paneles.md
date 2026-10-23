@@ -51,10 +51,18 @@ Any session can create a reusable panel; the catalog view carries the doc
 
 ## Serving and listing
 
-- `lib/paneles.ts` is the only reader of the root: dated directories
+- `lib/paneles.ts` is the only reader of the roots: dated directories
   (`isPanelDirName`) with an `index.html` list; `_plantillas` and dotfiles are
-  internal. `PANELES_ROOT` overrides the root (production sets it in the
-  systemd drop-in).
+  internal. `PANELES_ROOT` overrides the canonical root (production sets it in
+  the systemd drop-in); `PANELES_STAGING_ROOT` overrides the staging root.
+- **Two roots are served**: canonical `~/.local/share/exohuman/paneles`
+  (promoted panels) and staging `~/.local/state/exohuman/paneles`, where
+  agent sessions create panels (the write-guard keeps `~/.local/share`
+  read-only). `panelesRoots()` orders them canonical-first; a slug in both
+  resolves to the canonical copy, so promotion never breaks a URL.
+  `listPanelsSync()` merges both (canonical wins by slug); the file and
+  sessions routes resolve each request across `panelesRoots()` /
+  `resolvePanelDirSync()`.
 - `app/api/paneles/[...path]/route.ts` serves one panel's bytes with a
   `<base href>` injected into HTML (relative assets survive Next's
   slashless-directory normalization). No traversal, no symlink escapes,
@@ -99,6 +107,9 @@ the strip may be incomplete, which the UI says ("+ más…"). The route caches
 each slug's response 20 s; `hooks/usePanelSessions.ts` adds a 30 s module
 cache shared by the strip and the cards (cards only fetch once expanded).
 
-Creating panels stays `rg-panel`'s job; the routes' one write is the
-catalog's visibility change above, and it only ever touches panel.json of an
-existing panel directory.
+Creating and archiving panels stays `rg-panel`'s job; the routes' one write is
+the catalog's visibility change above, and it only ever touches panel.json of
+an existing panel directory. An agent session creates its panel in staging
+with `PANELES_ROOT=$HOME/.local/state/exohuman/paneles rg-panel new …` — it
+is served by `/api/paneles` immediately, no promotion and no dev port
+needed; promotion to the canonical root remains a deliberate later copy.

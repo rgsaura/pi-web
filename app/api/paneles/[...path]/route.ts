@@ -1,20 +1,21 @@
 import { NextResponse } from "next/server";
 import { createReadStream, realpathSync, readFileSync, statSync } from "fs";
 import { join, extname } from "path";
-import { PANEL_MIME, isServablePanelSegment, panelesRoot } from "@/lib/paneles";
+import { PANEL_MIME, isServablePanelSegment, panelesRoots } from "@/lib/paneles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
  * GET /api/paneles/<dir>[/<asset>] — serves one panel's files from the
- * paneles root, the same bytes the standalone :30150 server used to serve:
- * a directory serves its index.html, so an iframe (or a new tab) pointed at
+ * paneles roots (canonical ~/.local/share + staging ~/.local/state), the
+ * same bytes the standalone :30150 server used to serve: a directory serves
+ * its index.html, so an iframe (or a new tab) pointed at
  * `/api/paneles/<dir>/` renders the deliverable with its relative assets.
  *
- * Only plain segments under the root: no dotfiles, no `_`-prefixed internal
+ * Only plain segments under a root: no dotfiles, no `_`-prefixed internal
  * entries (templates), no traversal; symlinks must resolve back inside the
- * root. Read-only GET, size-capped, inline + nosniff.
+ * same root. Read-only GET, size-capped, inline + nosniff.
  */
 
 const MAX_BYTES = 64 * 1024 * 1024;
@@ -53,20 +54,29 @@ export async function GET(_request: Request, context: { params: Promise<{ path?:
     return notFound("PANEL_NOT_FOUND");
   }
 
-  const root = panelesRoot();
-  let target = join(root, ...segments);
-  if (!target.startsWith(root + "/")) return notFound("PANEL_NOT_FOUND");
-
-  let stat;
-  try {
-    stat = statSync(target);
-  } catch {
-    return notFound("PANEL_NOT_FOUND");
+  let root: string | null = null;
+  let target = "";
+  let stat: ReturnType<typeof statSync> | null = null;
+  // Canonical root first: a promoted panel wins over its staging draft.
+  for (const candidate of panelesRoots()) {
+    const candidateTarget = join(candidate, ...segments);
+    if (!candidateTarget.startsWith(candidate + "/")) continue;
+    try {
+      const candidateStat = statSync(candidateTarget);
+      root = candidate;
+      target = candidateTarget;
+      stat = candidateStat;
+      break;
+    } catch {
+      // Not in this root; try the next.
+    }
   }
+  if (!root || !target || !stat) return notFound("PANEL_NOT_FOUND");
+
   if (stat.isDirectory()) target = join(target, "index.html");
 
   // Resolve symlinks: a panel directory must not serve files from outside
-  // the paneles root (same rule as the upload target check).
+  // the root it was found in (same rule as the upload target check).
   try {
     const realTarget = realpathSync(target);
     const realRoot = realpathSync(root);

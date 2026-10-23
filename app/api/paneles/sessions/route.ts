@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { readFileSync, statSync } from "fs";
+import { readFileSync } from "fs";
 import { join } from "path";
-import { isPanelDirName, panelesRoot, registeredSessionIds } from "@/lib/paneles";
+import { isPanelDirName, registeredSessionIds, resolvePanelDirSync } from "@/lib/paneles";
 import { mergePanelSessions, panelSessionNeedle } from "@/lib/paneles-sessions";
 import { listAllSessions } from "@/lib/session-reader";
 import { searchSessionContents } from "@/lib/session-search";
@@ -33,10 +33,9 @@ export async function GET(request: Request) {
     return NextResponse.json(cached.body, { headers });
   }
 
-  const dir = join(panelesRoot(), slug);
-  try {
-    if (!statSync(dir).isDirectory()) throw new Error("not a directory");
-  } catch {
+  // Canonical root first, then staging: the trace reads whichever copy exists.
+  const dir = resolvePanelDirSync(slug);
+  if (!dir) {
     return NextResponse.json({ error: "Panel not found" }, { status: 404, headers });
   }
 

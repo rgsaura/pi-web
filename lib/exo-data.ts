@@ -89,6 +89,7 @@ import { join } from "path";
 import { homedir } from "os";
 import { execSync } from "child_process";
 import { optionImagesFor } from "./exo-media";
+import { optionPanelsFor } from "./exo-panels";
 
 interface LocalLedgerProposal {
   id: string;
@@ -97,6 +98,8 @@ interface LocalLedgerProposal {
   summary?: string;
   options?: string[];
   option_images?: unknown;
+  /** Per-option live preview panels: `paneles/<slug>[/file]`, aligned by position. */
+  option_panels?: unknown;
   source?: string;
   status?: string;
   session_id?: string;
@@ -145,10 +148,12 @@ links: item.links ?? [],
         discard: status === "discarded" ? (item.discard && typeof item.discard === "object" ? { reason: item.discard.reason ?? "Descartada", details: item.discard.details, discardedAt: item.discard.discarded_at } : null) : null,        options: (() => {
           const labels = (item.options ?? ["Aceptar", "Descartar"]) as string[];
           const images = optionImagesFor(labels.length, item.option_images);
+          const panels = optionPanelsFor(labels.length, item.option_panels);
           return labels.map((opt, idx) => ({
             id: `opt-${idx}`,
             label: opt,
             ...(images[idx] ? { image: images[idx] } : {}),
+            ...(panels[idx] ? { previewUrl: panels[idx] } : {}),
           }));
         })(),
         evidence: [],

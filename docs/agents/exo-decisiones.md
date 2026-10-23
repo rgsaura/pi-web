@@ -94,3 +94,37 @@ LD_LIBRARY_PATH=/tmp/chromium-libs/root/usr/lib/x86_64-linux-gnu:\
 /tmp/chromium-libs/root/lib/x86_64-linux-gnu \
 COUNTERS_CHECK_BASE=http://127.0.0.1:<port> node e2e/counters-check.mjs
 ```
+
+## Embedded comparative previews (option panels)
+
+An F1 proposal can carry a **live comparative preview embedded in the
+Decisiones view itself**: options A/B/C switchable in-situ, same-origin,
+without leaving the panel (the method prop-d35754a4/prop-1cbfac6a lacked:
+staging panels nobody served, links to dev ports, manual promotion).
+
+- **Ledger field**: `option_panels`, aligned with `options` by position
+  (same rule as `option_images`). Entries are `paneles/<slug>[/file]`
+  (`paneles/<slug>` = the panel's index; `paneles/<slug>/<file>` = one page
+  of a multi-variant panel). `rg-proposal` does not know the field yet: the
+  F1 encargo writes it directly into
+  `~/.local/state/proposals/ledger.json` alongside `options`.
+- **Panel assets**: created in the staging root
+  (`PANELES_ROOT=$HOME/.local/state/exohuman/paneles rg-panel new …`),
+  served by the canonical `/api/paneles/<slug>/` route (both roots — see
+  `docs/agents/paneles.md`). Never dev-port URLs, never external origins.
+- **Resolver**: `lib/exo-panels.ts` (`resolveOptionPanelSrc`,
+  `optionPanelsFor`) maps entries to same-origin `/api/paneles/…` srcs only —
+  http(s), traversal, non-dated or malformed slugs become null, so a bad
+  ledger entry can never point the iframe outside the app. `lib/exo-data.ts`
+  zips the resolved src onto `ExoProposalOption.previewUrl`
+  (`lib/exo-types.ts`).
+- **UI**: when a proposal has options with `previewUrl`, `ExoProposalsView`
+  renders a "Comparativa en vivo" block above the option cards: an A/B/C
+  switcher (letters match the cards), the panel in an iframe with the same
+  sandbox the Paneles view uses, plus reload / fullscreen (Esc closes it
+  before the view's own Esc) / new-tab. Switching only looks; the option
+  cards below remain the act of choosing (keyboard A–E included).
+
+Files: `lib/exo-panels.ts`(+test), `lib/exo-data.ts`, `lib/exo-types.ts`,
+`components/ExoProposalsView.tsx`, the staging roots in `lib/paneles.ts` and
+`app/api/paneles/**`.
