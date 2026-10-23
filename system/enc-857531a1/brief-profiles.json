@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "updated": "2026-10-23",
+  "comment": "Perfiles de brief del dispatcher (enc-126d5a2e). Cada perfil inyecta contexto A MEDIDA en el brief de la sesión: docs exactos (≤2), reglas aplicables, qué NO tocar y protocolo de verificación. El dispatcher elige perfil por (categoría, fase); nunca por heurísticas de texto. La fase 'preview' activa el protocolo preview-first (F1). 22-10 (voz de Rodrigo): límite de escritura UNIVERSAL en todos los perfiles — las sesiones nacen en su workspace acotado, jamás escriben ni crean carpetas en el home. 23-10 (enc-857531a1, prop-e0bcbbfb): code-build reenlazado a FUENTES VIVAS (AGENTS.md del repo + MAPA-DEL-SISTEMA.md) — ~/.local/share/context/projects/<proyecto>.md está poblado en el host PERO el sandbox (contenedor api) no monta ~/.local/share: la referencia llegaba muerta a cada sesión despachada (prop-e0bcbbfb la vio 'inexistente' con find desde el sandbox). Poblar no procede (ya está poblado) y no sería visible para la sesión; el AGENTS.md trackeado en repos es la fuente canónica de contexto de proyecto (MAPA-DEL-SISTEMA). El --self-test del dispatcher valida ahora que toda ruta referenciada en los perfiles existe Y es visible para el sandbox.",
+  "profileByCategory": {
+    "ui": {
+      "completo": "ui-build",
+      "preview": "ui-preview"
+    },
+    "preview": {
+      "completo": "ui-preview",
+      "preview": "ui-preview"
+    },
+    "sistema": {
+      "completo": "sistema-ops",
+      "preview": "ui-preview"
+    },
+    "social": {
+      "completo": "social",
+      "preview": "social"
+    },
+    "facesearch": {
+      "completo": "code-build",
+      "preview": "ui-preview"
+    },
+    "exohuman": {
+      "completo": "code-build",
+      "preview": "ui-preview"
+    },
+    "bot": {
+      "completo": "investigacion",
+      "preview": "investigacion"
+    },
+    "personal": {
+      "completo": "investigacion",
+      "preview": "investigacion"
+    },
+    "general": {
+      "completo": "investigacion",
+      "preview": "investigacion"
+    },
+    "wallapop": {
+      "completo": "investigacion",
+      "preview": "investigacion"
+    },
+    "storylater": {
+      "completo": "investigacion",
+      "preview": "investigacion"
+    }
+  },
+  "defaultProfile": "investigacion",
+  "profiles": {
+    "ui-preview": {
+      "nombre": "Preview-first F1 (UI)",
+      "objetivo": "Construir SOLO la preview funcional MÍNIMA del cambio pedido: lo mínimo que deja VER y COMPARAR la mejora. SIN implementación completa.",
+      "contexto": [
+        "Doc único del flujo: ~/.config/exohuman/docs/ORDEN-DEL-TRABAJO.md (sección PREVIEW-FIRST).",
+        "Diseño/revisión visual: skill design-craft + web-design-guidelines (sólo si toca estilo)."
+      ],
+      "reglas": [
+        "Fase F1: implementa únicamente el cambio visual/funcional mínimo pedido; NADA de extras, refactors ni limpieza colateral.",
+        "Arranca el dev server SOLO en tu puerto asignado del registro (rg-port get enc-<hex8>). NUNCA en :30141 (prod) ni :30149 (pre).",
+        "Genera capturas ANTES/DESPUÉS (Chrome headless o skill disponible) y móntalas como panel comparativa: rg-panel new <slug> --tipo comparativa --titulo \"Preview: <cambio>\".",
+        "Registra la decisión de aprobación: rg-proposal add --title \"Preview <cambio>: ¿aprobar F2?\" --summary \"...\" --options \"Aprobar F2 completo,Corregir preview,Descartar\" --source \"Preview-first F1 · <DD-MM>\" --session-id \"$PI_SESSION_ID\".",
+        "Commitea al fork/<hex8> y termina. El OK de Rodrigo (Decisiones o reply ROT) abre el encargo hijo F2."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Producción (:30141), pre (:30149) y sus árboles (ui-prod, pre): intocables.",
+        "Árbol base compartido (exohuman/ui): sólo tu worktree.",
+        "Merge a main: PROHIBIDO en F1.",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "Dev server responde en tu puerto + capturas antes/después reales guardadas + panel creado + propuesta registrada.",
+      "done": "rg-encargo done <eid> --title \"Preview lista: <cambio>\" --summary \"panel <slug> + prop en Decisiones; a la espera de OK para F2\""
+    },
+    "ui-build": {
+      "nombre": "Implementación UI completa (F2)",
+      "objetivo": "Implementar completo el cambio de ExoHuman UI ya validado en preview (o cambio menor sin preview), con tests y QA visual.",
+      "contexto": [
+        "Notas del wrapper pi-web: AGENTS.md del worktree (doc completo, sección Despliegue ExoHuman primero) — léelo sólo si la tarea toca wrapper/despliegue.",
+        "Reglas de producto: ~/workspaces/exohuman/AGENTS.md (autocargado por cercanía: reglas UI, paneles, QA visual, deep links)."
+      ],
+      "reglas": [
+        "Si vienes de una preview aprobada (F2): parte del fork/ del encargo padre indicado en el brief; reutiliza su worktree si sigue vivo (rg-worktree create es idempotente).",
+        "Typecheck: node_modules/.bin/tsc --noEmit. NUNCA `next build` durante dev (rompe el dev server).",
+        "QA visual como usuario real (regla 27): capturas móvil+desktop, claro+oscuro, analizadas con visión. Nada de 'debería funcionar'.",
+        "Dev server SOLO en tu puerto del registro. Merge a main sólo tras aprobación de Rodrigo."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Producción (:30141), pre (:30149), árboles ui-prod y pre.",
+        "Árbol base compartido: sólo tu worktree.",
+        "Cambios de alcance no pedidos (scope creep).",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "tsc --noEmit limpio + capturas QA visual reales + (si aplica) test/lint del repo.",
+      "done": "rg-encargo done <eid> --title \"<qué se implementó>\" --summary \"<verificación realizada + fork para review>\""
+    },
+    "sistema-ops": {
+      "nombre": "Piezas de sistema (routines/units/config)",
+      "objetivo": "Crear/modificar piezas del sistema personal: routines, unidades systemd, CLIs, config canónica, skills, presets.",
+      "contexto": [
+        "Skill system-creation + contrato canónico (obligatorio antes de crear/renombrar/desplegar piezas).",
+        "Mapa de piezas: ~/.config/exohuman/docs/ROUTING.md."
+      ],
+      "reglas": [
+        "Las piezas de sistema se editan por RUTA ABSOLUTA (viven en ~/.local/bin, ~/.config/exohuman, ~/.local/state): el worktree es sólo tu zona de escritura para artefactos/briefs, NO el hogar de las piezas.",
+        "Toda pieza nueva lleva cabecera con encargo de origen, fecha y reglas; cambios quirúrgicos y validados.",
+        "Si tocas el dispatcher/rg-*: prueba con --self-test o equivalente ANTES de dar por hecho.",
+        "Timers/units modificados: systemctl --user daemon-reload y verificar con list-timers."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Servicios de producción (exohuman-ui.service, pre) sin instrucción explícita.",
+        "El ledger de encargos no se reescribe a mano salvo vía rg-encargo.",
+        "Cero escrituras destructivas sin instrucción explícita.",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "Self-test/probe real de cada pieza tocada, ejecutado y con salida verificada.",
+      "done": "rg-encargo done <eid> --title \"<pieza>: <qué cambió>\" --summary \"<qué se verificó>\""
+    },
+    "social": {
+      "nombre": "Social / Post Studio",
+      "objetivo": "Preparar y curar posts sociales (Instagram/LinkedIn/X/TikTok) y paneles de planes, con criterio humano.",
+      "contexto": [
+        "Skill rg-social-workspace (workspace OpenPost) y regla 28 del perfil assistant (curación real).",
+        "Skill instagram-self-data si hace falta estado propio de IG."
+      ],
+      "reglas": [
+        "MÚSICA de la biblioteca real de Instagram (audio_id utilizable), nunca IA como sustituto.",
+        "Cada foto con procedencia (fecha/lugar) y motivo coherente; nada de fotos irrelevantes.",
+        "Validación VISUAL slide por slide antes de presentar como listo (regla 28).",
+        "Publicar requiere instrucción explícita; por defecto draft/preview."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Cuentas sociales sin instrucción explícita (nada se publica solo).",
+        "EXIF: limpiar metadatos antes de cualquier publicación (skill exif-strip).",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "Preview visual validado slide por slide + música real verificada.",
+      "done": "rg-encargo done <eid> --title \"<entregable social>\" --summary \"<dónde quedó el draft/panel>\""
+    },
+    "investigacion": {
+      "nombre": "Investigación / análisis",
+      "objetivo": "Investigar, auditar o proponer sobre un tema con evidencia real y entregable observable.",
+      "contexto": [
+        "Búsqueda web: gsearch (NO el web_search integrado). Detalle: skill search.",
+        "Contexto personal: skill exo-context / exo-lookup antes de asumir historial."
+      ],
+      "reglas": [
+        "Todo hallazgo con evidencia verificable (fuente, comando, salida real). Nada de 'debería'.",
+        "Entregable OBSERVABLE (regla 16): informe → panel (rg-panel new <slug> --tipo informe) y mandar link, no rutas sueltas.",
+        "Decisiones estratégicas que surjan → rg-proposal (con --source legible y --links verificables).",
+        "Reutilizar antes de construir: buscar solución existente primero."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Sin efectos colaterales: ni commits, despliegues ni escrituras fuera de tu zona (worktree o ~/.cache/<encargo>).",
+        "Memoria EXO: sólo vía exo-memory/exo-note, nunca a mano.",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "Datos contrastados en su fuente viva + entregable publicado y linkeado.",
+      "done": "rg-encargo done <eid> --title \"<qué se encontró/entregó>\" --summary \"<link al panel/sesión>\""
+    },
+    "code-build": {
+      "nombre": "Desarrollo de código (proyecto propio)",
+      "objetivo": "Implementar en un repo de proyecto propio (facesearch, exohuman/core): cambio completo con tests.",
+      "contexto": [
+        "Contexto del proyecto (FUENTES VIVAS): el AGENTS.md y README del propio repo — tu worktree los hereda; léelos ANTES de actuar.",
+        "Mapa del sistema: ~/.config/exohuman/docs/MAPA-DEL-SISTEMA.md (capas, piezas y dónde vive cada estado)."
+      ],
+      "reglas": [
+        "Trabaja SÓLO en tu worktree fork/<hex8>. Commits limpios y atómicos al fork.",
+        "Tests/probes reales antes de cerrar; QA visual si hay UI.",
+        "Producción del proyecto (si existe) intocable sin aprobación explícita."
+      ],
+      "no_tocar": [
+        "LÍMITE DE ESCRITURA (reglas 23/30/34, obligatorio): ESCRITURAS SÓLO EN tu worktree/sandbox asignado (el cwd de esta sesión), ~/.local/state/**, ~/.cache/**, /tmp/**. PROHIBIDO crear archivos o carpetas en ~ (home del usuario) o fuera de esas zonas; la write-guard lo bloquea igualmente.",
+        "Tu cwd ES tu workspace acotado: trabaja ahí. Piezas de sistema (routines, units, config) se tocan por ruta absoluta siguiendo skill system-creation, nunca con archivos sueltos en el home.",
+        "Árboles base/compartidos del proyecto y cualquier despliegue en vivo.",
+        "Secretos: resolver vía skill op-vault, nunca imprimirlos.",
+        "node_modules del árbol base es COMPARTIDO por symlink entre worktrees: prohibido npm install o modificarlo; si necesitas dependencias, decláralo en el done."
+      ],
+      "verificacion": "Suite de tests del repo (o probe equivalente) ejecutada con salida real.",
+      "done": "rg-encargo done <eid> --title \"<qué se cambió>\" --summary \"<verificación>\""
+    }
+  }
+}
